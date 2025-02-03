@@ -17,6 +17,13 @@ export class singUp {
   })
   email: string;
 
+  @IsEmail()
+  @ApiProperty({
+    description: 'El nombre de la empresa',
+    example: 'Compañados Total',
+  })
+  company: string;
+
   @IsNotEmpty()
   @IsString()
   @MinLength(5)
@@ -41,8 +48,7 @@ export class singUp {
   @MinLength(5)
   @IsStrongPassword()
   @ApiProperty({
-    description:
-      'Debe ser un string mayor de 5 caracteres',
+    description: 'Debe ser un string mayor de 5 caracteres',
     example: 'Romer',
   })
   username: string;

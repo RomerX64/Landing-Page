@@ -18,4 +18,7 @@ export class User {
 
   @Column()
   telefono: string;
+
+  @Column()
+  company: string;
 }
