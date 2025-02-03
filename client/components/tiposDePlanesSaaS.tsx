@@ -93,7 +93,7 @@ const CardPlan: React.FC<CardPlanProps> = ({
 }) => {
   return (
     <a
-      href="#0"
+      href="/suscribirse"
       className="group/card relative w-full h-full overflow-hidden rounded-2xl bg-gray-800 p-px transform transition-all duration-300 hover:scale-105 hover:shadow-2xl
         before:pointer-events-none before:absolute before:-left-40 before:-top-40 before:z-10 before:h-80 before:w-80
         before:translate-x-[var(--mouse-x)] before:translate-y-[var(--mouse-y)] before:rounded-full before:bg-indigo-500/80

@@ -6,9 +6,8 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="relative flex grow flex-col">
+    <main className="relative flex flex-col grow">
       <PageIllustration multiple />
-
       {children}
     </main>
   );

@@ -3,7 +3,6 @@ export const metadata = {
   description: "Page description",
 };
 
-import Link from "next/link";
 import SignInLayout from "./layout";
 
 export default function SignIn() {
