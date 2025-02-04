@@ -12,7 +12,7 @@ export default function SignUpLayout() {
     confirmPassword: "",
   });
 
-  const [phoneError, setPhoneError] = useState(false); // Nuevo estado para el teléfono
+  const [phoneError, setPhoneError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [lengthError, setLengthError] = useState(false);
 
@@ -28,7 +28,7 @@ export default function SignUpLayout() {
 
       const phonePattern = /^\+54[1-9]\d{1,14}$/;
       setPhoneError(!phonePattern.test(formattedPhone));
-      setNewUser({ ...newUser, [name]: formattedPhone }); 
+      setNewUser({ ...newUser, [name]: formattedPhone });
     } else {
       setNewUser({ ...newUser, [name]: value });
     }
@@ -68,20 +68,52 @@ export default function SignUpLayout() {
     });
   };
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Validaciones adicionales si es necesario
+    if (phoneError || passwordError || lengthError) {
+      return;
+    }
+
+    try {
+      // Reemplaza esta URL con la URL real de tu API o backend
+      const response = await fetch("/api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newUser),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Procesar la respuesta de éxito
+        console.log("Usuario registrado exitosamente:", data);
+        // Redirigir o mostrar un mensaje de éxito si es necesario
+      } else {
+        // Manejar el error si la respuesta no es exitosa
+        console.error("Error al registrar el usuario:", data);
+      }
+    } catch (error) {
+      console.error("Error en la solicitud:", error);
+    }
+  };
+
   return (
     <section>
       <div className="max-w-6xl px-4 mx-auto sm:px-6">
         <div className="py-12 md:py-20">
-          {/* Section header */}
           <div className="pb-12 text-center">
             <h1 className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,theme(colors.gray.200),theme(colors.indigo.200),theme(colors.gray.50),theme(colors.indigo.300),theme(colors.gray.200))] bg-[length:200%_auto] bg-clip-text font-nacelle text-3xl font-semibold text-transparent md:text-4xl">
               Crea tu usuario
             </h1>
           </div>
 
-          {/* Contact form */}
-          <form className="mx-auto max-w-[400px]">
+          <form onSubmit={handleSubmit} className="mx-auto max-w-[400px]">
             <div className="space-y-5">
+              {/* Formulario de entrada para cada campo */}
               <div>
                 <label
                   className="block mb-1 text-sm font-medium text-indigo-200/65"
@@ -151,7 +183,9 @@ export default function SignUpLayout() {
                   onChange={handleOnChange}
                 />
                 {phoneError && (
-                  <span className="text-xs text-red-500">Formato inválido, debe tener el prefijo nacional</span>
+                  <span className="text-xs text-red-500">
+                    Formato inválido, debe tener el prefijo nacional
+                  </span>
                 )}
               </div>
               <div>
@@ -213,11 +247,12 @@ export default function SignUpLayout() {
               <div className="flex items-center gap-3 text-sm italic text-center text-gray-600 before:h-px before:flex-1 before:bg-gradient-to-r before:from-transparent before:via-gray-400/25 after:h-px after:flex-1 after:bg-gradient-to-r after:from-transparent after:via-gray-400/25">
                 o
               </div>
-              <button className="btn relative w-full bg-gradient-to-b from-gray-800 to-gray-800/60 bg-[length:100%_100%] bg-[bottom] text-gray-300 before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_right,theme(colors.gray.800),theme(colors.gray.700),theme(colors.gray.800))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-[length:100%_150%]">
+              <button className="btn relative w-full bg-gradient-to-b from-gray-800 to-gray-800/60 bg-[length:100%_100%] bg-[bottom] text-gray-300">
                 Logearse con Google
               </button>
             </div>
           </form>
+
           <div className="mt-6 text-sm text-center text-indigo-200/65">
             Ya posee una cuenta?{" "}
             <Link className="font-medium text-indigo-500" href="/signin">
