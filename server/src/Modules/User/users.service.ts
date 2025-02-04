@@ -1,4 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './User.entity';
 import { IsNull, Not, Repository } from 'typeorm';
@@ -47,6 +52,7 @@ export class UserService {
         sub: user.id,
         id: user.id,
         email: user.email,
+        isAdmin: user.isAdmin,
       };
 
       const token = this.jwtService.sign(userPayload);
@@ -56,7 +62,7 @@ export class UserService {
     }
   }
 
-  async signUp(signUp: singUp): Promise<User> {
+  async signUp(signUp: singUp): Promise<{ user: User; token: string }> {
     try {
       const exist = await this.userRepository.findOne({
         where: { email: signUp.email },
@@ -80,30 +86,15 @@ export class UserService {
           HttpStatus.BAD_REQUEST,
         );
 
-      return await this.userRepository.save(user);
-    } catch (error) {
-      throw ErrorHandler.handle(error);
-    }
-  }
-
-  async getAdmin(
-    userId: string,
-    password: string,
-  ): Promise<{ User: User; token: string }> {
-    try {
-      const user = await this.getUserById(userId);
-      if (!user)
-        throw new HttpException('Credencial invalida', HttpStatus.BAD_REQUEST);
-      const isValid = await bcrypt.compare(password, user.password);
-      if (!isValid)
-        throw new HttpException('Credencial invalida', HttpStatus.BAD_REQUEST);
       const userPayload = {
         sub: user.id,
         id: user.id,
         email: user.email,
+        isAdmin: user.isAdmin,
       };
       const token = this.jwtService.sign(userPayload);
-      return { User: user, token: token };
+
+      return { user: await this.userRepository.save(user), token: token };
     } catch (error) {
       throw ErrorHandler.handle(error);
     }
@@ -216,6 +207,19 @@ export class UserService {
       return user;
     } catch (error) {
       throw ErrorHandler.handle(error);
+    }
+  }
+
+  async mailIsValid(email: string): Promise<boolean> {
+    try {
+      const exist = await this.userRepository.findOne({
+        where: { email: email },
+      });
+
+      return !!exist; // Retorna true si existe, false si no
+    } catch (error) {
+      console.error('Error al verificar el email:', error);
+      return false; // En caso de error, retorna false
     }
   }
 }

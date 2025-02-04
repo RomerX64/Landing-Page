@@ -6,19 +6,23 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './users.service';
 import { User } from './User.entity';
 import { singIn } from './Dto/singIn.dto';
 import { singUp } from './Dto/singUp.dto';
 import { ErrorHandler } from 'src/Utils/Error.Handler';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
+import { AuthGuard } from 'src/guards/auth.guard';
+import { AdminGuard } from 'src/guards/admin.guard';
+import { IsEmail } from 'class-validator';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post('singIn')
+  @Post('/singIn')
   @ApiOperation({
     summary: 'Logearse',
     description: 'Logea al usuario mediante el username y password.',
@@ -31,12 +35,29 @@ export class UserController {
     }
   }
 
-  @Post('singUp')
+  @Get('/email/:email')
   @ApiOperation({
-    summary: 'Elminar usuario',
-    description: 'Elimina un usuario mediante el username y password',
+    summary: 'verifica si el mail es valido',
+    description: 'verifica si el mail es valido y no esta en uso',
   })
-  async singUp(@Body() signUp: singUp): Promise<User> {
+  async mailIsValid(
+    @Param('email')
+    email: string,
+  ): Promise<boolean> {
+    try {
+      return await this.userService.mailIsValid(email);
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  }
+
+  @Post('/singUp')
+  @ApiOperation({
+    summary: 'Registrar usuario',
+    description: 'Registra a un usuario nuevo',
+  })
+  async singUp(@Body() signUp: singUp): Promise<{ user: User; token: string }> {
     try {
       return await this.userService.signUp(signUp);
     } catch (error) {
@@ -44,23 +65,9 @@ export class UserController {
     }
   }
 
-  @Post('/getAdmin')
-  @ApiOperation({
-    summary: 'Obtiene los Permisos de administrador',
-    description: 'Obtienes El token de autenticacion de admin',
-  })
-  async getAdmin(
-    @Body() body: { username: string; password: string },
-  ): Promise<{ User: User; token: string }> {
-    try {
-      const { username, password } = body;
-      return await this.userService.getAdmin(username, password);
-    } catch (error) {
-      throw ErrorHandler.handle(error);
-    }
-  }
-
+  @ApiBearerAuth()
   @Get('/users')
+  @UseGuards(AuthGuard, AdminGuard)
   @ApiOperation({
     summary: 'Get users',
     description: 'Obtiene todos los usuarios',
@@ -73,7 +80,9 @@ export class UserController {
     }
   }
 
+  @ApiBearerAuth()
   @Get('/getUsersSubscribed')
+  @UseGuards(AuthGuard, AdminGuard)
   @ApiOperation({
     summary: 'Get users subscritos',
     description: 'Obtiene todos los usuarios suscritos',
@@ -86,7 +95,9 @@ export class UserController {
     }
   }
 
+  @ApiBearerAuth()
   @Get('/getUsersSubscribed/:planId')
+  @UseGuards(AuthGuard, AdminGuard)
   @ApiOperation({
     summary: 'Get users subscritos en ...',
     description: 'Obtiene todos los usuarios suscritos en el plan seleccionado',
@@ -99,7 +110,9 @@ export class UserController {
     }
   }
 
+  @ApiBearerAuth()
   @Get('/suscribe/:userId/:planId')
+  @UseGuards(AuthGuard)
   @ApiOperation({
     summary: 'Suscribir Usuario',
     description: 'Subscribe al usuario mediante el suerId y plan de pago',
@@ -115,7 +128,9 @@ export class UserController {
     }
   }
 
-  @Get('/Desuscribe/:userId')
+  @ApiBearerAuth()
+  @Get('/desuscribe/:userId')
+  @UseGuards(AuthGuard, AdminGuard)
   @ApiOperation({
     summary: 'Desuscribir Usuario',
     description: 'desuscribe a un usuario mediante el user ID',
@@ -128,7 +143,9 @@ export class UserController {
     }
   }
 
+  @ApiBearerAuth()
   @Delete('/user')
+  @UseGuards(AuthGuard)
   @ApiOperation({
     summary: 'Elminar usuario',
     description: 'Elimina un usuario mediante el username y password',

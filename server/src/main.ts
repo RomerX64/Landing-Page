@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as http from 'http';
 
 async function getAvailablePort(startPort: number): Promise<number> {
@@ -15,10 +16,23 @@ async function getAvailablePort(startPort: number): Promise<number> {
 }
 
 async function bootstrap() {
-  const port = await getAvailablePort(parseInt(process.env.PORT ?? '3000', 10));
+  const port = await getAvailablePort(parseInt(process.env.PORT ?? '3000'));
   const app = await NestFactory.create(AppModule);
+
+  app.enableCors();
+
+  const config = new DocumentBuilder()
+    .setTitle('API Assetly') // Nombre de la API
+    .setDescription('Documentación de la API de Assetly')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('docs', app, document);
   await app.listen(port);
   console.log(`App running on port ${port}`);
+  console.log(`Swagger disponible en: http://localhost:${port}/docs`);
 }
 
 bootstrap();
