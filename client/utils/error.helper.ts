@@ -3,14 +3,12 @@ export interface AsyncResult<T> {
   error?: any;
 }
 
-export async function handleAsync<T>(
-  promise: Promise<T>
-): Promise<AsyncResult<T>> {
+export const handleAsync = async (promise: Promise<any>) => {
   try {
     const data = await promise;
-    return { data };
+    return { data, error: null };
   } catch (error) {
-    console.error("Error capturado:", error);
-    return { error };
+    console.error(error); // Log the actual error
+    return { data: null, error }; // Return error in case of failure
   }
-}
+};

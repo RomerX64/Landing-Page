@@ -1,25 +1,28 @@
 "use client";
+import { UserContext } from "@/context/user.context";
 import Link from "next/link";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 export default function SignUpLayout() {
   const [newUser, setNewUser] = useState({
     username: "",
     company: "",
     email: "",
-    phone: "",
+    telefono: "",
     password: "",
     confirmPassword: "",
   });
-
+  const { signUp, mailIsValid } = useContext(UserContext);
   const [phoneError, setPhoneError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [lengthError, setLengthError] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  let debounceTimeout: NodeJS.Timeout;
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
-    if (name === "phone") {
+    if (name === "telefono") {
       let formattedPhone = value.replace(/\s+/g, "");
 
       if (!formattedPhone.startsWith("+54")) {
@@ -68,34 +71,31 @@ export default function SignUpLayout() {
     });
   };
 
+  const handleEmailChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setNewUser({ ...newUser, email: value });
+
+    clearTimeout(debounceTimeout);
+
+    debounceTimeout = setTimeout(async () => {
+      const isValid = await mailIsValid(value);
+      if (isValid) {
+        setEmailError("Este correo ya está registrado");
+      } else {
+        setEmailError("");
+      }
+    }, 1000);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validaciones adicionales si es necesario
-    if (phoneError || passwordError || lengthError) {
+    if (phoneError || passwordError || lengthError || emailError) {
       return;
     }
 
     try {
-      // Reemplaza esta URL con la URL real de tu API o backend
-      const response = await fetch("/api/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newUser),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        // Procesar la respuesta de éxito
-        console.log("Usuario registrado exitosamente:", data);
-        // Redirigir o mostrar un mensaje de éxito si es necesario
-      } else {
-        // Manejar el error si la respuesta no es exitosa
-        console.error("Error al registrar el usuario:", data);
-      }
+      const response = await signUp(newUser);
     } catch (error) {
       console.error("Error en la solicitud:", error);
     }
@@ -162,24 +162,28 @@ export default function SignUpLayout() {
                   className="w-full form-input"
                   placeholder="Su email de trabajo"
                   required
-                  onChange={handleOnChange}
+                  value={newUser.email}
+                  onChange={handleEmailChange}
                 />
+                {emailError && (
+                  <span className="text-xs text-red-500">{emailError}</span>
+                )}
               </div>
               <div>
                 <label
                   className="block mb-1 text-sm font-medium text-indigo-200/65"
-                  htmlFor="phone"
+                  htmlFor="telefono"
                 >
                   Número Telefónico <span className="text-red-500">*</span>
                 </label>
                 <input
-                  id="phone"
-                  name="phone"
+                  id="telefono"
+                  name="telefono"
                   type="tel"
                   className="w-full form-input"
                   placeholder="Su número telefónico"
                   required
-                  value={newUser.phone}
+                  value={newUser.telefono}
                   onChange={handleOnChange}
                 />
                 {phoneError && (

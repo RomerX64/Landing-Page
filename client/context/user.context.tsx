@@ -12,6 +12,7 @@ interface UserContextProps {
   signIn: (data: SignInDTO) => Promise<IUser>;
   signUp: (data: SignUpDTO) => Promise<IUser>;
   deleteUser: (data: SignInDTO) => Promise<IUser>;
+  mailIsValid: (email: string) => Promise<boolean>;
   setUser: (user: IUser | null) => void;
 }
 
@@ -25,6 +26,9 @@ const defaultContext: UserContextProps = {
     throw new Error("Not implemented");
   },
   deleteUser: async () => {
+    throw new Error("Not implemented");
+  },
+  mailIsValid: async () => {
     throw new Error("Not implemented");
   },
   setUser: () => {},
@@ -87,6 +91,24 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     return User;
   };
 
+  const mailIsValid = async (email: string): Promise<boolean> => {
+    try {
+      const response = await api.get(`/email/${email}`);
+
+      if (
+        response.data ||
+        response.data === null ||
+        response.data === undefined
+      ) {
+        return false;
+      }
+
+      return response.data;
+    } catch (error) {
+      return false;
+    }
+  };
+
   const value = {
     token,
     user,
@@ -94,6 +116,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     signIn,
     signUp,
     deleteUser,
+    mailIsValid,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
