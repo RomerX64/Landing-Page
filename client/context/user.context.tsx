@@ -45,21 +45,34 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const [token, setToken] = useState<string>("");
 
   useEffect(() => {
-    const T = localStorage.getItem("token");
-    setToken(T ? T : "");
+    const storedToken = localStorage.getItem("token");
+    const storedUser = localStorage.getItem("user");
+
+    if (storedToken) {
+      setToken(storedToken);
+    }
+    if (storedUser) {
+      try {
+        setUserState(JSON.parse(storedUser));
+      } catch (error) {
+        console.error("Error al parsear el usuario del localStorage", error);
+      }
+    }
   }, []);
 
   const signIn = async (signInData: SignInDTO): Promise<IUser> => {
     const { data, error } = await handleAsync(
       api.post("/users/signIn", signInData)
     );
-    if (error || !data || !data.data)
+    if (error || !data || !data.data) {
       throw new Error("No se recibió respuesta de la API");
+    }
 
     const { User: returnedUser, token: returnedToken } = data.data;
     setToken(returnedToken);
     setUserState(returnedUser);
     localStorage.setItem("token", returnedToken);
+    localStorage.setItem("user", JSON.stringify(returnedUser));
     return returnedUser;
   };
 
@@ -67,13 +80,15 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     const { data, error } = await handleAsync(
       api.post("/users/signUp", signUpData)
     );
-    if (error || !data || !data.data)
+    if (error || !data || !data.data) {
       throw new Error("No se recibió respuesta de la API");
+    }
 
     const { User: returnedUser, token: returnedToken } = data.data;
     setToken(returnedToken);
     setUserState(returnedUser);
     localStorage.setItem("token", returnedToken);
+    localStorage.setItem("user", JSON.stringify(returnedUser));
     return returnedUser;
   };
 
@@ -81,14 +96,16 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     const { data, error } = await handleAsync(
       api.delete("/users/user", { data: signInData })
     );
-    if (error || !data || !data.data)
+    if (error || !data || !data.data) {
       throw new Error("No se recibió respuesta de la API");
+    }
 
-    const User = data.data;
+    const deletedUser = data.data;
     setToken("");
     setUserState(null);
     localStorage.removeItem("token");
-    return User;
+    localStorage.removeItem("user");
+    return deletedUser;
   };
 
   const mailIsValid = async (email: string): Promise<boolean> => {

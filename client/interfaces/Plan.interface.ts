@@ -1,8 +1,10 @@
-import { ISubscripcion } from "./Subscripcion.interface";
-
 export interface IPlan {
   id: number;
+  name: string;
+  imagen: string;
+  alt: string;
+  precio: string;
+  activos: string;
   descripcion: string;
-  price: number;
-  subscripciones: ISubscripcion[];
+  popular?: boolean;
 }

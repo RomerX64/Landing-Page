@@ -1,8 +1,10 @@
+import PlanDetail from "./layout";
+
 export const metadata = {
-  title: "Metodos de Pago - Open PRO",
+  title: "Datos Del Plan - Assetly",
   description: "Page description",
 };
 
 export default function metodoPago() {
-  return <></>;
+  return <PlanDetail />;
 }
