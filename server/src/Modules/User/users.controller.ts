@@ -17,6 +17,7 @@ import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { AdminGuard } from 'src/guards/admin.guard';
 import { IsEmail } from 'class-validator';
+import { Plan } from './Planes.entity';
 
 @Controller('users')
 export class UserController {
@@ -156,6 +157,32 @@ export class UserController {
     try {
       const { username, password } = body;
       return await this.userService.deleteUser(username, password);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  @Get('plan/:planId')
+  @ApiOperation({
+    summary: 'Obtiene un plan',
+    description: 'Obtiene los datos de un solo plan',
+  })
+  async getPlan(@Param('planId') planId: number): Promise<Plan> {
+    try {
+      return await this.userService.getPlan(planId);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  @Get('planes')
+  @ApiOperation({
+    summary: 'Obtiene los Planes',
+    description: 'Obtiene los datos de un solo plan',
+  })
+  async getPlanes(): Promise<Plan[]> {
+    try {
+      return await this.userService.getPlanes();
     } catch (error) {
       throw ErrorHandler.handle(error);
     }

@@ -5,6 +5,8 @@ import typeOrmConfig from './config/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 import { User } from './Modules/User/User.entity';
 import { UserModule } from './Modules/User/users.module';
+import { UsersPreLoad } from './Modules/preLoad/preLoad.user.service';
+import { PreLoadModule } from './Modules/preLoad/preLoad.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -29,6 +31,6 @@ import { UserModule } from './Modules/User/users.module';
     TypeOrmModule.forFeature([User]),
   ],
   controllers: [],
-  providers: [],
+  providers: [PreLoadModule],
 })
 export class AppModule {}

@@ -19,7 +19,7 @@ import { Plan } from './Planes.entity';
 export class UserService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
-    @InjectRepository(Plan) private planIdRepository: Repository<Plan>,
+    @InjectRepository(Plan) private planRepository: Repository<Plan>,
     @InjectRepository(Subscripcion)
     private subsRepository: Repository<Subscripcion>,
     private readonly jwtService: JwtService,
@@ -134,7 +134,7 @@ export class UserService {
   async suscribeUser(userId: string, planId: number): Promise<User> {
     try {
       const user = await this.getUserById(userId);
-      const plan: Plan = await this.planIdRepository.findOne({
+      const plan: Plan = await this.planRepository.findOne({
         where: { id: planId },
       });
 
@@ -220,6 +220,26 @@ export class UserService {
     } catch (error) {
       console.error('Error al verificar el email:', error);
       return false; // En caso de error, retorna false
+    }
+  }
+
+  async getPlan(planId: number): Promise<Plan> {
+    try {
+      const plan: Plan = await this.planRepository.findOne({
+        where: { id: planId },
+      });
+      if (!plan) throw new NotFoundException('Plan not Found');
+      return plan;
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  async getPlanes(): Promise<Plan[]> {
+    try {
+      return await this.planRepository.find();
+    } catch (error) {
+      throw ErrorHandler.handle(error);
     }
   }
 }
