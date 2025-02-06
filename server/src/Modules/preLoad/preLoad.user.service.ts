@@ -5,7 +5,7 @@ import { singUp } from 'src/modules/User/Dto/singUp.dto';
 import { Plan } from 'src/Modules/User/Planes.entity';
 import { User } from 'src/Modules/User/User.entity';
 import { ErrorHandler } from 'src/Utils/Error.Handler';
-import { Subscripcion } from '../User/Subscripcion.entity';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersPreLoad implements OnApplicationBootstrap {
@@ -31,7 +31,7 @@ export class UsersPreLoad implements OnApplicationBootstrap {
       name: 'Free Pass',
       alt: 'Workflow 01',
       precio: 'Free',
-      activos: '300 activos',
+      activos: '300',
       descripcion:
         'Podrá tener todas las funcionalidades del servicio, a excepción de las personalizaciones.',
     },
@@ -41,7 +41,7 @@ export class UsersPreLoad implements OnApplicationBootstrap {
       name: 'AssetsOK',
       alt: 'Workflow 02',
       precio: '$80/anual',
-      activos: '500 activos',
+      activos: '500',
       descripcion:
         'En este plan podrá tener todas las funcionalidades, además de personalizaciones en Reportes.',
     },
@@ -51,7 +51,7 @@ export class UsersPreLoad implements OnApplicationBootstrap {
       name: 'UltraAssets',
       alt: 'Workflow 03',
       precio: '$200/anual',
-      activos: '2500 activos',
+      activos: '2500',
       descripcion:
         'Tendrá todas las funcionalidades, y personalizaciones deseadas.',
       popular: true,
@@ -62,7 +62,7 @@ export class UsersPreLoad implements OnApplicationBootstrap {
       name: 'MegaAssets',
       alt: 'Workflow 01',
       precio: '$300/anual',
-      activos: '10000 activos',
+      activos: '10000',
       descripcion: 'Todo lo mencionado.',
     },
     {
@@ -71,7 +71,7 @@ export class UsersPreLoad implements OnApplicationBootstrap {
       name: 'AssetsGod',
       alt: 'Workflow 02',
       precio: '$600/anual',
-      activos: '50000 activos',
+      activos: '50000',
       descripcion: 'Todo lo mencionado.',
     },
     {
@@ -99,8 +99,10 @@ export class UsersPreLoad implements OnApplicationBootstrap {
         });
 
         if (!existingUser) {
+          const hashedPassword = await bcrypt.hash(userData.password, 10);
           const user = this.userRepository.create(userData);
           user.isAdmin = true;
+          user.password = hashedPassword;
           await this.userRepository.save(user);
         } else {
           console.log(`El usuario con correo ${userData.email} ya existe`);
