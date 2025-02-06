@@ -2,7 +2,7 @@ import { TiposDePlanes } from "./tiposDePlanesSaaS";
 
 export default function Workflows() {
   return (
-    <section>
+    <section id="planes">
       <div className="max-w-6xl px-4 mx-auto sm:px-6">
         <div className="pb-12 md:pb-20">
           {/* Section header */}

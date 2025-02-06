@@ -5,7 +5,7 @@ import ModalVideo from "@/components/modal-video";
 export default function HeroHome() {
   const scrollToTestimonials = (e: React.MouseEvent) => {
     e.preventDefault();
-    const element = document.getElementById("Features");
+    const element = document.getElementById("planes");
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }

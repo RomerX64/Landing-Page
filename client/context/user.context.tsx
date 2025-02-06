@@ -61,6 +61,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   }, []);
 
   const signIn = async (signInData: SignInDTO): Promise<IUser> => {
+    console.log(signInData);
     const { data, error } = await handleAsync(
       api.post("/users/signIn", signInData)
     );
@@ -110,7 +111,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const mailIsValid = async (email: string): Promise<boolean> => {
     try {
-      const response = await api.get(`/email/${email}`);
+      const response = await api.get(`/users/email/${email}`);
 
       if (
         response.data ||

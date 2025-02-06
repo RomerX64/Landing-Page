@@ -1,11 +1,10 @@
 "use client";
-
 import React, {
-  createContext,
   useState,
   ReactNode,
   useContext,
   useEffect,
+  createContext,
 } from "react";
 import api from "@/app/api/Api";
 import { handleAsync } from "@/utils/error.helper";
@@ -20,6 +19,7 @@ interface SuscribeContextProps {
   suscribirse: (planId: number) => void;
   desuscribirse: () => void;
   selectPlan: (planId: number) => Promise<IPlan | null>;
+  changePlan: (direction: "next" | "prev") => void;
 }
 
 const defaultContext: SuscribeContextProps = {
@@ -29,6 +29,7 @@ const defaultContext: SuscribeContextProps = {
   desuscribirse: () => {},
   selectPlan: async () => null,
   viewPlan: null,
+  changePlan: () => {},
 };
 
 export const SuscribeContext =
@@ -109,7 +110,23 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
     }
 
     setViewPlan(foundPlan);
+    localStorage.setItem("viewPlan", JSON.stringify(foundPlan)); // Guardamos el plan seleccionado en localStorage
     return foundPlan;
+  };
+
+  const changePlan = (direction: "next" | "prev") => {
+    if (!viewPlan || planes.length === 0) return;
+
+    const currentIndex = planes.findIndex((plan) => plan.id === viewPlan.id);
+    if (currentIndex === -1) return;
+
+    let newIndex = direction === "next" ? currentIndex + 1 : currentIndex - 1;
+    if (newIndex < 0) newIndex = planes.length - 1;
+    if (newIndex >= planes.length) newIndex = 0;
+
+    const newPlan = planes[newIndex];
+    setViewPlan(newPlan);
+    localStorage.setItem("viewPlan", JSON.stringify(newPlan)); // Actualizamos el plan en localStorage
   };
 
   useEffect(() => {
@@ -122,11 +139,16 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
 
   useEffect(() => {
     if (planes.length > 0 && viewPlan === null) {
-      const popularPlan = planes.find((plan) => plan.popular === true);
-      if (popularPlan) {
-        setViewPlan(popularPlan);
+      const storedViewPlan = localStorage.getItem("viewPlan");
+      if (storedViewPlan) {
+        setViewPlan(JSON.parse(storedViewPlan)); // Recuperamos el plan desde localStorage
       } else {
-        setViewPlan(planes[0]);
+        const popularPlan = planes.find((plan) => plan.popular === true);
+        if (popularPlan) {
+          setViewPlan(popularPlan);
+        } else {
+          setViewPlan(planes[0]);
+        }
       }
     }
   }, [planes, viewPlan]);
@@ -138,6 +160,7 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
     desuscribirse,
     selectPlan,
     viewPlan,
+    changePlan,
   };
 
   return (

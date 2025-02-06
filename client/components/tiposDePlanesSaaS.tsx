@@ -13,6 +13,7 @@ interface Plan {
   id: number;
   imagen: StaticImageData;
   alt: string;
+  name: string;
   precio: string;
   activos: string;
   descripcion: string;
@@ -22,6 +23,7 @@ interface Plan {
 interface CardPlanProps {
   id: number;
   imagen: StaticImageData;
+  name: string;
   alt: string;
   precio: string;
   activos: string;
@@ -31,6 +33,7 @@ interface CardPlanProps {
 
 const CardPlan: React.FC<CardPlanProps> = ({
   id,
+  name,
   imagen,
   alt,
   precio,
@@ -49,6 +52,10 @@ const CardPlan: React.FC<CardPlanProps> = ({
     }
   };
 
+  // Comprobamos si el plan es uno de los seleccionados para agregar "Personalizable"
+  const isPersonalizable =
+    name === "MegaAssets" || name === "AssetsGod" || name === "Unlimit";
+
   return (
     <div
       className="relative w-full h-full p-px overflow-hidden transition-all duration-300 ease-in-out transform bg-gray-800 cursor-pointer group/card rounded-2xl hover:scale-105 hover:shadow-2xl"
@@ -57,14 +64,16 @@ const CardPlan: React.FC<CardPlanProps> = ({
       <div className="relative z-20 h-full overflow-hidden rounded-[inherit] bg-gray-950">
         {/* Indicador de popularidad */}
         {popular && (
-          <div className="absolute z-30 px-3 py-1 text-xs font-bold text-black bg-yellow-500 rounded-full shadow-md top-4 left-4">
+          <div className="absolute z-30 px-3 py-1 text-xs font-bold text-black bg-yellow-500 rounded-full shadow-md top-3 right-2">
             Más Vendido
           </div>
         )}
 
         {/* Flecha de navegación */}
         <div
-          className="absolute flex items-center justify-center w-8 h-8 text-gray-200 transition-opacity ease-in-out border rounded-full opacity-0 right-6 top-6 border-gray-700/50 bg-gray-800/65 group-hover/card:opacity-100"
+          className={`absolute flex items-center justify-center w-8 h-8 text-gray-200 transition-opacity ease-in-out border rounded-full opacity-0 right-6 ${
+            popular ? "top-12" : "top-6"
+          } border-gray-700/50 bg-gray-800/65 group-hover/card:opacity-100`}
           aria-hidden="true"
         >
           <svg
@@ -91,20 +100,32 @@ const CardPlan: React.FC<CardPlanProps> = ({
 
         {/* Contenido del plan */}
         <div className="p-6">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="btn-sm relative rounded-full px-2.5 py-0.5 text-xs font-bold text-white shadow-sm animate-gradient">
+          <div
+            className={`${
+              isPersonalizable ? "justify-between" : ""
+            } flex items-center gap-2 mb-3`}
+          >
+            <h2 className="absolute text-2xl font-bold text-transparent top-4 left-4 bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
+              {name}
+            </h2>
+            <span className="inline-block rounded-full bg-gradient-to-r from-indigo-400 to-pink-400 px-3 py-1 text-sm font-bold text-white shadow-sm animate-gradient bg-[length:200%_auto]">
               {precio}
             </span>
-            <span className="btn-sm relative rounded-full px-2.5 py-0.5 text-xs font-bold text-white shadow-sm animate-gradient">
+            <span className="inline-block rounded-full bg-gradient-to-r from-green-500 to-teal-400 px-3 py-1 text-sm font-bold text-white shadow-sm animate-gradient bg-[length:200%_auto]">
               {activos}
             </span>
+            {isPersonalizable && (
+              <span className="inline-block rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 px-2 py-1 text-sm font-bold text-white shadow-sm animate-gradient bg-[length:200%_auto]">
+                Personaliza
+              </span>
+            )}
           </div>
-          <p className="mb-4 text-gray-300">{descripcion}</p>
+
           <button
             type="button"
             className="w-full px-4 py-2 font-semibold text-white transition-all duration-300 ease-in-out rounded-lg shadow-md bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 animate-gradient"
           >
-            ¡Contrátalo ahora!
+            ¡Mira los Detalles!
           </button>
         </div>
       </div>
@@ -132,14 +153,8 @@ export const TiposDePlanes: React.FC = () => {
         <CardPlan
           key={plan.id}
           id={plan.id}
-          imagen={
-            imagenMap[
-              plan.imagen as
-                | "workflow-01.png"
-                | "workflow-02.png"
-                | "workflow-03.png"
-            ]
-          }
+          name={plan.name}
+          imagen={WorkflowImg01}
           alt={plan.alt}
           precio={plan.precio}
           activos={plan.activos}
