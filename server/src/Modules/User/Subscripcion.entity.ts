@@ -8,14 +8,13 @@ import {
 } from 'typeorm';
 import { User } from './User.entity';
 import { Plan } from './Planes.entity';
-
+import { v4 as uuid } from 'uuid';
 @Entity({
   name: 'subscriciones',
 })
 export class Subscripcion {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+  id: string = uuid();
   @ManyToOne(() => Plan, (plan) => plan.subscripciones)
   @JoinColumn()
   plan: Plan;
