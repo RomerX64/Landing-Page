@@ -1,9 +1,9 @@
 import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { singUp } from 'src/modules/User/Dto/singUp.dto';
-import { Plan } from 'src/Modules/User/Planes.entity';
-import { User } from 'src/Modules/User/User.entity';
+import { singUp } from '../User/Dto/singUp.dto';
+import { Plan } from '../User/Planes.entity';
+import { User } from '../User/User.entity';
 import { ErrorHandler } from 'src/Utils/Error.Handler';
 import * as bcrypt from 'bcrypt';
 

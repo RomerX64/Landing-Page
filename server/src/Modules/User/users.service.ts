@@ -10,7 +10,7 @@ import { IsNull, Not, Repository } from 'typeorm';
 import { singIn } from './Dto/singIn.dto';
 import * as bcrypt from 'bcrypt';
 import { singUp } from './Dto/singUp.dto';
-import { ErrorHandler } from 'src/Utils/Error.Handler';
+import { ErrorHandler } from '../../Utils/Error.Handler';
 import { JwtService } from '@nestjs/jwt';
 import { Subscripcion } from './Subscripcion.entity';
 import { Plan } from './Planes.entity';
