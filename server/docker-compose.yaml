@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: server/Dockerfile # Ruta al Dockerfile de tu backend
+    ports:
+      - '3000:3000' # Mapea el puerto 3000 del contenedor al puerto 3000 del host
+    environment:
+      - DATABASE_HOST=dpg-cuj5smdumphs7393tpog-a # Nombre del servicio de la base de datos
+      - DATABASE_PORT=5432
+      - DATABASE_USER=assetly_db_user # Reemplaza con tu usuario
+      - DATABASE_PASSWORD=bPa2qqy3Ld71UC75MoirQIPQBxwztM4U # Reemplaza con tu contraseña
+      - DATABASE_NAME=assetly_db # Nombre de la base de datos
+    depends_on:
+      - postgres # Asegura que PostgreSQL esté disponible antes de arrancar el backend
+
+  postgres:
+    image: postgres:13 # Usa la imagen oficial de PostgreSQL
+    environment:
+      - POSTGRES_USER=assetly_db_user # Usuario para la base de datos
+      - POSTGRES_PASSWORD=bPa2qqy3Ld71UC75MoirQIPQBxwztM4U # Contraseña para la base de datos
+      - POSTGRES_DB=assetly_db # Nombre de la base de datos
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Volumen persistente para los datos
+
+volumes:
+  postgres_data: # Define el volumen persistente para PostgreSQL
