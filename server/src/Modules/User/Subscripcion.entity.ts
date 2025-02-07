@@ -8,14 +8,15 @@ import {
 } from 'typeorm';
 import { User } from './User.entity';
 import { Plan } from './Planes.entity';
-import { v4 as uuid } from 'uuid';
+
 @Entity({
   name: 'subscriciones',
 })
 export class Subscripcion {
   @PrimaryGeneratedColumn('uuid')
-  id: string = uuid();
-  @ManyToOne(() => Plan, (plan) => plan.subscripciones)
+  id: string;
+
+  @ManyToOne(() => Plan, (Plan) => Plan.subscripciones)
   @JoinColumn()
   plan: Plan;
 
@@ -26,9 +27,9 @@ export class Subscripcion {
   fechaUltimaPaga: Date;
 
   @Column()
-  fechaVencimiento: Date;
+  fechaVenciento: Date;
 
-  @OneToOne(() => User, (user) => user.subscripcion)
+  @OneToOne(() => User, (User) => User.subscripcion)
   @JoinColumn()
   user: User;
 }

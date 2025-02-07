@@ -1,9 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Subscripcion } from './Subscripcion.entity';
 
-@Entity({
-  name: 'planes', 
-})
+@Entity()
 export class Plan {
   @PrimaryGeneratedColumn()
   id: number;
@@ -14,7 +12,7 @@ export class Plan {
   @Column()
   descripcion: string;
 
-  @Column('decimal', { precision: 10, scale: 2 })
+  @Column()
   precio: string;
 
   @Column()
@@ -30,5 +28,5 @@ export class Plan {
   popular?: boolean;
 
   @OneToMany(() => Subscripcion, (subscripcion) => subscripcion.plan)
-  subscripciones: Subscripcion[]; // Relación inversa con Subscripcion
+  subscripciones: Subscripcion[];
 }
