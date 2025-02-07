@@ -20,6 +20,7 @@ export class User {
   @OneToOne(() => Subscripcion, (subscripcion) => subscripcion.user, {
     cascade: true,
   })
+  @JoinColumn()
   subscripcion: Subscripcion;
 
   @Column()

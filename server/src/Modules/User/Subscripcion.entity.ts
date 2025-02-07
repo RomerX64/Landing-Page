@@ -16,7 +16,7 @@ export class Subscripcion {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => Plan, (Plan) => Plan.subscripciones)
+  @ManyToOne(() => Plan, (plan) => plan.subscripciones)
   @JoinColumn()
   plan: Plan;
 
@@ -27,9 +27,9 @@ export class Subscripcion {
   fechaUltimaPaga: Date;
 
   @Column()
-  fechaVenciento: Date;
+  fechaVencimiento: Date;
 
-  @OneToOne(() => User, (User) => User.subscripcion)
+  @OneToOne(() => User, (user) => user.subscripcion)
   @JoinColumn()
   user: User;
 }
