@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { singUp } from '../User/Dto/singUp.dto';
 import { Plan } from '../User/Planes.entity';
 import { User } from '../User/User.entity';
-import { ErrorHandler } from 'src/Utils/Error.Handler';
+import { ErrorHandler } from '../../Utils/Error.Handler';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
