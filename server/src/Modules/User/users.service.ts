@@ -14,6 +14,7 @@ import { ErrorHandler } from 'src/Utils/Error.Handler';
 import { JwtService } from '@nestjs/jwt';
 import { Subscripcion } from './Subscripcion.entity';
 import { Plan } from './Planes.entity';
+import { updateUserDto } from './Dto/updateUser.dto';
 
 @Injectable()
 export class UserService {
@@ -95,6 +96,26 @@ export class UserService {
       const token = this.jwtService.sign(userPayload);
 
       return { user: await this.userRepository.save(user), token: token };
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  async updateUser(
+    updateUser: updateUserDto,
+  ): Promise<{ user: User; token: string }> {
+    try {
+      if (updateUser.password)
+        updateUser.password = await bcrypt.hash(updateUser.password, 10);
+      const userPayload = {
+        sub: updateUser.id,
+        id: updateUser.id,
+        email: updateUser.email,
+        isAdmin: false,
+      };
+      const token = this.jwtService.sign(userPayload);
+      const user = await await this.userRepository.save(updateUser);
+      return { user: user, token: token };
     } catch (error) {
       throw ErrorHandler.handle(error);
     }

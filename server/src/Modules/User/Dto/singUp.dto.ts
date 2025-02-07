@@ -17,7 +17,7 @@ export class singUp {
   })
   email: string;
 
-  @IsEmail()
+  @IsString()
   @ApiProperty({
     description: 'El nombre de la empresa',
     example: 'Compañados Total',

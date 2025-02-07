@@ -18,6 +18,7 @@ import { AuthGuard } from 'src/guards/auth.guard';
 import { AdminGuard } from 'src/guards/admin.guard';
 import { IsEmail } from 'class-validator';
 import { Plan } from './Planes.entity';
+import { updateUserDto } from './Dto/updateUser.dto';
 
 @Controller('users')
 export class UserController {
@@ -183,6 +184,22 @@ export class UserController {
   async getPlanes(): Promise<Plan[]> {
     try {
       return await this.userService.getPlanes();
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  @Put('update')
+  @UseGuards(AuthGuard)
+  @ApiOperation({
+    summary: 'Cambiar datos de Usuario',
+    description: 'Cambiar datos de Usuario',
+  })
+  async updateUser(
+    @Body() updateUser: updateUserDto,
+  ): Promise<{ user: User; token: string }> {
+    try {
+      return await this.userService.updateUser(updateUser);
     } catch (error) {
       throw ErrorHandler.handle(error);
     }
