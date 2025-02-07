@@ -1,7 +1,10 @@
 // utils/api.ts
 import axios from "axios";
 
-const API_URL = "http://localhost:3000";
+const API_URL =
+  typeof window === "undefined" || process.env.NODE_ENV === "development"
+    ? "http://localhost:3000" // Para entorno de desarrollo
+    : "https://assetly-landing-page-backend.onrender.com"; // Para entorno de producción
 
 const api = axios.create({
   baseURL: API_URL,
