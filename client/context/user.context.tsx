@@ -3,7 +3,7 @@
 import React, { createContext, useEffect, useState, ReactNode } from "react";
 import { IUser } from "@/interfaces/User.interface";
 import api from "@/app/api/Api";
-import { SignInDTO, SignUpDTO } from "./DTO/sing.user.dto";
+import { SignInDTO, SignUpDTO, updateUserDTO } from "./DTO/sing.user.dto";
 import { handleAsync } from "@/utils/error.helper";
 
 interface UserContextProps {
@@ -14,6 +14,7 @@ interface UserContextProps {
   deleteUser: (data: SignInDTO) => Promise<IUser>;
   mailIsValid: (email: string) => Promise<boolean>;
   setUser: (user: IUser | null) => void;
+  updateUser: (updateUserData: updateUserDTO) => Promise<IUser>;
 }
 
 const defaultContext: UserContextProps = {
@@ -32,6 +33,9 @@ const defaultContext: UserContextProps = {
     throw new Error("Not implemented");
   },
   setUser: () => {},
+  updateUser: async () => {
+    throw new Error("Not implemented");
+  },
 };
 
 export const UserContext = createContext<UserContextProps>(defaultContext);
@@ -63,7 +67,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const signIn = async (signInData: SignInDTO): Promise<IUser> => {
     console.log(signInData);
     const { data, error } = await handleAsync(
-      api.post("/users/signIn", signInData)
+      api.post("/users/singIn", signInData)
     );
     if (error || !data || !data.data) {
       throw new Error("No se recibió respuesta de la API");
@@ -79,7 +83,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const signUp = async (signUpData: SignUpDTO): Promise<IUser> => {
     const { data, error } = await handleAsync(
-      api.post("/users/signUp", signUpData)
+      api.post("/users/singUp", signUpData)
     );
     if (error || !data || !data.data) {
       throw new Error("No se recibió respuesta de la API");
@@ -127,6 +131,30 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     }
   };
 
+  const updateUser = async (
+    updateUserData: Partial<updateUserDTO>
+  ): Promise<IUser> => {
+    if (!user?.id) throw new Error("El usuario no está autenticado.");
+
+    const { data, error } = await handleAsync(
+      api.post("/users/update", { ...updateUserData, id: user.id })
+    );
+
+    if (error || !data || !data.data) {
+      throw new Error("No se recibió respuesta de la API");
+    }
+
+    const { User: returnedUser, token: returnedToken } = data.data;
+
+    // Actualiza el estado global y almacenamiento local
+    setToken(returnedToken);
+    setUserState(returnedUser);
+    localStorage.setItem("token", returnedToken);
+    localStorage.setItem("user", JSON.stringify(returnedUser));
+
+    return returnedUser;
+  };
+
   const value = {
     token,
     user,
@@ -135,6 +163,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     signUp,
     deleteUser,
     mailIsValid,
+    updateUser,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

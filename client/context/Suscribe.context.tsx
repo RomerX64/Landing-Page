@@ -135,7 +135,7 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
       setSub(JSON.parse(storedSub));
     }
     getPlanes();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     if (planes.length > 0 && viewPlan === null) {
