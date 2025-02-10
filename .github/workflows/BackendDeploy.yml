@@ -3,7 +3,7 @@ name: Backend_Deploy
 on:
   push:
     branches:
-      - "prod:back" 
+      - "prod-back" 
 
 jobs:
   deploy:
