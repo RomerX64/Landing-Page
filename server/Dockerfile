@@ -1,24 +1,32 @@
-# Usa una imagen base oficial de Node.js
-FROM node:20
+# Usar una imagen base de Node.js
+FROM node:18 AS build
 
+# Establecer el directorio de trabajo en la carpeta client
+WORKDIR /app/client
 
-# Define el directorio de trabajo en la carpeta /app
-WORKDIR /app
+# Copiar los archivos package.json y package-lock.json (si existe) al contenedor
+COPY client/package*.json ./
 
-# Copia el package.json y package-lock.json en el contenedor
-COPY server/package*.json ./
-
-# Instala las dependencias
+# Instalar las dependencias del proyecto
 RUN npm install
 
-# Copia todo el código fuente
-COPY server/ ./
+# Copiar todo el contenido del proyecto al contenedor
+COPY client/ .
 
-# Compila el proyecto TypeScript (esto genera la carpeta dist/)
+# Construir la aplicación de Next.js
 RUN npm run build
 
-# Expone el puerto que usará la app
+# Usar una imagen base de Node.js para el contenedor final
+FROM node:18 AS production
+
+# Establecer el directorio de trabajo
+WORKDIR /app/client
+
+# Copiar solo los archivos necesarios desde la etapa de construcción
+COPY --from=build /app/client /app/client
+
+# Exponer el puerto donde se ejecutará Next.js
 EXPOSE 3000
 
-# Comando para iniciar la aplicación en modo producción
-CMD ["npm", "run", "start:prod"]
+# Comando para ejecutar la aplicación en producción
+CMD ["npm", "start"]
