@@ -3,7 +3,7 @@ name: Frontend_Deploy
 on:
   push:
     branches:
-      - "prod:front" 
+      - "prod-front" 
 
 jobs:
   deploy:
