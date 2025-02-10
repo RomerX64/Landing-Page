@@ -1,16 +1,17 @@
-# Usar una imagen base de Node.js
+# Usar la imagen base de Node.js
 FROM node:20 AS build
 
-# Establecer el directorio de trabajo en /app
+# Configuración del directorio de trabajo
 WORKDIR /app
 
-# Copiar los archivos package.json y package-lock.json al contenedor
+# Copiar los archivos de configuración del cliente (package.json y package-lock.json)
 COPY client/package*.json ./
+
 # Instalar las dependencias del proyecto
 RUN npm install
 
 # Copiar todo el código fuente de la carpeta client
-COPY . .
+COPY client/ ./
 
 # Construir la aplicación de Next.js
 RUN npm run build
@@ -18,14 +19,14 @@ RUN npm run build
 # Usar una imagen base de Node.js para el contenedor final
 FROM node:20 AS production
 
-# Establecer el directorio de trabajo
+# Configuración del directorio de trabajo para la ejecución
 WORKDIR /app
 
-# Copiar solo los archivos necesarios desde la etapa de construcción
-COPY --from=build /app /app
+# Copiar los archivos construidos y las dependencias desde la etapa de construcción
+COPY --from=build /app ./
 
-# Exponer el puerto donde se ejecutará Next.js
+# Exponer el puerto que Next.js usará
 EXPOSE 3000
 
-# Comando para ejecutar la aplicación en producción
+# Ejecutar el servidor de Next.js
 CMD ["npm", "start"]

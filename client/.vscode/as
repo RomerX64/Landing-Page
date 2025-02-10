@@ -1,0 +1,24 @@
+va asi
+assetylLandingPage/
+    ├──client/
+    │   ├──app/          
+    │    │   └── (default)/  
+    │    │          ├── page.tsx   
+    │    │          ├── layuout.tsx   
+    │    │          ├── profile/  
+    │    │          │       └── page.tsx   
+    │    │          └── subsriber/  
+    │    │                  └── page.tsx   
+    │    ├── components/
+    │    ├── context/
+    │    ├── context/
+    │    ├── public/
+    │    ├── utils/
+    │    ├── interfaces/
+    │    ├── node_modules/
+    │    ├── .next/
+    │    ├── .vscode/
+    │    ├── (auth)/
+    │    └── package.json
+    └──server/
+  
