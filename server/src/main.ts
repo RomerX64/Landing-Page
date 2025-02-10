@@ -32,7 +32,7 @@ async function bootstrap() {
   SwaggerModule.setup('docs', app, document);
   await app.listen(port);
   console.log(`App running on port ${port}`);
-  console.log(`Swagger disponible en: http://localhost:${port}/docs`);
+  console.log(`Swagger disponible en: /docs`);
 }
 
 bootstrap();

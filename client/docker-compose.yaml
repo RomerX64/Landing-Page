@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=https://assetly-landing-page-backend.onrender.com # URL pública del backend en Render
