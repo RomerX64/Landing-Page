@@ -1,9 +1,9 @@
-name: Backend_Deploy
+name: Frontend_Deploy
 
 on:
   push:
     branches:
-      - "prod-back" 
+      - "prod-front" 
 
 jobs:
   deploy:
@@ -31,5 +31,5 @@ jobs:
           file: ./server/Dockerfile           
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/assetly-landing_page-backend:latest 
-            ${{ secrets.DOCKERHUB_USERNAME }}/assetly-landing_page-backend:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/assetly-landing_page-frontend:latest 
+            ${{ secrets.DOCKERHUB_USERNAME }}/assetly-landing_page-frontend:${{ github.sha }}
