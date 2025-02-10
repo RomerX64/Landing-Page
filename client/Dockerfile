@@ -5,8 +5,7 @@ FROM node:20 AS build
 WORKDIR /app
 
 # Copiar los archivos package.json y package-lock.json al contenedor
-COPY package*.json ./
-
+COPY client/package*.json ./
 # Instalar las dependencias del proyecto
 RUN npm install
 
