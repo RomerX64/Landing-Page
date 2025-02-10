@@ -12,6 +12,7 @@ RUN npm install
 
 # Copia todo el código fuente
 COPY . ./ 
+COPY client/ ./
 
 # Compila el proyecto
 RUN npm run build

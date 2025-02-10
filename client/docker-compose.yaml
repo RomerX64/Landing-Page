@@ -4,8 +4,12 @@ services:
   frontend:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: client/Dockerfile # Asegúrate de que el Dockerfile esté en la carpeta client
     ports:
-      - "3001:3000"
-    environment:
-      - NEXT_PUBLIC_API_URL=https://assetly-landing-page-backend.onrender.com # URL pública del backend en Render
+      - "3000:3000"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
