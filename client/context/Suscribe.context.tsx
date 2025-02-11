@@ -50,9 +50,8 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
       api.get(`users/suscribe/${user?.id}/${planId}`)
     );
 
-    if (error || !data || !data.data) {
-      console.error("Error suscribiéndose:", error || "No data returned");
-      return;
+    if (error || !data) {
+      throw new Error(error.message || "Hubo un error al iniciar sesión.");
     }
 
     setSub(data.data);
@@ -64,9 +63,8 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
       api.get(`/users/desuscribe/${user?.id}`)
     );
 
-    if (error || !data || !data.data) {
-      console.error("Error al desuscribirse:", error || "No data returned");
-      return;
+    if (error || !data) {
+      throw new Error(error.message || "Hubo un error al iniciar sesión.");
     }
 
     setSub(null);
@@ -85,12 +83,8 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
 
     const { data, error } = await handleAsync(api.get(`/users/planes`));
 
-    if (error || !data || !data.data) {
-      console.error(
-        "Error al obtener los datos del plan:",
-        error || "No data returned"
-      );
-      return;
+    if (error || !data) {
+      throw new Error(error.message || "Hubo un error al iniciar sesión.");
     }
 
     const planesReturned: IPlan[] = data.data;

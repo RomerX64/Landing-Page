@@ -89,7 +89,7 @@ const PlanDetail: React.FC = () => {
         <div className="flex-grow p-4 mt-10 pt-7">
           <div className="flex items-center gap-4">
             <span className="inline-block px-6 py-2 text-lg font-bold text-white transition-all duration-300 rounded-full shadow-sm bg-gradient-to-r from-green-500 to-teal-400 animate-gradient">
-              {viewPlan.activos}
+              {viewPlan.activos} activos
             </span>
           </div>
 

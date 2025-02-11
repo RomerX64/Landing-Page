@@ -9,17 +9,6 @@ import { useContext } from "react";
 import { SuscribeContext } from "@/context/Suscribe.context";
 import { useRouter } from "next/navigation";
 
-interface Plan {
-  id: number;
-  imagen: StaticImageData;
-  alt: string;
-  name: string;
-  precio: string;
-  activos: string;
-  descripcion: string;
-  popular?: boolean;
-}
-
 interface CardPlanProps {
   id: number;
   imagen: StaticImageData;
@@ -46,13 +35,13 @@ const CardPlan: React.FC<CardPlanProps> = ({
 
   // Función para manejar el evento onClick
   const handleClick = async () => {
-    const selectedPlan = await selectPlan(id); // Seleccionar el plan
+    const selectedPlan = await selectPlan(id);
     if (selectedPlan) {
-      router.push("/suscribirse"); // Navegar a la página de suscripción
+      router.push("/suscribirse");
     }
   };
 
-  // Comprobamos si el plan es uno de los seleccionados para agregar "Personalizable"
+  // Verifica si el plan es personalizable
   const isPersonalizable =
     name === "MegaAssets" || name === "AssetsGod" || name === "Unlimit";
 
@@ -100,22 +89,25 @@ const CardPlan: React.FC<CardPlanProps> = ({
 
         {/* Contenido del plan */}
         <div className="p-6">
-          <div
-            className={`${
-              isPersonalizable ? "justify-between" : ""
-            } flex items-center gap-2 mb-3`}
-          >
+          {/* Título y etiquetas */}
+          <div className="flex flex-wrap items-center gap-2 mb-3">
             <h2 className="absolute text-2xl font-bold text-transparent top-4 left-4 bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
               {name}
             </h2>
-            <span className="inline-block rounded-full bg-gradient-to-r from-indigo-400 to-pink-400 px-3 py-1 text-sm font-bold text-white shadow-sm animate-gradient bg-[length:200%_auto]">
+
+            {/* Precio */}
+            <span className="inline-block min-w-[80px] rounded-full bg-gradient-to-r from-indigo-400 to-pink-400 px-3 py-1 text-sm font-bold text-white shadow-sm animate-gradient text-center">
               {precio}
             </span>
-            <span className="inline-block rounded-full bg-gradient-to-r from-green-500 to-teal-400 px-3 py-1 text-sm font-bold text-white shadow-sm animate-gradient bg-[length:200%_auto]">
+
+            {/* Activos */}
+            <span className="inline-block min-w-[100px] rounded-full bg-gradient-to-r from-green-500 to-teal-400 px-3 py-1 text-sm font-bold text-white shadow-sm animate-gradient text-center">
               {activos}
             </span>
+
+            {/* Personalizable */}
             {isPersonalizable && (
-              <span className="inline-block rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 px-2 py-1 text-sm font-bold text-white shadow-sm animate-gradient bg-[length:200%_auto]">
+              <span className="inline-block min-w-[90px] rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 px-2 py-1 text-sm font-bold text-white shadow-sm animate-gradient text-center">
                 Personaliza
               </span>
             )}
@@ -135,13 +127,9 @@ const CardPlan: React.FC<CardPlanProps> = ({
 
 export const TiposDePlanes: React.FC = () => {
   const { planes } = useContext(SuscribeContext);
-  // Definimos el tipo de las claves del objeto
-  const imagenMap: {
-    [key in
-      | "workflow-01.png"
-      | "workflow-02.png"
-      | "workflow-03.png"]: StaticImageData;
-  } = {
+
+  // Mapeo de imágenes
+  const imagenMap: Record<string, StaticImageData> = {
     "workflow-01.png": WorkflowImg01,
     "workflow-02.png": WorkflowImg02,
     "workflow-03.png": WorkflowImg03,
@@ -154,7 +142,7 @@ export const TiposDePlanes: React.FC = () => {
           key={plan.id}
           id={plan.id}
           name={plan.name}
-          imagen={WorkflowImg01}
+          imagen={imagenMap[plan.alt] || WorkflowImg01} // Usa la imagen mapeada
           alt={plan.alt}
           precio={plan.precio}
           activos={plan.activos}
@@ -166,7 +154,7 @@ export const TiposDePlanes: React.FC = () => {
   );
 };
 
-// Añadimos la animación de gradiente continua
+// Estilos globales para la animación de gradiente
 const style = `
   @keyframes gradientAnimation {
     0% { background-position: 0% 50%; }

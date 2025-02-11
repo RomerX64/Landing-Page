@@ -12,7 +12,7 @@ export default function SignUpLayout() {
     password: "",
     confirmPassword: "",
   });
-  const { signUp, mailIsValid } = useContext(UserContext);
+  const { signUp, mailIsValid, loginWithGoogle } = useContext(UserContext);
   const [phoneError, setPhoneError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [lengthError, setLengthError] = useState(false);
@@ -21,14 +21,11 @@ export default function SignUpLayout() {
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-
     if (name === "telefono") {
       let formattedPhone = value.replace(/\s+/g, "");
-
       if (!formattedPhone.startsWith("+54")) {
         formattedPhone = "+" + formattedPhone.replace(/^\+?/, "");
       }
-
       const phonePattern = /^\+54[1-9]\d{1,14}$/;
       setPhoneError(!phonePattern.test(formattedPhone));
       setNewUser({ ...newUser, [name]: formattedPhone });
@@ -41,12 +38,9 @@ export default function SignUpLayout() {
     const { name, value } = e.target;
     setNewUser((prev) => {
       const updatedUser = { ...prev, [name]: value };
-
       const pass = updatedUser.password;
       const confirmPass = updatedUser.confirmPassword;
-
       setLengthError(pass.length < 5);
-
       if (pass.length > 0 && confirmPass.length > 0) {
         let mismatchIndex = -1;
         for (let i = 0; i < Math.min(pass.length, confirmPass.length); i++) {
@@ -55,7 +49,6 @@ export default function SignUpLayout() {
             break;
           }
         }
-
         if (mismatchIndex === -1) {
           const trimmedPass = pass.trimEnd();
           const trimmedConfirmPass = confirmPass.trimEnd();
@@ -66,7 +59,6 @@ export default function SignUpLayout() {
       } else {
         setPasswordError(false);
       }
-
       return updatedUser;
     });
   };
@@ -74,9 +66,7 @@ export default function SignUpLayout() {
   const handleEmailChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setNewUser({ ...newUser, email: value });
-
     clearTimeout(debounceTimeout);
-
     debounceTimeout = setTimeout(async () => {
       const isValid = await mailIsValid(value);
       if (isValid) {
@@ -89,15 +79,29 @@ export default function SignUpLayout() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (phoneError || passwordError || lengthError || emailError) {
       return;
     }
-
     try {
       const response = await signUp(newUser);
+      // Por ejemplo, podrías mostrar un mensaje indicando que revise su email para confirmar
+      console.log("Registro exitoso. Revise su email para confirmar.");
     } catch (error) {
       console.error("Error en la solicitud:", error);
+    }
+  };
+
+  // Opcional: función para login con Google (puedes integrarla usando la librería de Google o un popup)
+  const handleGoogleLogin = async () => {
+    try {
+      // Aquí deberías obtener el googleToken mediante el flujo de autenticación de Google.
+      // Por simplicidad, se usa prompt para simularlo:
+      const googleToken = prompt("Ingrese el token de Google (simulación)");
+      if (!googleToken) return;
+      const user = await loginWithGoogle(googleToken);
+      console.log("Login con Google exitoso:", user);
+    } catch (error) {
+      console.error("Error en login con Google:", error);
     }
   };
 
@@ -110,14 +114,13 @@ export default function SignUpLayout() {
               Crea tu usuario
             </h1>
           </div>
-
           <form onSubmit={handleSubmit} className="mx-auto max-w-[400px]">
             <div className="space-y-5">
-              {/* Formulario de entrada para cada campo */}
+              {/* Campos del formulario */}
               <div>
                 <label
-                  className="block mb-1 text-sm font-medium text-indigo-200/65"
                   htmlFor="username"
+                  className="block mb-1 text-sm font-medium text-indigo-200/65"
                 >
                   Username <span className="text-red-500">*</span>
                 </label>
@@ -133,8 +136,8 @@ export default function SignUpLayout() {
               </div>
               <div>
                 <label
-                  className="block mb-1 text-sm font-medium text-indigo-200/65"
                   htmlFor="company"
+                  className="block mb-1 text-sm font-medium text-indigo-200/65"
                 >
                   Nombre de Compañía <span className="text-red-500">*</span>
                 </label>
@@ -150,8 +153,8 @@ export default function SignUpLayout() {
               </div>
               <div>
                 <label
-                  className="block mb-1 text-sm font-medium text-indigo-200/65"
                   htmlFor="email"
+                  className="block mb-1 text-sm font-medium text-indigo-200/65"
                 >
                   Work Email <span className="text-red-500">*</span>
                 </label>
@@ -171,8 +174,8 @@ export default function SignUpLayout() {
               </div>
               <div>
                 <label
-                  className="block mb-1 text-sm font-medium text-indigo-200/65"
                   htmlFor="telefono"
+                  className="block mb-1 text-sm font-medium text-indigo-200/65"
                 >
                   Número Telefónico <span className="text-red-500">*</span>
                 </label>
@@ -194,8 +197,8 @@ export default function SignUpLayout() {
               </div>
               <div>
                 <label
-                  className="block text-sm font-medium text-indigo-200/65"
                   htmlFor="password"
+                  className="block text-sm font-medium text-indigo-200/65"
                 >
                   Contraseña <span className="text-red-500">*</span>
                 </label>
@@ -204,22 +207,20 @@ export default function SignUpLayout() {
                   name="password"
                   type="password"
                   className="w-full form-input"
-                  placeholder="Contraseña (mayor o igual a 5 caracteres)"
+                  placeholder="Contraseña (mínimo 5 caracteres)"
                   required
                   onChange={handlePasswordChange}
                 />
                 {lengthError && (
-                  <label htmlFor="password">
-                    <span className="text-red-500">
-                      La contraseña debe tener al menos 5 caracteres
-                    </span>
-                  </label>
+                  <span className="text-xs text-red-500">
+                    La contraseña debe tener al menos 5 caracteres
+                  </span>
                 )}
               </div>
               <div>
                 <label
-                  className="block text-sm font-medium text-indigo-200/65"
                   htmlFor="confirmPassword"
+                  className="block text-sm font-medium text-indigo-200/65"
                 >
                   Confirmar contraseña <span className="text-red-500">*</span>
                 </label>
@@ -233,32 +234,30 @@ export default function SignUpLayout() {
                   onChange={handlePasswordChange}
                 />
                 {passwordError && !lengthError && (
-                  <label htmlFor="confirmPassword">
-                    <span className="text-red-500">
-                      Las contraseñas no son iguales
-                    </span>
-                  </label>
+                  <span className="text-xs text-red-500">
+                    Las contraseñas no son iguales
+                  </span>
                 )}
               </div>
             </div>
             <div className="mt-6 space-y-5">
               <button
                 type="submit"
-                className="btn w-full bg-gradient-to-t from-indigo-600 to-indigo-500 bg-[length:100%_100%] bg-[bottom] text-white shadow-[inset_0px_1px_0px_0px_theme(colors.white/.16)] hover:bg-[length:100%_150%]"
+                className="btn w-full bg-gradient-to-t from-indigo-600 to-indigo-500 text-white hover:bg-[length:100%_150%]"
               >
                 Registrarse
               </button>
-              <div className="flex items-center gap-3 text-sm italic text-center text-gray-600 before:h-px before:flex-1 before:bg-gradient-to-r before:from-transparent before:via-gray-400/25 after:h-px after:flex-1 after:bg-gradient-to-r after:from-transparent after:via-gray-400/25">
-                o
-              </div>
-              <button className="btn relative w-full bg-gradient-to-b from-gray-800 to-gray-800/60 bg-[length:100%_100%] bg-[bottom] text-gray-300">
+              <button
+                type="button"
+                onClick={handleGoogleLogin}
+                className="w-full text-gray-300 btn bg-gradient-to-b from-gray-800 to-gray-800/60"
+              >
                 Logearse con Google
               </button>
             </div>
           </form>
-
           <div className="mt-6 text-sm text-center text-indigo-200/65">
-            Ya posee una cuenta?{" "}
+            ¿Ya posee una cuenta?{" "}
             <Link className="font-medium text-indigo-500" href="/signin">
               Logearse
             </Link>

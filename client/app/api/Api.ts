@@ -1,10 +1,9 @@
 // utils/api.ts
 import axios from "axios";
 
-const API_URL =
-  typeof window === "undefined" || process.env.NODE_ENV === "development"
-    ? "https://assetly-landing-page-backend.onrender.com" // Para entorno de desarrollo
-    : "https://assetly-landing-page-backend.onrender.com"; // Para entorno de producción
+const prod = false;
+const urlWeb = "https://assetly-landing-page-backend.onrender.com/";
+const API_URL = prod ? urlWeb : "http://localhost:3000";
 
 const api = axios.create({
   baseURL: API_URL,
@@ -24,6 +23,14 @@ api.interceptors.request.use(
     return config;
   },
   (error) => Promise.reject(error)
+);
+
+api.interceptors.response.use(
+  (response) => response, // Devuelve la respuesta normalmente si es exitosa
+  (error) => {
+    // Asegura que los errores sigan siendo tratados como errores
+    return Promise.reject(error);
+  }
 );
 
 export default api;

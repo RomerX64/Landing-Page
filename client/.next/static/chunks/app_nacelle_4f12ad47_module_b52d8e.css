@@ -1,0 +1,51 @@
+/* [project]/app/nacelle_4f12ad47.module.css [app-client] (css) */
+@font-face {
+  font-family: nacelle;
+  src: url("../media/nacelle_regular-s.p.802336a3.woff2") format("woff2");
+  font-display: swap;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: nacelle;
+  src: url("../media/nacelle_italic-s.p.6e3faeac.woff2") format("woff2");
+  font-display: swap;
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: nacelle;
+  src: url("../media/nacelle_semibold-s.p.44b89e5b.woff2") format("woff2");
+  font-display: swap;
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: nacelle;
+  src: url("../media/nacelle_semibolditalic-s.p.7e949854.woff2") format("woff2");
+  font-display: swap;
+  font-weight: 600;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: nacelle Fallback;
+  src: local(Arial);
+  ascent-override: 95.72%;
+  descent-override: 24.47%;
+  line-gap-override: 0.0%;
+  size-adjust: 101.97%;
+}
+
+.nacelle_4f12ad47-module__Q85gtW__className {
+  font-family: nacelle, nacelle Fallback;
+}
+
+.nacelle_4f12ad47-module__Q85gtW__variable {
+  --font-nacelle: "nacelle", "nacelle Fallback";
+}
+
+/*# sourceMappingURL=app_nacelle_4f12ad47_module_b52d8e.css.map*/
