@@ -27,7 +27,6 @@ FROM node:20 AS production
 # Configuración del directorio de trabajo para la ejecución
 WORKDIR /app
 
-# Copiar los archivos construidos y las dependencias desde la etapa de construcción
 COPY --from=build /app /app
 
 # Copiar las dependencias de producción
@@ -37,4 +36,4 @@ COPY --from=build /app/node_modules /app/node_modules
 EXPOSE 3000
 
 # Ejecutar el servidor de Next.js
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]
