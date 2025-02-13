@@ -14,7 +14,7 @@ interface CardPlanProps {
   imagen: StaticImageData;
   name: string;
   alt: string;
-  precio: string;
+  precio: number;
   activos: string;
   descripcion: string;
   popular?: boolean;
@@ -97,12 +97,17 @@ const CardPlan: React.FC<CardPlanProps> = ({
 
             {/* Precio */}
             <span className="inline-block min-w-[80px] rounded-full bg-gradient-to-r from-indigo-400 to-pink-400 px-3 py-1 text-sm font-bold text-white shadow-sm animate-gradient text-center">
-              {precio}
+              {precio > 0 ? `${precio}/m` : "Free"}
             </span>
 
             {/* Activos */}
             <span className="inline-block min-w-[100px] rounded-full bg-gradient-to-r from-green-500 to-teal-400 px-3 py-1 text-sm font-bold text-white shadow-sm animate-gradient text-center">
               {activos}
+              {activos !== "Sin límites" && (
+                <span className="ml-1">
+                  /act
+                </span>
+              )}
             </span>
 
             {/* Personalizable */}

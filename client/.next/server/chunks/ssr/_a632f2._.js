@@ -24,11 +24,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f28$default$292f$suscri
 ;
 ;
 const metadata = {
-<<<<<<< HEAD
     title: "Suscribirse - Assetly",
-=======
-    title: "Datos Del Plan - Assetly",
->>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
     description: "Page description"
 };
 function metodoPago() {

@@ -3,7 +3,7 @@ export interface IPlan {
   name: string;
   imagen: string;
   alt: string;
-  precio: string;
+  precio: number;
   activos: string;
   descripcion: string;
   popular?: boolean;

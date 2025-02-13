@@ -4,11 +4,7 @@
   "sections": [
     {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":""}},
     {"offset": {"line": 11, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}},
-<<<<<<< HEAD
     {"offset": {"line": 17, "column": 0}, "map": {"version":3,"sources":["file://C%3A/Users/tomir/OneDrive/Desktop/AssetlyLandingPage/client/app/%28default%29/suscribirse/page.tsx"],"sourcesContent":["import PaymentForm from \"./layout\";\r\n\r\nexport const metadata = {\r\n  title: \"Suscribirse - Assetly\",\r\n  description: \"Page description\",\r\n};\r\n\r\nexport default function metodoPago() {\r\n  return <PaymentForm />;\r\n}\r\n"],"names":[],"mappings":";;;;;AAAA;;;AAEO,MAAM,WAAW;IACtB,OAAO;IACP,aAAa;AACf;AAEe,SAAS;IACtB,qBAAO,8OAAC,4IAAA,CAAA,UAAW;;;;;AACrB"}},
-=======
-    {"offset": {"line": 17, "column": 0}, "map": {"version":3,"sources":["file://C%3A/Users/tomir/OneDrive/Desktop/AssetlyLandingPage/client/app/%28default%29/suscribirse/page.tsx"],"sourcesContent":["import PlanDetail from \"./layout\";\r\n\r\nexport const metadata = {\r\n  title: \"Datos Del Plan - Assetly\",\r\n  description: \"Page description\",\r\n};\r\n\r\nexport default function metodoPago() {\r\n  return <PlanDetail />;\r\n}\r\n"],"names":[],"mappings":";;;;;AAAA;;;AAEO,MAAM,WAAW;IACtB,OAAO;IACP,aAAa;AACf;AAEe,SAAS;IACtB,qBAAO,8OAAC,4IAAA,CAAA,UAAU;;;;;AACpB"}},
->>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
     {"offset": {"line": 36, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}},
     {"offset": {"line": 47, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":""}},
     {"offset": {"line": 47, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}},

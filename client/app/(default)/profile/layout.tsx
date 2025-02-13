@@ -4,6 +4,7 @@ import { UserContext } from "@/context/user.context";
 import { UserPen, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import SuscriberProfile from "./suscriberProfile";
 
 const UserProfile: React.FC = () => {
   const { user, updateUser, signOut } = useContext(UserContext);
@@ -18,9 +19,15 @@ const UserProfile: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
+    let timeout: NodeJS.Timeout;
+
     if (!user) {
-      router?.push("/signin");
+      // Si no hay usuario, esperar 1 segundo antes de redirigir
+      timeout = setTimeout(() => {
+        router?.push("/signin");
+      }, 1000);
     } else {
+      // Si hay usuario, actualizar los datos del formulario
       setFormData({
         username: user.username || "",
         email: user.email || "",
@@ -29,6 +36,10 @@ const UserProfile: React.FC = () => {
         password: "",
       });
     }
+
+    return () => {
+      clearTimeout(timeout);
+    };
   }, [user, router]);
 
   if (!user) return null;
@@ -54,7 +65,6 @@ const UserProfile: React.FC = () => {
   return (
     <section className="px-2 py-3 mx-auto max-w-7xl">
       <div className="relative w-[75vw] mx-auto overflow-hidden bg-gray-800 shadow-2xl sm:px-6 rounded-2xl flex flex-col">
-        {/* Cabecera con icono, nombre, id y empresa */}
         <div className="relative flex flex-wrap items-center justify-between gap-3 px-4 py-6 md:flex-row">
           <div className="flex items-center gap-3">
             <Link
@@ -62,7 +72,7 @@ const UserProfile: React.FC = () => {
               onClick={handleSignOut}
               className="transition-transform transform hover:scale-110"
             >
-              <LogOut size={48} className="text-indigo-200/65" />
+              <LogOut size={48} className="text-red-400" />
             </Link>
             <div className="flex flex-col">
               <h2 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
@@ -187,6 +197,7 @@ const UserProfile: React.FC = () => {
           )}
         </div>
       </div>
+      <SuscriberProfile />
     </section>
   );
 };
