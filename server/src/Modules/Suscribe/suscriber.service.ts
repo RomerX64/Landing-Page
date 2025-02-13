@@ -2,12 +2,12 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MercadoPagoConfig, PreApproval } from 'mercadopago'; // Importación correcta
-import {
-  CreateSubscriptionDto,
-  CancelSubscriptionDto,
-} from './dto/subscription.dto';
 import { Subscripcion, SubscriptionStatus } from '../User/Subscripcion.entity';
 import { Plan } from '../User/Planes.entity';
+import {
+  CancelSubscriptionDto,
+  CreateSubscriptionDto,
+} from './dto/subscription.dto';
 
 // Configurar Mercado Pago correctamente
 const client = new MercadoPagoConfig({
