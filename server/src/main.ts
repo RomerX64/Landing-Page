@@ -19,7 +19,7 @@ async function bootstrap() {
   const port = await getAvailablePort(parseInt(process.env.PORT ?? '3000'));
   const app = await NestFactory.create(AppModule);
 
-  app.enableCors();
+  app.enableCors(); 
 
   const config = new DocumentBuilder()
     .setTitle('API Assetly') // Nombre de la API

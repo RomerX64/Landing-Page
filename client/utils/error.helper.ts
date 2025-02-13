@@ -1,14 +1,16 @@
-export interface AsyncResult<T> {
-  data?: T;
-  error?: any;
-}
+import { AsyncResult } from "@/interfaces/AsyncResul.interface";
 
-export const handleAsync = async (promise: Promise<any>) => {
+export const handleAsync = async <T>(
+  promise: Promise<T>
+): Promise<AsyncResult<T>> => {
   try {
-    const data = await promise;
-    return { data, error: null };
-  } catch (error) {
-    console.error(error);
-    return { data: null, error };
+    const response = await promise;
+    return { data: response };
+  } catch (error: any) {
+    console.error("Error en handleAsync:", error);
+
+    return {
+      error: error.response ? error.response.data : { message: error.message },
+    };
   }
 };

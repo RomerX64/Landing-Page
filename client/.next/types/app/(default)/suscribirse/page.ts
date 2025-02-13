@@ -1,8 +1,8 @@
 // File: C:\Users\tomir\OneDrive\Desktop\AssetlyLandingPage\client\app\(default)\suscribirse\page.tsx
-import * as entry from '../../../../../app/(default)/suscribirse/page.jsx'
+import * as entry from '../../../../../app/(default)/plan/page.jsx'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
-type TEntry = typeof import('../../../../../app/(default)/suscribirse/page.jsx')
+type TEntry = typeof import('../../../../../app/(default)/plan/page.jsx')
 
 type SegmentParams<T extends Object = any> = T extends Record<string, any>
   ? { [K in keyof T]: T[K] extends string ? string | string[] | undefined : never }

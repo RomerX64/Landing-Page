@@ -16,7 +16,11 @@ interface SuscribeContextProps {
   sub: ISubscripcion | null;
   planes: IPlan[];
   viewPlan: IPlan | null;
-  suscribirse: (planId: number) => void;
+  /**
+   * Función para suscribirse.
+   * Ahora requiere el `planId` y el `paymentMethodToken` obtenido desde el formulario de pago.
+   */
+  suscribirse: (planId: number, paymentMethodToken: string) => void;
   desuscribirse: () => void;
   selectPlan: (planId: number) => Promise<IPlan | null>;
   changePlan: (direction: "next" | "prev") => void;
@@ -45,27 +49,41 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
   const [planes, setPlanes] = useState<IPlan[]>([]);
   const [viewPlan, setViewPlan] = useState<IPlan | null>(null);
 
-  const suscribirse = async (planId: number) => {
+  const suscribirse = async (planId: number, paymentMethodToken: string) => {
     const { data, error } = await handleAsync(
-      api.get(`users/suscribe/${user?.id}/${planId}`)
+      api.post(`/subscriptions`, {
+        planId,
+        userEmail: user?.email,
+        paymentMethodToken,
+      })
     );
 
-    if (error || !data || !data.data) {
-      console.error("Error suscribiéndose:", error || "No data returned");
+    if (error || !data || !data) {
+      console.error("Error suscribiéndose:", error || "No se retornaron datos");
       return;
     }
 
-    setSub(data.data);
-    localStorage.setItem("subscripcion", JSON.stringify(data.data));
+    setSub(data.data.subscription);
+    localStorage.setItem(
+      "subscripcion",
+      JSON.stringify(data.data.subscription)
+    );
   };
 
   const desuscribirse = async () => {
+    if (!sub) return;
     const { data, error } = await handleAsync(
-      api.get(`/users/desuscribe/${user?.id}`)
+      api.post(`/subscriptions/cancel`, {
+        subscriptionId: sub.mercadopagoSubscriptionId,
+        cancellationReason: "Cancelación solicitada por el usuario",
+      })
     );
 
-    if (error || !data || !data.data) {
-      console.error("Error al desuscribirse:", error || "No data returned");
+    if (error || !data || !data.data.subscription) {
+      console.error(
+        "Error al desuscribirse:",
+        error || "No se retornaron datos"
+      );
       return;
     }
 
@@ -79,7 +97,7 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
     if (storedPlanes) {
       const parsed = JSON.parse(storedPlanes);
       setPlanes(parsed);
-      console.log("Planes Cargados");
+      console.log("Planes cargados desde LocalStorage");
       return;
     }
 
@@ -88,7 +106,7 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
     if (error || !data || !data.data) {
       console.error(
         "Error al obtener los datos del plan:",
-        error || "No data returned"
+        error || "No se retornaron datos"
       );
       return;
     }
@@ -110,7 +128,7 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
     }
 
     setViewPlan(foundPlan);
-    localStorage.setItem("viewPlan", JSON.stringify(foundPlan)); // Guardamos el plan seleccionado en localStorage
+    localStorage.setItem("viewPlan", JSON.stringify(foundPlan));
     return foundPlan;
   };
 
@@ -126,7 +144,7 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
 
     const newPlan = planes[newIndex];
     setViewPlan(newPlan);
-    localStorage.setItem("viewPlan", JSON.stringify(newPlan)); // Actualizamos el plan en localStorage
+    localStorage.setItem("viewPlan", JSON.stringify(newPlan));
   };
 
   useEffect(() => {
@@ -141,7 +159,7 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
     if (planes.length > 0 && viewPlan === null) {
       const storedViewPlan = localStorage.getItem("viewPlan");
       if (storedViewPlan) {
-        setViewPlan(JSON.parse(storedViewPlan)); // Recuperamos el plan desde localStorage
+        setViewPlan(JSON.parse(storedViewPlan));
       } else {
         const popularPlan = planes.find((plan) => plan.popular === true);
         if (popularPlan) {

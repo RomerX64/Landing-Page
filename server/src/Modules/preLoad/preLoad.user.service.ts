@@ -6,6 +6,17 @@ import { Plan } from '../User/Planes.entity';
 import { User } from '../User/User.entity';
 import { ErrorHandler } from '../../Utils/Error.Handler';
 import * as bcrypt from 'bcrypt';
+import { BillingCycle } from '../User/Planes.entity'; // Asegúrate de importar el enum si lo necesitas
+interface PreLoadPlan {
+  imagen?: string;
+  name: string;
+  alt?: string;
+  // El precio puede venir como number o string
+  precio: number | string;
+  activos: string;
+  descripcion: string;
+  popular?: boolean;
+}
 
 @Injectable()
 export class UsersPreLoad implements OnApplicationBootstrap {
@@ -24,62 +35,57 @@ export class UsersPreLoad implements OnApplicationBootstrap {
     },
   ];
 
-  planes: Partial<Plan>[] = [
+  // Se elimina el campo "id" ya que es autogenerado
+  planes: PreLoadPlan[] = [
     {
-      id: 1,
       imagen: 'WorkflowImg01',
       name: 'Free Pass',
       alt: 'Workflow 01',
-      precio: 'Free',
+      precio: 0,
       activos: '300',
       descripcion:
         'Podrá tener todas las funcionalidades del servicio, a excepción de las personalizaciones.',
     },
     {
-      id: 2,
       imagen: 'WorkflowImg02',
       name: 'AssetsOK',
-      alt: 'Workflow 02',
-      precio: '$80/anual',
+      alt: 'WorkflowImg02',
+      precio: 80,
       activos: '500',
       descripcion:
         'En este plan podrá tener todas las funcionalidades, además de personalizaciones en Reportes.',
     },
     {
-      id: 3,
       imagen: 'WorkflowImg03',
       name: 'UltraAssets',
-      alt: 'Workflow 03',
-      precio: '$200/anual',
+      alt: 'WorkflowImg03',
+      precio: 200,
       activos: '2500',
       descripcion:
         'Tendrá todas las funcionalidades, y personalizaciones deseadas.',
       popular: true,
     },
     {
-      id: 4,
       imagen: 'WorkflowImg01',
       name: 'MegaAssets',
-      alt: 'Workflow 01',
-      precio: '$300/anual',
+      alt: 'WorkflowImg01',
+      precio: 300,
       activos: '10000',
       descripcion: 'Todo lo mencionado.',
     },
     {
-      id: 5,
       imagen: 'WorkflowImg02',
       name: 'AssetsGod',
-      alt: 'Workflow 02',
-      precio: '$600/anual',
+      alt: 'Workflow Img02',
+      precio: 600,
       activos: '50000',
       descripcion: 'Todo lo mencionado.',
     },
     {
-      id: 6,
       imagen: 'WorkflowImg03',
       name: 'Unlimit',
-      alt: 'Workflow 03',
-      precio: '$15000/year',
+      alt: 'Workflow Img03',
+      precio: 15000,
       activos: 'Sin límites',
       descripcion: 'Todo lo mencionado.',
     },
@@ -118,14 +124,40 @@ export class UsersPreLoad implements OnApplicationBootstrap {
     try {
       for (const planData of this.planes) {
         const existingPlan = await this.planRepository.findOne({
-          where: { id: planData.id },
+          where: { name: planData.name },
         });
 
         if (!existingPlan) {
-          const plan = this.planRepository.create(planData);
+          let processedPrecio: number;
+          // Si viene como string, lo procesamos; si ya es number, lo usamos directamente.
+          if (typeof planData.precio === 'string') {
+            if (planData.precio.toLowerCase() === 'free') {
+              processedPrecio = 0;
+            } else {
+              const numericString = planData.precio.replace(/[^0-9.]/g, '');
+              processedPrecio = parseFloat(numericString);
+            }
+          } else {
+            processedPrecio = planData.precio;
+          }
+
+          // Convertimos el precio a string con dos decimales
+          const plan = this.planRepository.create({
+            name: planData.name,
+            descripcion: planData.descripcion,
+            imagen: planData.imagen,
+            alt: planData.alt,
+            precio: Number(processedPrecio.toFixed(2)),
+            activos: planData.activos,
+            popular: planData.popular || false,
+            mercadopagoPlanId: `mp_${planData.name.toLowerCase().replace(/\s+/g, '_')}`,
+            billingCycle: BillingCycle.MONTHLY,
+            activo: true,
+          });
+
           await this.planRepository.save(plan);
         } else {
-          console.log(`El plan con ID ${planData.id} ya existe`);
+          console.log(`El plan con nombre ${planData.name} ya existe`);
         }
       }
       console.log('Planes cargados con éxito');

@@ -48,7 +48,7 @@ const CardPlan: React.FC<CardPlanProps> = ({
   const handleClick = async () => {
     const selectedPlan = await selectPlan(id); // Seleccionar el plan
     if (selectedPlan) {
-      router.push("/suscribirse"); // Navegar a la página de suscripción
+      router.push("/plan"); // Navegar a la página de suscripción
     }
   };
 

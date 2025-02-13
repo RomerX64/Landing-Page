@@ -1,10 +1,10 @@
-import PlanDetail from "./layout";
+import PaymentForm from "./layout";
 
 export const metadata = {
-  title: "Datos Del Plan - Assetly",
+  title: "Suscribirse - Assetly",
   description: "Page description",
 };
 
 export default function metodoPago() {
-  return <PlanDetail />;
+  return <PaymentForm />;
 }

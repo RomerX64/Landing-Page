@@ -1,5 +1,11 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Subscripcion } from './Subscripcion.entity';
+import { IsEnum, IsString } from 'class-validator';
+
+export enum BillingCycle {
+  MONTHLY = 'monthly',
+  YEARLY = 'yearly',
+}
 
 @Entity()
 export class Plan {
@@ -13,10 +19,21 @@ export class Plan {
   descripcion: string;
 
   @Column()
-  precio: string;
-
-  @Column()
   activos: string;
+
+  @Column({
+    type: 'decimal',
+    precision: 10,
+    scale: 2,
+    transformer: {
+      to: (value: number) => value, // Al guardar, se utiliza el número
+      from: (value: string) => parseFloat(value), // Al leer, se transforma a número
+    },
+  })
+  precio: number;
+
+  @Column({ default: true })
+  activo: boolean;
 
   @Column({ nullable: true })
   imagen?: string;
@@ -25,8 +42,24 @@ export class Plan {
   alt?: string;
 
   @Column({ default: false })
-  popular?: boolean;
+  popular: boolean;
+
+  @Column({ unique: true })
+  mercadopagoPlanId: string;
+
+  @Column({
+    type: 'enum',
+    enum: BillingCycle,
+    default: BillingCycle.MONTHLY,
+  })
+  billingCycle: BillingCycle;
 
   @OneToMany(() => Subscripcion, (subscripcion) => subscripcion.plan)
   subscripciones: Subscripcion[];
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  fechaCreacion: Date;
+
+  @Column({ type: 'timestamp', nullable: true })
+  fechaActualizacion: Date;
 }
