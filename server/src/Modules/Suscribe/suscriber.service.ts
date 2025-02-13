@@ -4,10 +4,8 @@ import { Repository } from 'typeorm';
 import { MercadoPagoConfig, PreApproval } from 'mercadopago'; // Importación correcta
 import { Subscripcion, SubscriptionStatus } from '../User/Subscripcion.entity';
 import { Plan } from '../User/Planes.entity';
-import {
-  CancelSubscriptionDto,
-  CreateSubscriptionDto,
-} from './dto/subscription.dto';
+import { CreateSubscriptionDto } from './DTO/CreateSubscription.dto';
+import { CancelSubscriptionDto } from './DTO/CancelSubscription.dto';
 
 // Configurar Mercado Pago correctamente
 const client = new MercadoPagoConfig({

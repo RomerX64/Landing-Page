@@ -5,9 +5,3 @@ export class CreateSubscriptionDto {
 
   paymentMethodToken: string;
 }
-
-export class CancelSubscriptionDto {
-  subscriptionId: string;
-
-  cancellationReason?: string;
-}
