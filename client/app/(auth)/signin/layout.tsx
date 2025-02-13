@@ -10,13 +10,10 @@ export default function SignInLayout() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
-<<<<<<< HEAD
 
   if (user) {
     if (user) router.push("/");
   }
-=======
->>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -64,69 +64,6 @@ export class UserController {
     }
   }
 
-  @Get('/confirm')
-  @ApiOperation({
-    summary: 'Confirmar email',
-    description: 'Confirma el email del usuario a partir del token recibido',
-  })
-  async confirmEmail(
-    @Query('token') token: string,
-  ): Promise<{ message: string }> {
-    try {
-      return await this.userService.confirmEmail(token);
-    } catch (error) {
-      throw ErrorHandler.handle(error);
-    }
-  }
-
-  @Post('/request-reset-password')
-  @ApiOperation({
-    summary: 'Solicitar reinicio de contraseña',
-    description:
-      'Envía un enlace al email del usuario para resetear la contraseña (si existe)',
-  })
-  async requestResetPassword(
-    @Body('email') email: string,
-  ): Promise<{ message: string }> {
-    try {
-      return await this.userService.requestResetPassword(email);
-    } catch (error) {
-      throw ErrorHandler.handle(error);
-    }
-  }
-
-  @Post('/reset-password')
-  @ApiOperation({
-    summary: 'Resetear contraseña',
-    description:
-      'Resetea la contraseña del usuario a partir del token enviado y la nueva contraseña',
-  })
-  async resetPassword(
-    @Body() body: { token: string; newPassword: string },
-  ): Promise<{ message: string }> {
-    try {
-      const { token, newPassword } = body;
-      return await this.userService.resetPassword(token, newPassword);
-    } catch (error) {
-      throw ErrorHandler.handle(error);
-    }
-  }
-
-  @Post('/login/google')
-  @ApiOperation({
-    summary: 'Login con Google',
-    description: 'Autentica al usuario usando el token de Google',
-  })
-  async loginWithGoogle(
-    @Body('googleToken') googleToken: string,
-  ): Promise<{ user: User; token: string }> {
-    try {
-      return await this.userService.loginWithGoogle(googleToken);
-    } catch (error) {
-      throw ErrorHandler.handle(error);
-    }
-  }
-
   @ApiBearerAuth()
   @Get('/users')
   @UseGuards(AuthGuard, AdminGuard)

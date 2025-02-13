@@ -13,12 +13,8 @@ export default function SignUpLayout() {
     password: "",
     confirmPassword: "",
   });
-<<<<<<< HEAD
   const { signUp, mailIsValid, loginWithGoogle, user } =
     useContext(UserContext);
-=======
-  const { signUp, mailIsValid, loginWithGoogle } = useContext(UserContext);
->>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
   const [phoneError, setPhoneError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [lengthError, setLengthError] = useState(false);
