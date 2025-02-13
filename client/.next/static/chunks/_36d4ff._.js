@@ -483,7 +483,11 @@ const UserProfile = ()=>{
         columnNumber: 5
     }, this);
 };
+<<<<<<< HEAD
 _s(UserProfile, "A7PqqUzRvVqa/iZs9eCgNueZSR0=", false, function() {
+=======
+_s(UserProfile, "waEwIvCTLHA+MJ/G+n6JJdcGbRo=", false, function() {
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"]
     ];

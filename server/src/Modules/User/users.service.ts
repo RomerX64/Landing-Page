@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './User.entity';
-import { IsNull, Not, Repository } from 'typeorm';
+import { Repository, IsNull, Not } from 'typeorm';
 import { singIn } from './Dto/singIn.dto';
 import * as bcrypt from 'bcrypt';
 import { singUp } from './Dto/singUp.dto';
@@ -15,16 +15,22 @@ import { JwtService } from '@nestjs/jwt';
 import { Subscripcion } from './Subscripcion.entity';
 import { Plan } from './Planes.entity';
 import { updateUserDto } from './Dto/updateUser.dto';
+import * as nodemailer from 'nodemailer';
+import { LoginTicket, OAuth2Client } from 'google-auth-library';
 
 @Injectable()
 export class UserService {
+  private googleClient: OAuth2Client;
+
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
     @InjectRepository(Plan) private planRepository: Repository<Plan>,
     @InjectRepository(Subscripcion)
     private subsRepository: Repository<Subscripcion>,
     private readonly jwtService: JwtService,
-  ) {}
+  ) {
+    this.googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+  }
 
   async getUserById(userId: string): Promise<User> {
     try {
@@ -45,10 +51,10 @@ export class UserService {
         where: { email: singIn.email },
       });
       if (!user)
-        throw new HttpException('Credencial invalida', HttpStatus.BAD_REQUEST);
+        throw new HttpException('Credencial inválida', HttpStatus.BAD_REQUEST);
       const isValid = await bcrypt.compare(singIn.password, user.password);
       if (!isValid)
-        throw new HttpException('Credencial invalida', HttpStatus.BAD_REQUEST);
+        throw new HttpException('Credencial inválida', HttpStatus.BAD_REQUEST);
       const userPayload = {
         sub: user.id,
         id: user.id,
@@ -79,23 +85,29 @@ export class UserService {
       const user: User = this.userRepository.create({
         ...signUp,
         password: hashedPassword,
+        // Suponemos que el usuario recién creado aún no tiene el email confirmado
+        emailVerified: false,
       });
 
-      if (!user)
-        throw new HttpException(
-          'No se pudo crear el usuario.',
-          HttpStatus.BAD_REQUEST,
-        );
+      const savedUser = await this.userRepository.save(user);
+
+      // Genera token de confirmación (válido por 1 día)
+      const emailToken = this.jwtService.sign(
+        { email: savedUser.email },
+        { expiresIn: '1d' },
+      );
+      // Envía el email de confirmación
+      await this.sendConfirmationEmail(savedUser.email, emailToken);
 
       const userPayload = {
-        sub: user.id,
-        id: user.id,
-        email: user.email,
-        isAdmin: user.isAdmin,
+        sub: savedUser.id,
+        id: savedUser.id,
+        email: savedUser.email,
+        isAdmin: savedUser.isAdmin,
       };
       const token = this.jwtService.sign(userPayload);
 
-      return { user: await this.userRepository.save(user), token: token };
+      return { user: savedUser, token: token };
     } catch (error) {
       throw ErrorHandler.handle(error);
     }
@@ -114,7 +126,7 @@ export class UserService {
         isAdmin: false,
       };
       const token = this.jwtService.sign(userPayload);
-      const user = await await this.userRepository.save(updateUser);
+      const user = await this.userRepository.save(updateUser);
       return { user: user, token: token };
     } catch (error) {
       throw ErrorHandler.handle(error);
@@ -164,7 +176,7 @@ export class UserService {
       }
 
       const subscripcion: Subscripcion = await this.subsRepository.findOne({
-        where: { id: user.subscripcion.id },
+        where: { id: user.subscripcion?.id },
       });
 
       if (!subscripcion) {
@@ -223,7 +235,7 @@ export class UserService {
       });
       const isValid = await bcrypt.compare(password, user.password);
       if (!isValid)
-        throw new HttpException('Credencial invalida', HttpStatus.BAD_REQUEST);
+        throw new HttpException('Credencial inválida', HttpStatus.BAD_REQUEST);
       await this.userRepository.delete(user);
       return user;
     } catch (error) {
@@ -240,7 +252,7 @@ export class UserService {
       return !!exist; // Retorna true si existe, false si no
     } catch (error) {
       console.error('Error al verificar el email:', error);
-      return false; // En caso de error, retorna false
+      return false;
     }
   }
 
@@ -262,5 +274,167 @@ export class UserService {
     } catch (error) {
       throw ErrorHandler.handle(error);
     }
+  }
+
+  private async sendEmail(options: {
+    to: string;
+    subject: string;
+    html: string;
+  }): Promise<void> {
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST || 'smtp.tu-dominio.com',
+      port: Number(process.env.SMTP_PORT) || 587,
+      secure: false,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASSWORD,
+      },
+    });
+
+    await transporter.sendMail({
+      from: '"Mi App" <no-reply@miapp.com>',
+      to: options.to,
+      subject: options.subject,
+      html: options.html,
+    });
+  }
+  
+  private async sendConfirmationEmail(
+    email: string,
+    token: string,
+  ): Promise<void> {
+    const confirmationUrl = `${process.env.APP_URL}/confirm?token=${token}`;
+    const html = `
+      <p>Gracias por registrarte.</p>
+      <p>Por favor confirma tu email haciendo clic en el siguiente enlace:</p>
+      <a href="${confirmationUrl}">Confirmar Email</a>
+    `;
+    await this.sendEmail({
+      to: email,
+      subject: 'Confirmación de Email',
+      html,
+    });
+  }
+
+  private async sendResetPasswordEmail(
+    email: string,
+    token: string,
+  ): Promise<void> {
+    const resetUrl = `${process.env.APP_URL}/reset-password?token=${token}`;
+    const html = `
+      <p>Haz clic en el siguiente enlace para resetear tu contraseña:</p>
+      <a href="${resetUrl}">Resetear Contraseña</a>
+    `;
+    await this.sendEmail({
+      to: email,
+      subject: 'Reset de Contraseña',
+      html,
+    });
+  }
+
+  async confirmEmail(token: string): Promise<{ message: string }> {
+    let payload: any;
+    try {
+      payload = this.jwtService.verify(token);
+    } catch (error) {
+      throw new HttpException(
+        'Token inválido o expirado',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    const email = payload.email;
+    const user = await this.userRepository.findOne({ where: { email } });
+    if (!user) {
+      throw new HttpException('Usuario no encontrado', HttpStatus.NOT_FOUND);
+    }
+    // Actualiza el usuario marcando el email como verificado.
+    user.emailVerified = true;
+    await this.userRepository.save(user);
+    return { message: 'Email confirmado correctamente' };
+  }
+
+  async requestResetPassword(email: string): Promise<{ message: string }> {
+    const user = await this.userRepository.findOne({ where: { email } });
+    if (!user) {
+      return {
+        message:
+          'Si el email existe, se ha enviado un enlace para resetear la contraseña',
+      };
+    }
+    const resetToken = this.jwtService.sign(
+      { email: user.email },
+      { expiresIn: '1h' },
+    );
+    await this.sendResetPasswordEmail(user.email, resetToken);
+    return {
+      message:
+        'Si el email existe, se ha enviado un enlace para resetear la contraseña',
+    };
+  }
+
+  async resetPassword(
+    token: string,
+    newPassword: string,
+  ): Promise<{ message: string }> {
+    let payload: any;
+    try {
+      payload = this.jwtService.verify(token);
+    } catch (error) {
+      throw new HttpException(
+        'Token inválido o expirado',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    const email = payload.email;
+    const user = await this.userRepository.findOne({ where: { email } });
+    if (!user) {
+      throw new HttpException('Usuario no encontrado', HttpStatus.NOT_FOUND);
+    }
+    user.password = await bcrypt.hash(newPassword, 10);
+    await this.userRepository.save(user);
+    return { message: 'Contraseña actualizada correctamente' };
+  }
+
+  async loginWithGoogle(
+    googleToken: string,
+  ): Promise<{ user: User; token: string }> {
+    let ticket: LoginTicket;
+    try {
+      ticket = await this.googleClient.verifyIdToken({
+        idToken: googleToken,
+        audience: process.env.GOOGLE_CLIENT_ID,
+      });
+    } catch (error) {
+      throw new HttpException(
+        'Token de Google inválido',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    const payload = ticket.getPayload();
+    if (!payload || !payload.email) {
+      throw new HttpException(
+        'No se encontró email en el token',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    let user = await this.userRepository.findOne({
+      where: { email: payload.email },
+    });
+    if (!user) {
+      user = this.userRepository.create({
+        email: payload.email,
+        password: '',
+        emailVerified: true,
+      });
+      user = await this.userRepository.save(user);
+    }
+    const userPayload = {
+      sub: user.id,
+      id: user.id,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    };
+    const token = this.jwtService.sign(userPayload);
+    return { user, token };
   }
 }

@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { UserService } from './users.service';
@@ -16,7 +17,6 @@ import { ErrorHandler } from '../../Utils/Error.Handler';
 import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { AuthGuard } from '../../guards/auth.guard';
 import { AdminGuard } from '../../guards/admin.guard';
-import { IsEmail } from 'class-validator';
 import { Plan } from './Planes.entity';
 import { updateUserDto } from './Dto/updateUser.dto';
 
@@ -39,13 +39,10 @@ export class UserController {
 
   @Get('/email/:email')
   @ApiOperation({
-    summary: 'verifica si el mail es valido',
-    description: 'verifica si el mail es valido y no esta en uso',
+    summary: 'Verificar email',
+    description: 'Verifica si el email es válido y no está en uso',
   })
-  async mailIsValid(
-    @Param('email')
-    email: string,
-  ): Promise<boolean> {
+  async mailIsValid(@Param('email') email: string): Promise<boolean> {
     try {
       return await this.userService.mailIsValid(email);
     } catch (error) {
@@ -57,7 +54,7 @@ export class UserController {
   @Post('/singUp')
   @ApiOperation({
     summary: 'Registrar usuario',
-    description: 'Registra a un usuario nuevo',
+    description: 'Registra a un usuario nuevo y envía un email de confirmación',
   })
   async singUp(@Body() signUp: singUp): Promise<{ user: User; token: string }> {
     try {
@@ -67,11 +64,74 @@ export class UserController {
     }
   }
 
+  @Get('/confirm')
+  @ApiOperation({
+    summary: 'Confirmar email',
+    description: 'Confirma el email del usuario a partir del token recibido',
+  })
+  async confirmEmail(
+    @Query('token') token: string,
+  ): Promise<{ message: string }> {
+    try {
+      return await this.userService.confirmEmail(token);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  @Post('/request-reset-password')
+  @ApiOperation({
+    summary: 'Solicitar reinicio de contraseña',
+    description:
+      'Envía un enlace al email del usuario para resetear la contraseña (si existe)',
+  })
+  async requestResetPassword(
+    @Body('email') email: string,
+  ): Promise<{ message: string }> {
+    try {
+      return await this.userService.requestResetPassword(email);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  @Post('/reset-password')
+  @ApiOperation({
+    summary: 'Resetear contraseña',
+    description:
+      'Resetea la contraseña del usuario a partir del token enviado y la nueva contraseña',
+  })
+  async resetPassword(
+    @Body() body: { token: string; newPassword: string },
+  ): Promise<{ message: string }> {
+    try {
+      const { token, newPassword } = body;
+      return await this.userService.resetPassword(token, newPassword);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  @Post('/login/google')
+  @ApiOperation({
+    summary: 'Login con Google',
+    description: 'Autentica al usuario usando el token de Google',
+  })
+  async loginWithGoogle(
+    @Body('googleToken') googleToken: string,
+  ): Promise<{ user: User; token: string }> {
+    try {
+      return await this.userService.loginWithGoogle(googleToken);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
   @ApiBearerAuth()
   @Get('/users')
   @UseGuards(AuthGuard, AdminGuard)
   @ApiOperation({
-    summary: 'Get users',
+    summary: 'Obtener usuarios',
     description: 'Obtiene todos los usuarios',
   })
   async getUsers(): Promise<User[]> {
@@ -86,7 +146,7 @@ export class UserController {
   @Get('/getUsersSubscribed')
   @UseGuards(AuthGuard, AdminGuard)
   @ApiOperation({
-    summary: 'Get users subscritos',
+    summary: 'Obtener usuarios suscritos',
     description: 'Obtiene todos los usuarios suscritos',
   })
   async getUsersSubscribed(): Promise<User[]> {
@@ -101,7 +161,7 @@ export class UserController {
   @Get('/getUsersSubscribed/:planId')
   @UseGuards(AuthGuard, AdminGuard)
   @ApiOperation({
-    summary: 'Get users subscritos en ...',
+    summary: 'Obtener usuarios suscritos en un plan',
     description: 'Obtiene todos los usuarios suscritos en el plan seleccionado',
   })
   async getUsersSubscribedAt(@Param('planId') planId: number): Promise<User[]> {
@@ -116,8 +176,9 @@ export class UserController {
   @Get('/suscribe/:userId/:planId')
   @UseGuards(AuthGuard)
   @ApiOperation({
-    summary: 'Suscribir Usuario',
-    description: 'Subscribe al usuario mediante el suerId y plan de pago',
+    summary: 'Suscribir usuario',
+    description:
+      'Suscribe al usuario a un plan mediante su userId y plan de pago',
   })
   async suscribeUser(
     @Param('userId') userId: string,
@@ -134,8 +195,8 @@ export class UserController {
   @Get('/desuscribe/:userId')
   @UseGuards(AuthGuard, AdminGuard)
   @ApiOperation({
-    summary: 'Desuscribir Usuario',
-    description: 'desuscribe a un usuario mediante el user ID',
+    summary: 'Desuscribir usuario',
+    description: 'Desuscribe a un usuario mediante su userId',
   })
   async desuscribeUser(@Param('userId') userId: string): Promise<User> {
     try {
@@ -149,7 +210,7 @@ export class UserController {
   @Delete('/user')
   @UseGuards(AuthGuard)
   @ApiOperation({
-    summary: 'Elminar usuario',
+    summary: 'Eliminar usuario',
     description: 'Elimina un usuario mediante el username y password',
   })
   async deleteUser(
@@ -165,7 +226,7 @@ export class UserController {
 
   @Get('plan/:planId')
   @ApiOperation({
-    summary: 'Obtiene un plan',
+    summary: 'Obtener un plan',
     description: 'Obtiene los datos de un solo plan',
   })
   async getPlan(@Param('planId') planId: number): Promise<Plan> {
@@ -178,8 +239,8 @@ export class UserController {
 
   @Get('planes')
   @ApiOperation({
-    summary: 'Obtiene los Planes',
-    description: 'Obtiene los datos de un solo plan',
+    summary: 'Obtener planes',
+    description: 'Obtiene los datos de los planes',
   })
   async getPlanes(): Promise<Plan[]> {
     try {
@@ -189,11 +250,11 @@ export class UserController {
     }
   }
 
-  @Put('update')
+  @Put('/update')
   @UseGuards(AuthGuard)
   @ApiOperation({
-    summary: 'Cambiar datos de Usuario',
-    description: 'Cambiar datos de Usuario',
+    summary: 'Actualizar usuario',
+    description: 'Actualiza los datos de un usuario',
   })
   async updateUser(
     @Body() updateUser: updateUserDto,

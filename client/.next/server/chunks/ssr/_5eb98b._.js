@@ -10,8 +10,13 @@ __turbopack_esm__({
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
+<<<<<<< HEAD
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/navigation.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$context$2f$user$2e$context$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/context/user.context.tsx [app-ssr] (ecmascript)");
+=======
+var __TURBOPACK__imported__module__$5b$project$5d2f$context$2f$user$2e$context$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/context/user.context.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/navigation.js [app-ssr] (ecmascript)");
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__User$3e$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/user.js [app-ssr] (ecmascript) <export default as User>");
 "use client";
 ;
@@ -20,7 +25,11 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 ;
 ;
 const UserProfile = ()=>{
+<<<<<<< HEAD
     const { user, updateUser } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useContext"])(__TURBOPACK__imported__module__$5b$project$5d2f$context$2f$user$2e$context$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["UserContext"]);
+=======
+    const { user, updateUser, signOut } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useContext"])(__TURBOPACK__imported__module__$5b$project$5d2f$context$2f$user$2e$context$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["UserContext"]);
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
     const [formData, setFormData] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])({
         email: "",
@@ -29,9 +38,16 @@ const UserProfile = ()=>{
         telefono: "",
         username: ""
     });
+<<<<<<< HEAD
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         if (!user) {
             router.push("/signIn");
+=======
+    const [isEditing, setIsEditing] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false); // Controla si los campos están en modo de edición
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        if (!user) {
+            router?.push("/signin");
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
         } else {
             setFormData({
                 username: user.username || "",
@@ -58,6 +74,16 @@ const UserProfile = ()=>{
             ...formData,
             id: user.id
         });
+<<<<<<< HEAD
+=======
+        setIsEditing(false); // Deshabilitar el modo de edición al guardar los cambios
+    };
+    const handleSignOut = ()=>{
+        signOut();
+    };
+    const toggleEditMode = ()=>{
+        setIsEditing(!isEditing); // Cambiar entre editar y vista solo lectura
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
         className: "px-2 py-3 mx-auto max-w-7xl",
@@ -75,7 +101,11 @@ const UserProfile = ()=>{
                                     className: "text-indigo-200/65 "
                                 }, void 0, false, {
                                     fileName: "[project]/app/(default)/profile/layout.tsx",
+<<<<<<< HEAD
                                     lineNumber: 49,
+=======
+                                    lineNumber: 59,
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -86,7 +116,11 @@ const UserProfile = ()=>{
                                             children: user.username
                                         }, void 0, false, {
                                             fileName: "[project]/app/(default)/profile/layout.tsx",
+<<<<<<< HEAD
                                             lineNumber: 51,
+=======
+                                            lineNumber: 61,
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -94,19 +128,31 @@ const UserProfile = ()=>{
                                             children: user.id
                                         }, void 0, false, {
                                             fileName: "[project]/app/(default)/profile/layout.tsx",
+<<<<<<< HEAD
                                             lineNumber: 54,
+=======
+                                            lineNumber: 64,
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/(default)/profile/layout.tsx",
+<<<<<<< HEAD
                                     lineNumber: 50,
+=======
+                                    lineNumber: 60,
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/(default)/profile/layout.tsx",
+<<<<<<< HEAD
                             lineNumber: 48,
+=======
+                            lineNumber: 58,
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -114,16 +160,54 @@ const UserProfile = ()=>{
                             children: user.company
                         }, void 0, false, {
                             fileName: "[project]/app/(default)/profile/layout.tsx",
+<<<<<<< HEAD
                             lineNumber: 57,
+=======
+                            lineNumber: 67,
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/(default)/profile/layout.tsx",
+<<<<<<< HEAD
                     lineNumber: 47,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
+=======
+                    lineNumber: 57,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "flex justify-between p-4",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            onClick: toggleEditMode,
+                            className: "px-6 py-3 font-semibold text-white transition-all duration-300 rounded-lg shadow-md bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800",
+                            children: isEditing ? "Cancelar Edición" : "Editar Perfil"
+                        }, void 0, false, {
+                            fileName: "[project]/app/(default)/profile/layout.tsx",
+                            lineNumber: 74,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            onClick: handleSignOut,
+                            className: "px-6 py-3 font-semibold text-white transition-all duration-300 rounded-lg shadow-md bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800",
+                            children: "Deslogearse"
+                        }, void 0, false, {
+                            fileName: "[project]/app/(default)/profile/layout.tsx",
+                            lineNumber: 80,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/app/(default)/profile/layout.tsx",
+                    lineNumber: 73,
+                    columnNumber: 9
+                }, this),
+                isEditing ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
                     onSubmit: handleSubmit,
                     className: "p-4",
                     children: [
@@ -137,8 +221,13 @@ const UserProfile = ()=>{
                                             children: "Nombre"
                                         }, void 0, false, {
                                             fileName: "[project]/app/(default)/profile/layout.tsx",
+<<<<<<< HEAD
                                             lineNumber: 66,
                                             columnNumber: 15
+=======
+                                            lineNumber: 93,
+                                            columnNumber: 17
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                             type: "text",
@@ -148,14 +237,24 @@ const UserProfile = ()=>{
                                             className: "w-full px-3 py-2 mt-1 text-white bg-gray-700 rounded-lg"
                                         }, void 0, false, {
                                             fileName: "[project]/app/(default)/profile/layout.tsx",
+<<<<<<< HEAD
                                             lineNumber: 67,
                                             columnNumber: 15
+=======
+                                            lineNumber: 94,
+                                            columnNumber: 17
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/(default)/profile/layout.tsx",
+<<<<<<< HEAD
                                     lineNumber: 65,
                                     columnNumber: 13
+=======
+                                    lineNumber: 92,
+                                    columnNumber: 15
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     children: [
@@ -164,8 +263,13 @@ const UserProfile = ()=>{
                                             children: "Email"
                                         }, void 0, false, {
                                             fileName: "[project]/app/(default)/profile/layout.tsx",
+<<<<<<< HEAD
                                             lineNumber: 76,
                                             columnNumber: 15
+=======
+                                            lineNumber: 103,
+                                            columnNumber: 17
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                             type: "email",
@@ -175,14 +279,24 @@ const UserProfile = ()=>{
                                             className: "w-full px-3 py-2 mt-1 text-white bg-gray-700 rounded-lg"
                                         }, void 0, false, {
                                             fileName: "[project]/app/(default)/profile/layout.tsx",
+<<<<<<< HEAD
                                             lineNumber: 77,
                                             columnNumber: 15
+=======
+                                            lineNumber: 104,
+                                            columnNumber: 17
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/(default)/profile/layout.tsx",
+<<<<<<< HEAD
                                     lineNumber: 75,
                                     columnNumber: 13
+=======
+                                    lineNumber: 102,
+                                    columnNumber: 15
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     children: [
@@ -191,8 +305,13 @@ const UserProfile = ()=>{
                                             children: "Teléfono"
                                         }, void 0, false, {
                                             fileName: "[project]/app/(default)/profile/layout.tsx",
+<<<<<<< HEAD
                                             lineNumber: 86,
                                             columnNumber: 15
+=======
+                                            lineNumber: 113,
+                                            columnNumber: 17
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                             type: "text",
@@ -202,14 +321,24 @@ const UserProfile = ()=>{
                                             className: "w-full px-3 py-2 mt-1 text-white bg-gray-700 rounded-lg"
                                         }, void 0, false, {
                                             fileName: "[project]/app/(default)/profile/layout.tsx",
+<<<<<<< HEAD
                                             lineNumber: 87,
                                             columnNumber: 15
+=======
+                                            lineNumber: 114,
+                                            columnNumber: 17
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/(default)/profile/layout.tsx",
+<<<<<<< HEAD
                                     lineNumber: 85,
                                     columnNumber: 13
+=======
+                                    lineNumber: 112,
+                                    columnNumber: 15
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     children: [
@@ -218,8 +347,13 @@ const UserProfile = ()=>{
                                             children: "Empresa"
                                         }, void 0, false, {
                                             fileName: "[project]/app/(default)/profile/layout.tsx",
+<<<<<<< HEAD
                                             lineNumber: 96,
                                             columnNumber: 15
+=======
+                                            lineNumber: 123,
+                                            columnNumber: 17
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                             type: "text",
@@ -229,20 +363,35 @@ const UserProfile = ()=>{
                                             className: "w-full px-3 py-2 mt-1 text-white bg-gray-700 rounded-lg"
                                         }, void 0, false, {
                                             fileName: "[project]/app/(default)/profile/layout.tsx",
+<<<<<<< HEAD
                                             lineNumber: 97,
                                             columnNumber: 15
+=======
+                                            lineNumber: 124,
+                                            columnNumber: 17
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/(default)/profile/layout.tsx",
+<<<<<<< HEAD
                                     lineNumber: 95,
                                     columnNumber: 13
+=======
+                                    lineNumber: 122,
+                                    columnNumber: 15
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/(default)/profile/layout.tsx",
+<<<<<<< HEAD
                             lineNumber: 64,
                             columnNumber: 11
+=======
+                            lineNumber: 91,
+                            columnNumber: 13
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "mt-6",
@@ -252,8 +401,13 @@ const UserProfile = ()=>{
                                     children: "Contraseña (dejar en blanco para no cambiar)"
                                 }, void 0, false, {
                                     fileName: "[project]/app/(default)/profile/layout.tsx",
+<<<<<<< HEAD
                                     lineNumber: 107,
                                     columnNumber: 13
+=======
+                                    lineNumber: 134,
+                                    columnNumber: 15
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                     type: "password",
@@ -264,14 +418,24 @@ const UserProfile = ()=>{
                                     placeholder: "********"
                                 }, void 0, false, {
                                     fileName: "[project]/app/(default)/profile/layout.tsx",
+<<<<<<< HEAD
                                     lineNumber: 110,
                                     columnNumber: 13
+=======
+                                    lineNumber: 137,
+                                    columnNumber: 15
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/(default)/profile/layout.tsx",
+<<<<<<< HEAD
                             lineNumber: 106,
                             columnNumber: 11
+=======
+                            lineNumber: 133,
+                            columnNumber: 13
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "flex justify-end mt-4",
@@ -281,6 +445,7 @@ const UserProfile = ()=>{
                                 children: "Guardar Cambios"
                             }, void 0, false, {
                                 fileName: "[project]/app/(default)/profile/layout.tsx",
+<<<<<<< HEAD
                                 lineNumber: 120,
                                 columnNumber: 13
                             }, this)
@@ -288,22 +453,127 @@ const UserProfile = ()=>{
                             fileName: "[project]/app/(default)/profile/layout.tsx",
                             lineNumber: 119,
                             columnNumber: 11
+=======
+                                lineNumber: 147,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "[project]/app/(default)/profile/layout.tsx",
+                            lineNumber: 146,
+                            columnNumber: 13
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/(default)/profile/layout.tsx",
+<<<<<<< HEAD
                     lineNumber: 63,
                     columnNumber: 9
+=======
+                    lineNumber: 90,
+                    columnNumber: 11
+                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "p-4",
+                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "grid grid-cols-1 gap-6 md:grid-cols-2",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                    className: "block text-gray-300",
+                                    children: [
+                                        "Nombre: ",
+                                        formData.username
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/app/(default)/profile/layout.tsx",
+                                    lineNumber: 159,
+                                    columnNumber: 17
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/app/(default)/profile/layout.tsx",
+                                lineNumber: 158,
+                                columnNumber: 15
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                    className: "block text-gray-300",
+                                    children: [
+                                        "Email: ",
+                                        formData.email
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/app/(default)/profile/layout.tsx",
+                                    lineNumber: 164,
+                                    columnNumber: 17
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/app/(default)/profile/layout.tsx",
+                                lineNumber: 163,
+                                columnNumber: 15
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                    className: "block text-gray-300",
+                                    children: [
+                                        "Teléfono: ",
+                                        formData.telefono
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/app/(default)/profile/layout.tsx",
+                                    lineNumber: 167,
+                                    columnNumber: 17
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/app/(default)/profile/layout.tsx",
+                                lineNumber: 166,
+                                columnNumber: 15
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                    className: "block text-gray-300",
+                                    children: [
+                                        "Empresa: ",
+                                        formData.company
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/app/(default)/profile/layout.tsx",
+                                    lineNumber: 172,
+                                    columnNumber: 17
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/app/(default)/profile/layout.tsx",
+                                lineNumber: 171,
+                                columnNumber: 15
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/app/(default)/profile/layout.tsx",
+                        lineNumber: 157,
+                        columnNumber: 13
+                    }, this)
+                }, void 0, false, {
+                    fileName: "[project]/app/(default)/profile/layout.tsx",
+                    lineNumber: 156,
+                    columnNumber: 11
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/(default)/profile/layout.tsx",
+<<<<<<< HEAD
             lineNumber: 45,
+=======
+            lineNumber: 55,
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/(default)/profile/layout.tsx",
+<<<<<<< HEAD
         lineNumber: 44,
+=======
+        lineNumber: 54,
+>>>>>>> c1d71ea21458e829175dbf5afe57cdf0232685be
         columnNumber: 5
     }, this);
 };

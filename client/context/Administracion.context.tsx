@@ -36,7 +36,9 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
     }
 
     const { data, error } = await handleAsync(api.get("/users/users"));
-    if (error || !data || !data.data) throw new Error("Error fetching users");
+    if (error || !data) {
+      throw new Error(error.message || "Hubo un error al iniciar sesión.");
+    }
     localStorage.setItem("admin_users", JSON.stringify(data.data));
     return data.data;
   };
@@ -51,8 +53,9 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
     const { data, error } = await handleAsync(
       api.get("/users/getUsersSubscribed")
     );
-    if (error || !data || !data.data)
-      throw new Error("Error fetching subscribed users");
+    if (error || !data) {
+      throw new Error(error.message || "Hubo un error al iniciar sesión.");
+    }
     localStorage.setItem("admin_usersSubscribed", JSON.stringify(data.data));
     return data.data;
   };
@@ -70,8 +73,9 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
     const { data, error } = await handleAsync(
       api.get(`/users/getUsersSubscribed/${planId}`)
     );
-    if (error || !data || !data.data)
-      throw new Error("Error fetching subscribed users at plan");
+    if (error || !data) {
+      throw new Error(error.message || "Hubo un error al iniciar sesión.");
+    }
     localStorage.setItem(cacheKey, JSON.stringify(data.data));
     return data.data;
   };

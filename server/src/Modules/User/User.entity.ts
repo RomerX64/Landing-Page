@@ -14,7 +14,7 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ nullable: true })
   username: string;
 
   @OneToOne(() => Subscripcion, (subscripcion) => subscripcion.user, {
@@ -23,16 +23,19 @@ export class User {
   @JoinColumn()
   subscripcion: Subscripcion;
 
+  @Column({ default: false })
+  emailVerified: boolean;
+
   @Column()
   email: string;
 
-  @Column()
+  @Column({ nullable: true })
   password: string;
 
   @Column()
   telefono: string;
-
-  @Column()
+  
+  @Column({ nullable: true })
   company: string;
 
   @Column({ default: false })
