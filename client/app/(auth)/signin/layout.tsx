@@ -3,8 +3,10 @@ import Link from "next/link";
 import { useState, useContext } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { UserContext } from "@/context/user.context";
 
 export default function SignInLayout() {
+  const { signInWithGoogle } = useContext(UserContext);
   const { data: session } = useSession();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,7 +28,7 @@ export default function SignInLayout() {
   };
 
   const handleGoogle = async () => {
-    await signIn("google", { callbackUrl: "/" });
+    await signInWithGoogle();
   };
 
   return (

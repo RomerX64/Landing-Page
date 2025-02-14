@@ -1,5 +1,6 @@
 "use client";
 import { UserContext } from "@/context/user.context";
+import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
@@ -13,7 +14,7 @@ export default function SignUpLayout() {
     password: "",
     confirmPassword: "",
   });
-  const { signUp, mailIsValid, loginWithGoogle, user } =
+  const { signUp, mailIsValid, signUpWithGoogle, user } =
     useContext(UserContext);
   const [phoneError, setPhoneError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
@@ -99,18 +100,8 @@ export default function SignUpLayout() {
     }
   };
 
-  // Opcional: función para login con Google (puedes integrarla usando la librería de Google o un popup)
-  const handleGoogleLogin = async () => {
-    try {
-      // Aquí deberías obtener el googleToken mediante el flujo de autenticación de Google.
-      // Por simplicidad, se usa prompt para simularlo:
-      const googleToken = prompt("Ingrese el token de Google (simulación)");
-      if (!googleToken) return;
-      const user = await loginWithGoogle(googleToken);
-      console.log("Login con Google exitoso:", user);
-    } catch (error) {
-      console.error("Error en login con Google:", error);
-    }
+  const handleGoogle = async () => {
+    await signUpWithGoogle();
   };
 
   return (
@@ -257,7 +248,7 @@ export default function SignUpLayout() {
               </button>
               <button
                 type="button"
-                onClick={handleGoogleLogin}
+                onClick={handleGoogle}
                 className="w-full text-gray-300 btn bg-gradient-to-b from-gray-800 to-gray-800/60"
               >
                 Logearse con Google

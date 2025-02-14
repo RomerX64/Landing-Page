@@ -20,7 +20,8 @@ interface UserContextProps {
   mailIsValid: (email: string) => Promise<boolean>;
   updateUser: (updateUserData: updateUserDTO) => Promise<IUser>;
   signOut: () => void;
-  loginWithGoogle: () => Promise<IUser | null>;
+  signInWithGoogle: () => Promise<IUser | null>;
+  signUpWithGoogle: () => Promise<IUser | null>;
   requestResetPassword: (email: string) => Promise<{ message: string }>;
   resetPassword: (
     token: string,
@@ -49,7 +50,10 @@ const defaultContext: UserContextProps = {
   signOut: () => {
     throw new Error("Not implemented");
   },
-  loginWithGoogle: async () => {
+  signInWithGoogle: async () => {
+    throw new Error("Not implemented");
+  },
+  signUpWithGoogle: async () => {
     throw new Error("Not implemented");
   },
   requestResetPassword: async () => {
@@ -174,20 +178,41 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
   };
-  console.log(user);
-  const loginWithGoogle = async (): Promise<IUser | null> => {
+
+  const signInWithGoogle = async (): Promise<IUser | null> => {
     try {
-      await signIn("google"); // No se necesita el segundo argumento
-
+      await signIn("google", { callbackUrl: "/" });
       const session = await getSession(); // Obtiene la sesión después de iniciar sesión
-
       if (!session || !session.user) {
         throw new Error("No se pudo obtener la sesión del usuario.");
       }
-
       const returnedUser = session.user as IUser;
       setUserState(returnedUser);
       localStorage.setItem("user", JSON.stringify(returnedUser));
+
+      return returnedUser;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  };
+  const signUpWithGoogle = async (): Promise<IUser | null> => {
+    try {
+      await signIn("google", { callbackUrl: "/" });
+      const session = await getSession(); // Obtiene la sesión después de iniciar sesión
+      if (!session || !session.user) {
+        throw new Error("No se pudo obtener la sesión del usuario.");
+      }
+      const returnedUser = session.user as IUser;
+      setUserState(returnedUser);
+      localStorage.setItem("user", JSON.stringify(returnedUser));
+
+      const { data, error } = await handleAsync(
+        api.post("/users/singUp/google", user)
+      );
+      if (error || !data) {
+        throw new Error(error.message || "Hubo un error al registrarse.");
+      }
 
       return returnedUser;
     } catch (error) {
@@ -234,7 +259,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         mailIsValid,
         updateUser,
         signOut,
-        loginWithGoogle,
+        signInWithGoogle,
+        signUpWithGoogle,
         requestResetPassword,
         resetPassword,
       }}

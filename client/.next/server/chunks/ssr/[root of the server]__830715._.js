@@ -317,7 +317,10 @@ const defaultContext = {
     signOut: ()=>{
         throw new Error("Not implemented");
     },
-    loginWithGoogle: async ()=>{
+    signInWithGoogle: async ()=>{
+        throw new Error("Not implemented");
+    },
+    signUpWithGoogle: async ()=>{
         throw new Error("Not implemented");
     },
     requestResetPassword: async ()=>{
@@ -424,10 +427,11 @@ const UserProvider = ({ children })=>{
         localStorage.removeItem("token");
         localStorage.removeItem("user");
     };
-    console.log(user);
-    const loginWithGoogle = async ()=>{
+    const signInWithGoogle = async ()=>{
         try {
-            await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["signIn"])("google"); // No se necesita el segundo argumento
+            await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["signIn"])("google", {
+                callbackUrl: "/"
+            });
             const session = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getSession"])(); // Obtiene la sesión después de iniciar sesión
             if (!session || !session.user) {
                 throw new Error("No se pudo obtener la sesión del usuario.");
@@ -435,6 +439,28 @@ const UserProvider = ({ children })=>{
             const returnedUser = session.user;
             setUserState(returnedUser);
             localStorage.setItem("user", JSON.stringify(returnedUser));
+            return returnedUser;
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
+    };
+    const signUpWithGoogle = async ()=>{
+        try {
+            await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["signIn"])("google", {
+                callbackUrl: "/"
+            });
+            const session = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getSession"])(); // Obtiene la sesión después de iniciar sesión
+            if (!session || !session.user) {
+                throw new Error("No se pudo obtener la sesión del usuario.");
+            }
+            const returnedUser = session.user;
+            setUserState(returnedUser);
+            localStorage.setItem("user", JSON.stringify(returnedUser));
+            const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post("/users/singUp/google", user));
+            if (error || !data) {
+                throw new Error(error.message || "Hubo un error al registrarse.");
+            }
             return returnedUser;
         } catch (error) {
             console.error(error);
@@ -470,14 +496,15 @@ const UserProvider = ({ children })=>{
             mailIsValid,
             updateUser,
             signOut,
-            loginWithGoogle,
+            signInWithGoogle,
+            signUpWithGoogle,
             requestResetPassword,
             resetPassword
         },
         children: children
     }, void 0, false, {
         fileName: "[project]/context/user.context.tsx",
-        lineNumber: 227,
+        lineNumber: 252,
         columnNumber: 5
     }, this);
 };

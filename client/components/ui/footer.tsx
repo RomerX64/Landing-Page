@@ -1,4 +1,3 @@
-import Logo from "./logo";
 import Image from "next/image";
 import FooterIllustration from "@/public/images/footer-illustration.svg";
 
@@ -200,9 +199,7 @@ export default function Footer() {
           </div>
           {/* 5th block */}
           <div className="col-span-2 md:col-span-4 lg:col-span-1 lg:text-right">
-            <div className="mb-3">
-              <Logo />
-            </div>
+            <div className="mb-3"></div>
             <div className="text-sm">
               <p className="mb-3 text-indigo-200/65">
                 © Cruip.com
