@@ -15,7 +15,7 @@ export class User {
   id: string;
 
   @Column({ nullable: true })
-  username: string;
+  name: string;
 
   @OneToOne(() => Subscripcion, (subscripcion) => subscripcion.user, {
     cascade: true,
@@ -34,7 +34,7 @@ export class User {
 
   @Column()
   telefono: string;
-  
+
   @Column({ nullable: true })
   company: string;
 

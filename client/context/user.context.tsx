@@ -4,17 +4,23 @@ import { IUser } from "@/interfaces/User.interface";
 import api from "@/app/api/Api";
 import { SignInDTO, SignUpDTO, updateUserDTO } from "./DTO/sing.user.dto";
 import { handleAsync } from "@/utils/error.helper";
+import {
+  signIn,
+  signOut as nextAuthSignOut,
+  useSession,
+  getSession,
+} from "next-auth/react";
 
 interface UserContextProps {
   token: string;
   user: IUser | null;
-  signIn: (data: SignInDTO) => Promise<IUser | null>;
+  signInO: (data: SignInDTO) => Promise<IUser | null>;
   signUp: (data: SignUpDTO) => Promise<IUser>;
   deleteUser: (data: SignInDTO) => Promise<IUser>;
   mailIsValid: (email: string) => Promise<boolean>;
   updateUser: (updateUserData: updateUserDTO) => Promise<IUser>;
   signOut: () => void;
-  loginWithGoogle: (googleToken: string) => Promise<IUser>;
+  loginWithGoogle: () => Promise<IUser | null>;
   requestResetPassword: (email: string) => Promise<{ message: string }>;
   resetPassword: (
     token: string,
@@ -25,7 +31,7 @@ interface UserContextProps {
 const defaultContext: UserContextProps = {
   token: "",
   user: null,
-  signIn: async () => {
+  signInO: async () => {
     throw new Error("Not implemented");
   },
   signUp: async () => {
@@ -61,12 +67,14 @@ interface UserProviderProps {
 }
 
 export const UserProvider = ({ children }: UserProviderProps) => {
+  const { data: session } = useSession();
   const [user, setUserState] = useState<IUser | null>(null);
   const [token, setToken] = useState<string>("");
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     const storedUser = localStorage.getItem("user");
+
     if (storedToken) setToken(storedToken);
     if (storedUser) {
       try {
@@ -75,9 +83,14 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         console.error("Error al parsear el usuario del localStorage", error);
       }
     }
-  }, []);
 
-  const signIn = async (signInData: SignInDTO): Promise<IUser | null> => {
+    if (session?.user) {
+      setUserState(session.user as IUser);
+      localStorage.setItem("user", JSON.stringify(session.user));
+    }
+  }, [session]);
+
+  const signInO = async (signInData: SignInDTO): Promise<IUser | null> => {
     const { data, error } = await handleAsync(
       api.post("/users/singin", signInData)
     );
@@ -128,7 +141,6 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const mailIsValid = async (email: string): Promise<boolean> => {
     try {
       const response = await api.get(`/users/email/${email}`);
-      // Se asume que el endpoint devuelve true/false.
       return response.data;
     } catch (error) {
       return false;
@@ -155,26 +167,33 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     return returnedUser;
   };
 
-  const signOut = (): void => {
+  const signOut = async (): Promise<void> => {
+    await nextAuthSignOut({ redirect: false });
     setToken("");
     setUserState(null);
     localStorage.removeItem("token");
     localStorage.removeItem("user");
   };
+  console.log(user);
+  const loginWithGoogle = async (): Promise<IUser | null> => {
+    try {
+      await signIn("google"); // No se necesita el segundo argumento
 
-  const loginWithGoogle = async (googleToken: string): Promise<IUser> => {
-    const { data, error } = await handleAsync(
-      api.post("/users/login/google", { googleToken })
-    );
-    if (error || !data) {
-      throw new Error(error.message || "Error al iniciar sesión con Google");
+      const session = await getSession(); // Obtiene la sesión después de iniciar sesión
+
+      if (!session || !session.user) {
+        throw new Error("No se pudo obtener la sesión del usuario.");
+      }
+
+      const returnedUser = session.user as IUser;
+      setUserState(returnedUser);
+      localStorage.setItem("user", JSON.stringify(returnedUser));
+
+      return returnedUser;
+    } catch (error) {
+      console.error(error);
+      return null;
     }
-    const { user: returnedUser, token: returnedToken } = data.data;
-    setToken(returnedToken);
-    setUserState(returnedUser);
-    localStorage.setItem("token", returnedToken);
-    localStorage.setItem("user", JSON.stringify(returnedUser));
-    return returnedUser;
   };
 
   const requestResetPassword = async (
@@ -204,20 +223,23 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     return data.data;
   };
 
-  const value = {
-    token,
-    user,
-    setUser: setUserState,
-    signIn,
-    signUp,
-    deleteUser,
-    mailIsValid,
-    updateUser,
-    signOut,
-    loginWithGoogle,
-    requestResetPassword,
-    resetPassword,
-  };
-
-  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+  return (
+    <UserContext.Provider
+      value={{
+        token,
+        user,
+        signInO,
+        signUp,
+        deleteUser,
+        mailIsValid,
+        updateUser,
+        signOut,
+        loginWithGoogle,
+        requestResetPassword,
+        resetPassword,
+      }}
+    >
+      {children}
+    </UserContext.Provider>
+  );
 };

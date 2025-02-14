@@ -1,16 +1,16 @@
 {
   "pages": {
     "/(auth)/signup/page": [
+      "static/chunks/node_modules_44bcb6._.js",
+      "static/chunks/[root of the server]__aa9bf2._.js",
       "static/chunks/[root of the server]__a65930._.css",
-      "static/chunks/node_modules_f20410._.js",
-      "static/chunks/_9fa9a8._.js",
       "static/chunks/app_layout_tsx_61af54._.js",
       "static/chunks/app_(auth)_layout_tsx_b8af1c._.js",
-      "static/chunks/app_(auth)_layout_tsx_ac01c4._.js",
-      "static/chunks/app_(auth)_signup_layout_tsx_2b56c7._.js",
-      "static/chunks/app_(auth)_signup_layout_tsx_c9f79f._.js",
+      "static/chunks/app_(auth)_layout_tsx_222e44._.js",
+      "static/chunks/_66f715._.js",
+      "static/chunks/app_(auth)_signup_layout_tsx_be2453._.js",
       "static/chunks/app_(auth)_signup_page_tsx_209146._.js",
-      "static/chunks/app_(auth)_signup_page_tsx_8deb57._.js",
+      "static/chunks/app_(auth)_signup_page_tsx_ca552f._.js",
       "static/chunks/node_modules_next_dist_compiled_react-dom_1f56dc._.js",
       "static/chunks/node_modules_next_dist_compiled_107ce8._.js",
       "static/chunks/node_modules_next_dist_client_523921._.js",

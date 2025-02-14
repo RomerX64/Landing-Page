@@ -4,7 +4,7 @@
   "sections": [
     {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":""}},
     {"offset": {"line": 11, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}},
-    {"offset": {"line": 17, "column": 0}, "map": {"version":3,"sources":["file://C%3A/Users/tomir/OneDrive/Desktop/AssetlyLandingPage/client/app/%28default%29/profile/page.tsx"],"sourcesContent":["export const metadata = {\r\n  title: \"Mi Cuenta - Assetly\",\r\n  description: \"Page description\",\r\n};\r\nimport UserProfile from \"./layout\";\r\n\r\nexport default function Profile() {\r\n  return (\r\n    <>\r\n      <UserProfile />\r\n    </>\r\n  );\r\n}\r\n"],"names":[],"mappings":";;;;;AAIA;;AAJO,MAAM,WAAW;IACtB,OAAO;IACP,aAAa;AACf;;AAGe,SAAS;IACtB,qBACE;kBACE,cAAA,8OAAC,wIAAA,CAAA,UAAW;;;;;;AAGlB"}},
+    {"offset": {"line": 17, "column": 0}, "map": {"version":3,"sources":["file://C%3A/Users/tomir/OneDrive/Desktop/AssetlyLandingPage/client/app/%28default%29/profile/page.tsx"],"sourcesContent":["export const metadata = {\n  title: \"Mi Cuenta - Assetly\",\n  description: \"Page description\",\n};\nimport UserProfile from \"./layout\";\n\nexport default function Profile() {\n  return (\n    <>\n      <UserProfile />\n    </>\n  );\n}\n"],"names":[],"mappings":";;;;;AAIA;;AAJO,MAAM,WAAW;IACtB,OAAO;IACP,aAAa;AACf;;AAGe,SAAS;IACtB,qBACE;kBACE,cAAA,8OAAC,wIAAA,CAAA,UAAW;;;;;;AAGlB"}},
     {"offset": {"line": 38, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}},
     {"offset": {"line": 49, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":""}},
     {"offset": {"line": 49, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}},

@@ -220,10 +220,10 @@ export class UserService {
     }
   }
 
-  async deleteUser(username: string, password: string): Promise<User> {
+  async deleteUser(name: string, password: string): Promise<User> {
     try {
       const user = await this.userRepository.findOne({
-        where: { username: username },
+        where: { name: name },
       });
       const isValid = await bcrypt.compare(password, user.password);
       if (!isValid)

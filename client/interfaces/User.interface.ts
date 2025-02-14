@@ -2,7 +2,7 @@ import { ISubscripcion } from "./Subscripcion.interface";
 
 export interface IUser {
   id: string;
-  username: string;
+  name: string;
   subscripcion: ISubscripcion;
   email: string;
   password: string;

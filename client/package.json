@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.1.3",
+    "@mercadopago/sdk-js": "^0.0.3",
     "@types/mercadopago": "^1.5.11",
     "@types/node": "^22.5.0",
     "@types/react": "19.0.1",

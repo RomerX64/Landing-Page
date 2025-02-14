@@ -50,5 +50,5 @@ export class singUp {
     description: 'Debe ser un string mayor de 5 caracteres',
     example: 'Romer',
   })
-  username: string;
+  name: string;
 }

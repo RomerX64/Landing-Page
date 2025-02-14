@@ -305,7 +305,7 @@ const UserProfile = ()=>{
         company: "",
         password: "",
         telefono: "",
-        username: ""
+        name: ""
     });
     const [isEditing, setIsEditing] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
@@ -318,7 +318,7 @@ const UserProfile = ()=>{
         } else {
             // Si hay usuario, actualizar los datos del formulario
             setFormData({
-                username: user.username || "",
+                name: user.name || "",
                 email: user.email || "",
                 telefono: user.telefono || "",
                 company: user.company || "",
@@ -387,7 +387,7 @@ const UserProfile = ()=>{
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                                                 className: "text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400",
-                                                children: user.username
+                                                children: user.name
                                             }, void 0, false, {
                                                 fileName: "[project]/app/(default)/profile/layout.tsx",
                                                 lineNumber: 78,
@@ -447,8 +447,8 @@ const UserProfile = ()=>{
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                                     type: "text",
-                                                    name: "username",
-                                                    value: formData.username,
+                                                    name: "name",
+                                                    value: formData.name,
                                                     onChange: handleChange,
                                                     className: "w-full px-3 py-2 mt-1 text-white bg-gray-700 rounded-lg"
                                                 }, void 0, false, {
@@ -628,7 +628,7 @@ const UserProfile = ()=>{
                                                         columnNumber: 21
                                                     }, this),
                                                     " ",
-                                                    formData.username
+                                                    formData.name
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/(default)/profile/layout.tsx",

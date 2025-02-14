@@ -72,7 +72,10 @@ const PaymentForm: React.FC = () => {
             <p className="text-gray-300">
               Estás suscribiéndote al plan{" "}
               <span className="font-bold">{viewPlan.name}</span> por{" "}
-              <span className="font-bold">${viewPlan.precio} dolares mensuales</span>.
+              <span className="font-bold">
+                ${viewPlan.precio} dolares mensuales
+              </span>
+              .
             </p>
           </div>
         )}

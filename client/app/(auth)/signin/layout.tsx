@@ -1,29 +1,32 @@
 "use client";
 import Link from "next/link";
 import { useState, useContext } from "react";
-import { UserContext } from "@/context/user.context";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function SignInLayout() {
-  const { signIn, user } = useContext(UserContext);
+  const { data: session } = useSession();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
-  if (user) {
-    if (user) router.push("/");
+  if (session) {
+    router.push("/");
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     try {
-      const user = await signIn({ email, password });
-      if (user) router.push("/");
+      // Aquí iría tu lógica de autenticación con email/contraseña
     } catch (err: any) {
       setError(err.message || "Hubo un error al iniciar sesión.");
     }
+  };
+
+  const handleGoogle = async () => {
+    await signIn("google", { callbackUrl: "/" });
   };
 
   return (
@@ -86,14 +89,13 @@ export default function SignInLayout() {
               >
                 Logearse
               </button>
-              <Link href="/auth/callback">
-                <button
-                  type="button"
-                  className="w-full mt-2 text-gray-300 btn bg-gradient-to-b from-gray-800 to-gray-800/60"
-                >
-                  Logearse con Google
-                </button>
-              </Link>
+              <button
+                type="button"
+                onClick={handleGoogle}
+                className="w-full mt-2 text-gray-300 btn bg-gradient-to-b from-gray-800 to-gray-800/60"
+              >
+                Logearse con Google
+              </button>
             </div>
           </form>
           <div className="mt-6 text-sm text-center text-indigo-200/65">

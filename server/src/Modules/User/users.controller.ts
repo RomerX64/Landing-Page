@@ -27,7 +27,7 @@ export class UserController {
   @Post('/singIn')
   @ApiOperation({
     summary: 'Logearse',
-    description: 'Logea al usuario mediante el username y password.',
+    description: 'Logea al usuario mediante el name y password.',
   })
   async singIn(@Body() singIn: singIn): Promise<{ User: User; token: string }> {
     try {
@@ -148,14 +148,14 @@ export class UserController {
   @UseGuards(AuthGuard)
   @ApiOperation({
     summary: 'Eliminar usuario',
-    description: 'Elimina un usuario mediante el username y password',
+    description: 'Elimina un usuario mediante el name y password',
   })
   async deleteUser(
-    @Body() body: { username: string; password: string },
+    @Body() body: { name: string; password: string },
   ): Promise<User> {
     try {
-      const { username, password } = body;
-      return await this.userService.deleteUser(username, password);
+      const { name, password } = body;
+      return await this.userService.deleteUser(name, password);
     } catch (error) {
       throw ErrorHandler.handle(error);
     }

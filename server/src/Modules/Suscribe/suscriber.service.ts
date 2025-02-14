@@ -1,7 +1,9 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { MercadoPagoConfig, PreApproval } from 'mercadopago'; // Importación correcta
+import { MercadoPagoConfig, PreApproval, Payment } from 'mercadopago';
+
+import { ConfigService } from '@nestjs/config';
 import {
   CreateSubscriptionDto,
   CancelSubscriptionDto,
@@ -9,60 +11,61 @@ import {
 import { Subscripcion, SubscriptionStatus } from '../User/Subscripcion.entity';
 import { Plan } from '../User/Planes.entity';
 
-// Configurar Mercado Pago correctamente
-const client = new MercadoPagoConfig({
-  accessToken: process.env.MERCADO_PAGO_PUBLIC_KEY,
-});
-
 @Injectable()
 export class SubscriptionsService {
+  private client: MercadoPagoConfig;
+
   constructor(
     @InjectRepository(Subscripcion)
     private readonly subscriptionRepository: Repository<Subscripcion>,
     @InjectRepository(Plan)
     private readonly planRepository: Repository<Plan>,
-  ) {}
+    private configService: ConfigService,
+  ) {
+    this.client = new MercadoPagoConfig({
+      accessToken: this.configService.get<string>('MERCADO_PAGO_ACCESS_TOKEN'),
+      options: { timeout: 5000, idempotencyKey: 'abc' },
+    });
+  }
 
-  async createSubscription(dto: CreateSubscriptionDto) {
+  async createSubscription(createSubscriptionDto: CreateSubscriptionDto) {
     const plan = await this.planRepository.findOne({
-      where: { id: dto.planId },
+      where: { id: createSubscriptionDto.planId },
     });
 
     if (!plan) {
       throw new HttpException('Plan no encontrado', HttpStatus.NOT_FOUND);
     }
 
-    // Verifica que los datos del DTO son correctos
-    if (!dto.userEmail || !dto.paymentMethodToken) {
+    if (
+      !createSubscriptionDto.userEmail ||
+      !createSubscriptionDto.paymentMethodToken
+    ) {
       throw new HttpException(
         'Datos incompletos para la suscripción',
         HttpStatus.BAD_REQUEST,
       );
     }
-
-    console.log('Plan encontrado:', plan);
-
-    const preApproval = new PreApproval(client); // Asegúrate de que 'client' esté correctamente configurado
-    console.log('PreApproval creado:', preApproval);
+    const preApproval = new PreApproval(this.client);
+    const payment = new Payment(this.client);
 
     try {
       const response = await preApproval.create({
         body: {
-          payer_email: dto.userEmail,
-          card_token_id: dto.paymentMethodToken,
+          payer_email: createSubscriptionDto.userEmail,
+          card_token_id: createSubscriptionDto.paymentMethodToken,
           status: 'authorized',
           auto_recurring: {
-            frequency: 1, // Frecuencia del pago (ej. mensual)
-            frequency_type: 'months', // Puede ser "days", "months", etc.
-            transaction_amount: plan.precio, // Precio del plan
-            currency_id: 'ARS', // Moneda de pago
+            frequency: 1,
+            frequency_type: 'months',
+            transaction_amount: plan.precio,
+            currency_id: 'ARS',
           },
         },
       });
 
       console.log('Respuesta de Mercado Pago:', response);
 
-      // Verifica si la respuesta contiene la suscripción y el ID de Mercado Pago
       if (!response || !response.id) {
         throw new HttpException(
           'No se recibió ID de suscripción de Mercado Pago',
@@ -91,7 +94,6 @@ export class SubscriptionsService {
         error.message || error.response?.data,
       );
 
-      // Proporciona un error más detallado si la respuesta de Mercado Pago está presente
       if (error.response?.data) {
         throw new HttpException(
           `Error al crear la suscripción en Mercado Pago: ${error.response.data.message}`,
@@ -118,7 +120,7 @@ export class SubscriptionsService {
       );
     }
 
-    const preApproval = new PreApproval(client);
+    const preApproval = new PreApproval(this.client);
     try {
       await preApproval.update({
         id: dto.subscriptionId,

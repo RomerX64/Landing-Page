@@ -14,7 +14,7 @@ const UserProfile: React.FC = () => {
     company: "",
     password: "",
     telefono: "",
-    username: "",
+    name: "",
   });
   const [isEditing, setIsEditing] = useState(false);
 
@@ -29,7 +29,7 @@ const UserProfile: React.FC = () => {
     } else {
       // Si hay usuario, actualizar los datos del formulario
       setFormData({
-        username: user.username || "",
+        name: user.name || "",
         email: user.email || "",
         telefono: user.telefono || "",
         company: user.company || "",
@@ -76,7 +76,7 @@ const UserProfile: React.FC = () => {
             </Link>
             <div className="flex flex-col">
               <h2 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
-                {user.username}
+                {user.name}
               </h2>
               <p className="text-sm text-indigo-200/65">{user.id}</p>
             </div>
@@ -95,8 +95,8 @@ const UserProfile: React.FC = () => {
                   <label className="block text-gray-300">Nombre</label>
                   <input
                     type="text"
-                    name="username"
-                    value={formData.username}
+                    name="name"
+                    value={formData.name}
                     onChange={handleChange}
                     className="w-full px-3 py-2 mt-1 text-white bg-gray-700 rounded-lg"
                   />
@@ -166,7 +166,7 @@ const UserProfile: React.FC = () => {
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <div>
                   <p className="block text-gray-300">
-                    <strong>Nombre:</strong> {formData.username}
+                    <strong>Nombre:</strong> {formData.name}
                   </p>
                 </div>
                 <div>
