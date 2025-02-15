@@ -708,10 +708,10 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$context$2f$user$2e$context$2
 const defaultContext = {
     sub: null,
     planes: [],
-    suscribirse: ()=>{},
-    desuscribirse: ()=>{},
-    selectPlan: async ()=>null,
     viewPlan: null,
+    suscribirse: async ()=>{},
+    desuscribirse: async ()=>{},
+    selectPlan: async ()=>null,
     changePlan: ()=>{}
 };
 const SuscribeContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["createContext"])(defaultContext);
@@ -720,50 +720,71 @@ const SuscribeProvider = ({ children })=>{
     const [sub, setSub] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
     const [planes, setPlanes] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
     const [viewPlan, setViewPlan] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
-    const suscribirse = async (planId, paymentMethodToken)=>{
-        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post(`/subscriptions`, {
-            planId,
-            userEmail: user?.email,
-            paymentMethodToken
-        }));
-        if (error || !data || !data) {
-            console.error("Error suscribiéndose:", error || "No se retornaron datos");
-            return;
+    // Función para obtener los planes desde la API o desde el localStorage
+    const getPlanes = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async ()=>{
+        try {
+            const storedPlanes = localStorage.getItem("planes");
+            if (storedPlanes) {
+                const parsed = JSON.parse(storedPlanes);
+                setPlanes(parsed);
+                console.log("Planes cargados desde LocalStorage");
+                return;
+            }
+            const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get(`/users/planes`));
+            if (error || !data?.data) {
+                console.error("Error al obtener planes:", error || "No se retornaron datos");
+                return;
+            }
+            const fetchedPlanes = data.data;
+            setPlanes(fetchedPlanes);
+            localStorage.setItem("planes", JSON.stringify(fetchedPlanes));
+        } catch (err) {
+            console.error("Error en getPlanes:", err);
         }
-        setSub(data.data.subscription);
-        localStorage.setItem("subscripcion", JSON.stringify(data.data.subscription));
-    };
-    const desuscribirse = async ()=>{
+    }, []);
+    // Función para suscribirse a un plan
+    const suscribirse = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async (planId, paymentMethodToken)=>{
+        try {
+            const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post(`/subscriptions`, {
+                planId,
+                userEmail: user?.email,
+                paymentMethodToken
+            }));
+            if (error || !data?.data?.subscription) {
+                console.error("Error al suscribirse:", error || "No se retornaron datos");
+                return;
+            }
+            const newSubscription = data.data.subscription;
+            setSub(newSubscription);
+            localStorage.setItem("subscripcion", JSON.stringify(newSubscription));
+        } catch (err) {
+            console.error("Excepción en suscribirse:", err);
+        }
+    }, [
+        user
+    ]);
+    // Función para cancelar la suscripción
+    const desuscribirse = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async ()=>{
         if (!sub) return;
-        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post(`/subscriptions/cancel`, {
-            subscriptionId: sub.mercadopagoSubscriptionId,
-            cancellationReason: "Cancelación solicitada por el usuario"
-        }));
-        if (error || !data || !data.data.subscription) {
-            console.error("Error al desuscribirse:", error || "No se retornaron datos");
-            return;
+        try {
+            const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post(`/subscriptions/cancel`, {
+                subscriptionId: sub.mercadopagoSubscriptionId,
+                cancellationReason: "Cancelación solicitada por el usuario"
+            }));
+            if (error || !data?.data?.subscription) {
+                console.error("Error al desuscribirse:", error || "No se retornaron datos");
+                return;
+            }
+            setSub(null);
+            localStorage.removeItem("subscripcion");
+        } catch (err) {
+            console.error("Excepción en desuscribirse:", err);
         }
-        setSub(null);
-        localStorage.removeItem("subscripcion");
-    };
-    const getPlanes = async ()=>{
-        const storedPlanes = localStorage.getItem("planes");
-        if (storedPlanes) {
-            const parsed = JSON.parse(storedPlanes);
-            setPlanes(parsed);
-            console.log("Planes cargados desde LocalStorage");
-            return;
-        }
-        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get(`/users/planes`));
-        if (error || !data || !data.data) {
-            console.error("Error al obtener los datos del plan:", error || "No se retornaron datos");
-            return;
-        }
-        const planesReturned = data.data;
-        setPlanes(planesReturned);
-        localStorage.setItem("planes", JSON.stringify(planesReturned));
-    };
-    const selectPlan = async (planId)=>{
+    }, [
+        sub
+    ]);
+    // Función para seleccionar un plan, que se busca primero en el estado (o en localStorage si aún no se cargó)
+    const selectPlan = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async (planId)=>{
         if (planes.length === 0) {
             await getPlanes();
         }
@@ -775,8 +796,12 @@ const SuscribeProvider = ({ children })=>{
         setViewPlan(foundPlan);
         localStorage.setItem("viewPlan", JSON.stringify(foundPlan));
         return foundPlan;
-    };
-    const changePlan = (direction)=>{
+    }, [
+        planes,
+        getPlanes
+    ]);
+    // Función para cambiar de plan (siguiente o anterior)
+    const changePlan = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])((direction)=>{
         if (!viewPlan || planes.length === 0) return;
         const currentIndex = planes.findIndex((plan)=>plan.id === viewPlan.id);
         if (currentIndex === -1) return;
@@ -786,7 +811,11 @@ const SuscribeProvider = ({ children })=>{
         const newPlan = planes[newIndex];
         setViewPlan(newPlan);
         localStorage.setItem("viewPlan", JSON.stringify(newPlan));
-    };
+    }, [
+        planes,
+        viewPlan
+    ]);
+    // Carga inicial de la suscripción y los planes al montar o al cambiar el usuario
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         const storedSub = localStorage.getItem("subscripcion");
         if (storedSub) {
@@ -794,42 +823,48 @@ const SuscribeProvider = ({ children })=>{
         }
         getPlanes();
     }, [
-        user
+        user,
+        getPlanes
     ]);
+    // Si no hay un plan seleccionado, intenta cargarlo desde localStorage o selecciona el plan popular o el primero
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        if (planes.length > 0 && viewPlan === null) {
+        if (planes.length > 0 && !viewPlan) {
             const storedViewPlan = localStorage.getItem("viewPlan");
             if (storedViewPlan) {
                 setViewPlan(JSON.parse(storedViewPlan));
             } else {
                 const popularPlan = planes.find((plan)=>plan.popular === true);
-                if (popularPlan) {
-                    setViewPlan(popularPlan);
-                } else {
-                    setViewPlan(planes[0]);
-                }
+                setViewPlan(popularPlan || planes[0]);
             }
         }
     }, [
         planes,
         viewPlan
     ]);
-    const value = {
+    const value = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>({
+            sub,
+            planes,
+            viewPlan,
+            suscribirse,
+            desuscribirse,
+            selectPlan,
+            changePlan
+        }), [
         sub,
         planes,
+        viewPlan,
         suscribirse,
         desuscribirse,
         selectPlan,
-        viewPlan,
         changePlan
-    };
+    ]);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(SuscribeContext.Provider, {
         value: value,
         children: children
     }, void 0, false, {
         fileName: "[project]/context/Suscribe.context.tsx",
-        lineNumber: 185,
-        columnNumber: 5
+        lineNumber: 192,
+        columnNumber: 10
     }, this);
 };
 }}),

@@ -157,7 +157,7 @@ const authOptions = {
             return session;
         },
         async redirect ({ url, baseUrl }) {
-            return `${"TURBOPACK compile-time value", "http://localhost:3000"}/`;
+            return `${process.env.NEXT_PUBLIC_API_URL}/`;
         }
     }
 };

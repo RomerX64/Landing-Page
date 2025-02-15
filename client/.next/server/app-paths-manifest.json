@@ -1,9 +1,9 @@
 {
-  "/(auth)/signin/page": "app/(auth)/signin/page.js",
-  "/_not-found/page": "app/_not-found/page.js",
-  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
   "/(default)/page": "app/(default)/page.js",
-  "/(default)/profile/page": "app/(default)/profile/page.js",
-  "/(auth)/signup/page": "app/(auth)/signup/page.js",
-  "/(default)/plan/page": "app/(default)/plan/page.js"
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
+  "/(default)/plan/page": "app/(default)/plan/page.js",
+  "/(default)/suscribirse/page": "app/(default)/suscribirse/page.js",
+  "/(default)/suscribirse/success/page": "app/(default)/suscribirse/success/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/(auth)/signin/page": "app/(auth)/signin/page.js"
 }

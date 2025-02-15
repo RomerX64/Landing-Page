@@ -2,12 +2,9 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MercadoPagoConfig, PreApproval, Payment } from 'mercadopago';
-
+import { v4 as uuidv4 } from 'uuid';
 import { ConfigService } from '@nestjs/config';
-import {
-  CreateSubscriptionDto,
-  CancelSubscriptionDto,
-} from './dto/subscription.dto';
+import { CreateSubscriptionDto, CancelSubscriptionDto } from './dto/subscription.dto';
 import { Subscripcion, SubscriptionStatus } from '../User/Subscripcion.entity';
 import { Plan } from '../User/Planes.entity';
 
@@ -24,31 +21,28 @@ export class SubscriptionsService {
   ) {
     this.client = new MercadoPagoConfig({
       accessToken: this.configService.get<string>('MERCADO_PAGO_ACCESS_TOKEN'),
-      options: { timeout: 5000, idempotencyKey: 'abc' },
+      options: { timeout: 5000 },
     });
   }
 
   async createSubscription(createSubscriptionDto: CreateSubscriptionDto) {
+    // Validar la existencia del plan
     const plan = await this.planRepository.findOne({
       where: { id: createSubscriptionDto.planId },
     });
-
     if (!plan) {
       throw new HttpException('Plan no encontrado', HttpStatus.NOT_FOUND);
     }
-
-    if (
-      !createSubscriptionDto.userEmail ||
-      !createSubscriptionDto.paymentMethodToken
-    ) {
+    if (!createSubscriptionDto.userEmail || !createSubscriptionDto.paymentMethodToken) {
       throw new HttpException(
         'Datos incompletos para la suscripción',
         HttpStatus.BAD_REQUEST,
       );
     }
-    const preApproval = new PreApproval(this.client);
-    const payment = new Payment(this.client);
 
+    // Generar una clave única de idempotencia para cada solicitud
+    this.client.options.idempotencyKey = uuidv4();
+    const preApproval = new PreApproval(this.client);
     try {
       const response = await preApproval.create({
         body: {
@@ -59,12 +53,10 @@ export class SubscriptionsService {
             frequency: 1,
             frequency_type: 'months',
             transaction_amount: plan.precio,
-            currency_id: 'ARS',
+            currency_id: 'USD', // Cambio a USD
           },
         },
       });
-
-      console.log('Respuesta de Mercado Pago:', response);
 
       if (!response || !response.id) {
         throw new HttpException(
@@ -79,9 +71,6 @@ export class SubscriptionsService {
         mercadopagoSubscriptionId: response.id,
         status: SubscriptionStatus.ACTIVE,
       });
-
-      console.log('Nueva suscripción creada:', newSubscription);
-
       await this.subscriptionRepository.save(newSubscription);
 
       return {
@@ -89,18 +78,12 @@ export class SubscriptionsService {
         subscription: newSubscription,
       };
     } catch (error) {
-      console.error(
-        'Error al crear la suscripción en Mercado Pago:',
-        error.message || error.response?.data,
-      );
-
       if (error.response?.data) {
         throw new HttpException(
           `Error al crear la suscripción en Mercado Pago: ${error.response.data.message}`,
           HttpStatus.BAD_REQUEST,
         );
       }
-
       throw new HttpException(
         'Error inesperado al crear la suscripción',
         HttpStatus.BAD_REQUEST,
@@ -112,7 +95,6 @@ export class SubscriptionsService {
     const subscription = await this.subscriptionRepository.findOne({
       where: { mercadopagoSubscriptionId: dto.subscriptionId },
     });
-
     if (!subscription) {
       throw new HttpException(
         'Suscripción no encontrada',
@@ -120,6 +102,8 @@ export class SubscriptionsService {
       );
     }
 
+    // Generar una clave única para la operación de cancelación
+    this.client.options.idempotencyKey = uuidv4();
     const preApproval = new PreApproval(this.client);
     try {
       await preApproval.update({
@@ -137,10 +121,6 @@ export class SubscriptionsService {
         subscription,
       };
     } catch (error) {
-      console.error(
-        'Error al cancelar la suscripción en Mercado Pago:',
-        error.message || error.response?.data,
-      );
       throw new HttpException(
         'Error al cancelar la suscripción',
         HttpStatus.BAD_REQUEST,
@@ -149,8 +129,8 @@ export class SubscriptionsService {
   }
 
   async handleWebhook(notification: any) {
-    const { id, action } = notification;
 
+    const { id, action } = notification;
     const subscription = await this.subscriptionRepository.findOne({
       where: { mercadopagoSubscriptionId: id },
     });
@@ -176,7 +156,6 @@ export class SubscriptionsService {
       subscription.cancellationReason =
         notification.reason || 'No especificado';
     }
-
     await this.subscriptionRepository.save(subscription);
   }
 

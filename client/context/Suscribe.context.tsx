@@ -5,6 +5,8 @@ import React, {
   useContext,
   useEffect,
   createContext,
+  useCallback,
+  useMemo,
 } from "react";
 import api from "@/app/api/Api";
 import { handleAsync } from "@/utils/error.helper";
@@ -16,12 +18,8 @@ interface SuscribeContextProps {
   sub: ISubscripcion | null;
   planes: IPlan[];
   viewPlan: IPlan | null;
-  /**
-   * Función para suscribirse.
-   * Ahora requiere el `planId` y el `paymentMethodToken` obtenido desde el formulario de pago.
-   */
-  suscribirse: (planId: number, paymentMethodToken: string) => void;
-  desuscribirse: () => void;
+  suscribirse: (planId: number, paymentMethodToken: string) => Promise<void>;
+  desuscribirse: () => Promise<void>;
   selectPlan: (planId: number) => Promise<IPlan | null>;
   changePlan: (direction: "next" | "prev") => void;
 }
@@ -29,15 +27,14 @@ interface SuscribeContextProps {
 const defaultContext: SuscribeContextProps = {
   sub: null,
   planes: [],
-  suscribirse: () => {},
-  desuscribirse: () => {},
-  selectPlan: async () => null,
   viewPlan: null,
+  suscribirse: async () => {},
+  desuscribirse: async () => {},
+  selectPlan: async () => null,
   changePlan: () => {},
 };
 
-export const SuscribeContext =
-  createContext<SuscribeContextProps>(defaultContext);
+export const SuscribeContext = createContext<SuscribeContextProps>(defaultContext);
 
 interface SuscribeProviderProps {
   children: ReactNode;
@@ -49,141 +46,148 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
   const [planes, setPlanes] = useState<IPlan[]>([]);
   const [viewPlan, setViewPlan] = useState<IPlan | null>(null);
 
-  const suscribirse = async (planId: number, paymentMethodToken: string) => {
-    const { data, error } = await handleAsync(
-      api.post(`/subscriptions`, {
-        planId,
-        userEmail: user?.email,
-        paymentMethodToken,
-      })
-    );
+  // Función para obtener los planes desde la API o desde el localStorage
+  const getPlanes = useCallback(async () => {
+    try {
+      const storedPlanes = localStorage.getItem("planes");
+      if (storedPlanes) {
+        const parsed = JSON.parse(storedPlanes) as IPlan[];
+        setPlanes(parsed);
+        console.log("Planes cargados desde LocalStorage");
+        return;
+      }
 
-    if (error || !data || !data) {
-      console.error("Error suscribiéndose:", error || "No se retornaron datos");
-      return;
+      const { data, error } = await handleAsync(api.get(`/users/planes`));
+      if (error || !data?.data) {
+        console.error("Error al obtener planes:", error || "No se retornaron datos");
+        return;
+      }
+
+      const fetchedPlanes: IPlan[] = data.data;
+      setPlanes(fetchedPlanes);
+      localStorage.setItem("planes", JSON.stringify(fetchedPlanes));
+    } catch (err) {
+      console.error("Error en getPlanes:", err);
     }
+  }, []);
 
-    setSub(data.data.subscription);
-    localStorage.setItem(
-      "subscripcion",
-      JSON.stringify(data.data.subscription)
-    );
-  };
+  // Función para suscribirse a un plan
+  const suscribirse = useCallback(
+    async (planId: number, paymentMethodToken: string) => {
+      try {
+        const { data, error } = await handleAsync(
+          api.post(`/subscriptions`, {
+            planId,
+            userEmail: user?.email,
+            paymentMethodToken,
+          })
+        );
 
-  const desuscribirse = async () => {
+        if (error || !data?.data?.subscription) {
+          console.error("Error al suscribirse:", error || "No se retornaron datos");
+          return;
+        }
+
+        const newSubscription: ISubscripcion = data.data.subscription;
+        setSub(newSubscription);
+        localStorage.setItem("subscripcion", JSON.stringify(newSubscription));
+      } catch (err) {
+        console.error("Excepción en suscribirse:", err);
+      }
+    },
+    [user]
+  );
+
+  // Función para cancelar la suscripción
+  const desuscribirse = useCallback(async () => {
     if (!sub) return;
-    const { data, error } = await handleAsync(
-      api.post(`/subscriptions/cancel`, {
-        subscriptionId: sub.mercadopagoSubscriptionId,
-        cancellationReason: "Cancelación solicitada por el usuario",
-      })
-    );
-
-    if (error || !data || !data.data.subscription) {
-      console.error(
-        "Error al desuscribirse:",
-        error || "No se retornaron datos"
+    try {
+      const { data, error } = await handleAsync(
+        api.post(`/subscriptions/cancel`, {
+          subscriptionId: sub.mercadopagoSubscriptionId,
+          cancellationReason: "Cancelación solicitada por el usuario",
+        })
       );
-      return;
+
+      if (error || !data?.data?.subscription) {
+        console.error("Error al desuscribirse:", error || "No se retornaron datos");
+        return;
+      }
+      setSub(null);
+      localStorage.removeItem("subscripcion");
+    } catch (err) {
+      console.error("Excepción en desuscribirse:", err);
     }
+  }, [sub]);
 
-    setSub(null);
-    localStorage.removeItem("subscripcion");
-  };
+  // Función para seleccionar un plan, que se busca primero en el estado (o en localStorage si aún no se cargó)
+  const selectPlan = useCallback(
+    async (planId: number): Promise<IPlan | null> => {
+      if (planes.length === 0) {
+        await getPlanes();
+      }
+      const foundPlan = planes.find((plan) => plan.id === planId);
+      if (!foundPlan) {
+        console.error("Plan no encontrado");
+        return null;
+      }
+      setViewPlan(foundPlan);
+      localStorage.setItem("viewPlan", JSON.stringify(foundPlan));
+      return foundPlan;
+    },
+    [planes, getPlanes]
+  );
 
-  const getPlanes = async () => {
-    const storedPlanes = localStorage.getItem("planes");
+  // Función para cambiar de plan (siguiente o anterior)
+  const changePlan = useCallback(
+    (direction: "next" | "prev") => {
+      if (!viewPlan || planes.length === 0) return;
+      const currentIndex = planes.findIndex((plan) => plan.id === viewPlan.id);
+      if (currentIndex === -1) return;
+      let newIndex = direction === "next" ? currentIndex + 1 : currentIndex - 1;
+      if (newIndex < 0) newIndex = planes.length - 1;
+      if (newIndex >= planes.length) newIndex = 0;
+      const newPlan = planes[newIndex];
+      setViewPlan(newPlan);
+      localStorage.setItem("viewPlan", JSON.stringify(newPlan));
+    },
+    [planes, viewPlan]
+  );
 
-    if (storedPlanes) {
-      const parsed = JSON.parse(storedPlanes);
-      setPlanes(parsed);
-      console.log("Planes cargados desde LocalStorage");
-      return;
-    }
-
-    const { data, error } = await handleAsync(api.get(`/users/planes`));
-
-    if (error || !data || !data.data) {
-      console.error(
-        "Error al obtener los datos del plan:",
-        error || "No se retornaron datos"
-      );
-      return;
-    }
-
-    const planesReturned: IPlan[] = data.data;
-    setPlanes(planesReturned);
-    localStorage.setItem("planes", JSON.stringify(planesReturned));
-  };
-
-  const selectPlan = async (planId: number): Promise<IPlan | null> => {
-    if (planes.length === 0) {
-      await getPlanes();
-    }
-
-    const foundPlan = planes.find((plan) => plan.id === planId);
-    if (!foundPlan) {
-      console.error("Plan no encontrado");
-      return null;
-    }
-
-    setViewPlan(foundPlan);
-    localStorage.setItem("viewPlan", JSON.stringify(foundPlan));
-    return foundPlan;
-  };
-
-  const changePlan = (direction: "next" | "prev") => {
-    if (!viewPlan || planes.length === 0) return;
-
-    const currentIndex = planes.findIndex((plan) => plan.id === viewPlan.id);
-    if (currentIndex === -1) return;
-
-    let newIndex = direction === "next" ? currentIndex + 1 : currentIndex - 1;
-    if (newIndex < 0) newIndex = planes.length - 1;
-    if (newIndex >= planes.length) newIndex = 0;
-
-    const newPlan = planes[newIndex];
-    setViewPlan(newPlan);
-    localStorage.setItem("viewPlan", JSON.stringify(newPlan));
-  };
-
+  // Carga inicial de la suscripción y los planes al montar o al cambiar el usuario
   useEffect(() => {
     const storedSub = localStorage.getItem("subscripcion");
     if (storedSub) {
       setSub(JSON.parse(storedSub));
     }
     getPlanes();
-  }, [user]);
+  }, [user, getPlanes]);
 
+  // Si no hay un plan seleccionado, intenta cargarlo desde localStorage o selecciona el plan popular o el primero
   useEffect(() => {
-    if (planes.length > 0 && viewPlan === null) {
+    if (planes.length > 0 && !viewPlan) {
       const storedViewPlan = localStorage.getItem("viewPlan");
       if (storedViewPlan) {
         setViewPlan(JSON.parse(storedViewPlan));
       } else {
         const popularPlan = planes.find((plan) => plan.popular === true);
-        if (popularPlan) {
-          setViewPlan(popularPlan);
-        } else {
-          setViewPlan(planes[0]);
-        }
+        setViewPlan(popularPlan || planes[0]);
       }
     }
   }, [planes, viewPlan]);
 
-  const value: SuscribeContextProps = {
-    sub,
-    planes,
-    suscribirse,
-    desuscribirse,
-    selectPlan,
-    viewPlan,
-    changePlan,
-  };
-
-  return (
-    <SuscribeContext.Provider value={value}>
-      {children}
-    </SuscribeContext.Provider>
+  const value = useMemo(
+    () => ({
+      sub,
+      planes,
+      viewPlan,
+      suscribirse,
+      desuscribirse,
+      selectPlan,
+      changePlan,
+    }),
+    [sub, planes, viewPlan, suscribirse, desuscribirse, selectPlan, changePlan]
   );
+
+  return <SuscribeContext.Provider value={value}>{children}</SuscribeContext.Provider>;
 };

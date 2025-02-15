@@ -31,11 +31,10 @@ export class UsersPreLoad implements OnApplicationBootstrap {
       company: 'Assetly',
       password: 'Paria!481632',
       telefono: '+54351532645',
-      username: 'Romer',
+      name: 'Romer',
     },
   ];
 
-  // Se elimina el campo "id" ya que es autogenerado
   planes: PreLoadPlan[] = [
     {
       imagen: 'WorkflowImg01',
