@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { UserContext } from "@/context/user.context";
 
 export default function SignInLayout() {
-  const { signInWithGoogle } = useContext(UserContext);
+  const { signInWithGoogle, signInO } = useContext(UserContext);
   const { data: session } = useSession();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,7 +21,8 @@ export default function SignInLayout() {
     e.preventDefault();
     setError("");
     try {
-      // Aquí iría tu lógica de autenticación con email/contraseña
+      signInO({email, password})
+      router.push("/")
     } catch (err: any) {
       setError(err.message || "Hubo un error al iniciar sesión.");
     }

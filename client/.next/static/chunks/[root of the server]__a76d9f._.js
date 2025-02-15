@@ -77,7 +77,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib
 ;
 const prod = false;
 const urlWeb = "https://assetly-landing-page-backend.onrender.com/";
-const API_URL = ("TURBOPACK compile-time falsy", 0) ? ("TURBOPACK unreachable", undefined) : "http://localhost:3000";
+const API_URL = ("TURBOPACK compile-time falsy", 0) ? ("TURBOPACK unreachable", undefined) : "http://localhost:3001";
 const api = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].create({
     baseURL: API_URL,
     headers: {

@@ -10,14 +10,12 @@ __turbopack_esm__({
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$context$2f$user$2e$context$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/context/user.context.tsx [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next-auth/react/index.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/client/app-dir/link.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/navigation.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
 ;
 var _s = __turbopack_refresh__.signature();
 "use client";
-;
 ;
 ;
 ;
@@ -32,7 +30,7 @@ function SignUpLayout() {
         password: "",
         confirmPassword: ""
     });
-    const { signUp, mailIsValid, loginWithGoogle, user } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useContext"])(__TURBOPACK__imported__module__$5b$project$5d2f$context$2f$user$2e$context$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["UserContext"]);
+    const { signUp, mailIsValid, signUpWithGoogle, user } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useContext"])(__TURBOPACK__imported__module__$5b$project$5d2f$context$2f$user$2e$context$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["UserContext"]);
     const [phoneError, setPhoneError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [passwordError, setPasswordError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [lengthError, setLengthError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
@@ -122,11 +120,8 @@ function SignUpLayout() {
             console.error("Error en la solicitud:", error);
         }
     };
-    // Opcional: función para login con Google (puedes integrarla usando la librería de Google o un popup)
     const handleGoogle = async ()=>{
-        await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["signIn"])("google", {
-            callbackUrl: "/"
-        });
+        await signUpWithGoogle();
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -141,12 +136,12 @@ function SignUpLayout() {
                             children: "Crea tu usuario"
                         }, void 0, false, {
                             fileName: "[project]/app/(auth)/signup/layout.tsx",
-                            lineNumber: 113,
+                            lineNumber: 112,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/(auth)/signup/layout.tsx",
-                        lineNumber: 112,
+                        lineNumber: 111,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -168,13 +163,13 @@ function SignUpLayout() {
                                                         children: "*"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                                        lineNumber: 125,
+                                                        lineNumber: 124,
                                                         columnNumber: 28
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                                lineNumber: 121,
+                                                lineNumber: 120,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -187,13 +182,13 @@ function SignUpLayout() {
                                                 onChange: handleOnChange
                                             }, void 0, false, {
                                                 fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                                lineNumber: 127,
+                                                lineNumber: 126,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                        lineNumber: 120,
+                                        lineNumber: 119,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -208,13 +203,13 @@ function SignUpLayout() {
                                                         children: "*"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                                        lineNumber: 142,
+                                                        lineNumber: 141,
                                                         columnNumber: 38
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                                lineNumber: 138,
+                                                lineNumber: 137,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -227,13 +222,13 @@ function SignUpLayout() {
                                                 onChange: handleOnChange
                                             }, void 0, false, {
                                                 fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                                lineNumber: 144,
+                                                lineNumber: 143,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                        lineNumber: 137,
+                                        lineNumber: 136,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -248,13 +243,13 @@ function SignUpLayout() {
                                                         children: "*"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                                        lineNumber: 159,
+                                                        lineNumber: 158,
                                                         columnNumber: 30
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                                lineNumber: 155,
+                                                lineNumber: 154,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -268,7 +263,7 @@ function SignUpLayout() {
                                                 onChange: handleEmailChange
                                             }, void 0, false, {
                                                 fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                                lineNumber: 161,
+                                                lineNumber: 160,
                                                 columnNumber: 17
                                             }, this),
                                             emailError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -276,13 +271,13 @@ function SignUpLayout() {
                                                 children: emailError
                                             }, void 0, false, {
                                                 fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                                lineNumber: 172,
+                                                lineNumber: 171,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                        lineNumber: 154,
+                                        lineNumber: 153,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -297,13 +292,13 @@ function SignUpLayout() {
                                                         children: "*"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                                        lineNumber: 180,
+                                                        lineNumber: 179,
                                                         columnNumber: 37
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                                lineNumber: 176,
+                                                lineNumber: 175,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -317,7 +312,7 @@ function SignUpLayout() {
                                                 onChange: handleOnChange
                                             }, void 0, false, {
                                                 fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                                lineNumber: 182,
+                                                lineNumber: 181,
                                                 columnNumber: 17
                                             }, this),
                                             phoneError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -325,13 +320,13 @@ function SignUpLayout() {
                                                 children: "Formato inválido, debe tener el prefijo nacional"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                                lineNumber: 193,
+                                                lineNumber: 192,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                        lineNumber: 175,
+                                        lineNumber: 174,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -346,13 +341,13 @@ function SignUpLayout() {
                                                         children: "*"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                                        lineNumber: 203,
+                                                        lineNumber: 202,
                                                         columnNumber: 30
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                                lineNumber: 199,
+                                                lineNumber: 198,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -365,7 +360,7 @@ function SignUpLayout() {
                                                 onChange: handlePasswordChange
                                             }, void 0, false, {
                                                 fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                                lineNumber: 205,
+                                                lineNumber: 204,
                                                 columnNumber: 17
                                             }, this),
                                             lengthError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -373,13 +368,13 @@ function SignUpLayout() {
                                                 children: "La contraseña debe tener al menos 5 caracteres"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                                lineNumber: 215,
+                                                lineNumber: 214,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                        lineNumber: 198,
+                                        lineNumber: 197,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -394,13 +389,13 @@ function SignUpLayout() {
                                                         children: "*"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                                        lineNumber: 225,
+                                                        lineNumber: 224,
                                                         columnNumber: 40
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                                lineNumber: 221,
+                                                lineNumber: 220,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -413,7 +408,7 @@ function SignUpLayout() {
                                                 onChange: handlePasswordChange
                                             }, void 0, false, {
                                                 fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                                lineNumber: 227,
+                                                lineNumber: 226,
                                                 columnNumber: 17
                                             }, this),
                                             passwordError && !lengthError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -421,19 +416,19 @@ function SignUpLayout() {
                                                 children: "Las contraseñas no son iguales"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                                lineNumber: 237,
+                                                lineNumber: 236,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                        lineNumber: 220,
+                                        lineNumber: 219,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                lineNumber: 118,
+                                lineNumber: 117,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -445,7 +440,7 @@ function SignUpLayout() {
                                         children: "Registrarse"
                                     }, void 0, false, {
                                         fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                        lineNumber: 244,
+                                        lineNumber: 243,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -455,19 +450,19 @@ function SignUpLayout() {
                                         children: "Logearse con Google"
                                     }, void 0, false, {
                                         fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                        lineNumber: 250,
+                                        lineNumber: 249,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                lineNumber: 243,
+                                lineNumber: 242,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/(auth)/signup/layout.tsx",
-                        lineNumber: 117,
+                        lineNumber: 116,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -481,33 +476,33 @@ function SignUpLayout() {
                                 children: "Logearse"
                             }, void 0, false, {
                                 fileName: "[project]/app/(auth)/signup/layout.tsx",
-                                lineNumber: 261,
+                                lineNumber: 260,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/(auth)/signup/layout.tsx",
-                        lineNumber: 259,
+                        lineNumber: 258,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/(auth)/signup/layout.tsx",
-                lineNumber: 111,
+                lineNumber: 110,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/app/(auth)/signup/layout.tsx",
-            lineNumber: 110,
+            lineNumber: 109,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/(auth)/signup/layout.tsx",
-        lineNumber: 109,
+        lineNumber: 108,
         columnNumber: 5
     }, this);
 }
-_s(SignUpLayout, "PXuWbWtftGIiuoVLIcCOKdCk4Ws=", false, function() {
+_s(SignUpLayout, "0uHnPDEqn8/UmYc8LnynzQjehwg=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"]
     ];
