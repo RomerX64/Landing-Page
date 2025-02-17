@@ -16,37 +16,30 @@ const PaymentForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // Función simulada para generar un token de pago a partir de los datos de la tarjeta.
-  // En producción, integra el SDK de Mercado Pago u otro método de tokenización.
-  const generatePaymentToken = (): string => {
-    return `token_${cardNumber.slice(-4)}_${expiryMonth}${expiryYear}`;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
 
     if (!viewPlan) {
-      setError("No hay un plan seleccionado.");
+      setError("No se ha seleccionado un plan.");
       return;
     }
-
+    // Validación básica de campos
     if (!cardNumber || !cardHolder || !expiryMonth || !expiryYear || !cvv) {
-      setError("Por favor completa todos los campos.");
+      setError("Por favor, complete todos los campos de la tarjeta.");
       return;
     }
 
     setLoading(true);
     try {
-      // Generamos el token de pago (simulado)
-      const paymentToken = generatePaymentToken();
-      // Llamamos a la función de suscribirse del contexto
-      await suscribirse(viewPlan.id, paymentToken);
-      // Redireccionamos a una pantalla de éxito o mostramos un mensaje
-      router.push("/success");
+      const paymentMethodToken = `token-${cardNumber.slice(-4)}-${Date.now()}`;
+
+      await suscribirse(viewPlan.id, paymentMethodToken);
+
+      router.push("/suscribirse/success");
     } catch (err) {
-      console.error("Error al procesar el pago:", err);
-      setError("Error al procesar el pago. Intenta nuevamente.");
+      console.error("Error en handleSubmit:", err);
+      setError("Error al procesar el pago. Por favor, intente nuevamente.");
     } finally {
       setLoading(false);
     }
@@ -72,10 +65,7 @@ const PaymentForm: React.FC = () => {
             <p className="text-gray-300">
               Estás suscribiéndote al plan{" "}
               <span className="font-bold">{viewPlan.name}</span> por{" "}
-              <span className="font-bold">
-                ${viewPlan.precio} dolares mensuales
-              </span>
-              .
+              <span className="font-bold">${viewPlan.precio} dólares mensuales</span>.
             </p>
           </div>
         )}

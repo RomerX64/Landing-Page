@@ -124,40 +124,6 @@ export class UserController {
   }
 
   @ApiBearerAuth()
-  @Get('/suscribe/:userId/:planId')
-  @UseGuards(AuthGuard)
-  @ApiOperation({
-    summary: 'Suscribir usuario',
-    description:
-      'Suscribe al usuario a un plan mediante su userId y plan de pago',
-  })
-  async suscribeUser(
-    @Param('userId') userId: string,
-    @Param('planId') planId: number,
-  ): Promise<User> {
-    try {
-      return await this.userService.suscribeUser(userId, planId);
-    } catch (error) {
-      throw ErrorHandler.handle(error);
-    }
-  }
-
-  @ApiBearerAuth()
-  @Get('/desuscribe/:userId')
-  @UseGuards(AuthGuard, AdminGuard)
-  @ApiOperation({
-    summary: 'Desuscribir usuario',
-    description: 'Desuscribe a un usuario mediante su userId',
-  })
-  async desuscribeUser(@Param('userId') userId: string): Promise<User> {
-    try {
-      return await this.userService.desuscribeUser(userId);
-    } catch (error) {
-      throw ErrorHandler.handle(error);
-    }
-  }
-
-  @ApiBearerAuth()
   @Delete('/user')
   @UseGuards(AuthGuard)
   @ApiOperation({

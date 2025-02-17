@@ -881,6 +881,10 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   margin-left: 5rem;
 }
 
+.ml-4 {
+  margin-left: 1rem;
+}
+
 .mr-2 {
   margin-right: .5rem;
 }
@@ -909,12 +913,12 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   margin-top: 1.5rem;
 }
 
-.mt-auto {
-  margin-top: auto;
+.mt-8 {
+  margin-top: 2rem;
 }
 
-.ml-4 {
-  margin-left: 1rem;
+.mt-auto {
+  margin-top: auto;
 }
 
 .block {
@@ -953,32 +957,16 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   height: 2rem;
 }
 
+.h-\[35px\] {
+  height: 35px;
+}
+
 .h-\[95vh\] {
   height: 95vh;
 }
 
 .h-full {
   height: 100%;
-}
-
-.h-auto {
-  height: auto;
-}
-
-.h-12 {
-  height: 3rem;
-}
-
-.h-screen {
-  height: 100vh;
-}
-
-.h-16 {
-  height: 4rem;
-}
-
-.h-\[35px\] {
-  height: 35px;
 }
 
 .max-h-full {
@@ -1001,20 +989,16 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   width: 75vw;
 }
 
+.w-auto {
+  width: auto;
+}
+
 .w-full {
   width: 100%;
 }
 
 .w-px {
   width: 1px;
-}
-
-.w-32 {
-  width: 8rem;
-}
-
-.w-auto {
-  width: auto;
 }
 
 .min-w-\[100px\] {
@@ -1033,12 +1017,20 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   max-width: 48rem;
 }
 
+.max-w-4xl {
+  max-width: 56rem;
+}
+
 .max-w-6xl {
   max-width: 72rem;
 }
 
 .max-w-7xl {
   max-width: 80rem;
+}
+
+.max-w-\[200px\] {
+  max-width: 200px;
 }
 
 .max-w-\[400px\] {
@@ -1055,14 +1047,6 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
 
 .max-w-xs {
   max-width: 20rem;
-}
-
-.max-w-\[150px\] {
-  max-width: 150px;
-}
-
-.max-w-\[200px\] {
-  max-width: 200px;
 }
 
 .flex-1 {
@@ -1263,6 +1247,10 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   border-radius: .5rem;
 }
 
+.rounded-md {
+  border-radius: .375rem;
+}
+
 .border {
   border-width: 1px;
 }
@@ -1305,6 +1293,11 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
 
 .bg-gray-800\/65 {
   background-color: #1f2937a6;
+}
+
+.bg-gray-900 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity, 1));
 }
 
 .bg-gray-900\/90 {
@@ -1542,6 +1535,11 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   padding-right: 1.5rem;
 }
 
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
 .py-0\.5 {
   padding-top: .125rem;
   padding-bottom: .125rem;
@@ -1565,6 +1563,11 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
 .py-3 {
   padding-top: .75rem;
   padding-bottom: .75rem;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .py-6 {
