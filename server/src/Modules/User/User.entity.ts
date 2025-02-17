@@ -32,7 +32,7 @@ export class User {
   @Column({ nullable: true })
   password: string;
 
-  @Column()
+  @Column({ nullable: true })
   telefono: string;
 
   @Column({ nullable: true })

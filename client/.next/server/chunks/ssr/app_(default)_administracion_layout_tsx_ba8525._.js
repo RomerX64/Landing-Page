@@ -41,7 +41,7 @@ const AdminPanel = ()=>{
     ]);
     // Filtrar usuarios según el término de búsqueda y planes seleccionados
     const filteredUsers = allUsers.filter((user)=>{
-        const matchesSearch = user.username.toLowerCase().includes(searchTerm.toLowerCase()) || user.email.toLowerCase().includes(searchTerm.toLowerCase()) || user.id.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase()) || user.email.toLowerCase().includes(searchTerm.toLowerCase()) || user.id.toLowerCase().includes(searchTerm.toLowerCase());
         let matchesPlan = true;
         if (selectedPlans.length > 0) {
             if (user.subscripcion && user.subscripcion.plan && selectedPlans.includes(user.subscripcion.plan.id)) {
@@ -123,22 +123,30 @@ const AdminPanel = ()=>{
                 className: "grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3",
                 children: filteredUsers.length > 0 ? filteredUsers.map((user)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         onClick: ()=>openModal(user),
-                        className: "p-4 transition-colors bg-gray-700 rounded-lg shadow cursor-pointer hover:bg-gray-600",
+                        className: "relative p-4 transition-colors bg-gray-700 rounded-lg shadow cursor-pointer hover:bg-gray-600",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                 className: "text-lg font-bold text-white",
-                                children: user.username
+                                children: user.name
                             }, void 0, false, {
                                 fileName: "[project]/app/(default)/administracion/layout.tsx",
-                                lineNumber: 124,
+                                lineNumber: 123,
                                 columnNumber: 15
+                            }, this),
+                            user.isAdmin && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "absolute flex items-center justify-center w-4 h-4 text-xs font-bold rounded-full top-2 right-2 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-400 text-neutral-950",
+                                children: "A"
+                            }, void 0, false, {
+                                fileName: "[project]/app/(default)/administracion/layout.tsx",
+                                lineNumber: 125,
+                                columnNumber: 17
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                 className: "text-gray-300",
                                 children: user.email
                             }, void 0, false, {
                                 fileName: "[project]/app/(default)/administracion/layout.tsx",
-                                lineNumber: 125,
+                                lineNumber: 129,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -149,25 +157,25 @@ const AdminPanel = ()=>{
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/(default)/administracion/layout.tsx",
-                                lineNumber: 126,
+                                lineNumber: 130,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, user.id, true, {
                         fileName: "[project]/app/(default)/administracion/layout.tsx",
-                        lineNumber: 119,
+                        lineNumber: 118,
                         columnNumber: 13
                     }, this)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "text-center text-gray-300 col-span-full",
                     children: "No se encontraron usuarios."
                 }, void 0, false, {
                     fileName: "[project]/app/(default)/administracion/layout.tsx",
-                    lineNumber: 130,
+                    lineNumber: 134,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/(default)/administracion/layout.tsx",
-                lineNumber: 116,
+                lineNumber: 115,
                 columnNumber: 7
             }, this),
             modalOpen && selectedUser && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -184,7 +192,7 @@ const AdminPanel = ()=>{
                             children: "Detalles del Usuario"
                         }, void 0, false, {
                             fileName: "[project]/app/(default)/administracion/layout.tsx",
-                            lineNumber: 146,
+                            lineNumber: 150,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -200,25 +208,25 @@ const AdminPanel = ()=>{
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/(default)/administracion/layout.tsx",
-                                            lineNumber: 154,
+                                            lineNumber: 158,
                                             columnNumber: 21
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                             children: typeof value === "object" ? JSON.stringify(value) : value
                                         }, void 0, false, {
                                             fileName: "[project]/app/(default)/administracion/layout.tsx",
-                                            lineNumber: 155,
+                                            lineNumber: 159,
                                             columnNumber: 21
                                         }, this)
                                     ]
                                 }, key, true, {
                                     fileName: "[project]/app/(default)/administracion/layout.tsx",
-                                    lineNumber: 153,
+                                    lineNumber: 157,
                                     columnNumber: 19
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/app/(default)/administracion/layout.tsx",
-                            lineNumber: 149,
+                            lineNumber: 153,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -227,18 +235,18 @@ const AdminPanel = ()=>{
                             children: "Cerrar"
                         }, void 0, false, {
                             fileName: "[project]/app/(default)/administracion/layout.tsx",
-                            lineNumber: 163,
+                            lineNumber: 167,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/(default)/administracion/layout.tsx",
-                    lineNumber: 139,
+                    lineNumber: 143,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/(default)/administracion/layout.tsx",
-                lineNumber: 138,
+                lineNumber: 142,
                 columnNumber: 9
             }, this)
         ]

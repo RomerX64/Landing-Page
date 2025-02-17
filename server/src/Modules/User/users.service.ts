@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   HttpException,
   HttpStatus,
   Injectable,
@@ -7,15 +8,15 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './User.entity';
 import { Repository, IsNull, Not } from 'typeorm';
-import { singIn } from './Dto/singIn.dto';
 import * as bcrypt from 'bcrypt';
-import { singUp } from './Dto/singUp.dto';
 import { ErrorHandler } from '../../Utils/Error.Handler';
 import { JwtService } from '@nestjs/jwt';
 import { Subscripcion } from './Subscripcion.entity';
 import { Plan } from './Planes.entity';
 import { updateUserDto } from './Dto/updateUser.dto';
-import { singInGoogleDTO } from './Dto/singInGoogle.dto';
+import { signIn } from './Dto/singIn.dto';
+import { signUp } from './Dto/singUp.dto';
+import { signInGoogleDTO } from './Dto/singInGoogle.dto';
 
 @Injectable()
 export class UserService {
@@ -40,14 +41,48 @@ export class UserService {
     }
   }
 
-  async singIn(singIn: singIn): Promise<{ User: User; token: string }> {
+  async getUserByEmail(email: string): Promise<{ User: User; token: string }> {
     try {
       const user: User = await this.userRepository.findOne({
-        where: { email: singIn.email },
+        where: { email: email },
+      });
+      if (!user)
+        throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      const userPayload = {
+        sub: user.id,
+        id: user.id,
+        email: user.email,
+        isAdmin: user.isAdmin,
+      };
+
+      const token = this.jwtService.sign(userPayload);
+      return { User: user, token: token };
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  async getUserTruebyEmail(email: string): Promise<boolean> {
+    try {
+      const user: User = await this.userRepository.findOne({
+        where: { email: email },
+      });
+      if (!user)
+        throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  async signIn(signIn: signIn): Promise<{ User: User; token: string }> {
+    try {
+      const user: User = await this.userRepository.findOne({
+        where: { email: signIn.email },
       });
       if (!user)
         throw new HttpException('Credencial inválida', HttpStatus.BAD_REQUEST);
-      const isValid = await bcrypt.compare(singIn.password, user.password);
+      const isValid = await bcrypt.compare(signIn.password, user.password);
       if (!isValid)
         throw new HttpException('Credencial inválida', HttpStatus.BAD_REQUEST);
       const userPayload = {
@@ -64,7 +99,7 @@ export class UserService {
     }
   }
 
-  async signUp(signUp: singUp): Promise<{ user: User; token: string }> {
+  async signUp(signUp: signUp): Promise<{ user: User; token: string }> {
     try {
       const exist = await this.userRepository.findOne({
         where: { email: signUp.email },
@@ -205,9 +240,22 @@ export class UserService {
     }
   }
 
-  async singInGoogle(singInGoogle: singInGoogleDTO): Promise<User> {
+  async signInGoogle(signInGoogle: signInGoogleDTO): Promise<User> {
     try {
-      const user = await this.userRepository.create(singInGoogle);
+      const user = await this.userRepository.create(signInGoogle);
+      return await this.userRepository.save(user);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  async signConGoogle(signInGoogle: signInGoogleDTO): Promise<User> {
+    try {
+      const exist = await this.userRepository.findOne({
+        where: { email: signInGoogle.email },
+      });
+      if (exist) throw new BadRequestException('User already exist');
+      const user = await this.userRepository.create(signInGoogle);
       return await this.userRepository.save(user);
     } catch (error) {
       throw ErrorHandler.handle(error);

@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useState, useContext } from "react";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { UserContext } from "@/context/user.context";
 
@@ -10,7 +10,7 @@ export default function SignInLayout() {
   const { data: session } = useSession();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string>("");
   const router = useRouter();
 
   if (session) {
@@ -21,8 +21,8 @@ export default function SignInLayout() {
     e.preventDefault();
     setError("");
     try {
-      signInO({email, password})
-      router.push("/")
+      signInO({ email, password });
+      router.push("/");
     } catch (err: any) {
       setError(err.message || "Hubo un error al iniciar sesión.");
     }

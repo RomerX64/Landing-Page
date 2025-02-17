@@ -447,6 +447,14 @@ const UserProfile = ()=>{
                         lineNumber: 68,
                         columnNumber: 9
                     }, this),
+                    user?.isAdmin && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "absolute top-0 right-0 px-3 py-1 text-lg rounded-l-lg bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-400 text-neutral-950",
+                        children: "Admin"
+                    }, void 0, false, {
+                        fileName: "[project]/app/(default)/profile/layout.tsx",
+                        lineNumber: 90,
+                        columnNumber: 11
+                    }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "p-4",
                         children: isEditing ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -462,7 +470,7 @@ const UserProfile = ()=>{
                                                     children: "Nombre"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/(default)/profile/layout.tsx",
-                                                    lineNumber: 95,
+                                                    lineNumber: 101,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -473,13 +481,13 @@ const UserProfile = ()=>{
                                                     className: "w-full px-3 py-2 mt-1 text-white bg-gray-700 rounded-lg"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/(default)/profile/layout.tsx",
-                                                    lineNumber: 96,
+                                                    lineNumber: 102,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/(default)/profile/layout.tsx",
-                                            lineNumber: 94,
+                                            lineNumber: 100,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -489,7 +497,7 @@ const UserProfile = ()=>{
                                                     children: "Email"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/(default)/profile/layout.tsx",
-                                                    lineNumber: 105,
+                                                    lineNumber: 111,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -500,13 +508,13 @@ const UserProfile = ()=>{
                                                     className: "w-full px-3 py-2 mt-1 text-white bg-gray-700 rounded-lg"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/(default)/profile/layout.tsx",
-                                                    lineNumber: 106,
+                                                    lineNumber: 112,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/(default)/profile/layout.tsx",
-                                            lineNumber: 104,
+                                            lineNumber: 110,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -516,7 +524,7 @@ const UserProfile = ()=>{
                                                     children: "Teléfono"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/(default)/profile/layout.tsx",
-                                                    lineNumber: 115,
+                                                    lineNumber: 121,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -527,13 +535,13 @@ const UserProfile = ()=>{
                                                     className: "w-full px-3 py-2 mt-1 text-white bg-gray-700 rounded-lg"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/(default)/profile/layout.tsx",
-                                                    lineNumber: 116,
+                                                    lineNumber: 122,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/(default)/profile/layout.tsx",
-                                            lineNumber: 114,
+                                            lineNumber: 120,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -543,7 +551,7 @@ const UserProfile = ()=>{
                                                     children: "Empresa"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/(default)/profile/layout.tsx",
-                                                    lineNumber: 125,
+                                                    lineNumber: 131,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -554,19 +562,19 @@ const UserProfile = ()=>{
                                                     className: "w-full px-3 py-2 mt-1 text-white bg-gray-700 rounded-lg"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/(default)/profile/layout.tsx",
-                                                    lineNumber: 126,
+                                                    lineNumber: 132,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/(default)/profile/layout.tsx",
-                                            lineNumber: 124,
+                                            lineNumber: 130,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/(default)/profile/layout.tsx",
-                                    lineNumber: 93,
+                                    lineNumber: 99,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -577,7 +585,7 @@ const UserProfile = ()=>{
                                             children: "Contraseña (dejar en blanco para no cambiar)"
                                         }, void 0, false, {
                                             fileName: "[project]/app/(default)/profile/layout.tsx",
-                                            lineNumber: 136,
+                                            lineNumber: 142,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -589,13 +597,13 @@ const UserProfile = ()=>{
                                             placeholder: "********"
                                         }, void 0, false, {
                                             fileName: "[project]/app/(default)/profile/layout.tsx",
-                                            lineNumber: 139,
+                                            lineNumber: 145,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/(default)/profile/layout.tsx",
-                                    lineNumber: 135,
+                                    lineNumber: 141,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -607,7 +615,7 @@ const UserProfile = ()=>{
                                             children: "Guardar Cambios"
                                         }, void 0, false, {
                                             fileName: "[project]/app/(default)/profile/layout.tsx",
-                                            lineNumber: 149,
+                                            lineNumber: 155,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -617,19 +625,19 @@ const UserProfile = ()=>{
                                             children: "Cancelar"
                                         }, void 0, false, {
                                             fileName: "[project]/app/(default)/profile/layout.tsx",
-                                            lineNumber: 155,
+                                            lineNumber: 161,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/(default)/profile/layout.tsx",
-                                    lineNumber: 148,
+                                    lineNumber: 154,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/(default)/profile/layout.tsx",
-                            lineNumber: 92,
+                            lineNumber: 98,
                             columnNumber: 13
                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             children: [
@@ -644,7 +652,7 @@ const UserProfile = ()=>{
                                                         children: "Nombre:"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/(default)/profile/layout.tsx",
-                                                        lineNumber: 169,
+                                                        lineNumber: 175,
                                                         columnNumber: 21
                                                     }, this),
                                                     " ",
@@ -652,12 +660,12 @@ const UserProfile = ()=>{
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/(default)/profile/layout.tsx",
-                                                lineNumber: 168,
+                                                lineNumber: 174,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/(default)/profile/layout.tsx",
-                                            lineNumber: 167,
+                                            lineNumber: 173,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -668,7 +676,7 @@ const UserProfile = ()=>{
                                                         children: "Email:"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/(default)/profile/layout.tsx",
-                                                        lineNumber: 174,
+                                                        lineNumber: 180,
                                                         columnNumber: 21
                                                     }, this),
                                                     " ",
@@ -676,12 +684,12 @@ const UserProfile = ()=>{
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/(default)/profile/layout.tsx",
-                                                lineNumber: 173,
+                                                lineNumber: 179,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/(default)/profile/layout.tsx",
-                                            lineNumber: 172,
+                                            lineNumber: 178,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -692,7 +700,7 @@ const UserProfile = ()=>{
                                                         children: "Teléfono:"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/(default)/profile/layout.tsx",
-                                                        lineNumber: 179,
+                                                        lineNumber: 185,
                                                         columnNumber: 21
                                                     }, this),
                                                     " ",
@@ -700,12 +708,12 @@ const UserProfile = ()=>{
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/(default)/profile/layout.tsx",
-                                                lineNumber: 178,
+                                                lineNumber: 184,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/(default)/profile/layout.tsx",
-                                            lineNumber: 177,
+                                            lineNumber: 183,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -716,7 +724,7 @@ const UserProfile = ()=>{
                                                         children: "Empresa:"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/(default)/profile/layout.tsx",
-                                                        lineNumber: 184,
+                                                        lineNumber: 190,
                                                         columnNumber: 21
                                                     }, this),
                                                     " ",
@@ -724,18 +732,18 @@ const UserProfile = ()=>{
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/(default)/profile/layout.tsx",
-                                                lineNumber: 183,
+                                                lineNumber: 189,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/(default)/profile/layout.tsx",
-                                            lineNumber: 182,
+                                            lineNumber: 188,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/(default)/profile/layout.tsx",
-                                    lineNumber: 166,
+                                    lineNumber: 172,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -747,28 +755,28 @@ const UserProfile = ()=>{
                                             size: 35
                                         }, void 0, false, {
                                             fileName: "[project]/app/(default)/profile/layout.tsx",
-                                            lineNumber: 193,
+                                            lineNumber: 199,
                                             columnNumber: 19
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/(default)/profile/layout.tsx",
-                                        lineNumber: 189,
+                                        lineNumber: 195,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/(default)/profile/layout.tsx",
-                                    lineNumber: 188,
+                                    lineNumber: 194,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/(default)/profile/layout.tsx",
-                            lineNumber: 165,
+                            lineNumber: 171,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/(default)/profile/layout.tsx",
-                        lineNumber: 90,
+                        lineNumber: 96,
                         columnNumber: 9
                     }, this)
                 ]
@@ -779,7 +787,7 @@ const UserProfile = ()=>{
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f28$default$292f$profile$2f$suscriberProfile$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/app/(default)/profile/layout.tsx",
-                lineNumber: 200,
+                lineNumber: 206,
                 columnNumber: 7
             }, this)
         ]

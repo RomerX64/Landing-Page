@@ -102,6 +102,7 @@ export default function SignUpLayout() {
 
   const handleGoogle = async () => {
     await signUpWithGoogle();
+    router.push("/")
   };
 
   return (
@@ -251,7 +252,7 @@ export default function SignUpLayout() {
                 onClick={handleGoogle}
                 className="w-full text-gray-300 btn bg-gradient-to-b from-gray-800 to-gray-800/60"
               >
-                Logearse con Google
+                Registrarse con Google
               </button>
             </div>
           </form>

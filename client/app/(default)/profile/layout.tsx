@@ -86,6 +86,12 @@ const UserProfile: React.FC = () => {
           </p>
         </div>
 
+        {user?.isAdmin && (
+          <div className="absolute top-0 right-0 px-3 py-1 text-lg rounded-l-lg bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-400 text-neutral-950">
+            Admin
+          </div>
+        )}
+
         {/* Formulario de edición y datos del usuario */}
         <div className="p-4">
           {isEditing ? (

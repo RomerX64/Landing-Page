@@ -11,41 +11,54 @@ import {
 } from '@nestjs/common';
 import { UserService } from './users.service';
 import { User } from './User.entity';
-import { singIn } from './Dto/singIn.dto';
-import { singUp } from './Dto/singUp.dto';
 import { ErrorHandler } from '../../Utils/Error.Handler';
 import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { AuthGuard } from '../../guards/auth.guard';
 import { AdminGuard } from '../../guards/admin.guard';
 import { Plan } from './Planes.entity';
 import { updateUserDto } from './Dto/updateUser.dto';
-import { singInGoogleDTO } from './Dto/singInGoogle.dto';
+import { signIn } from './Dto/singIn.dto';
+import { signInGoogleDTO } from './Dto/singInGoogle.dto';
+import { signUp } from './Dto/singUp.dto';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post('/singIn')
+  @Post('/signIn')
   @ApiOperation({
     summary: 'Logearse',
     description: 'Logea al usuario mediante el name y password.',
   })
-  async singIn(@Body() singIn: singIn): Promise<{ User: User; token: string }> {
+  async signIn(@Body() signIn: signIn): Promise<{ User: User; token: string }> {
     try {
-      return await this.userService.singIn(singIn);
+      return await this.userService.signIn(signIn);
     } catch (error) {
       throw ErrorHandler.handle(error);
     }
   }
 
-  @Post('/singUp/google')
+  @Post('/signUp/google')
   @ApiOperation({
-    summary: 'Logearse',
-    description: 'Logea al usuario mediante el name y password.',
+    summary: 'Registrarse con google',
+    description: 'Registra al usuario mediante google',
   })
-  async singInGoogle(@Body() singInGoogle: singInGoogleDTO): Promise<User> {
+  async signInGoogle(@Body() signInGoogle: signInGoogleDTO): Promise<User> {
     try {
-      return await this.userService.singInGoogle(singInGoogle);
+      return await this.userService.signInGoogle(signInGoogle);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  @Post('/crearUser/google')
+  @ApiOperation({
+    summary: 'Registrarse con google',
+    description: 'Registra al usuario mediante google',
+  })
+  async signConGoogle(@Body() signInGoogle: signInGoogleDTO): Promise<User> {
+    try {
+      return await this.userService.signConGoogle(signInGoogle);
     } catch (error) {
       throw ErrorHandler.handle(error);
     }
@@ -65,12 +78,32 @@ export class UserController {
     }
   }
 
-  @Post('/singUp')
+  @Get('/email/get/:email')
+  async getUserTruebyEmail(@Param('email') email: string): Promise<boolean> {
+    try {
+      return await this.userService.getUserTruebyEmail(email);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  @Get('/get/:email')
+  async getUserbyEmail(
+    @Param('email') email: string,
+  ): Promise<{ User: User; token: string }> {
+    try {
+      return await this.userService.getUserByEmail(email);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  @Post('/signUp')
   @ApiOperation({
     summary: 'Registrar usuario',
     description: 'Registra a un usuario nuevo y envía un email de confirmación',
   })
-  async singUp(@Body() signUp: singUp): Promise<{ user: User; token: string }> {
+  async signUp(@Body() signUp: signUp): Promise<{ user: User; token: string }> {
     try {
       return await this.userService.signUp(signUp);
     } catch (error) {

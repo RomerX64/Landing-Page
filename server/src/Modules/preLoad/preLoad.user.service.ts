@@ -1,12 +1,12 @@
 import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { singUp } from '../User/Dto/singUp.dto';
 import { Plan } from '../User/Planes.entity';
 import { User } from '../User/User.entity';
 import { ErrorHandler } from '../../Utils/Error.Handler';
 import * as bcrypt from 'bcrypt';
 import { BillingCycle } from '../User/Planes.entity'; // Asegúrate de importar el enum si lo necesitas
+import { signUp } from '../User/Dto/singUp.dto';
 interface PreLoadPlan {
   imagen?: string;
   name: string;
@@ -25,7 +25,7 @@ export class UsersPreLoad implements OnApplicationBootstrap {
     @InjectRepository(Plan) private planRepository: Repository<Plan>,
   ) {}
 
-  users: singUp[] = [
+  users: signUp[] = [
     {
       email: 'romer@gmail.com',
       company: 'Assetly',

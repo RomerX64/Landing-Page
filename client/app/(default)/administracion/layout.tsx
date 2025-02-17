@@ -42,7 +42,7 @@ const AdminPanel: React.FC = () => {
   // Filtrar usuarios según el término de búsqueda y planes seleccionados
   const filteredUsers = allUsers.filter((user) => {
     const matchesSearch =
-      user.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.id.toLowerCase().includes(searchTerm.toLowerCase());
 
@@ -112,16 +112,20 @@ const AdminPanel: React.FC = () => {
         </div>
       </div>
 
-      {/* Lista de usuarios */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {filteredUsers.length > 0 ? (
           filteredUsers.map((user) => (
             <div
               key={user.id}
               onClick={() => openModal(user)}
-              className="p-4 transition-colors bg-gray-700 rounded-lg shadow cursor-pointer hover:bg-gray-600"
+              className="relative p-4 transition-colors bg-gray-700 rounded-lg shadow cursor-pointer hover:bg-gray-600"
             >
-              <p className="text-lg font-bold text-white">{user.username}</p>
+              <p className="text-lg font-bold text-white">{user.name}</p>
+              {user.isAdmin && (
+                <div className="absolute flex items-center justify-center w-4 h-4 text-xs font-bold rounded-full top-2 right-2 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-400 text-neutral-950">
+                  A
+                </div>
+              )}
               <p className="text-gray-300">{user.email}</p>
               <p className="text-sm text-gray-400">ID: {user.id}</p>
             </div>

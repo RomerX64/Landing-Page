@@ -190,8 +190,10 @@ const UserProvider = ({ children })=>{
     const { data: session } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSession"])();
     const [user, setUserState] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const [token, setToken] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
+    const [isSignedOut, setIsSignedOut] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "UserProvider.useEffect": ()=>{
+            if (isSignedOut) return;
             const storedToken = localStorage.getItem("token");
             const storedUser = localStorage.getItem("user");
             if (storedToken) setToken(storedToken);
@@ -203,15 +205,51 @@ const UserProvider = ({ children })=>{
                 }
             }
             if (session?.user) {
-                setUserState(session.user);
-                localStorage.setItem("user", JSON.stringify(session.user));
+                const { email, name } = session.user;
+                registerUser(email, name);
             }
         }
     }["UserProvider.useEffect"], [
-        session
+        session,
+        isSignedOut
     ]);
+    const registerUser = async (email, name)=>{
+        try {
+            const { data: existsResponse, error: getError } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get(`users/email/get/${email}`));
+            if (getError) {
+                console.warn("Error al consultar existencia del usuario:", getError.message);
+                return null;
+            }
+            if (existsResponse?.data) {
+                const { data: fetchedResponse, error: fetchError } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get(`/users/get/${email}`));
+                if (fetchError || !fetchedResponse) {
+                    console.log("Error al traer el usuario:", fetchError?.message);
+                    return null;
+                }
+                setUserState(fetchedResponse.data.User);
+                setToken(fetchedResponse.data.token);
+                localStorage.setItem("token", fetchedResponse.data.token);
+                localStorage.setItem("user", JSON.stringify(fetchedResponse.data));
+                return fetchedResponse.data;
+            }
+            const { data: createdResponse, error: postError } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post("/users/crearUser/google", {
+                email,
+                name
+            }));
+            if (postError || !createdResponse) {
+                console.log("Error al crear el usuario:", postError?.message);
+                return null;
+            }
+            setUserState(createdResponse.data);
+            localStorage.setItem("user", JSON.stringify(createdResponse.data));
+            return createdResponse.data;
+        } catch (error) {
+            console.error("Error en el proceso de registro:", error);
+            return null;
+        }
+    };
     const signInO = async (signInData)=>{
-        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post("/users/singin", signInData));
+        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post("/users/signIn", signInData));
         if (error || !data) {
             throw new Error(error.message || "Hubo un error al iniciar sesión.");
         }
@@ -226,7 +264,7 @@ const UserProvider = ({ children })=>{
         return returnedUser;
     };
     const signUp = async (signUpData)=>{
-        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post("/users/singUp", signUpData));
+        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post("/users/signUp", signUpData));
         if (error || !data) {
             throw new Error(error.message || "Hubo un error al registrarse.");
         }
@@ -283,22 +321,21 @@ const UserProvider = ({ children })=>{
         setUserState(null);
         localStorage.removeItem("token");
         localStorage.removeItem("user");
+        setIsSignedOut(true);
     };
     const signInWithGoogle = async ()=>{
         try {
             await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["signIn"])("google", {
                 callbackUrl: "/"
             });
-            const session = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSession"])(); // Obtiene la sesión después de iniciar sesión
+            const session = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSession"])();
             if (!session || !session.user) {
                 throw new Error("No se pudo obtener la sesión del usuario.");
             }
-            const returnedUser = session.user;
-            setUserState(returnedUser);
-            localStorage.setItem("user", JSON.stringify(returnedUser));
-            return returnedUser;
+            const { email, name } = session.user;
+            return registerUser(email, name);
         } catch (error) {
-            console.error(error);
+            console.error("Error en signInWithGoogle:", error);
             return null;
         }
     };
@@ -307,20 +344,14 @@ const UserProvider = ({ children })=>{
             await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["signIn"])("google", {
                 callbackUrl: "/"
             });
-            const session = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSession"])(); // Obtiene la sesión después de iniciar sesión
+            const session = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSession"])();
             if (!session || !session.user) {
                 throw new Error("No se pudo obtener la sesión del usuario.");
             }
-            const returnedUser = session.user;
-            setUserState(returnedUser);
-            localStorage.setItem("user", JSON.stringify(returnedUser));
-            const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post("/users/singUp/google", user));
-            if (error || !data) {
-                throw new Error(error.message || "Hubo un error al registrarse.");
-            }
-            return returnedUser;
+            const { email, name } = session.user;
+            return registerUser(email, name);
         } catch (error) {
-            console.error(error);
+            console.error("Error en signUpWithGoogle:", error);
             return null;
         }
     };
@@ -361,11 +392,11 @@ const UserProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/context/user.context.tsx",
-        lineNumber: 252,
+        lineNumber: 292,
         columnNumber: 5
     }, this);
 };
-_s(UserProvider, "6uEJAgaTbrA9yucXUJ16NzBNOw4=", false, function() {
+_s(UserProvider, "LFBFAVVfFdRKFdRQei/5dMxQorM=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSession"]
     ];

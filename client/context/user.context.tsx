@@ -74,8 +74,11 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const { data: session } = useSession();
   const [user, setUserState] = useState<IUser | null>(null);
   const [token, setToken] = useState<string>("");
+  const [isSignedOut, setIsSignedOut] = useState<boolean>(false);
 
   useEffect(() => {
+    if (isSignedOut) return;
+
     const storedToken = localStorage.getItem("token");
     const storedUser = localStorage.getItem("user");
 
@@ -89,14 +92,62 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     }
 
     if (session?.user) {
-      setUserState(session.user as IUser);
-      localStorage.setItem("user", JSON.stringify(session.user));
+      const { email, name } = session.user as IUser;
+      registerUser(email, name);
     }
-  }, [session]);
+  }, [session, isSignedOut]);
+
+  const registerUser = async (
+    email: string,
+    name: string
+  ): Promise<IUser | null> => {
+    try {
+      const { data: existsResponse, error: getError } = await handleAsync(
+        api.get(`users/email/get/${email}`)
+      );
+      if (getError) {
+        console.warn(
+          "Error al consultar existencia del usuario:",
+          getError.message
+        );
+        return null;
+      }
+
+      if (existsResponse?.data) {
+        const { data: fetchedResponse, error: fetchError } = await handleAsync(
+          api.get(`/users/get/${email}`)
+        );
+        if (fetchError || !fetchedResponse) {
+          console.log("Error al traer el usuario:", fetchError?.message);
+          return null;
+        }
+        setUserState(fetchedResponse.data.User);
+        setToken(fetchedResponse.data.token);
+        localStorage.setItem("token", fetchedResponse.data.token);
+
+        localStorage.setItem("user", JSON.stringify(fetchedResponse.data));
+        return fetchedResponse.data;
+      }
+
+      const { data: createdResponse, error: postError } = await handleAsync(
+        api.post("/users/crearUser/google", { email, name })
+      );
+      if (postError || !createdResponse) {
+        console.log("Error al crear el usuario:", postError?.message);
+        return null;
+      }
+      setUserState(createdResponse.data);
+      localStorage.setItem("user", JSON.stringify(createdResponse.data));
+      return createdResponse.data;
+    } catch (error) {
+      console.error("Error en el proceso de registro:", error);
+      return null;
+    }
+  };
 
   const signInO = async (signInData: SignInDTO): Promise<IUser | null> => {
     const { data, error } = await handleAsync(
-      api.post("/users/singin", signInData)
+      api.post("/users/signIn", signInData)
     );
     if (error || !data) {
       throw new Error(error.message || "Hubo un error al iniciar sesión.");
@@ -114,7 +165,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const signUp = async (signUpData: SignUpDTO): Promise<IUser> => {
     const { data, error } = await handleAsync(
-      api.post("/users/singUp", signUpData)
+      api.post("/users/signUp", signUpData)
     );
     if (error || !data) {
       throw new Error(error.message || "Hubo un error al registrarse.");
@@ -177,46 +228,35 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     setUserState(null);
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    setIsSignedOut(true);
   };
 
   const signInWithGoogle = async (): Promise<IUser | null> => {
     try {
       await signIn("google", { callbackUrl: "/" });
-      const session = await getSession(); // Obtiene la sesión después de iniciar sesión
+      const session = await getSession();
       if (!session || !session.user) {
         throw new Error("No se pudo obtener la sesión del usuario.");
       }
-      const returnedUser = session.user as IUser;
-      setUserState(returnedUser);
-      localStorage.setItem("user", JSON.stringify(returnedUser));
-
-      return returnedUser;
+      const { email, name } = session.user as IUser;
+      return registerUser(email, name);
     } catch (error) {
-      console.error(error);
+      console.error("Error en signInWithGoogle:", error);
       return null;
     }
   };
+
   const signUpWithGoogle = async (): Promise<IUser | null> => {
     try {
       await signIn("google", { callbackUrl: "/" });
-      const session = await getSession(); // Obtiene la sesión después de iniciar sesión
+      const session = await getSession();
       if (!session || !session.user) {
         throw new Error("No se pudo obtener la sesión del usuario.");
       }
-      const returnedUser = session.user as IUser;
-      setUserState(returnedUser);
-      localStorage.setItem("user", JSON.stringify(returnedUser));
-
-      const { data, error } = await handleAsync(
-        api.post("/users/singUp/google", user)
-      );
-      if (error || !data) {
-        throw new Error(error.message || "Hubo un error al registrarse.");
-      }
-
-      return returnedUser;
+      const { email, name } = session.user as IUser;
+      return registerUser(email, name);
     } catch (error) {
-      console.error(error);
+      console.error("Error en signUpWithGoogle:", error);
       return null;
     }
   };

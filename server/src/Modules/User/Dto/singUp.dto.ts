@@ -8,7 +8,7 @@ import {
   MinLength,
 } from 'class-validator';
 
-export class singUp {
+export class signUp {
   @IsNotEmpty()
   @IsEmail()
   @ApiProperty({

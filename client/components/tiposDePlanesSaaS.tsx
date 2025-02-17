@@ -97,7 +97,7 @@ const CardPlan: React.FC<CardPlanProps> = ({
 
             {/* Precio */}
             <span className="inline-block min-w-[80px] rounded-full bg-gradient-to-r from-indigo-400 to-pink-400 px-3 py-1 text-sm font-bold text-white shadow-sm animate-gradient text-center">
-              {precio > 0 ? `${precio}/m` : "Free"}
+              {precio > 0 ? (precio > 10000? `$${precio}/y` : `$${precio}/m`) : "Free"}
             </span>
 
             {/* Activos */}
