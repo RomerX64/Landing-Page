@@ -15,6 +15,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Subscripcion } from './Subscripcion.entity';
 import { Plan } from './Planes.entity';
 import { updateUserDto } from './Dto/updateUser.dto';
+import { singInGoogleDTO } from './Dto/singInGoogle.dto';
 
 @Injectable()
 export class UserService {
@@ -263,6 +264,15 @@ export class UserService {
   async getPlanes(): Promise<Plan[]> {
     try {
       return await this.planRepository.find();
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  async singInGoogle(singInGoogle: singInGoogleDTO): Promise<User> {
+    try {
+      const user = await this.userRepository.create(singInGoogle);
+      return await this.userRepository.save(user);
     } catch (error) {
       throw ErrorHandler.handle(error);
     }

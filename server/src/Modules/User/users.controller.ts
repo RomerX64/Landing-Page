@@ -19,6 +19,7 @@ import { AuthGuard } from '../../guards/auth.guard';
 import { AdminGuard } from '../../guards/admin.guard';
 import { Plan } from './Planes.entity';
 import { updateUserDto } from './Dto/updateUser.dto';
+import { singInGoogleDTO } from './Dto/singInGoogle.dto';
 
 @Controller('users')
 export class UserController {
@@ -32,6 +33,19 @@ export class UserController {
   async singIn(@Body() singIn: singIn): Promise<{ User: User; token: string }> {
     try {
       return await this.userService.singIn(singIn);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  @Post('/singUp/google')
+  @ApiOperation({
+    summary: 'Logearse',
+    description: 'Logea al usuario mediante el name y password.',
+  })
+  async singInGoogle(@Body() singInGoogle: singInGoogleDTO): Promise<User> {
+    try {
+      return await this.userService.singInGoogle(singInGoogle);
     } catch (error) {
       throw ErrorHandler.handle(error);
     }
