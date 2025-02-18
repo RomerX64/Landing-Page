@@ -24,32 +24,29 @@ const PaymentForm = ()=>{
     _s();
     const { viewPlan, suscribirse } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useContext"])(__TURBOPACK__imported__module__$5b$project$5d2f$context$2f$Suscribe$2e$context$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SuscribeContext"]);
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
-    const [cardNumber, setCardNumber] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
-    const [cardHolder, setCardHolder] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
-    const [expiryMonth, setExpiryMonth] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
-    const [expiryYear, setExpiryYear] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
-    const [cvv, setCvv] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
     const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
-    const handleSubmit = async (e)=>{
-        e.preventDefault();
+    // Inicializamos el SDK con la public key de prueba
+    const handleFormSubmit = async (formData)=>{
         setError("");
+        setLoading(true);
         if (!viewPlan) {
             setError("No se ha seleccionado un plan.");
+            setLoading(false);
             return;
         }
-        // Validación básica de campos
-        if (!cardNumber || !cardHolder || !expiryMonth || !expiryYear || !cvv) {
-            setError("Por favor, complete todos los campos de la tarjeta.");
+        if (formData.error) {
+            setError(formData.error.message);
+            setLoading(false);
             return;
         }
-        setLoading(true);
         try {
-            const paymentMethodToken = `token-${cardNumber.slice(-4)}-${Date.now()}`;
+            const paymentMethodToken = formData.token.id;
+            // Llama a la función para suscribirse usando el token obtenido
             await suscribirse(viewPlan.id, paymentMethodToken);
             router.push("/suscribirse/success");
         } catch (err) {
-            console.error("Error en handleSubmit:", err);
+            console.error("Error en handleFormSubmit:", err);
             setError("Error al procesar el pago. Por favor, intente nuevamente.");
         } finally{
             setLoading(false);
@@ -70,12 +67,12 @@ const PaymentForm = ()=>{
                                 size: 24
                             }, void 0, false, {
                                 fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                                lineNumber: 56,
+                                lineNumber: 55,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                            lineNumber: 52,
+                            lineNumber: 51,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
@@ -83,13 +80,13 @@ const PaymentForm = ()=>{
                             children: "Completa tu Pago"
                         }, void 0, false, {
                             fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                            lineNumber: 58,
+                            lineNumber: 57,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                    lineNumber: 51,
+                    lineNumber: 50,
                     columnNumber: 9
                 }, this),
                 viewPlan && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -104,7 +101,7 @@ const PaymentForm = ()=>{
                                 children: viewPlan.name
                             }, void 0, false, {
                                 fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                                lineNumber: 67,
+                                lineNumber: 66,
                                 columnNumber: 15
                             }, this),
                             " por",
@@ -118,19 +115,19 @@ const PaymentForm = ()=>{
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                                lineNumber: 68,
+                                lineNumber: 67,
                                 columnNumber: 15
                             }, this),
                             "."
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                        lineNumber: 65,
+                        lineNumber: 64,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                    lineNumber: 64,
+                    lineNumber: 63,
                     columnNumber: 11
                 }, this),
                 error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -138,189 +135,35 @@ const PaymentForm = ()=>{
                     children: error
                 }, void 0, false, {
                     fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                    lineNumber: 73,
+                    lineNumber: 75,
                     columnNumber: 19
                 }, this),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
-                    onSubmit: handleSubmit,
-                    className: "space-y-4",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                    className: "block text-gray-300",
-                                    children: "Número de Tarjeta"
-                                }, void 0, false, {
-                                    fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                                    lineNumber: 77,
-                                    columnNumber: 13
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                    type: "text",
-                                    value: cardNumber,
-                                    onChange: (e)=>setCardNumber(e.target.value),
-                                    placeholder: "0000 0000 0000 0000",
-                                    className: "w-full p-3 mt-1 text-white bg-gray-700 rounded-lg focus:outline-none"
-                                }, void 0, false, {
-                                    fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                                    lineNumber: 78,
-                                    columnNumber: 13
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                            lineNumber: 76,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                    className: "block text-gray-300",
-                                    children: "Nombre del Titular"
-                                }, void 0, false, {
-                                    fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                                    lineNumber: 88,
-                                    columnNumber: 13
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                    type: "text",
-                                    value: cardHolder,
-                                    onChange: (e)=>setCardHolder(e.target.value),
-                                    placeholder: "Nombre completo",
-                                    className: "w-full p-3 mt-1 text-white bg-gray-700 rounded-lg focus:outline-none"
-                                }, void 0, false, {
-                                    fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                                    lineNumber: 89,
-                                    columnNumber: 13
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                            lineNumber: 87,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "flex gap-4",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "flex-1",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                            className: "block text-gray-300",
-                                            children: "Mes de Expiración"
-                                        }, void 0, false, {
-                                            fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                                            lineNumber: 100,
-                                            columnNumber: 15
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                            type: "text",
-                                            value: expiryMonth,
-                                            onChange: (e)=>setExpiryMonth(e.target.value),
-                                            placeholder: "MM",
-                                            className: "w-full p-3 mt-1 text-white bg-gray-700 rounded-lg focus:outline-none"
-                                        }, void 0, false, {
-                                            fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                                            lineNumber: 101,
-                                            columnNumber: 15
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                                    lineNumber: 99,
-                                    columnNumber: 13
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "flex-1",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                            className: "block text-gray-300",
-                                            children: "Año de Expiración"
-                                        }, void 0, false, {
-                                            fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                                            lineNumber: 110,
-                                            columnNumber: 15
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                            type: "text",
-                                            value: expiryYear,
-                                            onChange: (e)=>setExpiryYear(e.target.value),
-                                            placeholder: "YYYY",
-                                            className: "w-full p-3 mt-1 text-white bg-gray-700 rounded-lg focus:outline-none"
-                                        }, void 0, false, {
-                                            fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                                            lineNumber: 111,
-                                            columnNumber: 15
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                                    lineNumber: 109,
-                                    columnNumber: 13
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "flex-1",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                            className: "block text-gray-300",
-                                            children: "CVV"
-                                        }, void 0, false, {
-                                            fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                                            lineNumber: 120,
-                                            columnNumber: 15
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                            type: "text",
-                                            value: cvv,
-                                            onChange: (e)=>setCvv(e.target.value),
-                                            placeholder: "123",
-                                            className: "w-full p-3 mt-1 text-white bg-gray-700 rounded-lg focus:outline-none"
-                                        }, void 0, false, {
-                                            fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                                            lineNumber: 121,
-                                            columnNumber: 15
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                                    lineNumber: 119,
-                                    columnNumber: 13
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                            lineNumber: 98,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                            type: "submit",
-                            disabled: loading,
-                            className: "w-full py-3 font-semibold text-white transition rounded-lg shadow-md bg-gradient-to-r from-purple-600 to-indigo-600 hover:opacity-90",
-                            children: loading ? "Procesando..." : "Confirmar Pago"
-                        }, void 0, false, {
-                            fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                            lineNumber: 131,
-                            columnNumber: 11
-                        }, this)
-                    ]
-                }, void 0, true, {
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(CardForm, {
+                    onSubmit: handleFormSubmit,
+                    amount: viewPlan ? viewPlan.precio : 0,
+                    buttonText: loading ? "Procesando..." : "Confirmar Pago",
+                    styles: {
+                        input: "w-full p-3 mt-1 text-white bg-gray-700 rounded-lg focus:outline-none",
+                        button: "w-full py-3 font-semibold text-white transition rounded-lg shadow-md bg-gradient-to-r from-purple-600 to-indigo-600 hover:opacity-90"
+                    }
+                }, void 0, false, {
                     fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                    lineNumber: 75,
+                    lineNumber: 77,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-            lineNumber: 50,
+            lineNumber: 49,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-        lineNumber: 49,
+        lineNumber: 48,
         columnNumber: 5
     }, this);
 };
-_s(PaymentForm, "CMT27lkyJp+6esF5MrNnEWGMlrE=", false, function() {
+_s(PaymentForm, "IhDXebpxo6ZjQ00NSjS8WhNXSPU=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"]
     ];

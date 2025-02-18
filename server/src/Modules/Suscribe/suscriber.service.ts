@@ -1,10 +1,13 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { MercadoPagoConfig, PreApproval, Payment } from 'mercadopago';
+import { MercadoPagoConfig, PreApproval } from 'mercadopago';
 import { v4 as uuidv4 } from 'uuid';
 import { ConfigService } from '@nestjs/config';
-import { CreateSubscriptionDto, CancelSubscriptionDto } from './dto/subscription.dto';
+import {
+  CreateSubscriptionDto,
+  CancelSubscriptionDto,
+} from './dto/subscription.dto';
 import { Subscripcion, SubscriptionStatus } from '../User/Subscripcion.entity';
 import { Plan } from '../User/Planes.entity';
 
@@ -19,50 +22,69 @@ export class SubscriptionsService {
     private readonly planRepository: Repository<Plan>,
     private configService: ConfigService,
   ) {
+    const accessToken = this.configService.get<string>(
+      'MERCADO_PAGO_ACCESS_TOKEN',
+    );
+    if (!accessToken) {
+      throw new Error(
+        'MERCADO_PAGO_ACCESS_TOKEN no está definido en las variables de entorno',
+      );
+    }
     this.client = new MercadoPagoConfig({
-      accessToken: this.configService.get<string>('MERCADO_PAGO_ACCESS_TOKEN'),
+      accessToken,
       options: { timeout: 5000 },
     });
   }
 
   async createSubscription(createSubscriptionDto: CreateSubscriptionDto) {
-    // Validar la existencia del plan
-    const plan = await this.planRepository.findOne({
-      where: { id: createSubscriptionDto.planId },
-    });
-    if (!plan) {
-      throw new HttpException('Plan no encontrado', HttpStatus.NOT_FOUND);
+    if (!createSubscriptionDto.planId) {
+      throw new HttpException(
+        'ID del plan es requerido',
+        HttpStatus.BAD_REQUEST,
+      );
     }
-    if (!createSubscriptionDto.userEmail || !createSubscriptionDto.paymentMethodToken) {
+    if (
+      !createSubscriptionDto.userEmail ||
+      !createSubscriptionDto.paymentMethodToken
+    ) {
       throw new HttpException(
         'Datos incompletos para la suscripción',
         HttpStatus.BAD_REQUEST,
       );
     }
 
-    // Generar una clave única de idempotencia para cada solicitud
-    this.client.options.idempotencyKey = uuidv4();
+    const plan = await this.planRepository.findOne({
+      where: { id: createSubscriptionDto.planId },
+    });
+    if (!plan) {
+      throw new HttpException('Plan no encontrado', HttpStatus.NOT_FOUND);
+    }
+
     const preApproval = new PreApproval(this.client);
+    const idempotencyKey = uuidv4();
+    console.log('preApproval', preApproval);
     try {
       const response = await preApproval.create({
         body: {
           payer_email: createSubscriptionDto.userEmail,
+          reason: 'Subscripcion a Assetly',
           card_token_id: createSubscriptionDto.paymentMethodToken,
           status: 'authorized',
           auto_recurring: {
             frequency: 1,
             frequency_type: 'months',
-            transaction_amount: plan.precio,
-            currency_id: 'USD', // Cambio a USD
+            transaction_amount: 10,
+            currency_id: 'ARS',
           },
         },
+        requestOptions: {
+          idempotencyKey: idempotencyKey,
+        },
       });
+      console.log('response', response);
 
       if (!response || !response.id) {
-        throw new HttpException(
-          'No se recibió ID de suscripción de Mercado Pago',
-          HttpStatus.BAD_REQUEST,
-        );
+        throw new Error('No se recibió ID de suscripción de Mercado Pago');
       }
 
       const newSubscription = this.subscriptionRepository.create({
@@ -71,7 +93,10 @@ export class SubscriptionsService {
         mercadopagoSubscriptionId: response.id,
         status: SubscriptionStatus.ACTIVE,
       });
+
       await this.subscriptionRepository.save(newSubscription);
+
+      console.log(`Suscripción creada con ID: ${newSubscription.id}`);
 
       return {
         message: 'Suscripción creada correctamente',
@@ -84,9 +109,10 @@ export class SubscriptionsService {
           HttpStatus.BAD_REQUEST,
         );
       }
+      console.error('Error inesperado al crear la suscripción:', error);
       throw new HttpException(
         'Error inesperado al crear la suscripción',
-        HttpStatus.BAD_REQUEST,
+        HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
   }
@@ -129,7 +155,6 @@ export class SubscriptionsService {
   }
 
   async handleWebhook(notification: any) {
-
     const { id, action } = notification;
     const subscription = await this.subscriptionRepository.findOne({
       where: { mercadopagoSubscriptionId: id },

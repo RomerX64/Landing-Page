@@ -8,6 +8,7 @@ import React, {
   useCallback,
   useMemo,
 } from "react";
+import { initMercadoPago } from "@mercadopago/sdk-react";
 import api from "@/app/api/Api";
 import { handleAsync } from "@/utils/error.helper";
 import { UserContext } from "./user.context";
@@ -34,7 +35,8 @@ const defaultContext: SuscribeContextProps = {
   changePlan: () => {},
 };
 
-export const SuscribeContext = createContext<SuscribeContextProps>(defaultContext);
+export const SuscribeContext =
+  createContext<SuscribeContextProps>(defaultContext);
 
 interface SuscribeProviderProps {
   children: ReactNode;
@@ -45,6 +47,11 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
   const [sub, setSub] = useState<ISubscripcion | null>(null);
   const [planes, setPlanes] = useState<IPlan[]>([]);
   const [viewPlan, setViewPlan] = useState<IPlan | null>(null);
+
+  // Inicializamos el SDK de Mercado Pago con tu public key de prueba
+  useEffect(() => {
+    initMercadoPago("TEST-450aba78-55dc-4623-9975-99be4b21f666");
+  }, []);
 
   // Función para obtener los planes desde la API o desde el localStorage
   const getPlanes = useCallback(async () => {
@@ -59,7 +66,10 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
 
       const { data, error } = await handleAsync(api.get(`/users/planes`));
       if (error || !data?.data) {
-        console.error("Error al obtener planes:", error || "No se retornaron datos");
+        console.error(
+          "Error al obtener planes:",
+          error || "No se retornaron datos"
+        );
         return;
       }
 
@@ -84,7 +94,10 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
         );
 
         if (error || !data?.data?.subscription) {
-          console.error("Error al suscribirse:", error || "No se retornaron datos");
+          console.error(
+            "Error al suscribirse:",
+            error || "No se retornaron datos"
+          );
           return;
         }
 
@@ -110,7 +123,10 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
       );
 
       if (error || !data?.data?.subscription) {
-        console.error("Error al desuscribirse:", error || "No se retornaron datos");
+        console.error(
+          "Error al desuscribirse:",
+          error || "No se retornaron datos"
+        );
         return;
       }
       setSub(null);
@@ -120,7 +136,6 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
     }
   }, [sub]);
 
-  // Función para seleccionar un plan, que se busca primero en el estado (o en localStorage si aún no se cargó)
   const selectPlan = useCallback(
     async (planId: number): Promise<IPlan | null> => {
       if (planes.length === 0) {
@@ -138,7 +153,6 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
     [planes, getPlanes]
   );
 
-  // Función para cambiar de plan (siguiente o anterior)
   const changePlan = useCallback(
     (direction: "next" | "prev") => {
       if (!viewPlan || planes.length === 0) return;
@@ -163,7 +177,6 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
     getPlanes();
   }, [user, getPlanes]);
 
-  // Si no hay un plan seleccionado, intenta cargarlo desde localStorage o selecciona el plan popular o el primero
   useEffect(() => {
     if (planes.length > 0 && !viewPlan) {
       const storedViewPlan = localStorage.getItem("viewPlan");
@@ -189,5 +202,9 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
     [sub, planes, viewPlan, suscribirse, desuscribirse, selectPlan, changePlan]
   );
 
-  return <SuscribeContext.Provider value={value}>{children}</SuscribeContext.Provider>;
+  return (
+    <SuscribeContext.Provider value={value}>
+      {children}
+    </SuscribeContext.Provider>
+  );
 };

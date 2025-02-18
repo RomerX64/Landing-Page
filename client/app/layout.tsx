@@ -10,6 +10,7 @@ import { AdminProvider } from "@/context/Administracion.context";
 import { SuscribeProvider } from "@/context/Suscribe.context";
 import { UserProvider } from "@/context/user.context";
 import { SessionProvider } from "next-auth/react";
+import { initMercadoPago } from "@mercadopago/sdk-react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -49,6 +50,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  initMercadoPago("TEST-450aba78-55dc-4623-9975-99be4b21f666");
+
   return (
     <html lang="en">
       <SessionProvider>
