@@ -1,7 +1,4 @@
 {
   "/(default)/page": "app/(default)/page.js",
-  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
-  "/(default)/plan/page": "app/(default)/plan/page.js",
-  "/(default)/suscribirse/page": "app/(default)/suscribirse/page.js",
-  "/(default)/suscribirse/success/page": "app/(default)/suscribirse/success/page.js"
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js"
 }
