@@ -169,9 +169,9 @@ __turbopack_esm__({
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/axios/lib/axios.js [app-ssr] (ecmascript)");
 ;
-const prod = true;
+const prod = false;
 const urlWeb = "https://assetly-landing-page-backend.onrender.com/";
-const API_URL = ("TURBOPACK compile-time truthy", 1) ? urlWeb : ("TURBOPACK unreachable", undefined);
+const API_URL = ("TURBOPACK compile-time falsy", 0) ? ("TURBOPACK unreachable", undefined) : "http://localhost:3001";
 const api = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].create({
     baseURL: API_URL,
     headers: {
@@ -252,7 +252,7 @@ const defaultContext = {
     updateUser: async ()=>{
         throw new Error("Not implemented");
     },
-    signOut: ()=>{
+    signOut: async ()=>{
         throw new Error("Not implemented");
     },
     signInWithGoogle: async ()=>{
@@ -294,7 +294,7 @@ const UserProvider = ({ children })=>{
         session,
         isSignedOut
     ]);
-    const registerUser = async (email, name)=>{
+    const registerUser = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async (email, name)=>{
         try {
             const { data: existsResponse, error: getError } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get(`users/email/get/${email}`));
             if (getError) {
@@ -328,8 +328,8 @@ const UserProvider = ({ children })=>{
             console.error("Error en el proceso de registro:", error);
             return null;
         }
-    };
-    const signInO = async (signInData)=>{
+    }, []);
+    const signInO = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async (signInData)=>{
         const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post("/users/signIn", signInData));
         if (error || !data) {
             throw new Error(error.message || "Hubo un error al iniciar sesión.");
@@ -343,8 +343,8 @@ const UserProvider = ({ children })=>{
         localStorage.setItem("token", returnedToken);
         localStorage.setItem("user", JSON.stringify(returnedUser));
         return returnedUser;
-    };
-    const signUp = async (signUpData)=>{
+    }, []);
+    const signUp = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async (signUpData)=>{
         const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post("/users/signUp", signUpData));
         if (error || !data) {
             throw new Error(error.message || "Hubo un error al registrarse.");
@@ -355,8 +355,8 @@ const UserProvider = ({ children })=>{
         localStorage.setItem("token", returnedToken);
         localStorage.setItem("user", JSON.stringify(returnedUser));
         return returnedUser;
-    };
-    const deleteUser = async (signInData)=>{
+    }, []);
+    const deleteUser = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async (signInData)=>{
         const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].delete("/users/user", {
             data: signInData
         }));
@@ -369,16 +369,16 @@ const UserProvider = ({ children })=>{
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         return deletedUser;
-    };
-    const mailIsValid = async (email)=>{
+    }, []);
+    const mailIsValid = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async (email)=>{
         try {
             const response = await __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get(`/users/email/${email}`);
             return response.data;
         } catch (error) {
             return false;
         }
-    };
-    const updateUser = async (updateUserData)=>{
+    }, []);
+    const updateUser = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async (updateUserData)=>{
         if (!user?.id) throw new Error("El usuario no está autenticado.");
         const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post("/users/update", {
             ...updateUserData,
@@ -393,8 +393,10 @@ const UserProvider = ({ children })=>{
         localStorage.setItem("token", returnedToken);
         localStorage.setItem("user", JSON.stringify(returnedUser));
         return returnedUser;
-    };
-    const signOut = async ()=>{
+    }, [
+        user
+    ]);
+    const signOut = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async ()=>{
         await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["signOut"])({
             redirect: false
         });
@@ -403,8 +405,8 @@ const UserProvider = ({ children })=>{
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         setIsSignedOut(true);
-    };
-    const signInWithGoogle = async ()=>{
+    }, []);
+    const signInWithGoogle = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async ()=>{
         try {
             await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["signIn"])("google", {
                 callbackUrl: "/"
@@ -419,8 +421,10 @@ const UserProvider = ({ children })=>{
             console.error("Error en signInWithGoogle:", error);
             return null;
         }
-    };
-    const signUpWithGoogle = async ()=>{
+    }, [
+        registerUser
+    ]);
+    const signUpWithGoogle = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async ()=>{
         try {
             await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["signIn"])("google", {
                 callbackUrl: "/"
@@ -435,8 +439,10 @@ const UserProvider = ({ children })=>{
             console.error("Error en signUpWithGoogle:", error);
             return null;
         }
-    };
-    const requestResetPassword = async (email)=>{
+    }, [
+        registerUser
+    ]);
+    const requestResetPassword = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async (email)=>{
         const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post("/users/request-reset-password", {
             email
         }));
@@ -444,8 +450,8 @@ const UserProvider = ({ children })=>{
             throw new Error(error.message || "Error al solicitar reset de contraseña");
         }
         return data.data;
-    };
-    const resetPassword = async (token, newPassword)=>{
+    }, []);
+    const resetPassword = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async (token, newPassword)=>{
         const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post("/users/reset-password", {
             token,
             newPassword
@@ -454,9 +460,8 @@ const UserProvider = ({ children })=>{
             throw new Error(error.message || "Error al resetear la contraseña");
         }
         return data.data;
-    };
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(UserContext.Provider, {
-        value: {
+    }, []);
+    const value = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>({
             token,
             user,
             signInO,
@@ -469,12 +474,27 @@ const UserProvider = ({ children })=>{
             signUpWithGoogle,
             requestResetPassword,
             resetPassword
-        },
+        }), [
+        token,
+        user,
+        signInO,
+        signUp,
+        deleteUser,
+        mailIsValid,
+        updateUser,
+        signOut,
+        signInWithGoogle,
+        signUpWithGoogle,
+        requestResetPassword,
+        resetPassword
+    ]);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(UserContext.Provider, {
+        value: value,
         children: children
     }, void 0, false, {
         fileName: "[project]/context/user.context.tsx",
-        lineNumber: 292,
-        columnNumber: 5
+        lineNumber: 335,
+        columnNumber: 10
     }, this);
 };
 }}),
@@ -754,11 +774,11 @@ const SuscribeProvider = ({ children })=>{
     const [sub, setSub] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
     const [planes, setPlanes] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
     const [viewPlan, setViewPlan] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
-    // Inicializamos el SDK de Mercado Pago con tu public key de prueba
+    // Inicializar MercadoPago (se ejecuta solo una vez)
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mercadopago$2f$sdk$2d$react$2f$esm$2f$mercadoPago$2f$initMercadoPago$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__initMercadoPago$3e$__["initMercadoPago"])("TEST-450aba78-55dc-4623-9975-99be4b21f666");
     }, []);
-    // Función para obtener los planes desde la API o desde el localStorage
+    // Función para obtener planes (uso de useCallback para memorizarla)
     const getPlanes = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async ()=>{
         try {
             const storedPlanes = localStorage.getItem("planes");
@@ -780,7 +800,6 @@ const SuscribeProvider = ({ children })=>{
             console.error("Error en getPlanes:", err);
         }
     }, []);
-    // Función para suscribirse a un plan
     const suscribirse = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async (planId, paymentMethodToken)=>{
         try {
             const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post(`/subscriptions`, {
@@ -801,7 +820,6 @@ const SuscribeProvider = ({ children })=>{
     }, [
         user
     ]);
-    // Función para cancelar la suscripción
     const desuscribirse = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async ()=>{
         if (!sub) return;
         try {
@@ -851,7 +869,7 @@ const SuscribeProvider = ({ children })=>{
         planes,
         viewPlan
     ]);
-    // Carga inicial de la suscripción y los planes al montar o al cambiar el usuario
+    // Cargar la subscripción y los planes al montar o cuando cambie el usuario
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         const storedSub = localStorage.getItem("subscripcion");
         if (storedSub) {
@@ -862,6 +880,7 @@ const SuscribeProvider = ({ children })=>{
         user,
         getPlanes
     ]);
+    // Seleccionar el plan de vista si aún no está seleccionado
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         if (planes.length > 0 && !viewPlan) {
             const storedViewPlan = localStorage.getItem("viewPlan");
@@ -876,6 +895,7 @@ const SuscribeProvider = ({ children })=>{
         planes,
         viewPlan
     ]);
+    // Memorizar el valor del contexto para evitar renders innecesarios
     const value = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>({
             sub,
             planes,

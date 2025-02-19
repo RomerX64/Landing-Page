@@ -43,7 +43,6 @@ const cardForm = mp.cardForm({
   callbacks: {
     onFormMounted: (error) => {
       if (error) return console.warn("Form Mounted handling error: ", error);
-      console.log("Form mounted");
     },
     onSubmit: (event) => {
       event.preventDefault();
@@ -84,7 +83,6 @@ const cardForm = mp.cardForm({
     onFetching: (resource) => {
       console.log("Fetching resource: ", resource);
 
-      // Animate progress bar
       const progressBar = document.querySelector(".progress-bar");
       progressBar.removeAttribute("value");
 

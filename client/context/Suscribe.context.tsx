@@ -48,12 +48,12 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
   const [planes, setPlanes] = useState<IPlan[]>([]);
   const [viewPlan, setViewPlan] = useState<IPlan | null>(null);
 
-  // Inicializamos el SDK de Mercado Pago con tu public key de prueba
+  // Inicializar MercadoPago (se ejecuta solo una vez)
   useEffect(() => {
     initMercadoPago("TEST-450aba78-55dc-4623-9975-99be4b21f666");
   }, []);
 
-  // Función para obtener los planes desde la API o desde el localStorage
+  // Función para obtener planes (uso de useCallback para memorizarla)
   const getPlanes = useCallback(async () => {
     try {
       const storedPlanes = localStorage.getItem("planes");
@@ -81,7 +81,6 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
     }
   }, []);
 
-  // Función para suscribirse a un plan
   const suscribirse = useCallback(
     async (planId: number, paymentMethodToken: string) => {
       try {
@@ -111,7 +110,6 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
     [user]
   );
 
-  // Función para cancelar la suscripción
   const desuscribirse = useCallback(async () => {
     if (!sub) return;
     try {
@@ -168,7 +166,7 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
     [planes, viewPlan]
   );
 
-  // Carga inicial de la suscripción y los planes al montar o al cambiar el usuario
+  // Cargar la subscripción y los planes al montar o cuando cambie el usuario
   useEffect(() => {
     const storedSub = localStorage.getItem("subscripcion");
     if (storedSub) {
@@ -177,6 +175,7 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
     getPlanes();
   }, [user, getPlanes]);
 
+  // Seleccionar el plan de vista si aún no está seleccionado
   useEffect(() => {
     if (planes.length > 0 && !viewPlan) {
       const storedViewPlan = localStorage.getItem("viewPlan");
@@ -189,6 +188,7 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
     }
   }, [planes, viewPlan]);
 
+  // Memorizar el valor del contexto para evitar renders innecesarios
   const value = useMemo(
     () => ({
       sub,

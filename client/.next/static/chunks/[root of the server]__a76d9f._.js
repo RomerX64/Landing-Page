@@ -75,9 +75,9 @@ __turbopack_esm__({
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/axios/lib/axios.js [app-client] (ecmascript)");
 ;
-const prod = true;
+const prod = false;
 const urlWeb = "https://assetly-landing-page-backend.onrender.com/";
-const API_URL = ("TURBOPACK compile-time truthy", 1) ? urlWeb : ("TURBOPACK unreachable", undefined);
+const API_URL = ("TURBOPACK compile-time falsy", 0) ? ("TURBOPACK unreachable", undefined) : "http://localhost:3001";
 const api = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].create({
     baseURL: API_URL,
     headers: {
@@ -168,7 +168,7 @@ const defaultContext = {
     updateUser: async ()=>{
         throw new Error("Not implemented");
     },
-    signOut: ()=>{
+    signOut: async ()=>{
         throw new Error("Not implemented");
     },
     signInWithGoogle: async ()=>{
@@ -213,190 +213,234 @@ const UserProvider = ({ children })=>{
         session,
         isSignedOut
     ]);
-    const registerUser = async (email, name)=>{
-        try {
-            const { data: existsResponse, error: getError } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get(`users/email/get/${email}`));
-            if (getError) {
-                console.warn("Error al consultar existencia del usuario:", getError.message);
-                return null;
-            }
-            if (existsResponse?.data) {
-                const { data: fetchedResponse, error: fetchError } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get(`/users/get/${email}`));
-                if (fetchError || !fetchedResponse) {
-                    console.log("Error al traer el usuario:", fetchError?.message);
+    const registerUser = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "UserProvider.useCallback[registerUser]": async (email, name)=>{
+            try {
+                const { data: existsResponse, error: getError } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get(`users/email/get/${email}`));
+                if (getError) {
+                    console.warn("Error al consultar existencia del usuario:", getError.message);
                     return null;
                 }
-                setUserState(fetchedResponse.data.User);
-                setToken(fetchedResponse.data.token);
-                localStorage.setItem("token", fetchedResponse.data.token);
-                localStorage.setItem("user", JSON.stringify(fetchedResponse.data));
-                return fetchedResponse.data;
-            }
-            const { data: createdResponse, error: postError } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post("/users/crearUser/google", {
-                email,
-                name
-            }));
-            if (postError || !createdResponse) {
-                console.log("Error al crear el usuario:", postError?.message);
+                if (existsResponse?.data) {
+                    const { data: fetchedResponse, error: fetchError } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get(`/users/get/${email}`));
+                    if (fetchError || !fetchedResponse) {
+                        console.log("Error al traer el usuario:", fetchError?.message);
+                        return null;
+                    }
+                    setUserState(fetchedResponse.data.User);
+                    setToken(fetchedResponse.data.token);
+                    localStorage.setItem("token", fetchedResponse.data.token);
+                    localStorage.setItem("user", JSON.stringify(fetchedResponse.data));
+                    return fetchedResponse.data;
+                }
+                const { data: createdResponse, error: postError } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post("/users/crearUser/google", {
+                    email,
+                    name
+                }));
+                if (postError || !createdResponse) {
+                    console.log("Error al crear el usuario:", postError?.message);
+                    return null;
+                }
+                setUserState(createdResponse.data);
+                localStorage.setItem("user", JSON.stringify(createdResponse.data));
+                return createdResponse.data;
+            } catch (error) {
+                console.error("Error en el proceso de registro:", error);
                 return null;
             }
-            setUserState(createdResponse.data);
-            localStorage.setItem("user", JSON.stringify(createdResponse.data));
-            return createdResponse.data;
-        } catch (error) {
-            console.error("Error en el proceso de registro:", error);
-            return null;
         }
-    };
-    const signInO = async (signInData)=>{
-        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post("/users/signIn", signInData));
-        if (error || !data) {
-            throw new Error(error.message || "Hubo un error al iniciar sesión.");
-        }
-        const { User: returnedUser, token: returnedToken } = data?.data || {};
-        if (!returnedUser || !returnedToken) {
-            throw new Error("Los datos de autenticación son inválidos.");
-        }
-        setToken(returnedToken);
-        setUserState(returnedUser);
-        localStorage.setItem("token", returnedToken);
-        localStorage.setItem("user", JSON.stringify(returnedUser));
-        return returnedUser;
-    };
-    const signUp = async (signUpData)=>{
-        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post("/users/signUp", signUpData));
-        if (error || !data) {
-            throw new Error(error.message || "Hubo un error al registrarse.");
-        }
-        const { User: returnedUser, token: returnedToken } = data.data;
-        setToken(returnedToken);
-        setUserState(returnedUser);
-        localStorage.setItem("token", returnedToken);
-        localStorage.setItem("user", JSON.stringify(returnedUser));
-        return returnedUser;
-    };
-    const deleteUser = async (signInData)=>{
-        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].delete("/users/user", {
-            data: signInData
-        }));
-        if (error || !data) {
-            throw new Error(error.message || "Hubo un error al eliminar el usuario.");
-        }
-        const deletedUser = data.data;
-        setToken("");
-        setUserState(null);
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        return deletedUser;
-    };
-    const mailIsValid = async (email)=>{
-        try {
-            const response = await __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get(`/users/email/${email}`);
-            return response.data;
-        } catch (error) {
-            return false;
-        }
-    };
-    const updateUser = async (updateUserData)=>{
-        if (!user?.id) throw new Error("El usuario no está autenticado.");
-        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post("/users/update", {
-            ...updateUserData,
-            id: user.id
-        }));
-        if (error || !data) {
-            throw new Error(error.message || "Hubo un error al actualizar el usuario.");
-        }
-        const { User: returnedUser, token: returnedToken } = data.data;
-        setToken(returnedToken);
-        setUserState(returnedUser);
-        localStorage.setItem("token", returnedToken);
-        localStorage.setItem("user", JSON.stringify(returnedUser));
-        return returnedUser;
-    };
-    const signOut = async ()=>{
-        await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["signOut"])({
-            redirect: false
-        });
-        setToken("");
-        setUserState(null);
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        setIsSignedOut(true);
-    };
-    const signInWithGoogle = async ()=>{
-        try {
-            await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["signIn"])("google", {
-                callbackUrl: "/"
-            });
-            const session = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSession"])();
-            if (!session || !session.user) {
-                throw new Error("No se pudo obtener la sesión del usuario.");
+    }["UserProvider.useCallback[registerUser]"], []);
+    const signInO = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "UserProvider.useCallback[signInO]": async (signInData)=>{
+            const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post("/users/signIn", signInData));
+            if (error || !data) {
+                throw new Error(error.message || "Hubo un error al iniciar sesión.");
             }
-            const { email, name } = session.user;
-            return registerUser(email, name);
-        } catch (error) {
-            console.error("Error en signInWithGoogle:", error);
-            return null;
-        }
-    };
-    const signUpWithGoogle = async ()=>{
-        try {
-            await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["signIn"])("google", {
-                callbackUrl: "/"
-            });
-            const session = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSession"])();
-            if (!session || !session.user) {
-                throw new Error("No se pudo obtener la sesión del usuario.");
+            const { User: returnedUser, token: returnedToken } = data?.data || {};
+            if (!returnedUser || !returnedToken) {
+                throw new Error("Los datos de autenticación son inválidos.");
             }
-            const { email, name } = session.user;
-            return registerUser(email, name);
-        } catch (error) {
-            console.error("Error en signUpWithGoogle:", error);
-            return null;
+            setToken(returnedToken);
+            setUserState(returnedUser);
+            localStorage.setItem("token", returnedToken);
+            localStorage.setItem("user", JSON.stringify(returnedUser));
+            return returnedUser;
         }
-    };
-    const requestResetPassword = async (email)=>{
-        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post("/users/request-reset-password", {
-            email
-        }));
-        if (error || !data) {
-            throw new Error(error.message || "Error al solicitar reset de contraseña");
+    }["UserProvider.useCallback[signInO]"], []);
+    const signUp = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "UserProvider.useCallback[signUp]": async (signUpData)=>{
+            const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post("/users/signUp", signUpData));
+            if (error || !data) {
+                throw new Error(error.message || "Hubo un error al registrarse.");
+            }
+            const { User: returnedUser, token: returnedToken } = data.data;
+            setToken(returnedToken);
+            setUserState(returnedUser);
+            localStorage.setItem("token", returnedToken);
+            localStorage.setItem("user", JSON.stringify(returnedUser));
+            return returnedUser;
         }
-        return data.data;
-    };
-    const resetPassword = async (token, newPassword)=>{
-        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post("/users/reset-password", {
-            token,
-            newPassword
-        }));
-        if (error || !data) {
-            throw new Error(error.message || "Error al resetear la contraseña");
+    }["UserProvider.useCallback[signUp]"], []);
+    const deleteUser = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "UserProvider.useCallback[deleteUser]": async (signInData)=>{
+            const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].delete("/users/user", {
+                data: signInData
+            }));
+            if (error || !data) {
+                throw new Error(error.message || "Hubo un error al eliminar el usuario.");
+            }
+            const deletedUser = data.data;
+            setToken("");
+            setUserState(null);
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            return deletedUser;
         }
-        return data.data;
-    };
+    }["UserProvider.useCallback[deleteUser]"], []);
+    const mailIsValid = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "UserProvider.useCallback[mailIsValid]": async (email)=>{
+            try {
+                const response = await __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get(`/users/email/${email}`);
+                return response.data;
+            } catch (error) {
+                return false;
+            }
+        }
+    }["UserProvider.useCallback[mailIsValid]"], []);
+    const updateUser = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "UserProvider.useCallback[updateUser]": async (updateUserData)=>{
+            if (!user?.id) throw new Error("El usuario no está autenticado.");
+            const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post("/users/update", {
+                ...updateUserData,
+                id: user.id
+            }));
+            if (error || !data) {
+                throw new Error(error.message || "Hubo un error al actualizar el usuario.");
+            }
+            const { User: returnedUser, token: returnedToken } = data.data;
+            setToken(returnedToken);
+            setUserState(returnedUser);
+            localStorage.setItem("token", returnedToken);
+            localStorage.setItem("user", JSON.stringify(returnedUser));
+            return returnedUser;
+        }
+    }["UserProvider.useCallback[updateUser]"], [
+        user
+    ]);
+    const signOut = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "UserProvider.useCallback[signOut]": async ()=>{
+            await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["signOut"])({
+                redirect: false
+            });
+            setToken("");
+            setUserState(null);
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            setIsSignedOut(true);
+        }
+    }["UserProvider.useCallback[signOut]"], []);
+    const signInWithGoogle = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "UserProvider.useCallback[signInWithGoogle]": async ()=>{
+            try {
+                await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["signIn"])("google", {
+                    callbackUrl: "/"
+                });
+                const session = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSession"])();
+                if (!session || !session.user) {
+                    throw new Error("No se pudo obtener la sesión del usuario.");
+                }
+                const { email, name } = session.user;
+                return registerUser(email, name);
+            } catch (error) {
+                console.error("Error en signInWithGoogle:", error);
+                return null;
+            }
+        }
+    }["UserProvider.useCallback[signInWithGoogle]"], [
+        registerUser
+    ]);
+    const signUpWithGoogle = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "UserProvider.useCallback[signUpWithGoogle]": async ()=>{
+            try {
+                await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["signIn"])("google", {
+                    callbackUrl: "/"
+                });
+                const session = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSession"])();
+                if (!session || !session.user) {
+                    throw new Error("No se pudo obtener la sesión del usuario.");
+                }
+                const { email, name } = session.user;
+                return registerUser(email, name);
+            } catch (error) {
+                console.error("Error en signUpWithGoogle:", error);
+                return null;
+            }
+        }
+    }["UserProvider.useCallback[signUpWithGoogle]"], [
+        registerUser
+    ]);
+    const requestResetPassword = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "UserProvider.useCallback[requestResetPassword]": async (email)=>{
+            const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post("/users/request-reset-password", {
+                email
+            }));
+            if (error || !data) {
+                throw new Error(error.message || "Error al solicitar reset de contraseña");
+            }
+            return data.data;
+        }
+    }["UserProvider.useCallback[requestResetPassword]"], []);
+    const resetPassword = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "UserProvider.useCallback[resetPassword]": async (token, newPassword)=>{
+            const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post("/users/reset-password", {
+                token,
+                newPassword
+            }));
+            if (error || !data) {
+                throw new Error(error.message || "Error al resetear la contraseña");
+            }
+            return data.data;
+        }
+    }["UserProvider.useCallback[resetPassword]"], []);
+    const value = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "UserProvider.useMemo[value]": ()=>({
+                token,
+                user,
+                signInO,
+                signUp,
+                deleteUser,
+                mailIsValid,
+                updateUser,
+                signOut,
+                signInWithGoogle,
+                signUpWithGoogle,
+                requestResetPassword,
+                resetPassword
+            })
+    }["UserProvider.useMemo[value]"], [
+        token,
+        user,
+        signInO,
+        signUp,
+        deleteUser,
+        mailIsValid,
+        updateUser,
+        signOut,
+        signInWithGoogle,
+        signUpWithGoogle,
+        requestResetPassword,
+        resetPassword
+    ]);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(UserContext.Provider, {
-        value: {
-            token,
-            user,
-            signInO,
-            signUp,
-            deleteUser,
-            mailIsValid,
-            updateUser,
-            signOut,
-            signInWithGoogle,
-            signUpWithGoogle,
-            requestResetPassword,
-            resetPassword
-        },
+        value: value,
         children: children
     }, void 0, false, {
         fileName: "[project]/context/user.context.tsx",
-        lineNumber: 292,
-        columnNumber: 5
+        lineNumber: 335,
+        columnNumber: 10
     }, this);
 };
-_s(UserProvider, "LFBFAVVfFdRKFdRQei/5dMxQorM=", false, function() {
+_s(UserProvider, "4El7o02EdloHFm8YFHYzYRVf+tg=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSession"]
     ];
@@ -701,13 +745,13 @@ const SuscribeProvider = ({ children })=>{
     const [sub, setSub] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const [planes, setPlanes] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const [viewPlan, setViewPlan] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
-    // Inicializamos el SDK de Mercado Pago con tu public key de prueba
+    // Inicializar MercadoPago (se ejecuta solo una vez)
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "SuscribeProvider.useEffect": ()=>{
             (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mercadopago$2f$sdk$2d$react$2f$esm$2f$mercadoPago$2f$initMercadoPago$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__initMercadoPago$3e$__["initMercadoPago"])("TEST-450aba78-55dc-4623-9975-99be4b21f666");
         }
     }["SuscribeProvider.useEffect"], []);
-    // Función para obtener los planes desde la API o desde el localStorage
+    // Función para obtener planes (uso de useCallback para memorizarla)
     const getPlanes = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
         "SuscribeProvider.useCallback[getPlanes]": async ()=>{
             try {
@@ -731,7 +775,6 @@ const SuscribeProvider = ({ children })=>{
             }
         }
     }["SuscribeProvider.useCallback[getPlanes]"], []);
-    // Función para suscribirse a un plan
     const suscribirse = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
         "SuscribeProvider.useCallback[suscribirse]": async (planId, paymentMethodToken)=>{
             try {
@@ -754,7 +797,6 @@ const SuscribeProvider = ({ children })=>{
     }["SuscribeProvider.useCallback[suscribirse]"], [
         user
     ]);
-    // Función para cancelar la suscripción
     const desuscribirse = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
         "SuscribeProvider.useCallback[desuscribirse]": async ()=>{
             if (!sub) return;
@@ -814,7 +856,7 @@ const SuscribeProvider = ({ children })=>{
         planes,
         viewPlan
     ]);
-    // Carga inicial de la suscripción y los planes al montar o al cambiar el usuario
+    // Cargar la subscripción y los planes al montar o cuando cambie el usuario
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "SuscribeProvider.useEffect": ()=>{
             const storedSub = localStorage.getItem("subscripcion");
@@ -827,6 +869,7 @@ const SuscribeProvider = ({ children })=>{
         user,
         getPlanes
     ]);
+    // Seleccionar el plan de vista si aún no está seleccionado
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "SuscribeProvider.useEffect": ()=>{
             if (planes.length > 0 && !viewPlan) {
@@ -845,6 +888,7 @@ const SuscribeProvider = ({ children })=>{
         planes,
         viewPlan
     ]);
+    // Memorizar el valor del contexto para evitar renders innecesarios
     const value = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
         "SuscribeProvider.useMemo[value]": ()=>({
                 sub,

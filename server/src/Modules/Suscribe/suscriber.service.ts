@@ -36,6 +36,10 @@ export class SubscriptionsService {
     });
   }
 
+  /**
+   * Crea una suscripción utilizando la API de preaprobaciones.
+   * Esta API (https://api.mercadopago.com/preapproval) se encarga de gestionar pagos recurrentes.
+   */
   async createSubscription(createSubscriptionDto: CreateSubscriptionDto) {
     if (!createSubscriptionDto.planId) {
       throw new HttpException(
@@ -60,20 +64,22 @@ export class SubscriptionsService {
       throw new HttpException('Plan no encontrado', HttpStatus.NOT_FOUND);
     }
 
+    // Instanciamos el objeto PreApproval, el cual utilizará la API /preapproval de Mercado Pago.
     const preApproval = new PreApproval(this.client);
     const idempotencyKey = uuidv4();
     console.log('preApproval', preApproval);
+
     try {
       const response = await preApproval.create({
         body: {
           payer_email: createSubscriptionDto.userEmail,
-          reason: 'Subscripcion a Assetly',
+          reason: 'Subscripción a Assetly',
           card_token_id: createSubscriptionDto.paymentMethodToken,
           status: 'authorized',
           auto_recurring: {
             frequency: 1,
             frequency_type: 'months',
-            transaction_amount: 10,
+            transaction_amount: 100,
             currency_id: 'ARS',
           },
         },
@@ -87,6 +93,7 @@ export class SubscriptionsService {
         throw new Error('No se recibió ID de suscripción de Mercado Pago');
       }
 
+      // Se guarda la suscripción en la base de datos
       const newSubscription = this.subscriptionRepository.create({
         plan,
         fechaInicio: new Date(),
@@ -128,15 +135,17 @@ export class SubscriptionsService {
       );
     }
 
-    // Generar una clave única para la operación de cancelación
+    // Se genera una clave idempotente para la cancelación
     this.client.options.idempotencyKey = uuidv4();
     const preApproval = new PreApproval(this.client);
     try {
+      // Se actualiza la suscripción en Mercado Pago estableciendo el estado "cancelled"
       await preApproval.update({
         id: dto.subscriptionId,
         body: { status: 'cancelled' },
       });
 
+      // Actualizamos el registro local
       subscription.status = SubscriptionStatus.CANCELLED;
       subscription.cancellationDate = new Date();
       subscription.cancellationReason = dto.cancellationReason;

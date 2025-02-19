@@ -97,17 +97,17 @@ const CardPlan: React.FC<CardPlanProps> = ({
 
             {/* Precio */}
             <span className="inline-block min-w-[80px] rounded-full bg-gradient-to-r from-indigo-400 to-pink-400 px-3 py-1 text-sm font-bold text-white shadow-sm animate-gradient text-center">
-              {precio > 0 ? (precio > 10000? `$${precio}/y` : `$${precio}/m`) : "Free"}
+              {precio > 0
+                ? precio > 10000
+                  ? `$${precio}/y`
+                  : `$${precio}/m`
+                : "Free"}
             </span>
 
             {/* Activos */}
             <span className="inline-block min-w-[100px] rounded-full bg-gradient-to-r from-green-500 to-teal-400 px-3 py-1 text-sm font-bold text-white shadow-sm animate-gradient text-center">
               {activos}
-              {activos !== "Sin límites" && (
-                <span className="ml-1">
-                  /act
-                </span>
-              )}
+              {activos !== "Sin límites" && <span className="ml-1">/act</span>}
             </span>
 
             {/* Personalizable */}
@@ -140,9 +140,16 @@ export const TiposDePlanes: React.FC = () => {
     "workflow-03.png": WorkflowImg03,
   };
 
+  // Ordenar los planes: el Free (precio === 0) primero, luego por precio ascendente
+  const sortedPlanes = [...planes].sort((a, b) => {
+    if (a.precio === 0 && b.precio !== 0) return -1;
+    if (b.precio === 0 && a.precio !== 0) return 1;
+    return a.precio - b.precio;
+  });
+
   return (
     <Spotlight className="grid items-start max-w-sm gap-6 mx-auto group lg:max-w-none lg:grid-cols-3">
-      {planes.map((plan) => (
+      {sortedPlanes.map((plan) => (
         <CardPlan
           key={plan.id}
           id={plan.id}

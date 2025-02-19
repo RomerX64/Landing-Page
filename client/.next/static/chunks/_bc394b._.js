@@ -839,13 +839,13 @@ const CardPlan = ({ id, name, imagen, alt, precio, activos, descripcion, popular
                                             children: "/act"
                                         }, void 0, false, {
                                             fileName: "[project]/components/tiposDePlanesSaaS.tsx",
-                                            lineNumber: 107,
-                                            columnNumber: 17
+                                            lineNumber: 110,
+                                            columnNumber: 45
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/tiposDePlanesSaaS.tsx",
-                                    lineNumber: 104,
+                                    lineNumber: 108,
                                     columnNumber: 13
                                 }, this),
                                 isPersonalizable && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -904,9 +904,17 @@ const TiposDePlanes = ()=>{
         "workflow-02.png": __TURBOPACK__imported__module__$5b$project$5d2f$public$2f$images$2f$workflow$2d$02$2e$png$2e$mjs__$7b$__IMAGE__$3d3e$__$225b$project$5d2f$public$2f$images$2f$workflow$2d$02$2e$png__$5b$app$2d$client$5d$__$28$static$2922$__$7d$__$5b$app$2d$client$5d$__$28$structured__image__object$2c$__ecmascript$29$__["default"],
         "workflow-03.png": __TURBOPACK__imported__module__$5b$project$5d2f$public$2f$images$2f$workflow$2d$03$2e$png$2e$mjs__$7b$__IMAGE__$3d3e$__$225b$project$5d2f$public$2f$images$2f$workflow$2d$03$2e$png__$5b$app$2d$client$5d$__$28$static$2922$__$7d$__$5b$app$2d$client$5d$__$28$structured__image__object$2c$__ecmascript$29$__["default"]
     };
+    // Ordenar los planes: el Free (precio === 0) primero, luego por precio ascendente
+    const sortedPlanes = [
+        ...planes
+    ].sort((a, b)=>{
+        if (a.precio === 0 && b.precio !== 0) return -1;
+        if (b.precio === 0 && a.precio !== 0) return 1;
+        return a.precio - b.precio;
+    });
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$spotlight$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
         className: "grid items-start max-w-sm gap-6 mx-auto group lg:max-w-none lg:grid-cols-3",
-        children: planes.map((plan)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(CardPlan, {
+        children: sortedPlanes.map((plan)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(CardPlan, {
                 id: plan.id,
                 name: plan.name,
                 imagen: imagenMap[plan.alt] || __TURBOPACK__imported__module__$5b$project$5d2f$public$2f$images$2f$workflow$2d$01$2e$png$2e$mjs__$7b$__IMAGE__$3d3e$__$225b$project$5d2f$public$2f$images$2f$workflow$2d$01$2e$png__$5b$app$2d$client$5d$__$28$static$2922$__$7d$__$5b$app$2d$client$5d$__$28$structured__image__object$2c$__ecmascript$29$__["default"],
@@ -917,12 +925,12 @@ const TiposDePlanes = ()=>{
                 popular: plan.popular
             }, plan.id, false, {
                 fileName: "[project]/components/tiposDePlanesSaaS.tsx",
-                lineNumber: 146,
+                lineNumber: 153,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/components/tiposDePlanesSaaS.tsx",
-        lineNumber: 144,
+        lineNumber: 151,
         columnNumber: 5
     }, this);
 };
@@ -958,7 +966,7 @@ const GlobalStyle = ()=>{
         }
     }, void 0, false, {
         fileName: "[project]/components/tiposDePlanesSaaS.tsx",
-        lineNumber: 187,
+        lineNumber: 194,
         columnNumber: 10
     }, this);
 };
