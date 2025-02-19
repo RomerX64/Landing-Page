@@ -1,8 +1,8 @@
 // File: C:\Users\tomir\OneDrive\Desktop\AssetlyLandingPage\client\app\(auth)\signin\page.tsx
-import * as entry from '../../../../../app/(auth)/signin/page.jsx'
+import * as entry from '../../../../../app/(auth)/signin/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
-type TEntry = typeof import('../../../../../app/(auth)/signin/page.jsx')
+type TEntry = typeof import('../../../../../app/(auth)/signin/page.js')
 
 type SegmentParams<T extends Object = any> = T extends Record<string, any>
   ? { [K in keyof T]: T[K] extends string ? string | string[] | undefined : never }

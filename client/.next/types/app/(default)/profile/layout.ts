@@ -1,8 +1,8 @@
 // File: C:\Users\tomir\OneDrive\Desktop\AssetlyLandingPage\client\app\(default)\profile\layout.tsx
-import * as entry from '../../../../../app/(default)/profile/layout.jsx'
+import * as entry from '../../../../../app/(default)/profile/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
-type TEntry = typeof import('../../../../../app/(default)/profile/layout.jsx')
+type TEntry = typeof import('../../../../../app/(default)/profile/layout.js')
 
 type SegmentParams<T extends Object = any> = T extends Record<string, any>
   ? { [K in keyof T]: T[K] extends string ? string | string[] | undefined : never }
