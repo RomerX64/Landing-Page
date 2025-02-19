@@ -240,23 +240,15 @@ export class UserService {
     }
   }
 
-  async signInGoogle(signInGoogle: signInGoogleDTO): Promise<User> {
+  async putAdmin(userId: string): Promise<User> {
     try {
-      const user = await this.userRepository.create(signInGoogle);
-      return await this.userRepository.save(user);
-    } catch (error) {
-      throw ErrorHandler.handle(error);
-    }
-  }
+      const user = await this.getUserById(userId);
 
-  async signConGoogle(signInGoogle: signInGoogleDTO): Promise<User> {
-    try {
-      const exist = await this.userRepository.findOne({
-        where: { email: signInGoogle.email },
-      });
-      if (exist) throw new BadRequestException('User already exist');
-      const user = await this.userRepository.create(signInGoogle);
-      return await this.userRepository.save(user);
+      user.isAdmin = true;
+
+      await this.userRepository.update(userId, { isAdmin: true });
+
+      return user;
     } catch (error) {
       throw ErrorHandler.handle(error);
     }

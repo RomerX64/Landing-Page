@@ -38,32 +38,6 @@ export class UserController {
     }
   }
 
-  @Post('/signUp/google')
-  @ApiOperation({
-    summary: 'Registrarse con google',
-    description: 'Registra al usuario mediante google',
-  })
-  async signInGoogle(@Body() signInGoogle: signInGoogleDTO): Promise<User> {
-    try {
-      return await this.userService.signInGoogle(signInGoogle);
-    } catch (error) {
-      throw ErrorHandler.handle(error);
-    }
-  }
-
-  @Post('/crearUser/google')
-  @ApiOperation({
-    summary: 'Registrarse con google',
-    description: 'Registra al usuario mediante google',
-  })
-  async signConGoogle(@Body() signInGoogle: signInGoogleDTO): Promise<User> {
-    try {
-      return await this.userService.signConGoogle(signInGoogle);
-    } catch (error) {
-      throw ErrorHandler.handle(error);
-    }
-  }
-
   @Get('/email/:email')
   @ApiOperation({
     summary: 'Verificar email',
@@ -211,6 +185,15 @@ export class UserController {
   ): Promise<{ user: User; token: string }> {
     try {
       return await this.userService.updateUser(updateUser);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  @Put('/admin/:userId')
+  async putAdmin(@Param('userId') userId: string): Promise<User> {
+    try {
+      return await this.userService.putAdmin(userId);
     } catch (error) {
       throw ErrorHandler.handle(error);
     }
