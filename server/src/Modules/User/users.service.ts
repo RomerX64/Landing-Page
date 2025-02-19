@@ -118,7 +118,6 @@ export class UserService {
         // Suponemos que el usuario recién creado aún no tiene el email confirmado
         emailVerified: false,
       });
-
       const savedUser = await this.userRepository.save(user);
 
       // Genera token de confirmación (válido por 1 día)
@@ -140,7 +139,7 @@ export class UserService {
       throw ErrorHandler.handle(error);
     }
   }
-
+  
   async updateUser(
     updateUser: updateUserDto,
   ): Promise<{ user: User; token: string }> {
