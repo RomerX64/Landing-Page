@@ -6,13 +6,6 @@ WORKDIR /app
 # Copiar los archivos de configuración
 COPY client/package*.json ./
 
-# Instalar las dependencias necesarias para sharp
-RUN apt-get update && \
-    apt-get install -y \
-    build-essential \
-    libvips-dev \
-    && rm -rf /var/lib/apt/lists/*
-
 # Instalar las dependencias de la aplicación
 RUN npm install
 
