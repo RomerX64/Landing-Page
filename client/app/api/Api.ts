@@ -1,7 +1,7 @@
 // utils/api.ts
 import axios from "axios";
 
-const prod = true;
+const prod = false;
 const urlWeb = "https://assetly-landing-page-backend.onrender.com/";
 const API_URL = prod ? urlWeb : "http://localhost:3001";
 

@@ -50,7 +50,7 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
 
   // Inicializar MercadoPago (se ejecuta solo una vez)
   useEffect(() => {
-    initMercadoPago("TEST-450aba78-55dc-4623-9975-99be4b21f666");
+    initMercadoPago("APP_USR-a88f991b-d04b-490f-b447-502303d60b9e");
   }, []);
 
   // Función para obtener planes (uso de useCallback para memorizarla)

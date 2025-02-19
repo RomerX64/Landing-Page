@@ -76,6 +76,8 @@ export class SubscriptionsService {
           reason: 'Subscripción a Assetly',
           card_token_id: createSubscriptionDto.paymentMethodToken,
           status: 'authorized',
+          back_url:
+            'https://assetly-landing-page-backend.onrender.com/payment/success',
           auto_recurring: {
             frequency: 1,
             frequency_type: 'months',
@@ -87,6 +89,7 @@ export class SubscriptionsService {
           idempotencyKey: idempotencyKey,
         },
       });
+
       console.log('response', response);
 
       if (!response || !response.id) {
