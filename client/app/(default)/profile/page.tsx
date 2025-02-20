@@ -5,9 +5,5 @@ export const metadata = {
 import UserProfile from "./layout";
 
 export default function Profile() {
-  return (
-    <>
-      <UserProfile />
-    </>
-  );
+  return <UserProfile />;
 }

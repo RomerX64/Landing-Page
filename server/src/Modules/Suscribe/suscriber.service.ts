@@ -1,7 +1,13 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Injectable,
+  HttpException,
+  HttpStatus,
+  Inject,
+  forwardRef,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { MercadoPagoConfig, PreApproval } from 'mercadopago';
+import { MercadoPagoConfig, PreApproval, User } from 'mercadopago';
 import { v4 as uuidv4 } from 'uuid';
 import { ConfigService } from '@nestjs/config';
 import {
@@ -10,6 +16,7 @@ import {
 } from './dto/subscription.dto';
 import { Subscripcion, SubscriptionStatus } from '../User/Subscripcion.entity';
 import { Plan } from '../User/Planes.entity';
+import { UserService } from '../User/users.service';
 
 @Injectable()
 export class SubscriptionsService {
@@ -20,6 +27,9 @@ export class SubscriptionsService {
     private readonly subscriptionRepository: Repository<Subscripcion>,
     @InjectRepository(Plan)
     private readonly planRepository: Repository<Plan>,
+    @Inject(forwardRef(() => UserService))
+    private readonly userService: UserService,
+
     private configService: ConfigService,
   ) {
     const accessToken = this.configService.get<string>(
@@ -81,7 +91,7 @@ export class SubscriptionsService {
           auto_recurring: {
             frequency: 1,
             frequency_type: 'months',
-            transaction_amount: 100,
+            transaction_amount: plan.precio,
             currency_id: 'ARS',
           },
         },
@@ -95,6 +105,9 @@ export class SubscriptionsService {
       if (!response || !response.id) {
         throw new Error('No se recibió ID de suscripción de Mercado Pago');
       }
+      const { User } = await this.userService.getUserByEmail(
+        createSubscriptionDto.userEmail,
+      );
 
       // Se guarda la suscripción en la base de datos
       const newSubscription = this.subscriptionRepository.create({
@@ -102,10 +115,12 @@ export class SubscriptionsService {
         fechaInicio: new Date(),
         mercadopagoSubscriptionId: response.id,
         status: SubscriptionStatus.ACTIVE,
+        user: User,
       });
 
       await this.subscriptionRepository.save(newSubscription);
 
+      console.log('subscripcion:', newSubscription);
       console.log(`Suscripción creada con ID: ${newSubscription.id}`);
 
       return {

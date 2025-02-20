@@ -6,6 +6,7 @@ import React, {
   ReactNode,
   useCallback,
   useMemo,
+  useContext,
 } from "react";
 import { IUser } from "@/interfaces/User.interface";
 import api from "@/app/api/Api";
@@ -18,7 +19,7 @@ import {
   getSession,
 } from "next-auth/react";
 
-interface UserContextProps {
+interface IUserContextProps {
   token: string;
   user: IUser | null;
   signInO: (data: SignInDTO) => Promise<IUser | null>;
@@ -36,7 +37,7 @@ interface UserContextProps {
   ) => Promise<{ message: string }>;
 }
 
-const defaultContext: UserContextProps = {
+const defaultContext: IUserContextProps = {
   token: "",
   user: null,
   signInO: async () => {
@@ -71,22 +72,19 @@ const defaultContext: UserContextProps = {
   },
 };
 
-export const UserContext = createContext<UserContextProps>(defaultContext);
+export const UserContext = createContext<IUserContextProps>(defaultContext);
 
-interface UserProviderProps {
-  children: ReactNode;
-}
-
-export const UserProvider = ({ children }: UserProviderProps) => {
+export const UserProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const { data: session } = useSession();
   const [user, setUserState] = useState<IUser | null>(null);
   const [token, setToken] = useState<string>("");
-  const [isSignedOut, setIsSignedOut] = useState<boolean>(false);
 
   useEffect(() => {
-    if (isSignedOut) return;
     const storedToken = localStorage.getItem("token");
     const storedUser = localStorage.getItem("user");
+
     if (storedToken) setToken(storedToken);
     if (storedUser) {
       try {
@@ -95,11 +93,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         console.error("Error al parsear el usuario del localStorage", error);
       }
     }
-    if (session?.user) {
-      const { email, name } = session.user as IUser;
-      registerUser(email, name);
-    }
-  }, [session, isSignedOut]);
+  }, []);
 
   const registerUser = useCallback(
     async (email: string, name: string): Promise<IUser | null> => {
@@ -114,6 +108,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
           );
           return null;
         }
+
         if (existsResponse?.data) {
           const { data: fetchedResponse, error: fetchError } =
             await handleAsync(api.get(`/users/get/${email}`));
@@ -124,9 +119,13 @@ export const UserProvider = ({ children }: UserProviderProps) => {
           setUserState(fetchedResponse.data.User);
           setToken(fetchedResponse.data.token);
           localStorage.setItem("token", fetchedResponse.data.token);
-          localStorage.setItem("user", JSON.stringify(fetchedResponse.data));
-          return fetchedResponse.data;
+          localStorage.setItem(
+            "user",
+            JSON.stringify(fetchedResponse.data.User)
+          );
+          return fetchedResponse.data.User;
         }
+
         const { data: createdResponse, error: postError } = await handleAsync(
           api.post("/users/crearUser/google", { email, name })
         );
@@ -147,33 +146,35 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const signInO = useCallback(
     async (signInData: SignInDTO): Promise<IUser | null> => {
-      const { data, error } = await handleAsync(
-        api.post("/users/signIn", signInData)
-      );
-      if (error || !data) {
-        throw new Error(error.message || "Hubo un error al iniciar sesión.");
+      try {
+        const { data: response, error } = await handleAsync(
+          api.post("/users/signIn", signInData)
+        );
+        if (error || !response?.data) {
+          throw new Error(error?.message || "Error de inicio de sesión");
+        }
+        const { User: returnedUser, token: returnedToken } = response.data;
+        setToken(returnedToken);
+        setUserState(returnedUser);
+        localStorage.setItem("token", returnedToken);
+        localStorage.setItem("user", JSON.stringify(returnedUser));
+        return returnedUser;
+      } catch (error) {
+        console.error("Error en signIn:", error);
+        return null;
       }
-      const { User: returnedUser, token: returnedToken } = data?.data || {};
-      if (!returnedUser || !returnedToken) {
-        throw new Error("Los datos de autenticación son inválidos.");
-      }
-      setToken(returnedToken);
-      setUserState(returnedUser);
-      localStorage.setItem("token", returnedToken);
-      localStorage.setItem("user", JSON.stringify(returnedUser));
-      return returnedUser;
     },
     []
   );
 
   const signUp = useCallback(async (signUpData: SignUpDTO): Promise<IUser> => {
-    const { data, error } = await handleAsync(
+    const { data: response, error } = await handleAsync(
       api.post("/users/signUp", signUpData)
     );
-    if (error || !data) {
-      throw new Error(error.message || "Hubo un error al registrarse.");
+    if (error || !response?.data) {
+      throw new Error(error?.message || "Error de registro");
     }
-    const { User: returnedUser, token: returnedToken } = data.data;
+    const { User: returnedUser, token: returnedToken } = response.data;
     setToken(returnedToken);
     setUserState(returnedUser);
     localStorage.setItem("token", returnedToken);
@@ -183,15 +184,13 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const deleteUser = useCallback(
     async (signInData: SignInDTO): Promise<IUser> => {
-      const { data, error } = await handleAsync(
+      const { data: response, error } = await handleAsync(
         api.delete("/users/user", { data: signInData })
       );
-      if (error || !data) {
-        throw new Error(
-          error.message || "Hubo un error al eliminar el usuario."
-        );
+      if (error || !response?.data) {
+        throw new Error(error?.message || "Error al eliminar usuario");
       }
-      const deletedUser = data.data;
+      const deletedUser = response.data;
       setToken("");
       setUserState(null);
       localStorage.removeItem("token");
@@ -205,23 +204,21 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     try {
       const response = await api.get(`/users/email/${email}`);
       return response.data;
-    } catch (error) {
+    } catch {
       return false;
     }
   }, []);
 
   const updateUser = useCallback(
-    async (updateUserData: Partial<updateUserDTO>): Promise<IUser> => {
-      if (!user?.id) throw new Error("El usuario no está autenticado.");
-      const { data, error } = await handleAsync(
+    async (updateUserData: updateUserDTO): Promise<IUser> => {
+      if (!user?.id) throw new Error("Usuario no autenticado");
+      const { data: response, error } = await handleAsync(
         api.post("/users/update", { ...updateUserData, id: user.id })
       );
-      if (error || !data) {
-        throw new Error(
-          error.message || "Hubo un error al actualizar el usuario."
-        );
+      if (error || !response?.data) {
+        throw new Error(error?.message || "Error al actualizar usuario");
       }
-      const { User: returnedUser, token: returnedToken } = data.data;
+      const { User: returnedUser, token: returnedToken } = response.data;
       setToken(returnedToken);
       setUserState(returnedUser);
       localStorage.setItem("token", returnedToken);
@@ -232,20 +229,23 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   );
 
   const signOut = useCallback(async (): Promise<void> => {
-    await nextAuthSignOut({ redirect: false });
-    setToken("");
-    setUserState(null);
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setIsSignedOut(true);
+    try {
+      await nextAuthSignOut({ redirect: false });
+      setToken("");
+      setUserState(null);
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+    } catch (error) {
+      console.error("Error durante el cierre de sesión:", error);
+    }
   }, []);
 
   const signInWithGoogle = useCallback(async (): Promise<IUser | null> => {
     try {
       await signIn("google", { callbackUrl: "/" });
       const session = await getSession();
-      if (!session || !session.user) {
-        throw new Error("No se pudo obtener la sesión del usuario.");
+      if (!session?.user) {
+        throw new Error("No se pudo obtener la sesión del usuario");
       }
       const { email, name } = session.user as IUser;
       return registerUser(email, name);
@@ -256,31 +256,20 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   }, [registerUser]);
 
   const signUpWithGoogle = useCallback(async (): Promise<IUser | null> => {
-    try {
-      await signIn("google", { callbackUrl: "/" });
-      const session = await getSession();
-      if (!session || !session.user) {
-        throw new Error("No se pudo obtener la sesión del usuario.");
-      }
-      const { email, name } = session.user as IUser;
-      return registerUser(email, name);
-    } catch (error) {
-      console.error("Error en signUpWithGoogle:", error);
-      return null;
-    }
-  }, [registerUser]);
+    return signInWithGoogle();
+  }, [signInWithGoogle]);
 
   const requestResetPassword = useCallback(
     async (email: string): Promise<{ message: string }> => {
-      const { data, error } = await handleAsync(
+      const { data: response, error } = await handleAsync(
         api.post("/users/request-reset-password", { email })
       );
-      if (error || !data) {
+      if (error || !response?.data) {
         throw new Error(
-          error.message || "Error al solicitar reset de contraseña"
+          error?.message || "Error al solicitar reset de contraseña"
         );
       }
-      return data.data;
+      return response.data;
     },
     []
   );
@@ -290,13 +279,13 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       token: string,
       newPassword: string
     ): Promise<{ message: string }> => {
-      const { data, error } = await handleAsync(
+      const { data: response, error } = await handleAsync(
         api.post("/users/reset-password", { token, newPassword })
       );
-      if (error || !data) {
-        throw new Error(error.message || "Error al resetear la contraseña");
+      if (error || !response?.data) {
+        throw new Error(error?.message || "Error al resetear contraseña");
       }
-      return data.data;
+      return response.data;
     },
     []
   );
@@ -334,3 +323,13 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
+
+export const useAuth = () => {
+  const context = useContext(UserContext);
+  if (!context) {
+    throw new Error("useAuth debe usarse dentro de un UserProvider");
+  }
+  return context;
+};
+
+export default UserContext;

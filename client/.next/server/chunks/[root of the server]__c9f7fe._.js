@@ -156,7 +156,7 @@ const authOptions = {
             return session;
         },
         async redirect ({ url, baseUrl }) {
-            return `${"TURBOPACK compile-time value", "http://localhost:3001"}/`;
+            return `${"TURBOPACK compile-time value", "http://localhost:3000"}/`;
         }
     }
 };

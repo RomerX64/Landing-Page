@@ -22,12 +22,10 @@ const UserProfile: React.FC = () => {
     let timeout: NodeJS.Timeout;
 
     if (!user) {
-      // Si no hay usuario, esperar 1 segundo antes de redirigir
       timeout = setTimeout(() => {
         router?.push("/signin");
       }, 1000);
     } else {
-      // Si hay usuario, actualizar los datos del formulario
       setFormData({
         name: user.name || "",
         email: user.email || "",
@@ -92,7 +90,6 @@ const UserProfile: React.FC = () => {
           </div>
         )}
 
-        {/* Formulario de edición y datos del usuario */}
         <div className="p-4">
           {isEditing ? (
             <form onSubmit={handleSubmit}>
@@ -203,9 +200,8 @@ const UserProfile: React.FC = () => {
           )}
         </div>
       </div>
-      <SuscriberProfile />
     </section>
   );
 };
 
-export default UserProfile;
+export default React.memo(UserProfile);
