@@ -670,61 +670,166 @@ const defaultContext = {
     },
     getUsersSubscribedAt: async (_planId)=>{
         throw new Error("Not implemented");
+    },
+    putAdmin: async (_userId)=>{
+        throw new Error("Not implemented");
+    },
+    getAllPlans: async ()=>{
+        throw new Error("Not implemented");
+    },
+    createPlan: async (_plan)=>{
+        throw new Error("Not implemented");
+    },
+    updatePlan: async (_planId, _plan)=>{
+        throw new Error("Not implemented");
+    },
+    deletePlan: async (_planId)=>{
+        throw new Error("Not implemented");
+    },
+    getAllSubscriptions: async ()=>{
+        throw new Error("Not implemented");
+    },
+    getSubscriptionById: async (_subscriptionId)=>{
+        throw new Error("Not implemented");
+    },
+    updateSubscriptionStatus: async (_subscriptionId, _status)=>{
+        throw new Error("Not implemented");
+    },
+    cancelSubscription: async (_subscriptionId, _reason)=>{
+        throw new Error("Not implemented");
     }
 };
 const AdminContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["createContext"])(defaultContext);
 const AdminProvider = ({ children })=>{
+    // Funciones de Usuarios
     const getUsers = async ()=>{
-        const cachedUsers = localStorage.getItem("admin_users");
-        if (cachedUsers) {
+        const cached = localStorage.getItem("admin_users");
+        if (cached) {
             console.log("Cargando usuarios desde localStorage...");
-            return JSON.parse(cachedUsers);
+            return JSON.parse(cached);
         }
         const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get("/admin/users"));
         if (error || !data) {
-            throw new Error(error.message || "Hubo un error al iniciar sesión.");
+            throw new Error(error?.message || "Error al obtener los usuarios.");
         }
         localStorage.setItem("admin_users", JSON.stringify(data.data));
         return data.data;
     };
     const getUsersSubscribed = async ()=>{
-        const cachedUsersSubscribed = localStorage.getItem("admin_usersSubscribed");
-        if (cachedUsersSubscribed) {
+        const cached = localStorage.getItem("admin_usersSubscribed");
+        if (cached) {
             console.log("Cargando usuarios suscritos desde localStorage...");
-            return JSON.parse(cachedUsersSubscribed);
+            return JSON.parse(cached);
         }
         const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get("/admin/getUsersSubscribed"));
         if (error || !data) {
-            throw new Error(error.message || "Hubo un error al iniciar sesión.");
+            throw new Error(error?.message || "Error al obtener usuarios suscritos.");
         }
         localStorage.setItem("admin_usersSubscribed", JSON.stringify(data.data));
         return data.data;
     };
     const getUsersSubscribedAt = async (planId)=>{
         const cacheKey = `admin_usersSubscribed_plan_${planId}`;
-        const cachedUsersSubscribedAt = localStorage.getItem(cacheKey);
-        if (cachedUsersSubscribedAt) {
+        const cached = localStorage.getItem(cacheKey);
+        if (cached) {
             console.log(`Cargando usuarios suscritos al plan ${planId} desde localStorage...`);
-            return JSON.parse(cachedUsersSubscribedAt);
+            return JSON.parse(cached);
         }
         const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get(`/admin/getUsersSubscribed/${planId}`));
         if (error || !data) {
-            throw new Error(error.message || "Hubo un error al iniciar sesión.");
+            throw new Error(error?.message || "Error al obtener usuarios suscritos al plan.");
         }
         localStorage.setItem(cacheKey, JSON.stringify(data.data));
+        return data.data;
+    };
+    const putAdmin = async (userId)=>{
+        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].put(`/admin/admin/${userId}`));
+        if (error || !data) {
+            throw new Error(error?.message || "Error al asignar rol admin.");
+        }
+        return data.data;
+    };
+    // Funciones para Planes
+    const getAllPlans = async ()=>{
+        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get("/admin/plans"));
+        if (error || !data) {
+            throw new Error(error?.message || "Error al obtener los planes.");
+        }
+        return data.data;
+    };
+    const createPlan = async (plan)=>{
+        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post("/admin/plan", plan));
+        if (error || !data) {
+            throw new Error(error?.message || "Error al crear el plan.");
+        }
+        return data.data;
+    };
+    const updatePlan = async (planId, plan)=>{
+        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].put(`/admin/plan/${planId}`, plan));
+        if (error || !data) {
+            throw new Error(error?.message || "Error al actualizar el plan.");
+        }
+        return data.data;
+    };
+    const deletePlan = async (planId)=>{
+        const { error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].delete(`/admin/plan/${planId}`));
+        if (error) {
+            throw new Error(error?.message || "Error al eliminar el plan.");
+        }
+    };
+    // Funciones para Suscripciones
+    const getAllSubscriptions = async ()=>{
+        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get("/admin/subscriptions"));
+        if (error || !data) {
+            throw new Error(error?.message || "Error al obtener las suscripciones.");
+        }
+        return data.data;
+    };
+    const getSubscriptionById = async (subscriptionId)=>{
+        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get(`/admin/subscription/${subscriptionId}`));
+        if (error || !data) {
+            throw new Error(error?.message || "Error al obtener la suscripción.");
+        }
+        return data.data;
+    };
+    const updateSubscriptionStatus = async (subscriptionId, status)=>{
+        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].put(`/admin/subscription/${subscriptionId}/status`, {
+            status
+        }));
+        if (error || !data) {
+            throw new Error(error?.message || "Error al actualizar el estado de la suscripción.");
+        }
+        return data.data;
+    };
+    const cancelSubscription = async (subscriptionId, reason)=>{
+        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].put(`/admin/subscription/${subscriptionId}/cancel`, {
+            reason
+        }));
+        if (error || !data) {
+            throw new Error(error?.message || "Error al cancelar la suscripción.");
+        }
         return data.data;
     };
     const value = {
         getUsers,
         getUsersSubscribed,
-        getUsersSubscribedAt
+        getUsersSubscribedAt,
+        putAdmin,
+        getAllPlans,
+        createPlan,
+        updatePlan,
+        deletePlan,
+        getAllSubscriptions,
+        getSubscriptionById,
+        updateSubscriptionStatus,
+        cancelSubscription
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(AdminContext.Provider, {
         value: value,
         children: children
     }, void 0, false, {
         fileName: "[project]/context/Administracion.context.tsx",
-        lineNumber: 90,
+        lineNumber: 241,
         columnNumber: 5
     }, this);
 };
