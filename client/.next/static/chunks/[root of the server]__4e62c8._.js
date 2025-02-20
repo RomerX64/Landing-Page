@@ -645,7 +645,7 @@ const AdminProvider = ({ children })=>{
             console.log("Cargando usuarios desde localStorage...");
             return JSON.parse(cachedUsers);
         }
-        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get("/users/users"));
+        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get("/admin/users"));
         if (error || !data) {
             throw new Error(error.message || "Hubo un error al iniciar sesión.");
         }
@@ -658,7 +658,7 @@ const AdminProvider = ({ children })=>{
             console.log("Cargando usuarios suscritos desde localStorage...");
             return JSON.parse(cachedUsersSubscribed);
         }
-        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get("/users/getUsersSubscribed"));
+        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get("/admin/getUsersSubscribed"));
         if (error || !data) {
             throw new Error(error.message || "Hubo un error al iniciar sesión.");
         }
@@ -672,7 +672,7 @@ const AdminProvider = ({ children })=>{
             console.log(`Cargando usuarios suscritos al plan ${planId} desde localStorage...`);
             return JSON.parse(cachedUsersSubscribedAt);
         }
-        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get(`/users/getUsersSubscribed/${planId}`));
+        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get(`/admin/getUsersSubscribed/${planId}`));
         if (error || !data) {
             throw new Error(error.message || "Hubo un error al iniciar sesión.");
         }
@@ -771,11 +771,11 @@ const SuscribeProvider = ({ children })=>{
         }
     }["SuscribeProvider.useCallback[getPlanes]"], []);
     const suscribirse = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
-        "SuscribeProvider.useCallback[suscribirse]": async (planId, paymentMethodToken)=>{
+        "SuscribeProvider.useCallback[suscribirse]": async (planId, paymentMethodToken, email)=>{
             try {
                 const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post(`/subscriptions`, {
                     planId,
-                    userEmail: user?.email,
+                    userEmail: email,
                     paymentMethodToken
                 }));
                 if (error || !data?.data?.subscription) {
@@ -908,7 +908,7 @@ const SuscribeProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/context/Suscribe.context.tsx",
-        lineNumber: 206,
+        lineNumber: 210,
         columnNumber: 5
     }, this);
 };

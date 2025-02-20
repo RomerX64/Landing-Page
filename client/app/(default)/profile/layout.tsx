@@ -200,6 +200,7 @@ const UserProfile: React.FC = () => {
           )}
         </div>
       </div>
+      <SuscriberProfile />
     </section>
   );
 };

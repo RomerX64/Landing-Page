@@ -85,50 +85,6 @@ export class UserController {
     }
   }
 
-  @ApiBearerAuth()
-  @Get('/users')
-  @UseGuards(AuthGuard, AdminGuard)
-  @ApiOperation({
-    summary: 'Obtener usuarios',
-    description: 'Obtiene todos los usuarios',
-  })
-  async getUsers(): Promise<User[]> {
-    try {
-      return await this.userService.getUsers();
-    } catch (error) {
-      throw ErrorHandler.handle(error);
-    }
-  }
-
-  @ApiBearerAuth()
-  @Get('/getUsersSubscribed')
-  @UseGuards(AuthGuard, AdminGuard)
-  @ApiOperation({
-    summary: 'Obtener usuarios suscritos',
-    description: 'Obtiene todos los usuarios suscritos',
-  })
-  async getUsersSubscribed(): Promise<User[]> {
-    try {
-      return await this.userService.getUsersSubscribed();
-    } catch (error) {
-      throw ErrorHandler.handle(error);
-    }
-  }
-
-  @ApiBearerAuth()
-  @Get('/getUsersSubscribed/:planId')
-  @UseGuards(AuthGuard, AdminGuard)
-  @ApiOperation({
-    summary: 'Obtener usuarios suscritos en un plan',
-    description: 'Obtiene todos los usuarios suscritos en el plan seleccionado',
-  })
-  async getUsersSubscribedAt(@Param('planId') planId: number): Promise<User[]> {
-    try {
-      return await this.userService.getUsersSubscribedAt(planId);
-    } catch (error) {
-      throw ErrorHandler.handle(error);
-    }
-  }
 
   @ApiBearerAuth()
   @Delete('/user')
@@ -185,15 +141,6 @@ export class UserController {
   ): Promise<{ user: User; token: string }> {
     try {
       return await this.userService.updateUser(updateUser);
-    } catch (error) {
-      throw ErrorHandler.handle(error);
-    }
-  }
-
-  @Put('/admin/:userId')
-  async putAdmin(@Param('userId') userId: string): Promise<User> {
-    try {
-      return await this.userService.putAdmin(userId);
     } catch (error) {
       throw ErrorHandler.handle(error);
     }

@@ -35,7 +35,7 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
       return JSON.parse(cachedUsers);
     }
 
-    const { data, error } = await handleAsync(api.get("/users/users"));
+    const { data, error } = await handleAsync(api.get("/admin/users"));
     if (error || !data) {
       throw new Error(error.message || "Hubo un error al iniciar sesión.");
     }
@@ -51,7 +51,7 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
     }
 
     const { data, error } = await handleAsync(
-      api.get("/users/getUsersSubscribed")
+      api.get("/admin/getUsersSubscribed")
     );
     if (error || !data) {
       throw new Error(error.message || "Hubo un error al iniciar sesión.");
@@ -71,7 +71,7 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
     }
 
     const { data, error } = await handleAsync(
-      api.get(`/users/getUsersSubscribed/${planId}`)
+      api.get(`/admin/getUsersSubscribed/${planId}`)
     );
     if (error || !data) {
       throw new Error(error.message || "Hubo un error al iniciar sesión.");

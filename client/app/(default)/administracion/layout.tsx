@@ -1,6 +1,7 @@
 "use client";
 import { AdminContext } from "@/context/Administracion.context";
 import { SuscribeContext } from "@/context/Suscribe.context";
+import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 
 interface UserType {
@@ -23,6 +24,7 @@ const AdminPanel: React.FC = () => {
   const [allUsers, setAllUsers] = useState<UserType[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedPlans, setSelectedPlans] = useState<number[]>([]);
+  const router = useRouter();
   const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -78,6 +80,12 @@ const AdminPanel: React.FC = () => {
   const closeModal = () => {
     setSelectedUser(null);
     setModalOpen(false);
+  };
+
+  // Función para redirigir al usuario a la página de modificación
+  const redirectToEdit = (userId: string) => {
+    // window.open(`/administracion/user/${userId}`, "_blank");
+    router.push(`/administracion/${userId}`);
   };
 
   return (
@@ -169,6 +177,12 @@ const AdminPanel: React.FC = () => {
               className="px-4 py-2 mt-4 text-white transition-all rounded bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700"
             >
               Cerrar
+            </button>
+            <button
+              onClick={() => redirectToEdit(selectedUser.id)}
+              className="px-4 py-2 mt-4 ml-2 text-white transition-all rounded bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700"
+            >
+              Modificar
             </button>
           </div>
         </div>

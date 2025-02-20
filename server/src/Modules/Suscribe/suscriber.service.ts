@@ -9,6 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MercadoPagoConfig, PreApproval, User } from 'mercadopago';
 import { v4 as uuidv4 } from 'uuid';
+import { User as UserEntity } from '../User/User.entity';
 import { ConfigService } from '@nestjs/config';
 import {
   CreateSubscriptionDto,
@@ -50,7 +51,9 @@ export class SubscriptionsService {
    * Crea una suscripción utilizando la API de preaprobaciones.
    * Esta API (https://api.mercadopago.com/preapproval) se encarga de gestionar pagos recurrentes.
    */
+
   async createSubscription(createSubscriptionDto: CreateSubscriptionDto) {
+    console.log(createSubscriptionDto);
     if (!createSubscriptionDto.planId) {
       throw new HttpException(
         'ID del plan es requerido',
@@ -73,6 +76,7 @@ export class SubscriptionsService {
     if (!plan) {
       throw new HttpException('Plan no encontrado', HttpStatus.NOT_FOUND);
     }
+    console.log('plan', plan);
 
     // Instanciamos el objeto PreApproval, el cual utilizará la API /preapproval de Mercado Pago.
     const preApproval = new PreApproval(this.client);

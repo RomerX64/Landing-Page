@@ -24,6 +24,7 @@ export class SubscriptionsController {
     @Body() createSubscriptionDto: CreateSubscriptionDto,
   ) {
     try {
+      console.log(createSubscriptionDto);
       const result = await this.subscriptionsService.createSubscription(
         createSubscriptionDto,
       );

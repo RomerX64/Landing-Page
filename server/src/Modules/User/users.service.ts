@@ -139,7 +139,7 @@ export class UserService {
       throw ErrorHandler.handle(error);
     }
   }
-  
+
   async updateUser(
     updateUser: updateUserDto,
   ): Promise<{ user: User; token: string }> {
@@ -155,37 +155,6 @@ export class UserService {
       const token = this.jwtService.sign(userPayload);
       const user = await this.userRepository.save(updateUser);
       return { user: user, token: token };
-    } catch (error) {
-      throw ErrorHandler.handle(error);
-    }
-  }
-
-  async getUsers(): Promise<User[]> {
-    try {
-      const users = await this.userRepository.find();
-      return users;
-    } catch (error) {
-      throw ErrorHandler.handle(error);
-    }
-  }
-
-  async getUsersSubscribed(): Promise<User[]> {
-    try {
-      const users: User[] = await this.userRepository.find({
-        where: { subscripcion: Not(IsNull()) },
-      });
-      return users;
-    } catch (error) {
-      throw ErrorHandler.handle(error);
-    }
-  }
-
-  async getUsersSubscribedAt(planId: number): Promise<User[]> {
-    try {
-      const users: User[] = await this.userRepository.find({
-        where: { subscripcion: { plan: { id: planId } } },
-      });
-      return users;
     } catch (error) {
       throw ErrorHandler.handle(error);
     }
@@ -234,20 +203,6 @@ export class UserService {
   async getPlanes(): Promise<Plan[]> {
     try {
       return await this.planRepository.find();
-    } catch (error) {
-      throw ErrorHandler.handle(error);
-    }
-  }
-
-  async putAdmin(userId: string): Promise<User> {
-    try {
-      const user = await this.getUserById(userId);
-
-      user.isAdmin = true;
-
-      await this.userRepository.update(userId, { isAdmin: true });
-
-      return user;
     } catch (error) {
       throw ErrorHandler.handle(error);
     }

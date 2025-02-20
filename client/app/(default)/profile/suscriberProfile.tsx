@@ -16,7 +16,22 @@ import { SuscribeContext } from "@/context/Suscribe.context";
 
 const SuscriberProfile: React.FC = () => {
   const { sub } = useContext(SuscribeContext);
+  if (!sub) return;
+  const fechaInicio =
+    sub.fechaInicio instanceof Date
+      ? sub.fechaInicio
+      : new Date(sub.fechaInicio);
+  const fechaUltimaPaga =
+    sub.fechaUltimaPaga instanceof Date
+      ? sub.fechaUltimaPaga
+      : new Date(sub.fechaUltimaPaga);
+  const fechaVencimiento =
+    sub.fechaVencimiento instanceof Date
+      ? sub.fechaVencimiento
+      : new Date(sub.fechaVencimiento);
+
   const handleDesub = () => {};
+
   return (
     sub && (
       <section className="px-2 py-3 mx-auto max-w-7xl">
@@ -57,19 +72,19 @@ const SuscriberProfile: React.FC = () => {
               <div>
                 <p className="block text-gray-300">
                   <strong>Subscrito: </strong>
-                  {sub.fechaInicio.toLocaleDateString()}
+                  {fechaInicio.toLocaleDateString()}
                 </p>
               </div>
               <div>
                 <p className="block text-gray-300">
                   <strong>Ultima paga: </strong>
-                  {sub.fechaUltimaPaga.toLocaleDateString()}
+                  {fechaUltimaPaga.toLocaleDateString()}
                 </p>
               </div>
               <div>
                 <p className="block text-gray-300">
                   <strong>Vencimiento: </strong>
-                  {sub.fechaVencimiento.toLocaleDateString()}
+                  {fechaVencimiento.toLocaleDateString()}
                 </p>
               </div>
             </div>

@@ -1,4 +1,3 @@
-import { User } from 'mercadopago';
 import { Subscripcion } from '../User/Subscripcion.entity';
 import { Plan } from '../User/Planes.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -7,13 +6,16 @@ import { ConfigModule } from '@nestjs/config';
 import { SubscriptionsController } from './suscriber.controller';
 import { SubscriptionsService } from './suscriber.service';
 import { UserModule } from '../User/users.module';
+import { User } from 'mercadopago';
+import { User as UserEntity } from '../User/User.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Subscripcion, Plan]),
+    TypeOrmModule.forFeature([User, UserEntity, Subscripcion, Plan]),
     forwardRef(() => UserModule),
   ],
   providers: [SubscriptionsService],
   controllers: [SubscriptionsController],
+  exports: [SubscriptionsService],
 })
 export class SuscribeModule {}

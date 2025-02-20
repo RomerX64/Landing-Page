@@ -25,14 +25,36 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mercadopag
 const PaymentForm = ()=>{
     const { viewPlan, suscribirse } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useContext"])(__TURBOPACK__imported__module__$5b$project$5d2f$context$2f$Suscribe$2e$context$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["SuscribeContext"]);
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
+    const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [paymentProcessing, setPaymentProcessing] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    const validateCardData = (formData)=>{
+        if (!formData.token) {
+            setError("Falta el token de la tarjeta.");
+            return false;
+        }
+        if (!formData.payment_method_id) {
+            setError("Método de pago no seleccionado.");
+            return false;
+        }
+        return true;
+    };
     const handleFormSubmit = async (formData)=>{
+        console.log(formData);
+        console.log(formData.payer);
+        console.log(formData.payer.email);
         if (!viewPlan) return;
+        if (!validateCardData(formData)) return;
         try {
             const paymentMethodToken = formData.token;
-            await suscribirse(viewPlan.id, paymentMethodToken);
+            setPaymentProcessing(true);
+            await suscribirse(viewPlan.id, paymentMethodToken, formData.payer.email);
+            // Show success message and redirect
             router.push("/suscribirse/success");
         } catch (error) {
             console.error("Error al procesar el pago:", error);
+            setError("Hubo un error al procesar el pago. Intenta nuevamente.");
+        } finally{
+            setPaymentProcessing(false);
         }
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -50,12 +72,12 @@ const PaymentForm = ()=>{
                                 size: 24
                             }, void 0, false, {
                                 fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                                lineNumber: 33,
+                                lineNumber: 58,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                            lineNumber: 29,
+                            lineNumber: 54,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
@@ -63,61 +85,71 @@ const PaymentForm = ()=>{
                             children: "Completa tu Pago"
                         }, void 0, false, {
                             fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                            lineNumber: 35,
+                            lineNumber: 60,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                    lineNumber: 28,
+                    lineNumber: 53,
                     columnNumber: 9
                 }, this),
                 viewPlan && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "mb-6",
-                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                        className: "text-gray-300",
-                        children: [
-                            "Estás suscribiéndote al plan",
-                            " ",
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "font-bold",
-                                children: viewPlan.name
-                            }, void 0, false, {
-                                fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                                lineNumber: 44,
-                                columnNumber: 15
-                            }, this),
-                            " por",
-                            " ",
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "font-bold",
-                                children: [
-                                    "$",
-                                    viewPlan.precio,
-                                    " dólares mensuales"
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                                lineNumber: 45,
-                                columnNumber: 15
-                            }, this),
-                            "."
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                        lineNumber: 42,
-                        columnNumber: 13
-                    }, this)
-                }, void 0, false, {
+                    className: "mb-3",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                            className: "text-gray-300",
+                            children: [
+                                "Estás suscribiéndote al plan",
+                                " ",
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "font-bold",
+                                    children: viewPlan.name
+                                }, void 0, false, {
+                                    fileName: "[project]/app/(default)/suscribirse/layout.tsx",
+                                    lineNumber: 69,
+                                    columnNumber: 15
+                                }, this),
+                                " por",
+                                " ",
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "font-bold",
+                                    children: [
+                                        "$",
+                                        viewPlan.precio,
+                                        " dólares mensuales"
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/app/(default)/suscribirse/layout.tsx",
+                                    lineNumber: 70,
+                                    columnNumber: 15
+                                }, this),
+                                "."
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/app/(default)/suscribirse/layout.tsx",
+                            lineNumber: 67,
+                            columnNumber: 13
+                        }, this),
+                        error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                            className: "text-xl text-red-400 rounded",
+                            children: error
+                        }, void 0, false, {
+                            fileName: "[project]/app/(default)/suscribirse/layout.tsx",
+                            lineNumber: 75,
+                            columnNumber: 23
+                        }, this)
+                    ]
+                }, void 0, true, {
                     fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                    lineNumber: 41,
+                    lineNumber: 66,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     id: "cardPaymentBrick_container"
                 }, void 0, false, {
                     fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                    lineNumber: 53,
+                    lineNumber: 79,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mercadopago$2f$sdk$2d$react$2f$esm$2f$bricks$2f$cardPayment$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__CardPayment$3e$__["CardPayment"], {
@@ -125,30 +157,42 @@ const PaymentForm = ()=>{
                         amount: viewPlan ? viewPlan.precio : 0
                     },
                     onSubmit: handleFormSubmit,
-                    onError: (error)=>{
-                        console.error("Error en el Brick de Pago:", error);
+                    onError: (err)=>{
+                        console.error("Error en el Brick de Pago:", err);
+                        setError(error || "Hubo un error al procesar el pago. Intenta nuevamente.");
                     },
                     customization: {
                         visual: {
                             style: {
                                 theme: "dark"
                             }
+                        },
+                        paymentMethods: {
+                            types: {
+                                included: [
+                                    "credit_card",
+                                    "debit_card",
+                                    "prepaid_card"
+                                ]
+                            },
+                            minInstallments: 1,
+                            maxInstallments: 12
                         }
                     }
                 }, void 0, false, {
                     fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-                    lineNumber: 55,
+                    lineNumber: 81,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-            lineNumber: 27,
+            lineNumber: 52,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/(default)/suscribirse/layout.tsx",
-        lineNumber: 26,
+        lineNumber: 51,
         columnNumber: 5
     }, this);
 };

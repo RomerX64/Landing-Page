@@ -19,7 +19,11 @@ interface SuscribeContextProps {
   sub: ISubscripcion | null;
   planes: IPlan[];
   viewPlan: IPlan | null;
-  suscribirse: (planId: number, paymentMethodToken: string) => Promise<void>;
+  suscribirse: (
+    planId: number,
+    paymentMethodToken: string,
+    email: string
+  ) => Promise<void>;
   desuscribirse: () => Promise<void>;
   selectPlan: (planId: number) => Promise<IPlan | null>;
   changePlan: (direction: "next" | "prev") => void;
@@ -82,12 +86,12 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
   }, []);
 
   const suscribirse = useCallback(
-    async (planId: number, paymentMethodToken: string) => {
+    async (planId: number, paymentMethodToken: string, email: string) => {
       try {
         const { data, error } = await handleAsync(
           api.post(`/subscriptions`, {
             planId,
-            userEmail: user?.email,
+            userEmail: email,
             paymentMethodToken,
           })
         );

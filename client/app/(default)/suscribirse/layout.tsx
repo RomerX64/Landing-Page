@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { ChevronLeft } from "lucide-react";
 import { CardPayment } from "@mercadopago/sdk-react";
 import { useRouter } from "next/navigation";
@@ -8,17 +8,42 @@ import { SuscribeContext } from "@/context/Suscribe.context";
 const PaymentForm = () => {
   const { viewPlan, suscribirse } = useContext(SuscribeContext);
   const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+  const [paymentProcessing, setPaymentProcessing] = useState(false);
+
+  const validateCardData = (formData: any) => {
+    if (!formData.token) {
+      setError("Falta el token de la tarjeta.");
+      return false;
+    }
+    if (!formData.payment_method_id) {
+      setError("Método de pago no seleccionado.");
+      return false;
+    }
+    return true;
+  };
 
   const handleFormSubmit = async (formData: any) => {
+    console.log(formData);
+    console.log(formData.payer);
+    console.log(formData.payer.email);
     if (!viewPlan) return;
+
+    if (!validateCardData(formData)) return;
+
     try {
       const paymentMethodToken = formData.token;
 
-      await suscribirse(viewPlan.id, paymentMethodToken);
+      setPaymentProcessing(true);
+      await suscribirse(viewPlan.id, paymentMethodToken, formData.payer.email);
 
+      // Show success message and redirect
       router.push("/suscribirse/success");
     } catch (error) {
       console.error("Error al procesar el pago:", error);
+      setError("Hubo un error al procesar el pago. Intenta nuevamente.");
+    } finally {
+      setPaymentProcessing(false);
     }
   };
 
@@ -38,7 +63,7 @@ const PaymentForm = () => {
         </div>
 
         {viewPlan && (
-          <div className="mb-6">
+          <div className="mb-3">
             <p className="text-gray-300">
               Estás suscribiéndote al plan{" "}
               <span className="font-bold">{viewPlan.name}</span> por{" "}
@@ -47,6 +72,7 @@ const PaymentForm = () => {
               </span>
               .
             </p>
+            {error && <p className="text-xl text-red-400 rounded">{error}</p>}
           </div>
         )}
 
@@ -55,14 +81,24 @@ const PaymentForm = () => {
         <CardPayment
           initialization={{ amount: viewPlan ? viewPlan.precio : 0 }}
           onSubmit={handleFormSubmit}
-          onError={(error) => {
-            console.error("Error en el Brick de Pago:", error);
+          onError={(err) => {
+            console.error("Error en el Brick de Pago:", err);
+            setError(
+              error || "Hubo un error al procesar el pago. Intenta nuevamente."
+            );
           }}
           customization={{
             visual: {
               style: {
                 theme: "dark",
               },
+            },
+            paymentMethods: {
+              types: {
+                included: ["credit_card", "debit_card", "prepaid_card"],
+              },
+              minInstallments: 1,
+              maxInstallments: 12,
             },
           }}
         />
