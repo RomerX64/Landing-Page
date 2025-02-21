@@ -68,7 +68,7 @@ const PlanDetail: React.FC = () => {
 
   return (
     <section className="px-4 py-3 mx-auto max-w-7xl">
-      <div className="relative w-[75vw] h-[95vh] px-4 mx-auto overflow-hidden bg-gray-800 shadow-2xl sm:px-6 rounded-2xl flex flex-col">
+      <div className="relative w-[90vw] max-w-screen-lg min-h-screen px-2 mx-0 overflow-hidden bg-gray-800 shadow-2xl sm:px-6 rounded-2xl flex flex-col">
         <div className="relative">
           {viewPlan.popular && (
             <div className="absolute px-3 py-1 text-xs font-bold text-black bg-yellow-500 rounded-full shadow-md top-3 right-4">

@@ -16,7 +16,7 @@
     "@types/node": "^22.5.0",
     "@types/react": "19.0.1",
     "@types/react-dom": "19.0.1",
-    "aos": "^3.0.0-beta.6",
+    "aos": "^2.3.4",
     "axios": "^1.7.9",
     "cookie": "^1.0.2",
     "crypto": "^1.0.1",
