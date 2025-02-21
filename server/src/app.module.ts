@@ -8,6 +8,8 @@ import { UserModule } from './Modules/User/users.module';
 import { UsersPreLoad } from './Modules/preLoad/preLoad.user.service';
 import { PreLoadModule } from './Modules/preLoad/preLoad.module';
 import { SuscribeModule } from './Modules/Suscribe/suscriber.module';
+import { AdminService } from './Modules/Admin/admin.service';
+import { AdminModule } from './Modules/Admin/admin.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -23,6 +25,7 @@ import { SuscribeModule } from './Modules/Suscribe/suscriber.module';
 
     UserModule,
     SuscribeModule,
+    AdminModule,
 
     JwtModule.register({
       global: true,

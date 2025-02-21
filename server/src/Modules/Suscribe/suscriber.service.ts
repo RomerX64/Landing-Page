@@ -26,6 +26,8 @@ export class SubscriptionsService {
   constructor(
     @InjectRepository(Subscripcion)
     private readonly subscriptionRepository: Repository<Subscripcion>,
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
     @InjectRepository(Plan)
     private readonly planRepository: Repository<Plan>,
     @Inject(forwardRef(() => UserService))
@@ -54,6 +56,8 @@ export class SubscriptionsService {
 
   async createSubscription(createSubscriptionDto: CreateSubscriptionDto) {
     console.log(createSubscriptionDto);
+
+    // Validación de los datos de entrada
     if (!createSubscriptionDto.planId) {
       throw new HttpException(
         'ID del plan es requerido',
@@ -70,6 +74,7 @@ export class SubscriptionsService {
       );
     }
 
+    // Buscar el plan en la base de datos
     const plan = await this.planRepository.findOne({
       where: { id: createSubscriptionDto.planId },
     });
@@ -78,12 +83,13 @@ export class SubscriptionsService {
     }
     console.log('plan', plan);
 
-    // Instanciamos el objeto PreApproval, el cual utilizará la API /preapproval de Mercado Pago.
+    // Configuración de la preaprobación en Mercado Pago
     const preApproval = new PreApproval(this.client);
     const idempotencyKey = uuidv4();
     console.log('preApproval', preApproval);
 
     try {
+      // Creación de la suscripción en Mercado Pago
       const response = await preApproval.create({
         body: {
           payer_email: createSubscriptionDto.userEmail,
@@ -109,27 +115,35 @@ export class SubscriptionsService {
       if (!response || !response.id) {
         throw new Error('No se recibió ID de suscripción de Mercado Pago');
       }
-      const { User } = await this.userService.getUserByEmail(
-        createSubscriptionDto.userEmail,
-      );
 
-      // Se guarda la suscripción en la base de datos
+      const user = await this.userRepository.findOne({
+        where: { email: createSubscriptionDto.userEmail },
+        relations: ['subscripcion'],
+      });
+      if (!user) {
+        throw new HttpException('Usuario no encontrado', HttpStatus.NOT_FOUND);
+      }
+
       const newSubscription = this.subscriptionRepository.create({
         plan,
         fechaInicio: new Date(),
         mercadopagoSubscriptionId: response.id,
-        status: SubscriptionStatus.ACTIVE,
-        user: User,
+        status: SubscriptionStatus.PENDING,
+        user: user,
       });
 
-      await this.subscriptionRepository.save(newSubscription);
+      const savedSubscription =
+        await this.subscriptionRepository.save(newSubscription);
 
-      console.log('subscripcion:', newSubscription);
-      console.log(`Suscripción creada con ID: ${newSubscription.id}`);
+      user.subscripcion = savedSubscription;
+      await this.userRepository.save(user);
+
+      console.log('subscripcion:', savedSubscription);
+      console.log(`Suscripción creada con ID: ${savedSubscription.id}`);
 
       return {
         message: 'Suscripción creada correctamente',
-        subscription: newSubscription,
+        subscription: savedSubscription,
       };
     } catch (error) {
       if (error.response?.data) {
@@ -157,17 +171,14 @@ export class SubscriptionsService {
       );
     }
 
-    // Se genera una clave idempotente para la cancelación
     this.client.options.idempotencyKey = uuidv4();
     const preApproval = new PreApproval(this.client);
     try {
-      // Se actualiza la suscripción en Mercado Pago estableciendo el estado "cancelled"
       await preApproval.update({
         id: dto.subscriptionId,
         body: { status: 'cancelled' },
       });
 
-      // Actualizamos el registro local
       subscription.status = SubscriptionStatus.CANCELLED;
       subscription.cancellationDate = new Date();
       subscription.cancellationReason = dto.cancellationReason;

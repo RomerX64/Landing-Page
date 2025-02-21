@@ -12,6 +12,7 @@ export interface ISubscripcion {
   cancellationDate: Date | null;
   cancellationReason: string;
   metadata: Record<string, any>;
+  user: IUser;
 }
 
 export enum SubscriptionStatus {

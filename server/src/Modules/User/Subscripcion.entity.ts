@@ -14,6 +14,7 @@ export enum SubscriptionStatus {
   ACTIVE = 'active',
   PAUSED = 'paused',
   CANCELLED = 'cancelled',
+  PENDING = 'pending',
 }
 
 @Entity({ name: 'subscripciones' })
@@ -31,19 +32,23 @@ export class Subscripcion {
   @JoinColumn()
   user: User;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', nullable:true })
+  @Column({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    nullable: true,
+  })
   @IsISO8601()
   fechaInicio: Date;
 
-  @Column({ type: 'timestamp', nullable:true })
+  @Column({ type: 'timestamp', nullable: true })
   @IsISO8601()
   fechaUltimaPaga: Date;
 
-  @Column({ type: 'timestamp', nullable:true })
+  @Column({ type: 'timestamp', nullable: true })
   @IsISO8601()
   fechaVencimiento: Date;
 
-  @Column({ unique: true, nullable:true })
+  @Column({ unique: true, nullable: true })
   @IsString()
   mercadopagoSubscriptionId: string;
 
@@ -51,7 +56,7 @@ export class Subscripcion {
     type: 'enum',
     enum: SubscriptionStatus,
     default: SubscriptionStatus.ACTIVE,
-    nullable:true
+    nullable: true,
   })
   @IsEnum(SubscriptionStatus)
   status: SubscriptionStatus;

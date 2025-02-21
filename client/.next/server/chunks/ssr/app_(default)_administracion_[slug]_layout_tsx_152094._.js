@@ -37,7 +37,6 @@ const EditUser = ()=>{
     ]);
     const handleSubmit = async (e)=>{
         e.preventDefault();
-    // Logic for updating user details goes here
     };
     // Display loading or error if present
     if (loading) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -45,7 +44,7 @@ const EditUser = ()=>{
         children: "Cargando..."
     }, void 0, false, {
         fileName: "[project]/app/(default)/administracion/[slug]/layout.tsx",
-        lineNumber: 40,
+        lineNumber: 39,
         columnNumber: 12
     }, this);
     if (error) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -53,7 +52,7 @@ const EditUser = ()=>{
         children: error
     }, void 0, false, {
         fileName: "[project]/app/(default)/administracion/[slug]/layout.tsx",
-        lineNumber: 41,
+        lineNumber: 40,
         columnNumber: 21
     }, this);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -64,7 +63,7 @@ const EditUser = ()=>{
                 children: "Editar Usuario"
             }, void 0, false, {
                 fileName: "[project]/app/(default)/administracion/[slug]/layout.tsx",
-                lineNumber: 45,
+                lineNumber: 44,
                 columnNumber: 7
             }, this),
             userData && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -80,7 +79,7 @@ const EditUser = ()=>{
                                 children: "Nombre"
                             }, void 0, false, {
                                 fileName: "[project]/app/(default)/administracion/[slug]/layout.tsx",
-                                lineNumber: 52,
+                                lineNumber: 51,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -92,13 +91,13 @@ const EditUser = ()=>{
                                 className: "w-full px-4 py-2 mt-1 text-white bg-gray-700 border border-gray-600 rounded-lg"
                             }, void 0, false, {
                                 fileName: "[project]/app/(default)/administracion/[slug]/layout.tsx",
-                                lineNumber: 55,
+                                lineNumber: 54,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/(default)/administracion/[slug]/layout.tsx",
-                        lineNumber: 51,
+                        lineNumber: 50,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -110,7 +109,7 @@ const EditUser = ()=>{
                                 children: "Correo Electrónico"
                             }, void 0, false, {
                                 fileName: "[project]/app/(default)/administracion/[slug]/layout.tsx",
-                                lineNumber: 65,
+                                lineNumber: 64,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -122,13 +121,13 @@ const EditUser = ()=>{
                                 className: "w-full px-4 py-2 mt-1 text-white bg-gray-700 border border-gray-600 rounded-lg"
                             }, void 0, false, {
                                 fileName: "[project]/app/(default)/administracion/[slug]/layout.tsx",
-                                lineNumber: 68,
+                                lineNumber: 67,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/(default)/administracion/[slug]/layout.tsx",
-                        lineNumber: 64,
+                        lineNumber: 63,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -140,7 +139,7 @@ const EditUser = ()=>{
                                 children: "Teléfono"
                             }, void 0, false, {
                                 fileName: "[project]/app/(default)/administracion/[slug]/layout.tsx",
-                                lineNumber: 78,
+                                lineNumber: 77,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -151,13 +150,13 @@ const EditUser = ()=>{
                                 className: "w-full px-4 py-2 mt-1 text-white bg-gray-700 border border-gray-600 rounded-lg"
                             }, void 0, false, {
                                 fileName: "[project]/app/(default)/administracion/[slug]/layout.tsx",
-                                lineNumber: 81,
+                                lineNumber: 80,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/(default)/administracion/[slug]/layout.tsx",
-                        lineNumber: 77,
+                        lineNumber: 76,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -169,7 +168,7 @@ const EditUser = ()=>{
                                 children: "Empresa"
                             }, void 0, false, {
                                 fileName: "[project]/app/(default)/administracion/[slug]/layout.tsx",
-                                lineNumber: 90,
+                                lineNumber: 89,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -180,13 +179,13 @@ const EditUser = ()=>{
                                 className: "w-full px-4 py-2 mt-1 text-white bg-gray-700 border border-gray-600 rounded-lg"
                             }, void 0, false, {
                                 fileName: "[project]/app/(default)/administracion/[slug]/layout.tsx",
-                                lineNumber: 93,
+                                lineNumber: 92,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/(default)/administracion/[slug]/layout.tsx",
-                        lineNumber: 89,
+                        lineNumber: 88,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -197,24 +196,24 @@ const EditUser = ()=>{
                             children: "Actualizar Usuario"
                         }, void 0, false, {
                             fileName: "[project]/app/(default)/administracion/[slug]/layout.tsx",
-                            lineNumber: 102,
+                            lineNumber: 101,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/(default)/administracion/[slug]/layout.tsx",
-                        lineNumber: 101,
+                        lineNumber: 100,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/(default)/administracion/[slug]/layout.tsx",
-                lineNumber: 47,
+                lineNumber: 46,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/(default)/administracion/[slug]/layout.tsx",
-        lineNumber: 44,
+        lineNumber: 43,
         columnNumber: 5
     }, this);
 };

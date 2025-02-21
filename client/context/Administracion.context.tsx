@@ -2,29 +2,35 @@
 import React, { createContext, ReactNode } from "react";
 import api from "@/app/api/Api";
 import { handleAsync } from "@/utils/error.helper";
-
-// Puedes definir aquí tus interfaces para CreatePlanDto, UpdatePlanDto y SubscriptionStatus
-// o bien importarlas desde algún archivo de tipos si las tienes definidas.
+import { IUser } from "@/interfaces/User.interface";
+import { IPlan } from "@/interfaces/Plan.interface";
+import { ISubscripcion } from "@/interfaces/Subscripcion.interface";
 
 interface AdminContextProps {
   // Funciones para usuarios
-  getUsers: () => Promise<any[]>;
-  getUsersSubscribed: () => Promise<any[]>;
-  getUsersSubscribedAt: (planId: number) => Promise<any[]>;
-  putAdmin: (userId: string) => Promise<any>;
+  getUsers: () => Promise<IUser[]>;
+  getUsersSubscribed: () => Promise<IUser[]>;
+  getUsersSubscribedAt: (planId: number) => Promise<IUser[]>;
+  getUser: (userId: string) => Promise<IUser>;
+  putAdmin: (userId: string) => Promise<IUser>;
+
   // Funciones para planes
-  getAllPlans: () => Promise<any[]>;
-  createPlan: (plan: any) => Promise<any>;
-  updatePlan: (planId: number, plan: any) => Promise<any>;
+  getAllPlans: () => Promise<IPlan[]>;
+  createPlan: (plan: Omit<IPlan, "id">) => Promise<IPlan>;
+  updatePlan: (planId: number, plan: Partial<IPlan>) => Promise<IPlan>;
   deletePlan: (planId: number) => Promise<void>;
+
   // Funciones para suscripciones
-  getAllSubscriptions: () => Promise<any[]>;
-  getSubscriptionById: (subscriptionId: string) => Promise<any>;
+  getAllSubscriptions: () => Promise<ISubscripcion[]>;
+  getSubscriptionById: (subscriptionId: string) => Promise<ISubscripcion>;
   updateSubscriptionStatus: (
     subscriptionId: string,
-    status: string
-  ) => Promise<any>;
-  cancelSubscription: (subscriptionId: string, reason: string) => Promise<any>;
+    status: ISubscripcion["status"]
+  ) => Promise<ISubscripcion>;
+  cancelSubscription: (
+    subscriptionId: string,
+    reason: string
+  ) => Promise<ISubscripcion>;
 }
 
 const defaultContext: AdminContextProps = {
@@ -34,37 +40,37 @@ const defaultContext: AdminContextProps = {
   getUsersSubscribed: async () => {
     throw new Error("Not implemented");
   },
-  getUsersSubscribedAt: async (_planId: number) => {
+  getUsersSubscribedAt: async () => {
     throw new Error("Not implemented");
   },
-  putAdmin: async (_userId: string) => {
+  getUser: async () => {
+    throw new Error("Not implemented");
+  },
+  putAdmin: async () => {
     throw new Error("Not implemented");
   },
   getAllPlans: async () => {
     throw new Error("Not implemented");
   },
-  createPlan: async (_plan: any) => {
+  createPlan: async () => {
     throw new Error("Not implemented");
   },
-  updatePlan: async (_planId: number, _plan: any) => {
+  updatePlan: async () => {
     throw new Error("Not implemented");
   },
-  deletePlan: async (_planId: number) => {
+  deletePlan: async () => {
     throw new Error("Not implemented");
   },
   getAllSubscriptions: async () => {
     throw new Error("Not implemented");
   },
-  getSubscriptionById: async (_subscriptionId: string) => {
+  getSubscriptionById: async () => {
     throw new Error("Not implemented");
   },
-  updateSubscriptionStatus: async (
-    _subscriptionId: string,
-    _status: string
-  ) => {
+  updateSubscriptionStatus: async () => {
     throw new Error("Not implemented");
   },
-  cancelSubscription: async (_subscriptionId: string, _reason: string) => {
+  cancelSubscription: async () => {
     throw new Error("Not implemented");
   },
 };
@@ -77,11 +83,9 @@ interface AdminProviderProps {
 
 export const AdminProvider = ({ children }: AdminProviderProps) => {
   // Funciones de Usuarios
-
-  const getUsers = async (): Promise<any[]> => {
+  const getUsers = async (): Promise<IUser[]> => {
     const cached = localStorage.getItem("admin_users");
     if (cached) {
-      console.log("Cargando usuarios desde localStorage...");
       return JSON.parse(cached);
     }
     const { data, error } = await handleAsync(api.get("/admin/users"));
@@ -92,7 +96,7 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
     return data.data;
   };
 
-  const getUsersSubscribed = async (): Promise<any[]> => {
+  const getUsersSubscribed = async (): Promise<IUser[]> => {
     const cached = localStorage.getItem("admin_usersSubscribed");
     if (cached) {
       console.log("Cargando usuarios suscritos desde localStorage...");
@@ -108,13 +112,10 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
     return data.data;
   };
 
-  const getUsersSubscribedAt = async (planId: number): Promise<any[]> => {
+  const getUsersSubscribedAt = async (planId: number): Promise<IUser[]> => {
     const cacheKey = `admin_usersSubscribed_plan_${planId}`;
     const cached = localStorage.getItem(cacheKey);
     if (cached) {
-      console.log(
-        `Cargando usuarios suscritos al plan ${planId} desde localStorage...`
-      );
       return JSON.parse(cached);
     }
     const { data, error } = await handleAsync(
@@ -129,7 +130,15 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
     return data.data;
   };
 
-  const putAdmin = async (userId: string): Promise<any> => {
+  const getUser = async (userId: string): Promise<IUser> => {
+    const { data, error } = await handleAsync(api.get(`/admin/user/${userId}`));
+    if (error || !data) {
+      throw new Error(error?.message || "Error al obtener el usuario.");
+    }
+    return data.data;
+  };
+
+  const putAdmin = async (userId: string): Promise<IUser> => {
     const { data, error } = await handleAsync(
       api.put(`/admin/admin/${userId}`)
     );
@@ -139,86 +148,106 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
     return data.data;
   };
 
-  // Funciones para Planes
-
-  const getAllPlans = async (): Promise<any[]> => {
+  // Funciones de Planes
+  const getAllPlans = async (): Promise<IPlan[]> => {
+    const cached = localStorage.getItem("admin_plans");
+    if (cached) {
+      console.log("Cargando planes desde localStorage...");
+      return JSON.parse(cached);
+    }
     const { data, error } = await handleAsync(api.get("/admin/plans"));
     if (error || !data) {
-      throw new Error(error?.message || "Error al obtener los planes.");
+      throw new Error(error?.message || "Error al obtener planes.");
     }
+    localStorage.setItem("admin_plans", JSON.stringify(data.data));
     return data.data;
   };
 
-  const createPlan = async (plan: any): Promise<any> => {
-    const { data, error } = await handleAsync(api.post("/admin/plan", plan));
+  const createPlan = async (plan: Omit<IPlan, "id">): Promise<IPlan> => {
+    const { data, error } = await handleAsync(api.post("/admin/plans", plan));
     if (error || !data) {
-      throw new Error(error?.message || "Error al crear el plan.");
+      throw new Error(error?.message || "Error al crear plan.");
     }
+    localStorage.removeItem("admin_plans");
     return data.data;
   };
 
-  const updatePlan = async (planId: number, plan: any): Promise<any> => {
+  const updatePlan = async (
+    planId: number,
+    plan: Partial<IPlan>
+  ): Promise<IPlan> => {
     const { data, error } = await handleAsync(
-      api.put(`/admin/plan/${planId}`, plan)
+      api.put(`/admin/plans/${planId}`, plan)
     );
     if (error || !data) {
-      throw new Error(error?.message || "Error al actualizar el plan.");
+      throw new Error(error?.message || "Error al actualizar plan.");
     }
+    localStorage.removeItem("admin_plans");
     return data.data;
   };
 
   const deletePlan = async (planId: number): Promise<void> => {
-    const { error } = await handleAsync(api.delete(`/admin/plan/${planId}`));
+    const { error } = await handleAsync(api.delete(`/admin/plans/${planId}`));
     if (error) {
-      throw new Error(error?.message || "Error al eliminar el plan.");
+      throw new Error(error.message || "Error al eliminar plan.");
     }
+    localStorage.removeItem("admin_plans");
   };
 
-  // Funciones para Suscripciones
-
-  const getAllSubscriptions = async (): Promise<any[]> => {
+  // Funciones de Suscripciones
+  const getAllSubscriptions = async (): Promise<ISubscripcion[]> => {
+    const cached = localStorage.getItem("admin_subscriptions");
+    if (cached) {
+      console.log("Cargando suscripciones desde localStorage...");
+      return JSON.parse(cached);
+    }
     const { data, error } = await handleAsync(api.get("/admin/subscriptions"));
     if (error || !data) {
-      throw new Error(error?.message || "Error al obtener las suscripciones.");
+      throw new Error(error?.message || "Error al obtener suscripciones.");
     }
+    localStorage.setItem("admin_subscriptions", JSON.stringify(data.data));
     return data.data;
   };
 
-  const getSubscriptionById = async (subscriptionId: string): Promise<any> => {
+  const getSubscriptionById = async (
+    subscriptionId: string
+  ): Promise<ISubscripcion> => {
     const { data, error } = await handleAsync(
-      api.get(`/admin/subscription/${subscriptionId}`)
+      api.get(`/admin/subscriptions/${subscriptionId}`)
     );
     if (error || !data) {
-      throw new Error(error?.message || "Error al obtener la suscripción.");
+      throw new Error(error?.message || "Error al obtener suscripción.");
     }
     return data.data;
   };
 
   const updateSubscriptionStatus = async (
     subscriptionId: string,
-    status: string
-  ): Promise<any> => {
+    status: ISubscripcion["status"]
+  ): Promise<ISubscripcion> => {
     const { data, error } = await handleAsync(
-      api.put(`/admin/subscription/${subscriptionId}/status`, { status })
+      api.put(`/admin/subscriptions/${subscriptionId}/status`, { status })
     );
     if (error || !data) {
       throw new Error(
-        error?.message || "Error al actualizar el estado de la suscripción."
+        error?.message || "Error al actualizar estado de suscripción."
       );
     }
+    localStorage.removeItem("admin_subscriptions");
     return data.data;
   };
 
   const cancelSubscription = async (
     subscriptionId: string,
     reason: string
-  ): Promise<any> => {
+  ): Promise<ISubscripcion> => {
     const { data, error } = await handleAsync(
-      api.put(`/admin/subscription/${subscriptionId}/cancel`, { reason })
+      api.put(`/admin/subscriptions/${subscriptionId}/cancel`, { reason })
     );
     if (error || !data) {
-      throw new Error(error?.message || "Error al cancelar la suscripción.");
+      throw new Error(error?.message || "Error al cancelar suscripción.");
     }
+    localStorage.removeItem("admin_subscriptions");
     return data.data;
   };
 
@@ -226,6 +255,7 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
     getUsers,
     getUsersSubscribed,
     getUsersSubscribedAt,
+    getUser,
     putAdmin,
     getAllPlans,
     createPlan,

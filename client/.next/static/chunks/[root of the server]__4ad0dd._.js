@@ -1,0 +1,1697 @@
+(globalThis.TURBOPACK = globalThis.TURBOPACK || []).push(["static/chunks/[root of the server]__4ad0dd._.js", {
+
+"[next]/internal/font/google/inter_d30f9fdf.module.css [app-client] (css module)": ((__turbopack_context__) => {
+
+var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, t: __turbopack_require_real__ } = __turbopack_context__;
+{
+__turbopack_export_value__({
+  "className": "inter_d30f9fdf-module__1SD43G__className",
+  "variable": "inter_d30f9fdf-module__1SD43G__variable",
+});
+}}),
+"[next]/internal/font/google/inter_d30f9fdf.js [app-client] (ecmascript)": ((__turbopack_context__) => {
+"use strict";
+
+var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, z: __turbopack_require_stub__ } = __turbopack_context__;
+{
+__turbopack_esm__({
+    "default": (()=>__TURBOPACK__default__export__)
+});
+var __TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$inter_d30f9fdf$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__ = __turbopack_import__("[next]/internal/font/google/inter_d30f9fdf.module.css [app-client] (css module)");
+;
+const fontData = {
+    className: __TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$inter_d30f9fdf$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].className,
+    style: {
+        fontFamily: "'Inter', 'Inter Fallback'",
+        fontStyle: "normal"
+    }
+};
+if (__TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$inter_d30f9fdf$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].variable != null) {
+    fontData.variable = __TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$inter_d30f9fdf$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].variable;
+}
+const __TURBOPACK__default__export__ = fontData;
+}}),
+"[project]/app/nacelle_8b342a97.module.css [app-client] (css module)": ((__turbopack_context__) => {
+
+var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, t: __turbopack_require_real__ } = __turbopack_context__;
+{
+__turbopack_export_value__({
+  "className": "nacelle_8b342a97-module__jnuhuW__className",
+  "variable": "nacelle_8b342a97-module__jnuhuW__variable",
+});
+}}),
+"[project]/app/nacelle_8b342a97.js [app-client] (ecmascript)": ((__turbopack_context__) => {
+"use strict";
+
+var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
+{
+__turbopack_esm__({
+    "default": (()=>__TURBOPACK__default__export__)
+});
+var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$nacelle_8b342a97$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__ = __turbopack_import__("[project]/app/nacelle_8b342a97.module.css [app-client] (css module)");
+;
+const fontData = {
+    className: __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$nacelle_8b342a97$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].className,
+    style: {
+        fontFamily: "'nacelle', 'nacelle Fallback'"
+    }
+};
+if (__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$nacelle_8b342a97$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].variable != null) {
+    fontData.variable = __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$nacelle_8b342a97$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].variable;
+}
+const __TURBOPACK__default__export__ = fontData;
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
+}
+}}),
+"[project]/app/api/Api.ts [app-client] (ecmascript)": ((__turbopack_context__) => {
+"use strict";
+
+var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
+{
+// utils/api.ts
+__turbopack_esm__({
+    "default": (()=>__TURBOPACK__default__export__)
+});
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/axios/lib/axios.js [app-client] (ecmascript)");
+;
+const prod = false;
+const urlWeb = "https://assetly-landing-page-backend.onrender.com/";
+const API_URL = ("TURBOPACK compile-time falsy", 0) ? ("TURBOPACK unreachable", undefined) : "http://localhost:3001";
+const api = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].create({
+    baseURL: API_URL,
+    headers: {
+        "Content-Type": "application/json"
+    }
+});
+api.interceptors.request.use((config)=>{
+    if ("TURBOPACK compile-time truthy", 1) {
+        const token = localStorage.getItem("token");
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+    }
+    return config;
+}, (error)=>Promise.reject(error));
+api.interceptors.response.use((response)=>response, (error)=>{
+    // Asegura que los errores sigan siendo tratados como errores
+    return Promise.reject(error);
+});
+const __TURBOPACK__default__export__ = api;
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
+}
+}}),
+"[project]/utils/error.helper.ts [app-client] (ecmascript)": ((__turbopack_context__) => {
+"use strict";
+
+var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
+{
+__turbopack_esm__({
+    "handleAsync": (()=>handleAsync)
+});
+const handleAsync = async (promise)=>{
+    try {
+        const response = await promise;
+        return {
+            data: response
+        };
+    } catch (error) {
+        console.error("Error en handleAsync:", error);
+        return {
+            error: error.response ? error.response.data : {
+                message: error.message
+            }
+        };
+    }
+};
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
+}
+}}),
+"[project]/context/user.context.tsx [app-client] (ecmascript)": ((__turbopack_context__) => {
+"use strict";
+
+var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
+{
+__turbopack_esm__({
+    "UserContext": (()=>UserContext),
+    "UserProvider": (()=>UserProvider),
+    "default": (()=>__TURBOPACK__default__export__),
+    "useAuth": (()=>useAuth)
+});
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/app/api/Api.ts [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/utils/error.helper.ts [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next-auth/react/index.js [app-client] (ecmascript)");
+;
+var _s = __turbopack_refresh__.signature(), _s1 = __turbopack_refresh__.signature();
+"use client";
+;
+;
+;
+;
+const defaultContext = {
+    token: "",
+    user: null,
+    signInO: async ()=>{
+        throw new Error("Not implemented");
+    },
+    signUp: async ()=>{
+        throw new Error("Not implemented");
+    },
+    deleteUser: async ()=>{
+        throw new Error("Not implemented");
+    },
+    mailIsValid: async ()=>{
+        throw new Error("Not implemented");
+    },
+    updateUser: async ()=>{
+        throw new Error("Not implemented");
+    },
+    signOut: async ()=>{
+        throw new Error("Not implemented");
+    },
+    signInWithGoogle: async ()=>{
+        throw new Error("Not implemented");
+    },
+    signUpWithGoogle: async ()=>{
+        throw new Error("Not implemented");
+    },
+    requestResetPassword: async ()=>{
+        throw new Error("Not implemented");
+    },
+    resetPassword: async ()=>{
+        throw new Error("Not implemented");
+    }
+};
+const UserContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createContext"])(defaultContext);
+const UserProvider = ({ children })=>{
+    _s();
+    const { data: session } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSession"])();
+    const [user, setUserState] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [token, setToken] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "UserProvider.useEffect": ()=>{
+            const storedToken = localStorage.getItem("token");
+            const storedUser = localStorage.getItem("user");
+            if (storedToken) setToken(storedToken);
+            if (storedUser) {
+                try {
+                    setUserState(JSON.parse(storedUser));
+                } catch (error) {
+                    console.error("Error al parsear el usuario del localStorage", error);
+                }
+            }
+        }
+    }["UserProvider.useEffect"], []);
+    const registerUser = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "UserProvider.useCallback[registerUser]": async (email, name)=>{
+            try {
+                const { data: existsResponse, error: getError } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get(`users/email/get/${email}`));
+                if (getError) {
+                    console.warn("Error al consultar existencia del usuario:", getError.message);
+                    return null;
+                }
+                if (existsResponse?.data) {
+                    const { data: fetchedResponse, error: fetchError } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get(`/users/get/${email}`));
+                    if (fetchError || !fetchedResponse) {
+                        console.log("Error al traer el usuario:", fetchError?.message);
+                        return null;
+                    }
+                    setUserState(fetchedResponse.data.User);
+                    setToken(fetchedResponse.data.token);
+                    localStorage.setItem("token", fetchedResponse.data.token);
+                    localStorage.setItem("user", JSON.stringify(fetchedResponse.data.User));
+                    return fetchedResponse.data.User;
+                }
+                const { data: createdResponse, error: postError } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post("/users/crearUser/google", {
+                    email,
+                    name
+                }));
+                if (postError || !createdResponse) {
+                    console.log("Error al crear el usuario:", postError?.message);
+                    return null;
+                }
+                setUserState(createdResponse.data);
+                localStorage.setItem("user", JSON.stringify(createdResponse.data));
+                return createdResponse.data;
+            } catch (error) {
+                console.error("Error en el proceso de registro:", error);
+                return null;
+            }
+        }
+    }["UserProvider.useCallback[registerUser]"], []);
+    const signInO = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "UserProvider.useCallback[signInO]": async (signInData)=>{
+            try {
+                const { data: response, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post("/users/signIn", signInData));
+                if (error || !response?.data) {
+                    throw new Error(error?.message || "Error de inicio de sesión");
+                }
+                const { User: returnedUser, token: returnedToken } = response.data;
+                setToken(returnedToken);
+                setUserState(returnedUser);
+                localStorage.setItem("token", returnedToken);
+                localStorage.setItem("user", JSON.stringify(returnedUser));
+                return returnedUser;
+            } catch (error) {
+                console.error("Error en signIn:", error);
+                return null;
+            }
+        }
+    }["UserProvider.useCallback[signInO]"], []);
+    const signUp = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "UserProvider.useCallback[signUp]": async (signUpData)=>{
+            const { data: response, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post("/users/signUp", signUpData));
+            if (error || !response?.data) {
+                throw new Error(error?.message || "Error de registro");
+            }
+            const { User: returnedUser, token: returnedToken } = response.data;
+            setToken(returnedToken);
+            setUserState(returnedUser);
+            localStorage.setItem("token", returnedToken);
+            localStorage.setItem("user", JSON.stringify(returnedUser));
+            return returnedUser;
+        }
+    }["UserProvider.useCallback[signUp]"], []);
+    const deleteUser = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "UserProvider.useCallback[deleteUser]": async (signInData)=>{
+            const { data: response, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].delete("/users/user", {
+                data: signInData
+            }));
+            if (error || !response?.data) {
+                throw new Error(error?.message || "Error al eliminar usuario");
+            }
+            const deletedUser = response.data;
+            setToken("");
+            setUserState(null);
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            return deletedUser;
+        }
+    }["UserProvider.useCallback[deleteUser]"], []);
+    const mailIsValid = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "UserProvider.useCallback[mailIsValid]": async (email)=>{
+            try {
+                const response = await __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get(`/users/email/${email}`);
+                return response.data;
+            } catch  {
+                return false;
+            }
+        }
+    }["UserProvider.useCallback[mailIsValid]"], []);
+    const updateUser = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "UserProvider.useCallback[updateUser]": async (updateUserData)=>{
+            if (!user?.id) throw new Error("Usuario no autenticado");
+            const { data: response, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post("/users/update", {
+                ...updateUserData,
+                id: user.id
+            }));
+            if (error || !response?.data) {
+                throw new Error(error?.message || "Error al actualizar usuario");
+            }
+            const { User: returnedUser, token: returnedToken } = response.data;
+            setToken(returnedToken);
+            setUserState(returnedUser);
+            localStorage.setItem("token", returnedToken);
+            localStorage.setItem("user", JSON.stringify(returnedUser));
+            return returnedUser;
+        }
+    }["UserProvider.useCallback[updateUser]"], [
+        user
+    ]);
+    const signOut = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "UserProvider.useCallback[signOut]": async ()=>{
+            try {
+                await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["signOut"])({
+                    redirect: false
+                });
+                setToken("");
+                setUserState(null);
+                localStorage.removeItem("token");
+                localStorage.removeItem("user");
+            } catch (error) {
+                console.error("Error durante el cierre de sesión:", error);
+            }
+        }
+    }["UserProvider.useCallback[signOut]"], []);
+    const signInWithGoogle = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "UserProvider.useCallback[signInWithGoogle]": async ()=>{
+            try {
+                await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["signIn"])("google", {
+                    callbackUrl: "/"
+                });
+                const session = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSession"])();
+                if (!session?.user) {
+                    throw new Error("No se pudo obtener la sesión del usuario");
+                }
+                const { email, name } = session.user;
+                return registerUser(email, name);
+            } catch (error) {
+                console.error("Error en signInWithGoogle:", error);
+                return null;
+            }
+        }
+    }["UserProvider.useCallback[signInWithGoogle]"], [
+        registerUser
+    ]);
+    const signUpWithGoogle = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "UserProvider.useCallback[signUpWithGoogle]": async ()=>{
+            return signInWithGoogle();
+        }
+    }["UserProvider.useCallback[signUpWithGoogle]"], [
+        signInWithGoogle
+    ]);
+    const requestResetPassword = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "UserProvider.useCallback[requestResetPassword]": async (email)=>{
+            const { data: response, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post("/users/request-reset-password", {
+                email
+            }));
+            if (error || !response?.data) {
+                throw new Error(error?.message || "Error al solicitar reset de contraseña");
+            }
+            return response.data;
+        }
+    }["UserProvider.useCallback[requestResetPassword]"], []);
+    const resetPassword = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "UserProvider.useCallback[resetPassword]": async (token, newPassword)=>{
+            const { data: response, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post("/users/reset-password", {
+                token,
+                newPassword
+            }));
+            if (error || !response?.data) {
+                throw new Error(error?.message || "Error al resetear contraseña");
+            }
+            return response.data;
+        }
+    }["UserProvider.useCallback[resetPassword]"], []);
+    const value = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "UserProvider.useMemo[value]": ()=>({
+                token,
+                user,
+                signInO,
+                signUp,
+                deleteUser,
+                mailIsValid,
+                updateUser,
+                signOut,
+                signInWithGoogle,
+                signUpWithGoogle,
+                requestResetPassword,
+                resetPassword
+            })
+    }["UserProvider.useMemo[value]"], [
+        token,
+        user,
+        signInO,
+        signUp,
+        deleteUser,
+        mailIsValid,
+        updateUser,
+        signOut,
+        signInWithGoogle,
+        signUpWithGoogle,
+        requestResetPassword,
+        resetPassword
+    ]);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(UserContext.Provider, {
+        value: value,
+        children: children
+    }, void 0, false, {
+        fileName: "[project]/context/user.context.tsx",
+        lineNumber: 324,
+        columnNumber: 10
+    }, this);
+};
+_s(UserProvider, "IZpA54twYF+hvuILUDQkGKQ4PFI=", false, function() {
+    return [
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSession"]
+    ];
+});
+_c = UserProvider;
+const useAuth = ()=>{
+    _s1();
+    const context = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useContext"])(UserContext);
+    if (!context) {
+        throw new Error("useAuth debe usarse dentro de un UserProvider");
+    }
+    return context;
+};
+_s1(useAuth, "b9L3QQ+jgeyIrH0NfHrJ8nn7VMU=");
+const __TURBOPACK__default__export__ = UserContext;
+var _c;
+__turbopack_refresh__.register(_c, "UserProvider");
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
+}
+}}),
+"[project]/components/ui/header.tsx [app-client] (ecmascript)": ((__turbopack_context__) => {
+"use strict";
+
+var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
+{
+__turbopack_esm__({
+    "default": (()=>Header)
+});
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/client/app-dir/link.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$context$2f$user$2e$context$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/context/user.context.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__User$3e$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/user.js [app-client] (ecmascript) <export default as User>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$settings$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Settings$3e$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/settings.js [app-client] (ecmascript) <export default as Settings>");
+;
+var _s = __turbopack_refresh__.signature();
+"use client";
+;
+;
+;
+;
+function Header() {
+    _s();
+    const { user } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useContext"])(__TURBOPACK__imported__module__$5b$project$5d2f$context$2f$user$2e$context$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["UserContext"]);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("header", {
+        className: "z-30 w-full mt-2 md:mt-5",
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "max-w-6xl px-4 mx-auto sm:px-6",
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "relative flex h-14 items-center justify-between gap-3 rounded-2xl bg-gray-900/90 px-3 before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent  before:[background:linear-gradient(to_right,theme(colors.gray.800),theme(colors.gray.700),theme(colors.gray.800))_border-box]  before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)]  after:absolute after:inset-0 after:-z-10 after:backdrop-blur-sm",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                        href: "/",
+                        className: "inline-block",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                            src: "/images/logo.png",
+                            alt: "Logo",
+                            className: "ml-4 h-[35px] w-auto max-w-[200px] transition-transform duration-300 ease-in-out hover:scale-110"
+                        }, void 0, false, {
+                            fileName: "[project]/components/ui/header.tsx",
+                            lineNumber: 22,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/components/ui/header.tsx",
+                        lineNumber: 21,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
+                        className: "flex items-center justify-end flex-1 gap-3",
+                        children: user ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                    className: "flex items-center justify-center w-8 h-8 text-gray-200 transition-transform duration-300 ease-in-out border rounded-full border-gray-700/50 bg-gray-800/65 hover:scale-110",
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                                        href: "/profile",
+                                        className: "text-gray-300 hover:text-white",
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__User$3e$__["User"], {
+                                            size: 24
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/ui/header.tsx",
+                                            lineNumber: 39,
+                                            columnNumber: 21
+                                        }, this)
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/ui/header.tsx",
+                                        lineNumber: 35,
+                                        columnNumber: 19
+                                    }, this)
+                                }, void 0, false, {
+                                    fileName: "[project]/components/ui/header.tsx",
+                                    lineNumber: 34,
+                                    columnNumber: 17
+                                }, this),
+                                user.isAdmin && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                    className: "flex items-center justify-center w-8 h-8 text-gray-200 transition-transform duration-300 ease-in-out border rounded-full border-gray-700/50 bg-gray-800/65 hover:scale-110",
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                                        href: "/administracion",
+                                        className: "text-gray-300 hover:text-white",
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$settings$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Settings$3e$__["Settings"], {
+                                            size: 24
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/ui/header.tsx",
+                                            lineNumber: 49,
+                                            columnNumber: 23
+                                        }, this)
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/ui/header.tsx",
+                                        lineNumber: 45,
+                                        columnNumber: 21
+                                    }, this)
+                                }, void 0, false, {
+                                    fileName: "[project]/components/ui/header.tsx",
+                                    lineNumber: 44,
+                                    columnNumber: 19
+                                }, this)
+                            ]
+                        }, void 0, true) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                                        href: "/signin",
+                                        className: "btn-sm relative bg-gradient-to-b from-gray-800 to-gray-800/60 bg-[length:100%_100%] bg-[bottom] py-[5px] text-gray-300 before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_right,theme(colors.gray.800),theme(colors.gray.700),theme(colors.gray.800))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-[length:100%_150%] transition-transform duration-300 ease-in-out hover:scale-105",
+                                        children: "Sign In"
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/ui/header.tsx",
+                                        lineNumber: 57,
+                                        columnNumber: 19
+                                    }, this)
+                                }, void 0, false, {
+                                    fileName: "[project]/components/ui/header.tsx",
+                                    lineNumber: 56,
+                                    columnNumber: 17
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                                        href: "/signup",
+                                        className: "btn-sm bg-gradient-to-t from-indigo-600 to-indigo-500 bg-[length:100%_100%] bg-[bottom] py-[5px] text-white shadow-[inset_0px_1px_0px_0px_theme(colors.white/.16)] hover:bg-[length:100%_150%] transition-transform duration-300 ease-in-out hover:scale-105",
+                                        children: "Register"
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/ui/header.tsx",
+                                        lineNumber: 65,
+                                        columnNumber: 19
+                                    }, this)
+                                }, void 0, false, {
+                                    fileName: "[project]/components/ui/header.tsx",
+                                    lineNumber: 64,
+                                    columnNumber: 17
+                                }, this)
+                            ]
+                        }, void 0, true)
+                    }, void 0, false, {
+                        fileName: "[project]/components/ui/header.tsx",
+                        lineNumber: 30,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/components/ui/header.tsx",
+                lineNumber: 13,
+                columnNumber: 9
+            }, this)
+        }, void 0, false, {
+            fileName: "[project]/components/ui/header.tsx",
+            lineNumber: 12,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
+        fileName: "[project]/components/ui/header.tsx",
+        lineNumber: 11,
+        columnNumber: 5
+    }, this);
+}
+_s(Header, "y3FQDew7UyrSqYkvQcTdCsLbAB8=");
+_c = Header;
+var _c;
+__turbopack_refresh__.register(_c, "Header");
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
+}
+}}),
+"[project]/context/Suscribe.context.tsx [app-client] (ecmascript)": ((__turbopack_context__) => {
+"use strict";
+
+var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
+{
+__turbopack_esm__({
+    "SuscribeContext": (()=>SuscribeContext),
+    "SuscribeProvider": (()=>SuscribeProvider)
+});
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mercadopago$2f$sdk$2d$react$2f$esm$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$module__evaluation$3e$__ = __turbopack_import__("[project]/node_modules/@mercadopago/sdk-react/esm/index.js [app-client] (ecmascript) <module evaluation>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/app/api/Api.ts [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/utils/error.helper.ts [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$context$2f$user$2e$context$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/context/user.context.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mercadopago$2f$sdk$2d$react$2f$esm$2f$mercadoPago$2f$initMercadoPago$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__initMercadoPago$3e$__ = __turbopack_import__("[project]/node_modules/@mercadopago/sdk-react/esm/mercadoPago/initMercadoPago/index.js [app-client] (ecmascript) <export default as initMercadoPago>");
+;
+var _s = __turbopack_refresh__.signature();
+"use client";
+;
+;
+;
+;
+;
+const defaultContext = {
+    sub: null,
+    planes: [],
+    viewPlan: null,
+    suscribirse: async ()=>{},
+    desuscribirse: async ()=>{},
+    selectPlan: async ()=>null,
+    changePlan: ()=>{}
+};
+const SuscribeContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createContext"])(defaultContext);
+const SuscribeProvider = ({ children })=>{
+    _s();
+    const { user } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useContext"])(__TURBOPACK__imported__module__$5b$project$5d2f$context$2f$user$2e$context$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["UserContext"]);
+    const [sub, setSub] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [planes, setPlanes] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    const [viewPlan, setViewPlan] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    // Inicializar MercadoPago (se ejecuta solo una vez)
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "SuscribeProvider.useEffect": ()=>{
+            (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mercadopago$2f$sdk$2d$react$2f$esm$2f$mercadoPago$2f$initMercadoPago$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__initMercadoPago$3e$__["initMercadoPago"])("APP_USR-a88f991b-d04b-490f-b447-502303d60b9e");
+        }
+    }["SuscribeProvider.useEffect"], []);
+    // Función para obtener planes (uso de useCallback para memorizarla)
+    const getPlanes = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "SuscribeProvider.useCallback[getPlanes]": async ()=>{
+            try {
+                const storedPlanes = localStorage.getItem("planes");
+                if (storedPlanes) {
+                    const parsed = JSON.parse(storedPlanes);
+                    setPlanes(parsed);
+                    console.log("Planes cargados desde LocalStorage");
+                    return;
+                }
+                const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get(`/users/planes`));
+                if (error || !data?.data) {
+                    console.error("Error al obtener planes:", error || "No se retornaron datos");
+                    return;
+                }
+                const fetchedPlanes = data.data;
+                setPlanes(fetchedPlanes);
+                localStorage.setItem("planes", JSON.stringify(fetchedPlanes));
+            } catch (err) {
+                console.error("Error en getPlanes:", err);
+            }
+        }
+    }["SuscribeProvider.useCallback[getPlanes]"], []);
+    const suscribirse = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "SuscribeProvider.useCallback[suscribirse]": async (planId, paymentMethodToken, email)=>{
+            try {
+                const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post(`/subscriptions`, {
+                    planId,
+                    userEmail: email,
+                    paymentMethodToken
+                }));
+                if (error || !data?.data?.subscription) {
+                    console.error("Error al suscribirse:", error || "No se retornaron datos");
+                    return;
+                }
+                const newSubscription = data.data.subscription;
+                setSub(newSubscription);
+                localStorage.setItem("subscripcion", JSON.stringify(newSubscription));
+            } catch (err) {
+                console.error("Excepción en suscribirse:", err);
+            }
+        }
+    }["SuscribeProvider.useCallback[suscribirse]"], [
+        user
+    ]);
+    const desuscribirse = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "SuscribeProvider.useCallback[desuscribirse]": async ()=>{
+            if (!sub) return;
+            try {
+                const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post(`/subscriptions/cancel`, {
+                    subscriptionId: sub.mercadopagoSubscriptionId,
+                    cancellationReason: "Cancelación solicitada por el usuario"
+                }));
+                if (error || !data?.data?.subscription) {
+                    console.error("Error al desuscribirse:", error || "No se retornaron datos");
+                    return;
+                }
+                setSub(null);
+                localStorage.removeItem("subscripcion");
+            } catch (err) {
+                console.error("Excepción en desuscribirse:", err);
+            }
+        }
+    }["SuscribeProvider.useCallback[desuscribirse]"], [
+        sub
+    ]);
+    const selectPlan = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "SuscribeProvider.useCallback[selectPlan]": async (planId)=>{
+            if (planes.length === 0) {
+                await getPlanes();
+            }
+            const foundPlan = planes.find({
+                "SuscribeProvider.useCallback[selectPlan].foundPlan": (plan)=>plan.id === planId
+            }["SuscribeProvider.useCallback[selectPlan].foundPlan"]);
+            if (!foundPlan) {
+                console.error("Plan no encontrado");
+                return null;
+            }
+            setViewPlan(foundPlan);
+            localStorage.setItem("viewPlan", JSON.stringify(foundPlan));
+            return foundPlan;
+        }
+    }["SuscribeProvider.useCallback[selectPlan]"], [
+        planes,
+        getPlanes
+    ]);
+    const changePlan = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "SuscribeProvider.useCallback[changePlan]": (direction)=>{
+            if (!viewPlan || planes.length === 0) return;
+            const currentIndex = planes.findIndex({
+                "SuscribeProvider.useCallback[changePlan].currentIndex": (plan)=>plan.id === viewPlan.id
+            }["SuscribeProvider.useCallback[changePlan].currentIndex"]);
+            if (currentIndex === -1) return;
+            let newIndex = direction === "next" ? currentIndex + 1 : currentIndex - 1;
+            if (newIndex < 0) newIndex = planes.length - 1;
+            if (newIndex >= planes.length) newIndex = 0;
+            const newPlan = planes[newIndex];
+            setViewPlan(newPlan);
+            localStorage.setItem("viewPlan", JSON.stringify(newPlan));
+        }
+    }["SuscribeProvider.useCallback[changePlan]"], [
+        planes,
+        viewPlan
+    ]);
+    // Cargar la subscripción y los planes al montar o cuando cambie el usuario
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "SuscribeProvider.useEffect": ()=>{
+            const storedSub = localStorage.getItem("subscripcion");
+            if (storedSub) {
+                setSub(JSON.parse(storedSub));
+            }
+            getPlanes();
+        }
+    }["SuscribeProvider.useEffect"], [
+        user,
+        getPlanes
+    ]);
+    // Seleccionar el plan de vista si aún no está seleccionado
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "SuscribeProvider.useEffect": ()=>{
+            if (planes.length > 0 && !viewPlan) {
+                const storedViewPlan = localStorage.getItem("viewPlan");
+                if (storedViewPlan) {
+                    setViewPlan(JSON.parse(storedViewPlan));
+                } else {
+                    const popularPlan = planes.find({
+                        "SuscribeProvider.useEffect.popularPlan": (plan)=>plan.popular === true
+                    }["SuscribeProvider.useEffect.popularPlan"]);
+                    setViewPlan(popularPlan || planes[0]);
+                }
+            }
+        }
+    }["SuscribeProvider.useEffect"], [
+        planes,
+        viewPlan
+    ]);
+    // Memorizar el valor del contexto para evitar renders innecesarios
+    const value = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "SuscribeProvider.useMemo[value]": ()=>({
+                sub,
+                planes,
+                viewPlan,
+                suscribirse,
+                desuscribirse,
+                selectPlan,
+                changePlan
+            })
+    }["SuscribeProvider.useMemo[value]"], [
+        sub,
+        planes,
+        viewPlan,
+        suscribirse,
+        desuscribirse,
+        selectPlan,
+        changePlan
+    ]);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(SuscribeContext.Provider, {
+        value: value,
+        children: children
+    }, void 0, false, {
+        fileName: "[project]/context/Suscribe.context.tsx",
+        lineNumber: 210,
+        columnNumber: 5
+    }, this);
+};
+_s(SuscribeProvider, "40bPXX3Nm4LcT3TD5U+EtET+6fY=");
+_c = SuscribeProvider;
+var _c;
+__turbopack_refresh__.register(_c, "SuscribeProvider");
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
+}
+}}),
+"[project]/interfaces/Subscripcion.interface.ts [app-client] (ecmascript)": ((__turbopack_context__) => {
+"use strict";
+
+var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
+{
+__turbopack_esm__({
+    "SubscriptionStatus": (()=>SubscriptionStatus)
+});
+var SubscriptionStatus = /*#__PURE__*/ function(SubscriptionStatus) {
+    SubscriptionStatus["ACTIVE"] = "active";
+    SubscriptionStatus["PAUSED"] = "paused";
+    SubscriptionStatus["CANCELLED"] = "cancelled";
+    return SubscriptionStatus;
+}({});
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
+}
+}}),
+"[project]/context/Administracion.context.tsx [app-client] (ecmascript)": ((__turbopack_context__) => {
+"use strict";
+
+var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
+{
+__turbopack_esm__({
+    "default": (()=>__TURBOPACK__default__export__)
+});
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/navigation.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$context$2f$Administracion$2e$context$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/context/Administracion.context.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$context$2f$Suscribe$2e$context$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/context/Suscribe.context.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$interfaces$2f$Subscripcion$2e$interface$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/interfaces/Subscripcion.interface.ts [app-client] (ecmascript)");
+;
+var _s = __turbopack_refresh__.signature(), _s1 = __turbopack_refresh__.signature(), _s2 = __turbopack_refresh__.signature(), _s3 = __turbopack_refresh__.signature();
+"use client";
+;
+;
+;
+;
+;
+/* ============================================
+   Componente para la pestaña de Usuarios
+============================================ */ const UsuariosTab = ({ getUsers, planes })=>{
+    _s();
+    const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
+    const [allUsers, setAllUsers] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    const [searchTerm, setSearchTerm] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
+    const [selectedPlans, setSelectedPlans] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    const [modalOpen, setModalOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [selectedUser, setSelectedUser] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "UsuariosTab.useEffect": ()=>{
+            const fetchUsers = {
+                "UsuariosTab.useEffect.fetchUsers": async ()=>{
+                    try {
+                        const users = await getUsers();
+                        setAllUsers(users);
+                    } catch (error) {
+                        console.error("Error fetching users:", error);
+                    }
+                }
+            }["UsuariosTab.useEffect.fetchUsers"];
+            fetchUsers();
+        }
+    }["UsuariosTab.useEffect"], [
+        getUsers
+    ]);
+    const filteredUsers = allUsers.filter((user)=>{
+        const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase()) || user.email.toLowerCase().includes(searchTerm.toLowerCase()) || user.id.toLowerCase().includes(searchTerm.toLowerCase());
+        let matchesPlan = true;
+        if (selectedPlans.length > 0) {
+            matchesPlan = user.subscripcion?.plan ? selectedPlans.includes(user.subscripcion.plan.id) : false;
+        }
+        return matchesSearch && matchesPlan;
+    });
+    const togglePlanSelection = (planId)=>{
+        setSelectedPlans((prev)=>prev.includes(planId) ? prev.filter((id)=>id !== planId) : [
+                ...prev,
+                planId
+            ]);
+    };
+    const openModal = (user)=>{
+        setSelectedUser(user);
+        setModalOpen(true);
+    };
+    const closeModal = ()=>{
+        setSelectedUser(null);
+        setModalOpen(false);
+    };
+    const redirectToEdit = (userId)=>{
+        router.push(`/administracion/${userId}`);
+    };
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "flex flex-col gap-4 mb-6 md:flex-row",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                        type: "text",
+                        placeholder: "Buscar por nombre, email o ID...",
+                        value: searchTerm,
+                        onChange: (e)=>setSearchTerm(e.target.value),
+                        className: "flex-1 px-4 py-2 text-white bg-gray-700 rounded-lg"
+                    }, void 0, false, {
+                        fileName: "[project]/context/Administracion.context.tsx",
+                        lineNumber: 89,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex flex-wrap gap-4",
+                        children: planes.map((plan)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                onClick: ()=>togglePlanSelection(plan.id),
+                                className: `px-4 py-2 rounded-lg text-white transition-colors ${selectedPlans.includes(plan.id) ? "bg-indigo-600" : "bg-gray-700"}`,
+                                children: plan.name
+                            }, plan.id, false, {
+                                fileName: "[project]/context/Administracion.context.tsx",
+                                lineNumber: 98,
+                                columnNumber: 13
+                            }, this))
+                    }, void 0, false, {
+                        fileName: "[project]/context/Administracion.context.tsx",
+                        lineNumber: 96,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/context/Administracion.context.tsx",
+                lineNumber: 88,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3",
+                children: filteredUsers.length > 0 ? filteredUsers.map((user)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        onClick: ()=>openModal(user),
+                        className: "relative p-4 transition-colors bg-gray-700 rounded-lg shadow cursor-pointer hover:bg-gray-600",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-lg font-bold text-white",
+                                children: user.name
+                            }, void 0, false, {
+                                fileName: "[project]/context/Administracion.context.tsx",
+                                lineNumber: 122,
+                                columnNumber: 15
+                            }, this),
+                            user.isAdmin && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "absolute flex items-center justify-center w-4 h-4 text-xs font-bold rounded-full top-2 right-2 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-400 text-neutral-950",
+                                children: "A"
+                            }, void 0, false, {
+                                fileName: "[project]/context/Administracion.context.tsx",
+                                lineNumber: 124,
+                                columnNumber: 17
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-gray-300",
+                                children: user.email
+                            }, void 0, false, {
+                                fileName: "[project]/context/Administracion.context.tsx",
+                                lineNumber: 128,
+                                columnNumber: 15
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-sm text-gray-400",
+                                children: [
+                                    "ID: ",
+                                    user.id
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/context/Administracion.context.tsx",
+                                lineNumber: 129,
+                                columnNumber: 15
+                            }, this)
+                        ]
+                    }, user.id, true, {
+                        fileName: "[project]/context/Administracion.context.tsx",
+                        lineNumber: 117,
+                        columnNumber: 13
+                    }, this)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "text-center text-gray-300 col-span-full",
+                    children: "No se encontraron usuarios."
+                }, void 0, false, {
+                    fileName: "[project]/context/Administracion.context.tsx",
+                    lineNumber: 133,
+                    columnNumber: 11
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/context/Administracion.context.tsx",
+                lineNumber: 114,
+                columnNumber: 7
+            }, this),
+            modalOpen && selectedUser && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(UserModal, {
+                user: selectedUser,
+                onClose: closeModal,
+                onEdit: redirectToEdit
+            }, void 0, false, {
+                fileName: "[project]/context/Administracion.context.tsx",
+                lineNumber: 141,
+                columnNumber: 9
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/context/Administracion.context.tsx",
+        lineNumber: 86,
+        columnNumber: 5
+    }, this);
+};
+_s(UsuariosTab, "jOIr+G3WAHsuE9viVusoFwfAxPw=", false, function() {
+    return [
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"]
+    ];
+});
+_c = UsuariosTab;
+/* ============================================
+   Componente para el Modal de Usuario
+============================================ */ const UserModal = ({ user, onClose, onEdit })=>{
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50",
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "w-11/12 p-6 bg-gray-800 rounded-lg shadow-lg md:w-1/2 lg:w-1/3",
+            children: [
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                    className: "mb-4 text-2xl font-bold text-white",
+                    children: "Detalles del Usuario"
+                }, void 0, false, {
+                    fileName: "[project]/context/Administracion.context.tsx",
+                    lineNumber: 162,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "space-y-2 text-gray-300",
+                    children: Object.entries(user).filter(([key])=>key !== "password" && key !== "isAdmin").map(([key, value])=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "flex",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "mr-2 font-bold",
+                                    children: [
+                                        key,
+                                        ":"
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/context/Administracion.context.tsx",
+                                    lineNumber: 170,
+                                    columnNumber: 17
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    children: typeof value === "object" ? JSON.stringify(value) : String(value)
+                                }, void 0, false, {
+                                    fileName: "[project]/context/Administracion.context.tsx",
+                                    lineNumber: 171,
+                                    columnNumber: 17
+                                }, this)
+                            ]
+                        }, key, true, {
+                            fileName: "[project]/context/Administracion.context.tsx",
+                            lineNumber: 169,
+                            columnNumber: 15
+                        }, this))
+                }, void 0, false, {
+                    fileName: "[project]/context/Administracion.context.tsx",
+                    lineNumber: 165,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "flex justify-end mt-4",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            onClick: onClose,
+                            className: "px-4 py-2 text-white transition-all rounded bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700",
+                            children: "Cerrar"
+                        }, void 0, false, {
+                            fileName: "[project]/context/Administracion.context.tsx",
+                            lineNumber: 180,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            onClick: ()=>onEdit(user.id),
+                            className: "px-4 py-2 ml-2 text-white transition-all rounded bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700",
+                            children: "Modificar"
+                        }, void 0, false, {
+                            fileName: "[project]/context/Administracion.context.tsx",
+                            lineNumber: 186,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/context/Administracion.context.tsx",
+                    lineNumber: 179,
+                    columnNumber: 9
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "[project]/context/Administracion.context.tsx",
+            lineNumber: 161,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
+        fileName: "[project]/context/Administracion.context.tsx",
+        lineNumber: 160,
+        columnNumber: 5
+    }, this);
+};
+_c1 = UserModal;
+/* ============================================
+   Componente para la pestaña de Planes
+============================================ */ const PlanesTab = ({ getAllPlans, deletePlan })=>{
+    _s1();
+    const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
+    const [allPlans, setAllPlans] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "PlanesTab.useEffect": ()=>{
+            const fetchPlans = {
+                "PlanesTab.useEffect.fetchPlans": async ()=>{
+                    try {
+                        const plans = await getAllPlans();
+                        setAllPlans(plans);
+                    } catch (error) {
+                        console.error("Error fetching plans:", error);
+                    }
+                }
+            }["PlanesTab.useEffect.fetchPlans"];
+            fetchPlans();
+        }
+    }["PlanesTab.useEffect"], [
+        getAllPlans
+    ]);
+    const handleDelete = async (id)=>{
+        try {
+            await deletePlan(id);
+            setAllPlans((prev)=>prev.filter((plan)=>plan.id !== id));
+        } catch (error) {
+            console.error("Error al eliminar el plan:", error);
+        }
+    };
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                className: "mb-4 text-2xl font-bold text-white",
+                children: "Planes"
+            }, void 0, false, {
+                fileName: "[project]/context/Administracion.context.tsx",
+                lineNumber: 231,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3",
+                children: allPlans.length > 0 ? allPlans.map((plan)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "p-4 bg-gray-700 rounded-lg shadow",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-lg font-bold text-white",
+                                children: plan.name
+                            }, void 0, false, {
+                                fileName: "[project]/context/Administracion.context.tsx",
+                                lineNumber: 236,
+                                columnNumber: 15
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-gray-300",
+                                children: plan.descripcion
+                            }, void 0, false, {
+                                fileName: "[project]/context/Administracion.context.tsx",
+                                lineNumber: 237,
+                                columnNumber: 15
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-gray-300",
+                                children: [
+                                    "Precio: $",
+                                    plan.precio
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/context/Administracion.context.tsx",
+                                lineNumber: 238,
+                                columnNumber: 15
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex justify-between mt-2",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                        onClick: ()=>router.push(`/administracion/plan/${plan.id}`),
+                                        className: "px-3 py-1 text-sm text-white bg-blue-600 rounded hover:bg-blue-700",
+                                        children: "Editar"
+                                    }, void 0, false, {
+                                        fileName: "[project]/context/Administracion.context.tsx",
+                                        lineNumber: 240,
+                                        columnNumber: 17
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                        onClick: ()=>handleDelete(plan.id),
+                                        className: "px-3 py-1 text-sm text-white bg-red-600 rounded hover:bg-red-700",
+                                        children: "Eliminar"
+                                    }, void 0, false, {
+                                        fileName: "[project]/context/Administracion.context.tsx",
+                                        lineNumber: 246,
+                                        columnNumber: 17
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/context/Administracion.context.tsx",
+                                lineNumber: 239,
+                                columnNumber: 15
+                            }, this)
+                        ]
+                    }, plan.id, true, {
+                        fileName: "[project]/context/Administracion.context.tsx",
+                        lineNumber: 235,
+                        columnNumber: 13
+                    }, this)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "text-center text-gray-300 col-span-full",
+                    children: "No se encontraron planes."
+                }, void 0, false, {
+                    fileName: "[project]/context/Administracion.context.tsx",
+                    lineNumber: 256,
+                    columnNumber: 11
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/context/Administracion.context.tsx",
+                lineNumber: 232,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                onClick: ()=>router.push("/administracion/plan/nuevo"),
+                className: "px-4 py-2 mt-4 text-white bg-green-600 rounded hover:bg-green-700",
+                children: "Agregar Nuevo Plan"
+            }, void 0, false, {
+                fileName: "[project]/context/Administracion.context.tsx",
+                lineNumber: 261,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/context/Administracion.context.tsx",
+        lineNumber: 230,
+        columnNumber: 5
+    }, this);
+};
+_s1(PlanesTab, "6m+CpvEsAZ5l02+M4JXf/WJ7Iak=", false, function() {
+    return [
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"]
+    ];
+});
+_c2 = PlanesTab;
+/* ============================================
+   Componente para la pestaña de Suscripciones
+============================================ */ const SuscripcionesTab = ({ getAllSubscriptions, updateSubscriptionStatus, cancelSubscription })=>{
+    _s2();
+    const [allSubscriptions, setAllSubscriptions] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "SuscripcionesTab.useEffect": ()=>{
+            const fetchSubscriptions = {
+                "SuscripcionesTab.useEffect.fetchSubscriptions": async ()=>{
+                    try {
+                        const subs = await getAllSubscriptions();
+                        const formattedSubs = subs.map({
+                            "SuscripcionesTab.useEffect.fetchSubscriptions.formattedSubs": (subscription)=>({
+                                    ...subscription,
+                                    user: {
+                                        id: subscription.id,
+                                        name: "Usuario",
+                                        email: "email@example.com"
+                                    }
+                                })
+                        }["SuscripcionesTab.useEffect.fetchSubscriptions.formattedSubs"]);
+                        setAllSubscriptions(formattedSubs);
+                    } catch (error) {
+                        console.error("Error fetching subscriptions:", error);
+                    }
+                }
+            }["SuscripcionesTab.useEffect.fetchSubscriptions"];
+            fetchSubscriptions();
+        }
+    }["SuscripcionesTab.useEffect"], [
+        getAllSubscriptions
+    ]);
+    const handlePause = async (id)=>{
+        try {
+            await updateSubscriptionStatus(id, __TURBOPACK__imported__module__$5b$project$5d2f$interfaces$2f$Subscripcion$2e$interface$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SubscriptionStatus"].PAUSED);
+            const subs = await getAllSubscriptions();
+            const formattedSubs = subs.map((subscription)=>({
+                    ...subscription,
+                    user: {
+                        id: subscription.id,
+                        name: "Usuario",
+                        email: "email@example.com"
+                    }
+                }));
+            setAllSubscriptions(formattedSubs);
+        } catch (error) {
+            console.error("Error al actualizar la suscripción:", error);
+        }
+    };
+    const handleCancel = async (id)=>{
+        try {
+            await cancelSubscription(id, "Cancelado por admin");
+            const subs = await getAllSubscriptions();
+            const formattedSubs = subs.map((subscription)=>({
+                    ...subscription,
+                    user: {
+                        id: subscription.id,
+                        name: "Usuario",
+                        email: "email@example.com"
+                    }
+                }));
+            setAllSubscriptions(formattedSubs);
+        } catch (error) {
+            console.error("Error al cancelar la suscripción:", error);
+        }
+    };
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                className: "mb-4 text-2xl font-bold text-white",
+                children: "Suscripciones"
+            }, void 0, false, {
+                fileName: "[project]/context/Administracion.context.tsx",
+                lineNumber: 348,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "grid grid-cols-1 gap-4",
+                children: allSubscriptions.length > 0 ? allSubscriptions.map((sub)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "p-4 bg-gray-700 rounded-lg shadow",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-lg font-bold text-white",
+                                children: [
+                                    "ID: ",
+                                    sub.id
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/context/Administracion.context.tsx",
+                                lineNumber: 353,
+                                columnNumber: 15
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-gray-300",
+                                children: [
+                                    "Usuario: ",
+                                    sub.user.email,
+                                    " - ",
+                                    sub.user.name
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/context/Administracion.context.tsx",
+                                lineNumber: 354,
+                                columnNumber: 15
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-gray-300",
+                                children: [
+                                    "Plan: ",
+                                    sub.plan.name
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/context/Administracion.context.tsx",
+                                lineNumber: 357,
+                                columnNumber: 15
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-gray-300",
+                                children: [
+                                    "Estado: ",
+                                    sub.status
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/context/Administracion.context.tsx",
+                                lineNumber: 358,
+                                columnNumber: 15
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex gap-2 mt-2",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                        onClick: ()=>handlePause(sub.id),
+                                        className: "px-3 py-1 text-sm text-white bg-yellow-600 rounded hover:bg-yellow-700",
+                                        children: "Pausar"
+                                    }, void 0, false, {
+                                        fileName: "[project]/context/Administracion.context.tsx",
+                                        lineNumber: 360,
+                                        columnNumber: 17
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                        onClick: ()=>handleCancel(sub.id),
+                                        className: "px-3 py-1 text-sm text-white bg-red-600 rounded hover:bg-red-700",
+                                        children: "Cancelar"
+                                    }, void 0, false, {
+                                        fileName: "[project]/context/Administracion.context.tsx",
+                                        lineNumber: 366,
+                                        columnNumber: 17
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/context/Administracion.context.tsx",
+                                lineNumber: 359,
+                                columnNumber: 15
+                            }, this)
+                        ]
+                    }, sub.id, true, {
+                        fileName: "[project]/context/Administracion.context.tsx",
+                        lineNumber: 352,
+                        columnNumber: 13
+                    }, this)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "text-center text-gray-300",
+                    children: "No se encontraron suscripciones."
+                }, void 0, false, {
+                    fileName: "[project]/context/Administracion.context.tsx",
+                    lineNumber: 376,
+                    columnNumber: 11
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/context/Administracion.context.tsx",
+                lineNumber: 349,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/context/Administracion.context.tsx",
+        lineNumber: 347,
+        columnNumber: 5
+    }, this);
+};
+_s2(SuscripcionesTab, "aKmHFUtIjRxkRQPxUxjlhDqfrSk=");
+_c3 = SuscripcionesTab;
+/* ============================================
+         Componente Principal AdminPanel
+============================================ */ const AdminPanel = ()=>{
+    _s3();
+    const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
+    const { planes } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useContext"])(__TURBOPACK__imported__module__$5b$project$5d2f$context$2f$Suscribe$2e$context$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SuscribeContext"]);
+    const { getUsers, getAllPlans, deletePlan, getAllSubscriptions, updateSubscriptionStatus, cancelSubscription } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useContext"])(__TURBOPACK__imported__module__$5b$project$5d2f$context$2f$Administracion$2e$context$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AdminContext"]);
+    const [activeTab, setActiveTab] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("usuarios");
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
+        className: "px-4 py-3 mx-auto max-w-7xl",
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                className: "mb-4 text-3xl font-bold text-white",
+                children: "Panel de Administración"
+            }, void 0, false, {
+                fileName: "[project]/context/Administracion.context.tsx",
+                lineNumber: 405,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "flex gap-4 mb-6",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                        onClick: ()=>setActiveTab("usuarios"),
+                        className: `px-4 py-2 rounded ${activeTab === "usuarios" ? "bg-indigo-600" : "bg-gray-700 text-white"}`,
+                        children: "Usuarios"
+                    }, void 0, false, {
+                        fileName: "[project]/context/Administracion.context.tsx",
+                        lineNumber: 409,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                        onClick: ()=>setActiveTab("planes"),
+                        className: `px-4 py-2 rounded ${activeTab === "planes" ? "bg-indigo-600" : "bg-gray-700 text-white"}`,
+                        children: "Planes"
+                    }, void 0, false, {
+                        fileName: "[project]/context/Administracion.context.tsx",
+                        lineNumber: 419,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                        onClick: ()=>setActiveTab("suscripciones"),
+                        className: `px-4 py-2 rounded ${activeTab === "suscripciones" ? "bg-indigo-600" : "bg-gray-700 text-white"}`,
+                        children: "Suscripciones"
+                    }, void 0, false, {
+                        fileName: "[project]/context/Administracion.context.tsx",
+                        lineNumber: 427,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/context/Administracion.context.tsx",
+                lineNumber: 408,
+                columnNumber: 7
+            }, this),
+            activeTab === "usuarios" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(UsuariosTab, {
+                getUsers: getUsers,
+                planes: planes
+            }, void 0, false, {
+                fileName: "[project]/context/Administracion.context.tsx",
+                lineNumber: 439,
+                columnNumber: 9
+            }, this),
+            activeTab === "planes" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(PlanesTab, {
+                getAllPlans: getAllPlans,
+                deletePlan: deletePlan
+            }, void 0, false, {
+                fileName: "[project]/context/Administracion.context.tsx",
+                lineNumber: 442,
+                columnNumber: 9
+            }, this),
+            activeTab === "suscripciones" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(SuscripcionesTab, {
+                getAllSubscriptions: getAllSubscriptions,
+                updateSubscriptionStatus: updateSubscriptionStatus,
+                cancelSubscription: cancelSubscription
+            }, void 0, false, {
+                fileName: "[project]/context/Administracion.context.tsx",
+                lineNumber: 445,
+                columnNumber: 9
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/context/Administracion.context.tsx",
+        lineNumber: 404,
+        columnNumber: 5
+    }, this);
+};
+_s3(AdminPanel, "x4CoJC6Dbv1XfTKGlWAmuiTS+/Q=", false, function() {
+    return [
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"]
+    ];
+});
+_c4 = AdminPanel;
+const __TURBOPACK__default__export__ = AdminPanel;
+var _c, _c1, _c2, _c3, _c4;
+__turbopack_refresh__.register(_c, "UsuariosTab");
+__turbopack_refresh__.register(_c1, "UserModal");
+__turbopack_refresh__.register(_c2, "PlanesTab");
+__turbopack_refresh__.register(_c3, "SuscripcionesTab");
+__turbopack_refresh__.register(_c4, "AdminPanel");
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
+}
+}}),
+"[project]/app/rootlayout.tsx [app-client] (ecmascript)": ((__turbopack_context__) => {
+"use strict";
+
+var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
+{
+// RootLayout.tsx
+__turbopack_esm__({
+    "default": (()=>RootLayout)
+});
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$inter_d30f9fdf$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[next]/internal/font/google/inter_d30f9fdf.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$nacelle_8b342a97$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/app/nacelle_8b342a97.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$header$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/components/ui/header.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$context$2f$Administracion$2e$context$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/context/Administracion.context.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$context$2f$Suscribe$2e$context$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/context/Suscribe.context.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$context$2f$user$2e$context$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/context/user.context.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next-auth/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mercadopago$2f$sdk$2d$react$2f$esm$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$module__evaluation$3e$__ = __turbopack_import__("[project]/node_modules/@mercadopago/sdk-react/esm/index.js [app-client] (ecmascript) <module evaluation>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mercadopago$2f$sdk$2d$react$2f$esm$2f$mercadoPago$2f$initMercadoPago$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__initMercadoPago$3e$__ = __turbopack_import__("[project]/node_modules/@mercadopago/sdk-react/esm/mercadoPago/initMercadoPago/index.js [app-client] (ecmascript) <export default as initMercadoPago>");
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+function RootLayout({ children }) {
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mercadopago$2f$sdk$2d$react$2f$esm$2f$mercadoPago$2f$initMercadoPago$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__initMercadoPago$3e$__["initMercadoPago"])("APP_USR-a88f991b-d04b-490f-b447-502303d60b9e");
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("html", {
+        lang: "en",
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SessionProvider"], {
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$context$2f$Administracion$2e$context$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AdminProvider"], {
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$context$2f$Suscribe$2e$context$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SuscribeProvider"], {
+                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$context$2f$user$2e$context$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["UserProvider"], {
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("body", {
+                            className: `${__TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$inter_d30f9fdf$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].variable} ${__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$nacelle_8b342a97$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].variable} bg-gray-950 font-inter text-base text-gray-200 antialiased`,
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex min-h-screen flex-col overflow-hidden supports-[overflow:clip]:overflow-clip",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$header$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
+                                        fileName: "[project]/app/rootlayout.tsx",
+                                        lineNumber: 64,
+                                        columnNumber: 19
+                                    }, this),
+                                    children
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/app/rootlayout.tsx",
+                                lineNumber: 63,
+                                columnNumber: 17
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "[project]/app/rootlayout.tsx",
+                            lineNumber: 60,
+                            columnNumber: 15
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/app/rootlayout.tsx",
+                        lineNumber: 59,
+                        columnNumber: 13
+                    }, this)
+                }, void 0, false, {
+                    fileName: "[project]/app/rootlayout.tsx",
+                    lineNumber: 58,
+                    columnNumber: 11
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/app/rootlayout.tsx",
+                lineNumber: 57,
+                columnNumber: 9
+            }, this)
+        }, void 0, false, {
+            fileName: "[project]/app/rootlayout.tsx",
+            lineNumber: 56,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
+        fileName: "[project]/app/rootlayout.tsx",
+        lineNumber: 55,
+        columnNumber: 5
+    }, this);
+}
+_c = RootLayout;
+var _c;
+__turbopack_refresh__.register(_c, "RootLayout");
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
+}
+}}),
+"[project]/app/clientRootLayout.tsx [app-client] (ecmascript)": ((__turbopack_context__) => {
+"use strict";
+
+var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
+{
+// ClientRootLayout.tsx
+__turbopack_esm__({
+    "default": (()=>ClientRootLayout)
+});
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$rootlayout$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/app/rootlayout.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$swr$2f$dist$2f$index$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_import__("[project]/node_modules/swr/dist/index/index.mjs [app-client] (ecmascript) <locals>");
+"use client";
+;
+;
+;
+function ClientRootLayout({ children }) {
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$swr$2f$dist$2f$index$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["SWRConfig"], {
+        value: {
+            revalidateOnFocus: false
+        },
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$rootlayout$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+            children: children
+        }, void 0, false, {
+            fileName: "[project]/app/clientRootLayout.tsx",
+            lineNumber: 14,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
+        fileName: "[project]/app/clientRootLayout.tsx",
+        lineNumber: 13,
+        columnNumber: 5
+    }, this);
+}
+_c = ClientRootLayout;
+var _c;
+__turbopack_refresh__.register(_c, "ClientRootLayout");
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
+}
+}}),
+"[project]/app/layout.tsx [app-rsc] (ecmascript, Next.js server component, client modules)": ((__turbopack_context__) => {
+
+var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, t: __turbopack_require_real__ } = __turbopack_context__;
+{
+}}),
+}]);
+
+//# sourceMappingURL=%5Broot%20of%20the%20server%5D__4ad0dd._.js.map

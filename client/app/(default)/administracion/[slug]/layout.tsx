@@ -1,109 +1,209 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import UserContext from "@/context/user.context";
+import { useParams, useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
+import { IUser } from "@/interfaces/User.interface";
+import { AdminContext } from "@/context/Administracion.context";
 
-interface User {
-  id: string;
+interface EditUserFormData {
   name: string;
   email: string;
   telefono?: string;
   company?: string;
-  isAdmin: boolean;
 }
 
-const EditUser = () => {
+const EditUser: React.FC = () => {
+  const params = useParams();
   const router = useRouter();
-  const { slug } = router.query; // Get the slug from the URL
-  const { user } = useContext(UserContext); // Logged-in user
-  const [userData, setUserData] = useState<User | null>(null);
+  const userId = params?.slug as string;
+  const { getUser } = useContext(AdminContext);
+
+  const [userData, setUserData] = useState<IUser | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    if (user) {
-      setUserData(user);
-      setLoading(false);
-    } else {
-      setError("Usuario no encontrado.");
-      setLoading(false);
-    }
-  }, [user]);
+    const fetchUser = async () => {
+      if (!userId) {
+        setError("ID de usuario no proporcionado");
+        setLoading(false);
+        return;
+      }
+      try {
+        const user = await getUser(userId);
+        if (!user) {
+          setError("Usuario no encontrado");
+        } else {
+          setUserData(user);
+        }
+      } catch (err) {
+        setError("Error al cargar el usuario");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, [userId, getUser]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Logic for updating user details goes here
+    setSaving(true);
+    setError(null);
+    setSuccessMessage(null);
+
+    try {
+      const formData = new FormData(e.currentTarget);
+      const updatedData: EditUserFormData = {
+        name: formData.get("name") as string,
+        email: formData.get("email") as string,
+        telefono: formData.get("telefono") as string,
+        company: formData.get("company") as string,
+      };
+
+      if (!userId || !userData) {
+        throw new Error("Datos de usuario no disponibles");
+      }
+
+      // Aquí puedes llamar a la función de actualización del usuario
+      // await updateUser(userId, { ...userData, ...updatedData });
+
+      setSuccessMessage("Usuario actualizado exitosamente");
+      setUserData((prev) => (prev ? { ...prev, ...updatedData } : null));
+
+      // Opcional: redirigir después de actualizar
+      // router.push('/administracion');
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Error al actualizar el usuario"
+      );
+    } finally {
+      setSaving(false);
+    }
   };
 
-  // Display loading or error if present
-  if (loading)
-    return <div className="text-center text-gray-300">Cargando...</div>;
-  if (error) return <div className="text-center text-red-500">{error}</div>;
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <Loader2 className="w-8 h-8 text-indigo-600 animate-spin" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="max-w-md p-4 mx-auto mt-8 text-center bg-red-500 rounded-lg">
+        <p className="text-white">{error}</p>
+      </div>
+    );
+  }
 
   return (
-    <section className="px-4 py-6 mx-auto max-w-7xl">
-      <h1 className="mb-4 text-3xl font-bold text-white">Editar Usuario</h1>
+    <section className="max-w-3xl px-4 py-6 mx-auto">
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-2xl font-bold text-white md:text-3xl">
+          Editar Usuario
+        </h1>
+        <button
+          onClick={() => router.back()}
+          className="px-4 py-2 text-sm text-white transition-colors bg-gray-700 rounded-lg hover:bg-gray-600"
+        >
+          Volver
+        </button>
+      </div>
+
+      {successMessage && (
+        <div className="p-4 mb-6 text-center bg-green-600 rounded-lg">
+          <p className="text-white">{successMessage}</p>
+        </div>
+      )}
+
       {userData && (
         <form
           onSubmit={handleSubmit}
-          className="p-6 bg-gray-800 rounded-lg shadow-lg"
+          className="p-6 space-y-6 bg-gray-800 rounded-lg shadow-lg"
         >
-          <div className="mb-4">
-            <label htmlFor="name" className="block text-white">
-              Nombre
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              defaultValue={userData.name}
-              required
-              className="w-full px-4 py-2 mt-1 text-white bg-gray-700 border border-gray-600 rounded-lg"
-            />
+          <div className="grid gap-6 md:grid-cols-2">
+            <div>
+              <label
+                htmlFor="name"
+                className="block mb-2 text-sm font-medium text-white"
+              >
+                Nombre
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                defaultValue={userData.name}
+                required
+                className="w-full px-4 py-2 text-white bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="email"
+                className="block mb-2 text-sm font-medium text-white"
+              >
+                Correo Electrónico
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                defaultValue={userData.email}
+                required
+                className="w-full px-4 py-2 text-white bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="telefono"
+                className="block mb-2 text-sm font-medium text-white"
+              >
+                Teléfono
+              </label>
+              <input
+                type="tel"
+                id="telefono"
+                name="telefono"
+                defaultValue={userData.telefono || ""}
+                className="w-full px-4 py-2 text-white bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="company"
+                className="block mb-2 text-sm font-medium text-white"
+              >
+                Empresa
+              </label>
+              <input
+                type="text"
+                id="company"
+                name="company"
+                defaultValue={userData.company || ""}
+                className="w-full px-4 py-2 text-white bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              />
+            </div>
           </div>
-          <div className="mb-4">
-            <label htmlFor="email" className="block text-white">
-              Correo Electrónico
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              defaultValue={userData.email}
-              required
-              className="w-full px-4 py-2 mt-1 text-white bg-gray-700 border border-gray-600 rounded-lg"
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="telefono" className="block text-white">
-              Teléfono
-            </label>
-            <input
-              type="text"
-              id="telefono"
-              name="telefono"
-              defaultValue={userData.telefono || ""}
-              className="w-full px-4 py-2 mt-1 text-white bg-gray-700 border border-gray-600 rounded-lg"
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="company" className="block text-white">
-              Empresa
-            </label>
-            <input
-              type="text"
-              id="company"
-              name="company"
-              defaultValue={userData.company || ""}
-              className="w-full px-4 py-2 mt-1 text-white bg-gray-700 border border-gray-600 rounded-lg"
-            />
-          </div>
-          <div className="flex gap-4">
+
+          <div className="flex gap-4 pt-4">
             <button
               type="submit"
-              className="w-full px-4 py-2 text-white transition-all rounded bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700"
+              disabled={saving}
+              className="flex items-center justify-center w-full px-4 py-2 text-white transition-all rounded bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 disabled:opacity-50"
             >
-              Actualizar Usuario
+              {saving ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Actualizando...
+                </>
+              ) : (
+                "Actualizar Usuario"
+              )}
             </button>
           </div>
         </form>
