@@ -5,33 +5,7 @@ import { handleAsync } from "@/utils/error.helper";
 import { IUser } from "@/interfaces/User.interface";
 import { IPlan } from "@/interfaces/Plan.interface";
 import { ISubscripcion } from "@/interfaces/Subscripcion.interface";
-
-interface AdminContextProps {
-  // Funciones para usuarios
-  getUsers: () => Promise<IUser[]>;
-  getUsersSubscribed: () => Promise<IUser[]>;
-  getUsersSubscribedAt: (planId: number) => Promise<IUser[]>;
-  getUser: (userId: string) => Promise<IUser>;
-  putAdmin: (userId: string) => Promise<IUser>;
-
-  // Funciones para planes
-  getAllPlans: () => Promise<IPlan[]>;
-  createPlan: (plan: Omit<IPlan, "id">) => Promise<IPlan>;
-  updatePlan: (planId: number, plan: Partial<IPlan>) => Promise<IPlan>;
-  deletePlan: (planId: number) => Promise<void>;
-
-  // Funciones para suscripciones
-  getAllSubscriptions: () => Promise<ISubscripcion[]>;
-  getSubscriptionById: (subscriptionId: string) => Promise<ISubscripcion>;
-  updateSubscriptionStatus: (
-    subscriptionId: string,
-    status: ISubscripcion["status"]
-  ) => Promise<ISubscripcion>;
-  cancelSubscription: (
-    subscriptionId: string,
-    reason: string
-  ) => Promise<ISubscripcion>;
-}
+import { AdminContextProps } from "./DTO/AdminContextProps.interface";
 
 const defaultContext: AdminContextProps = {
   getUsers: async () => {
@@ -82,7 +56,6 @@ interface AdminProviderProps {
 }
 
 export const AdminProvider = ({ children }: AdminProviderProps) => {
-  // Funciones de Usuarios
   const getUsers = async (): Promise<IUser[]> => {
     const cached = localStorage.getItem("admin_users");
     if (cached) {
