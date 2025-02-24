@@ -20,6 +20,7 @@ import { updateUserDto } from './Dto/updateUser.dto';
 import { signIn } from './Dto/singIn.dto';
 import { signInGoogleDTO } from './Dto/singInGoogle.dto';
 import { signUp } from './Dto/singUp.dto';
+import { Subscripcion } from './Subscripcion.entity';
 
 @Controller('users')
 export class UserController {
@@ -85,7 +86,6 @@ export class UserController {
     }
   }
 
-
   @ApiBearerAuth()
   @Delete('/user')
   @UseGuards(AuthGuard)
@@ -141,6 +141,19 @@ export class UserController {
   ): Promise<{ user: User; token: string }> {
     try {
       return await this.userService.updateUser(updateUser);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  @Get('/sub/:userId')
+  @ApiOperation({
+    summary: 'Get sub by UserId',
+    description: 'obtiene el Id mediante el UserId',
+  })
+  async getSubByUserId(@Param('userId') userId: string): Promise<Subscripcion> {
+    try {
+      return await this.userService.getSubByUserId(userId);
     } catch (error) {
       throw ErrorHandler.handle(error);
     }

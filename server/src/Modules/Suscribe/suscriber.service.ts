@@ -57,7 +57,6 @@ export class SubscriptionsService {
   async createSubscription(createSubscriptionDto: CreateSubscriptionDto) {
     console.log(createSubscriptionDto);
 
-    // Validación de los datos de entrada
     if (!createSubscriptionDto.planId) {
       throw new HttpException(
         'ID del plan es requerido',
@@ -74,22 +73,16 @@ export class SubscriptionsService {
       );
     }
 
-    // Buscar el plan en la base de datos
     const plan = await this.planRepository.findOne({
       where: { id: createSubscriptionDto.planId },
     });
     if (!plan) {
       throw new HttpException('Plan no encontrado', HttpStatus.NOT_FOUND);
     }
-    console.log('plan', plan);
-
-    // Configuración de la preaprobación en Mercado Pago
     const preApproval = new PreApproval(this.client);
     const idempotencyKey = uuidv4();
-    console.log('preApproval', preApproval);
 
     try {
-      // Creación de la suscripción en Mercado Pago
       const response = await preApproval.create({
         body: {
           payer_email: createSubscriptionDto.userEmail,
@@ -109,13 +102,10 @@ export class SubscriptionsService {
           idempotencyKey: idempotencyKey,
         },
       });
-
       console.log('response', response);
-
       if (!response || !response.id) {
         throw new Error('No se recibió ID de suscripción de Mercado Pago');
       }
-
       const user = await this.userRepository.findOne({
         where: { email: createSubscriptionDto.userEmail },
         relations: ['subscripcion'],
@@ -130,6 +120,7 @@ export class SubscriptionsService {
         mercadopagoSubscriptionId: response.id,
         status: SubscriptionStatus.PENDING,
         user: user,
+        fechaVencimiento: response.payment_method_id,
       });
 
       const savedSubscription =

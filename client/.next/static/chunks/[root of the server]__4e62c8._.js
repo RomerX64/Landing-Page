@@ -871,7 +871,6 @@ const SuscribeProvider = ({ children })=>{
     const [sub, setSub] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const [planes, setPlanes] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const [viewPlan, setViewPlan] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
-    // Inicializar MercadoPago (se ejecuta solo una vez)
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "SuscribeProvider.useEffect": ()=>{
             (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mercadopago$2f$sdk$2d$react$2f$esm$2f$mercadoPago$2f$initMercadoPago$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__initMercadoPago$3e$__["initMercadoPago"])("APP_USR-a88f991b-d04b-490f-b447-502303d60b9e");
@@ -982,7 +981,6 @@ const SuscribeProvider = ({ children })=>{
         planes,
         viewPlan
     ]);
-    // Cargar la subscripción y los planes al montar o cuando cambie el usuario
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "SuscribeProvider.useEffect": ()=>{
             const storedSub = localStorage.getItem("subscripcion");
@@ -995,7 +993,6 @@ const SuscribeProvider = ({ children })=>{
         user,
         getPlanes
     ]);
-    // Seleccionar el plan de vista si aún no está seleccionado
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "SuscribeProvider.useEffect": ()=>{
             if (planes.length > 0 && !viewPlan) {
@@ -1039,7 +1036,7 @@ const SuscribeProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/context/Suscribe.context.tsx",
-        lineNumber: 210,
+        lineNumber: 207,
         columnNumber: 5
     }, this);
 };

@@ -64,7 +64,7 @@ const UsuariosTab: React.FC<{
   };
 
   const redirectToEdit = (userId: string) => {
-    router.push(`/administracion/${userId}`);
+    router.push(`/user/${userId}`);
   };
 
   return (

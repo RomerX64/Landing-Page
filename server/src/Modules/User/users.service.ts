@@ -207,4 +207,17 @@ export class UserService {
       throw ErrorHandler.handle(error);
     }
   }
+
+  async getSubByUserId(userId: string): Promise<Subscripcion> {
+    try {
+      const user: User = await this.getUserById(userId);
+      const sub: Subscripcion = await this.subsRepository.findOne({
+        where: { id: user.id },
+      });
+      if (!sub) throw new NotFoundException('Sub not found');
+      return sub;
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
 }

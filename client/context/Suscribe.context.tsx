@@ -52,7 +52,6 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
   const [planes, setPlanes] = useState<IPlan[]>([]);
   const [viewPlan, setViewPlan] = useState<IPlan | null>(null);
 
-  // Inicializar MercadoPago (se ejecuta solo una vez)
   useEffect(() => {
     initMercadoPago("APP_USR-a88f991b-d04b-490f-b447-502303d60b9e");
   }, []);
@@ -170,7 +169,6 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
     [planes, viewPlan]
   );
 
-  // Cargar la subscripción y los planes al montar o cuando cambie el usuario
   useEffect(() => {
     const storedSub = localStorage.getItem("subscripcion");
     if (storedSub) {
@@ -179,7 +177,6 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
     getPlanes();
   }, [user, getPlanes]);
 
-  // Seleccionar el plan de vista si aún no está seleccionado
   useEffect(() => {
     if (planes.length > 0 && !viewPlan) {
       const storedViewPlan = localStorage.getItem("viewPlan");
