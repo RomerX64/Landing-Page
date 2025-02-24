@@ -59,7 +59,6 @@ const SuscriberProfile: React.FC = () => {
             </p>
           </div>
 
-          {/* Fechas y detalles */}
           <div className="p-4">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <div>
@@ -84,7 +83,6 @@ const SuscriberProfile: React.FC = () => {
               </div>
             </div>
 
-            {/* Botón de editar */}
             <div className="flex justify-end my-4">
               <Link href="/planes">
                 <button className="transition-transform transform text-indigo-200/65 hover:scale-110">

@@ -69,7 +69,6 @@ const UsuariosTab: React.FC<{
 
   return (
     <div>
-      {/* Filtros */}
       <div className="flex flex-col gap-4 mb-6 md:flex-row">
         <input
           type="text"

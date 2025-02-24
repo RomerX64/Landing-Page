@@ -33,7 +33,6 @@ const PlanesTab: React.FC<{
 
   return (
     <div>
-      <h2 className="mb-4 text-2xl font-bold text-white">Planes</h2>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {allPlans.length > 0 ? (
           allPlans.map((plan) => (

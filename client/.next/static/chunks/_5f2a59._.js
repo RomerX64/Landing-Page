@@ -12,6 +12,7 @@ var SubscriptionStatus = /*#__PURE__*/ function(SubscriptionStatus) {
     SubscriptionStatus["ACTIVE"] = "active";
     SubscriptionStatus["PAUSED"] = "paused";
     SubscriptionStatus["CANCELLED"] = "cancelled";
+    SubscriptionStatus["PENDING"] = "pending";
     return SubscriptionStatus;
 }({});
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
@@ -167,19 +168,19 @@ const SuscriberProfile = ()=>{
                                                 children: "Subscrito: "
                                             }, void 0, false, {
                                                 fileName: "[project]/components/suscriberProfile.tsx",
-                                                lineNumber: 67,
+                                                lineNumber: 66,
                                                 columnNumber: 19
                                             }, this),
                                             fechaInicio ? fechaInicio.toLocaleDateString() : ""
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/suscriberProfile.tsx",
-                                        lineNumber: 66,
+                                        lineNumber: 65,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/suscriberProfile.tsx",
-                                    lineNumber: 65,
+                                    lineNumber: 64,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -190,19 +191,19 @@ const SuscriberProfile = ()=>{
                                                 children: "Ultima paga: "
                                             }, void 0, false, {
                                                 fileName: "[project]/components/suscriberProfile.tsx",
-                                                lineNumber: 73,
+                                                lineNumber: 72,
                                                 columnNumber: 19
                                             }, this),
                                             fechaUltimaPaga ? fechaUltimaPaga.toLocaleDateString() : ""
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/suscriberProfile.tsx",
-                                        lineNumber: 72,
+                                        lineNumber: 71,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/suscriberProfile.tsx",
-                                    lineNumber: 71,
+                                    lineNumber: 70,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -213,25 +214,25 @@ const SuscriberProfile = ()=>{
                                                 children: "Vencimiento: "
                                             }, void 0, false, {
                                                 fileName: "[project]/components/suscriberProfile.tsx",
-                                                lineNumber: 79,
+                                                lineNumber: 78,
                                                 columnNumber: 19
                                             }, this),
                                             fechaVencimiento ? fechaVencimiento.toLocaleDateString() : ""
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/suscriberProfile.tsx",
-                                        lineNumber: 78,
+                                        lineNumber: 77,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/suscriberProfile.tsx",
-                                    lineNumber: 77,
+                                    lineNumber: 76,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/suscriberProfile.tsx",
-                            lineNumber: 64,
+                            lineNumber: 63,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -244,28 +245,28 @@ const SuscriberProfile = ()=>{
                                         size: 35
                                     }, void 0, false, {
                                         fileName: "[project]/components/suscriberProfile.tsx",
-                                        lineNumber: 91,
+                                        lineNumber: 89,
                                         columnNumber: 19
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/suscriberProfile.tsx",
-                                    lineNumber: 90,
+                                    lineNumber: 88,
                                     columnNumber: 17
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/suscriberProfile.tsx",
-                                lineNumber: 89,
+                                lineNumber: 87,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/suscriberProfile.tsx",
-                            lineNumber: 88,
+                            lineNumber: 86,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/suscriberProfile.tsx",
-                    lineNumber: 63,
+                    lineNumber: 62,
                     columnNumber: 11
                 }, this)
             ]

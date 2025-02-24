@@ -19,4 +19,5 @@ export enum SubscriptionStatus {
   ACTIVE = "active",
   PAUSED = "paused",
   CANCELLED = "cancelled",
+  PENDING = "pending",
 }

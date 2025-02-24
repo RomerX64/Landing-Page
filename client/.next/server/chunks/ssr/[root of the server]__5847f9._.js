@@ -890,7 +890,10 @@ const defaultContext = {
     suscribirse: async ()=>{},
     desuscribirse: async ()=>{},
     selectPlan: async ()=>null,
-    changePlan: ()=>{}
+    changePlan: ()=>{},
+    refreshSubscription: async ()=>{},
+    refreshPlanes: async ()=>{},
+    loading: true
 };
 const SuscribeContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["createContext"])(defaultContext);
 const SuscribeProvider = ({ children })=>{
@@ -898,33 +901,120 @@ const SuscribeProvider = ({ children })=>{
     const [sub, setSub] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
     const [planes, setPlanes] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
     const [viewPlan, setViewPlan] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [lastPlanesUpdate, setLastPlanesUpdate] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(0);
+    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(true);
+    const [initialized, setInitialized] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mercadopago$2f$sdk$2d$react$2f$esm$2f$mercadoPago$2f$initMercadoPago$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__initMercadoPago$3e$__["initMercadoPago"])("APP_USR-a88f991b-d04b-490f-b447-502303d60b9e");
     }, []);
-    // Función para obtener planes (uso de useCallback para memorizarla)
-    const getPlanes = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async ()=>{
+    const fetchSubscription = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async (forceRefresh = false)=>{
+        if (!user?.id) return null;
         try {
+            // Comprobar si hay datos en localStorage primero
+            const storedSub = localStorage.getItem("subscripcion");
+            const storedSubTimestamp = localStorage.getItem("subscripcionTimestamp");
+            const now = Date.now();
+            const CACHE_DURATION = 1800000; // 30 minutos
+            // Usar caché sólo si no se fuerza actualización, existe, y no ha caducado
+            if (!forceRefresh && storedSub && storedSubTimestamp && now - parseInt(storedSubTimestamp) < CACHE_DURATION) {
+                const parsed = JSON.parse(storedSub);
+                setSub(parsed);
+                console.log("Suscripción cargada desde LocalStorage");
+                return parsed;
+            }
+            // Si no hay caché o ha caducado, obtener de la API
+            const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get(`/users/sub/${user.id}`));
+            if (error || !data?.data) {
+                console.error("Error al obtener la suscripción:", error || "No se retornaron datos");
+                // Si hay error pero tenemos datos en caché, usarlos como fallback
+                if (storedSub) {
+                    const parsed = JSON.parse(storedSub);
+                    setSub(parsed);
+                    return parsed;
+                }
+                return null;
+            }
+            const subscription = data.data;
+            setSub(subscription);
+            localStorage.setItem("subscripcion", JSON.stringify(subscription));
+            localStorage.setItem("subscripcionTimestamp", now.toString());
+            return subscription;
+        } catch (err) {
+            console.error("Error al obtener la suscripción:", err);
+            // Intentar recuperar del localStorage en caso de error
+            const storedSub = localStorage.getItem("subscripcion");
+            if (storedSub) {
+                try {
+                    const parsed = JSON.parse(storedSub);
+                    setSub(parsed);
+                    return parsed;
+                } catch (parseErr) {
+                    console.error("Error al parsear la suscripción almacenada:", parseErr);
+                }
+            }
+            return null;
+        }
+    }, [
+        user?.id
+    ]);
+    const refreshSubscription = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async ()=>{
+        await fetchSubscription(true);
+    }, [
+        fetchSubscription
+    ]);
+    const fetchPlanes = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async (forceRefresh = false)=>{
+        try {
+            const now = Date.now();
+            const CACHE_DURATION = 86400000; // 24 horas para los planes (cambian con menos frecuencia)
             const storedPlanes = localStorage.getItem("planes");
-            if (storedPlanes) {
+            const storedTimestamp = localStorage.getItem("planesTimestamp");
+            if (!forceRefresh && storedPlanes && storedTimestamp && now - parseInt(storedTimestamp) < CACHE_DURATION) {
                 const parsed = JSON.parse(storedPlanes);
                 setPlanes(parsed);
+                setLastPlanesUpdate(parseInt(storedTimestamp));
                 console.log("Planes cargados desde LocalStorage");
-                return;
+                return parsed;
             }
             const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get(`/users/planes`));
             if (error || !data?.data) {
                 console.error("Error al obtener planes:", error || "No se retornaron datos");
-                return;
+                if (storedPlanes) {
+                    const parsed = JSON.parse(storedPlanes);
+                    setPlanes(parsed);
+                    return parsed;
+                }
+                return [];
             }
             const fetchedPlanes = data.data;
             setPlanes(fetchedPlanes);
             localStorage.setItem("planes", JSON.stringify(fetchedPlanes));
+            localStorage.setItem("planesTimestamp", now.toString());
+            setLastPlanesUpdate(now);
+            return fetchedPlanes;
         } catch (err) {
-            console.error("Error en getPlanes:", err);
+            console.error("Error en fetchPlanes:", err);
+            // Intentar recuperar del localStorage en caso de error
+            const storedPlanes = localStorage.getItem("planes");
+            if (storedPlanes) {
+                try {
+                    const parsed = JSON.parse(storedPlanes);
+                    setPlanes(parsed);
+                    return parsed;
+                } catch (parseErr) {
+                    console.error("Error al parsear los planes almacenados:", parseErr);
+                }
+            }
+            return [];
         }
     }, []);
+    const refreshPlanes = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async ()=>{
+        await fetchPlanes(true);
+    }, [
+        fetchPlanes
+    ]);
     const suscribirse = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async (planId, paymentMethodToken, email)=>{
         try {
+            setLoading(true);
             const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post(`/subscriptions`, {
                 planId,
                 userEmail: email,
@@ -934,18 +1024,19 @@ const SuscribeProvider = ({ children })=>{
                 console.error("Error al suscribirse:", error || "No se retornaron datos");
                 return;
             }
-            const newSubscription = data.data.subscription;
-            setSub(newSubscription);
-            localStorage.setItem("subscripcion", JSON.stringify(newSubscription));
+            await refreshSubscription();
         } catch (err) {
             console.error("Excepción en suscribirse:", err);
+        } finally{
+            setLoading(false);
         }
     }, [
-        user
+        refreshSubscription
     ]);
     const desuscribirse = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async ()=>{
         if (!sub) return;
         try {
+            setLoading(true);
             const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post(`/subscriptions/cancel`, {
                 subscriptionId: sub.mercadopagoSubscriptionId,
                 cancellationReason: "Cancelación solicitada por el usuario"
@@ -954,19 +1045,22 @@ const SuscribeProvider = ({ children })=>{
                 console.error("Error al desuscribirse:", error || "No se retornaron datos");
                 return;
             }
-            setSub(null);
-            localStorage.removeItem("subscripcion");
+            await refreshSubscription();
         } catch (err) {
             console.error("Excepción en desuscribirse:", err);
+        } finally{
+            setLoading(false);
         }
     }, [
-        sub
+        sub,
+        refreshSubscription
     ]);
     const selectPlan = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async (planId)=>{
-        if (planes.length === 0) {
-            await getPlanes();
+        let availablePlanes = planes;
+        if (availablePlanes.length === 0) {
+            availablePlanes = await fetchPlanes();
         }
-        const foundPlan = planes.find((plan)=>plan.id === planId);
+        const foundPlan = availablePlanes.find((plan)=>plan.id === planId);
         if (!foundPlan) {
             console.error("Plan no encontrado");
             return null;
@@ -976,7 +1070,7 @@ const SuscribeProvider = ({ children })=>{
         return foundPlan;
     }, [
         planes,
-        getPlanes
+        fetchPlanes
     ]);
     const changePlan = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])((direction)=>{
         if (!viewPlan || planes.length === 0) return;
@@ -992,21 +1086,100 @@ const SuscribeProvider = ({ children })=>{
         planes,
         viewPlan
     ]);
+    // Carga inicial de datos
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        const storedSub = localStorage.getItem("subscripcion");
-        if (storedSub) {
-            setSub(JSON.parse(storedSub));
-        }
-        getPlanes();
+        const initializeData = async ()=>{
+            if (initialized) return;
+            setLoading(true);
+            try {
+                // Primero intentamos cargar del localStorage para mostrar algo rápido
+                const storedPlanes = localStorage.getItem("planes");
+                const storedSub = localStorage.getItem("subscripcion");
+                let planesLoaded = false;
+                let subLoaded = false;
+                if (storedPlanes) {
+                    try {
+                        const parsed = JSON.parse(storedPlanes);
+                        setPlanes(parsed);
+                        planesLoaded = true;
+                    } catch (err) {
+                        console.error("Error al parsear planes almacenados:", err);
+                    }
+                }
+                if (storedSub) {
+                    try {
+                        const parsed = JSON.parse(storedSub);
+                        setSub(parsed);
+                        subLoaded = true;
+                    } catch (err) {
+                        console.error("Error al parsear suscripción almacenada:", err);
+                    }
+                }
+                // Luego, si el usuario está autenticado, actualizamos desde la API
+                if (user?.id) {
+                    // Utilizamos Promise.all para hacer las peticiones en paralelo
+                    await Promise.all([
+                        !planesLoaded ? fetchPlanes() : Promise.resolve(),
+                        !subLoaded ? fetchSubscription() : Promise.resolve()
+                    ]);
+                } else if (!planesLoaded) {
+                    // Si no hay usuario pero necesitamos los planes
+                    await fetchPlanes();
+                }
+                setInitialized(true);
+            } catch (err) {
+                console.error("Error al inicializar datos:", err);
+            } finally{
+                setLoading(false);
+            }
+        };
+        initializeData();
     }, [
-        user,
-        getPlanes
+        user?.id,
+        fetchPlanes,
+        fetchSubscription,
+        initialized
     ]);
+    // Efecto para actualizar cuando cambia el usuario
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        if (!initialized) return;
+        if (user?.id) {
+            const updateUserData = async ()=>{
+                setLoading(true);
+                try {
+                    await fetchSubscription();
+                } finally{
+                    setLoading(false);
+                }
+            };
+            updateUserData();
+        } else {
+            setSub(null);
+        }
+    }, [
+        user?.id,
+        fetchSubscription,
+        initialized
+    ]);
+    // Configurar el plan visible tras cargar los planes
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         if (planes.length > 0 && !viewPlan) {
             const storedViewPlan = localStorage.getItem("viewPlan");
             if (storedViewPlan) {
-                setViewPlan(JSON.parse(storedViewPlan));
+                try {
+                    const parsedPlan = JSON.parse(storedViewPlan);
+                    const planExists = planes.some((plan)=>plan.id === parsedPlan.id);
+                    if (planExists) {
+                        setViewPlan(parsedPlan);
+                    } else {
+                        const popularPlan = planes.find((plan)=>plan.popular === true);
+                        setViewPlan(popularPlan || planes[0]);
+                    }
+                } catch (err) {
+                    console.error("Error al parsear el plan almacenado:", err);
+                    const popularPlan = planes.find((plan)=>plan.popular === true);
+                    setViewPlan(popularPlan || planes[0]);
+                }
             } else {
                 const popularPlan = planes.find((plan)=>plan.popular === true);
                 setViewPlan(popularPlan || planes[0]);
@@ -1016,7 +1189,6 @@ const SuscribeProvider = ({ children })=>{
         planes,
         viewPlan
     ]);
-    // Memorizar el valor del contexto para evitar renders innecesarios
     const value = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>({
             sub,
             planes,
@@ -1024,7 +1196,10 @@ const SuscribeProvider = ({ children })=>{
             suscribirse,
             desuscribirse,
             selectPlan,
-            changePlan
+            changePlan,
+            refreshSubscription,
+            refreshPlanes,
+            loading
         }), [
         sub,
         planes,
@@ -1032,14 +1207,17 @@ const SuscribeProvider = ({ children })=>{
         suscribirse,
         desuscribirse,
         selectPlan,
-        changePlan
+        changePlan,
+        refreshSubscription,
+        refreshPlanes,
+        loading
     ]);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(SuscribeContext.Provider, {
         value: value,
         children: children
     }, void 0, false, {
         fileName: "[project]/context/Suscribe.context.tsx",
-        lineNumber: 207,
+        lineNumber: 447,
         columnNumber: 5
     }, this);
 };

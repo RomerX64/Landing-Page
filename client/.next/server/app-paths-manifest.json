@@ -7,5 +7,7 @@
   "/(default)/administracion/[slug]/page": "app/(default)/administracion/[slug]/page.js",
   "/(default)/administracion/user/[slug]/page": "app/(default)/administracion/user/[slug]/page.js",
   "/(default)/administracion/user/slug/page": "app/(default)/administracion/user/slug/page.js",
-  "/(default)/user/[slug]/page": "app/(default)/user/[slug]/page.js"
+  "/(default)/user/[slug]/page": "app/(default)/user/[slug]/page.js",
+  "/(auth)/signin/page": "app/(auth)/signin/page.js",
+  "/(auth)/signup/page": "app/(auth)/signup/page.js"
 }

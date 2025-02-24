@@ -212,7 +212,7 @@ export class UserService {
     try {
       const user: User = await this.getUserById(userId);
       const sub: Subscripcion = await this.subsRepository.findOne({
-        where: { id: user.id },
+        where: { id: user.subscripcion?.id },
       });
       if (!sub) throw new NotFoundException('Sub not found');
       return sub;

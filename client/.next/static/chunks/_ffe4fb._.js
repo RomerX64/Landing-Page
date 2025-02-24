@@ -47,14 +47,6 @@ const PlanesTab = ({ getAllPlans, deletePlan })=>{
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                className: "mb-4 text-2xl font-bold text-white",
-                children: "Planes"
-            }, void 0, false, {
-                fileName: "[project]/components/plan.tab.tsx",
-                lineNumber: 36,
-                columnNumber: 7
-            }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3",
                 children: allPlans.length > 0 ? allPlans.map((plan)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -65,7 +57,7 @@ const PlanesTab = ({ getAllPlans, deletePlan })=>{
                                 children: plan.name
                             }, void 0, false, {
                                 fileName: "[project]/components/plan.tab.tsx",
-                                lineNumber: 41,
+                                lineNumber: 40,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -73,7 +65,7 @@ const PlanesTab = ({ getAllPlans, deletePlan })=>{
                                 children: plan.descripcion
                             }, void 0, false, {
                                 fileName: "[project]/components/plan.tab.tsx",
-                                lineNumber: 42,
+                                lineNumber: 41,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -84,7 +76,7 @@ const PlanesTab = ({ getAllPlans, deletePlan })=>{
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/plan.tab.tsx",
-                                lineNumber: 43,
+                                lineNumber: 42,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -96,7 +88,7 @@ const PlanesTab = ({ getAllPlans, deletePlan })=>{
                                         children: "Editar"
                                     }, void 0, false, {
                                         fileName: "[project]/components/plan.tab.tsx",
-                                        lineNumber: 45,
+                                        lineNumber: 44,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -105,31 +97,31 @@ const PlanesTab = ({ getAllPlans, deletePlan })=>{
                                         children: "Eliminar"
                                     }, void 0, false, {
                                         fileName: "[project]/components/plan.tab.tsx",
-                                        lineNumber: 51,
+                                        lineNumber: 50,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/plan.tab.tsx",
-                                lineNumber: 44,
+                                lineNumber: 43,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, plan.id, true, {
                         fileName: "[project]/components/plan.tab.tsx",
-                        lineNumber: 40,
+                        lineNumber: 39,
                         columnNumber: 13
                     }, this)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "text-center text-gray-300 col-span-full",
                     children: "No se encontraron planes."
                 }, void 0, false, {
                     fileName: "[project]/components/plan.tab.tsx",
-                    lineNumber: 61,
+                    lineNumber: 60,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/plan.tab.tsx",
-                lineNumber: 37,
+                lineNumber: 36,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -138,7 +130,7 @@ const PlanesTab = ({ getAllPlans, deletePlan })=>{
                 children: "Agregar Nuevo Plan"
             }, void 0, false, {
                 fileName: "[project]/components/plan.tab.tsx",
-                lineNumber: 66,
+                lineNumber: 65,
                 columnNumber: 7
             }, this)
         ]
@@ -173,6 +165,7 @@ var SubscriptionStatus = /*#__PURE__*/ function(SubscriptionStatus) {
     SubscriptionStatus["ACTIVE"] = "active";
     SubscriptionStatus["PAUSED"] = "paused";
     SubscriptionStatus["CANCELLED"] = "cancelled";
+    SubscriptionStatus["PENDING"] = "pending";
     return SubscriptionStatus;
 }({});
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
@@ -198,28 +191,33 @@ var _s = __turbopack_refresh__.signature();
 const SuscripcionesTab = ({ getAllSubscriptions, updateSubscriptionStatus, cancelSubscription })=>{
     _s();
     const [allSubscriptions, setAllSubscriptions] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    const [searchTerm, setSearchTerm] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
+    const [selectedStatus, setSelectedStatus] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
+    const fetchSubscriptions = async ()=>{
+        try {
+            setLoading(true);
+            const subs = await getAllSubscriptions();
+            const formattedSubs = subs.map((subscription)=>({
+                    ...subscription,
+                    // Verificamos si subscription.user existe; si no, asignamos valores por defecto.
+                    user: subscription.user ? {
+                        id: subscription.user.id,
+                        email: subscription.user.email
+                    } : {
+                        id: "N/A",
+                        email: "N/A"
+                    }
+                }));
+            setAllSubscriptions(formattedSubs);
+        } catch (error) {
+            console.error("Error fetching subscriptions:", error);
+        } finally{
+            setLoading(false);
+        }
+    };
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "SuscripcionesTab.useEffect": ()=>{
-            const fetchSubscriptions = {
-                "SuscripcionesTab.useEffect.fetchSubscriptions": async ()=>{
-                    try {
-                        const subs = await getAllSubscriptions();
-                        const formattedSubs = subs.map({
-                            "SuscripcionesTab.useEffect.fetchSubscriptions.formattedSubs": (subscription)=>({
-                                    ...subscription,
-                                    user: {
-                                        id: subscription.id,
-                                        name: "Usuario",
-                                        email: "email@example.com"
-                                    }
-                                })
-                        }["SuscripcionesTab.useEffect.fetchSubscriptions.formattedSubs"]);
-                        setAllSubscriptions(formattedSubs);
-                    } catch (error) {
-                        console.error("Error fetching subscriptions:", error);
-                    }
-                }
-            }["SuscripcionesTab.useEffect.fetchSubscriptions"];
             fetchSubscriptions();
         }
     }["SuscripcionesTab.useEffect"], [
@@ -228,35 +226,62 @@ const SuscripcionesTab = ({ getAllSubscriptions, updateSubscriptionStatus, cance
     const handlePause = async (id)=>{
         try {
             await updateSubscriptionStatus(id, __TURBOPACK__imported__module__$5b$project$5d2f$interfaces$2f$Subscripcion$2e$interface$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SubscriptionStatus"].PAUSED);
-            const subs = await getAllSubscriptions();
-            const formattedSubs = subs.map((subscription)=>({
-                    ...subscription,
-                    user: {
-                        id: subscription.id,
-                        name: "Usuario",
-                        email: "email@example.com"
-                    }
-                }));
-            setAllSubscriptions(formattedSubs);
+            fetchSubscriptions();
         } catch (error) {
             console.error("Error al actualizar la suscripción:", error);
+        }
+    };
+    const handleActivate = async (id)=>{
+        try {
+            await updateSubscriptionStatus(id, __TURBOPACK__imported__module__$5b$project$5d2f$interfaces$2f$Subscripcion$2e$interface$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SubscriptionStatus"].ACTIVE);
+            fetchSubscriptions();
+        } catch (error) {
+            console.error("Error al activar la suscripción:", error);
         }
     };
     const handleCancel = async (id)=>{
         try {
             await cancelSubscription(id, "Cancelado por admin");
-            const subs = await getAllSubscriptions();
-            const formattedSubs = subs.map((subscription)=>({
-                    ...subscription,
-                    user: {
-                        id: subscription.id,
-                        name: "Usuario",
-                        email: "email@example.com"
-                    }
-                }));
-            setAllSubscriptions(formattedSubs);
+            fetchSubscriptions();
         } catch (error) {
             console.error("Error al cancelar la suscripción:", error);
+        }
+    };
+    // Función para obtener un color basado en el estado
+    const getStatusColor = (status)=>{
+        switch(status){
+            case __TURBOPACK__imported__module__$5b$project$5d2f$interfaces$2f$Subscripcion$2e$interface$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SubscriptionStatus"].ACTIVE:
+                return "bg-green-600";
+            case __TURBOPACK__imported__module__$5b$project$5d2f$interfaces$2f$Subscripcion$2e$interface$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SubscriptionStatus"].PAUSED:
+                return "bg-blue-600";
+            case __TURBOPACK__imported__module__$5b$project$5d2f$interfaces$2f$Subscripcion$2e$interface$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SubscriptionStatus"].CANCELLED:
+                return "bg-red-600";
+            case __TURBOPACK__imported__module__$5b$project$5d2f$interfaces$2f$Subscripcion$2e$interface$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SubscriptionStatus"].PENDING:
+                return "bg-yellow-600";
+            default:
+                return "bg-gray-600";
+        }
+    };
+    // Función para formatear fecha
+    const formatDate = (date)=>{
+        if (!date) return "N/A";
+        return new Date(date).toLocaleDateString();
+    };
+    // Filtrar suscripciones
+    const filteredSubscriptions = allSubscriptions.filter((sub)=>{
+        const matchesSearch = sub.id.toLowerCase().includes(searchTerm.toLowerCase()) || sub.user.email.toLowerCase().includes(searchTerm.toLowerCase()) || sub.plan.name.toLowerCase().includes(searchTerm.toLowerCase()) || sub.mercadopagoSubscriptionId && sub.mercadopagoSubscriptionId.toLowerCase().includes(searchTerm.toLowerCase());
+        let matchesStatus = true;
+        if (selectedStatus !== null) {
+            matchesStatus = sub.status === selectedStatus;
+        }
+        return matchesSearch && matchesStatus;
+    });
+    // Función para alternar estado seleccionado
+    const toggleStatusSelection = (status)=>{
+        if (selectedStatus === status) {
+            setSelectedStatus(null);
+        } else {
+            setSelectedStatus(status);
         }
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -266,113 +291,327 @@ const SuscripcionesTab = ({ getAllSubscriptions, updateSubscriptionStatus, cance
                 children: "Suscripciones"
             }, void 0, false, {
                 fileName: "[project]/components/sub.tab.tsx",
-                lineNumber: 80,
+                lineNumber: 131,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "grid grid-cols-1 gap-4",
-                children: allSubscriptions.length > 0 ? allSubscriptions.map((sub)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "p-4 bg-gray-700 rounded-lg shadow",
+                className: "flex flex-col gap-4 mb-6 md:flex-row",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                        type: "text",
+                        placeholder: "Buscar por ID, email o plan...",
+                        value: searchTerm,
+                        onChange: (e)=>setSearchTerm(e.target.value),
+                        className: "flex-1 px-4 py-2 text-white bg-gray-700 rounded-lg"
+                    }, void 0, false, {
+                        fileName: "[project]/components/sub.tab.tsx",
+                        lineNumber: 135,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex flex-wrap gap-4",
+                        children: Object.values(__TURBOPACK__imported__module__$5b$project$5d2f$interfaces$2f$Subscripcion$2e$interface$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SubscriptionStatus"]).map((status)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                onClick: ()=>toggleStatusSelection(status),
+                                className: `w-32 px-4 py-2 rounded-lg text-white transition-colors ${selectedStatus === status ? getStatusColor(status) : "bg-gray-700"}`,
+                                children: status
+                            }, status, false, {
+                                fileName: "[project]/components/sub.tab.tsx",
+                                lineNumber: 144,
+                                columnNumber: 13
+                            }, this))
+                    }, void 0, false, {
+                        fileName: "[project]/components/sub.tab.tsx",
+                        lineNumber: 142,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/components/sub.tab.tsx",
+                lineNumber: 134,
+                columnNumber: 7
+            }, this),
+            loading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "flex items-center justify-center h-32",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "w-8 h-8 border-4 rounded-full border-t-indigo-600 animate-spin"
+                }, void 0, false, {
+                    fileName: "[project]/components/sub.tab.tsx",
+                    lineNumber: 161,
+                    columnNumber: 11
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/components/sub.tab.tsx",
+                lineNumber: 160,
+                columnNumber: 9
+            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3",
+                children: filteredSubscriptions.length > 0 ? filteredSubscriptions.map((sub)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "p-2 bg-gray-700 rounded-lg shadow",
                         children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "text-lg font-bold text-white",
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex items-center justify-between mb-1",
                                 children: [
-                                    "ID: ",
-                                    sub.id
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-xs font-bold text-white truncate",
+                                        children: [
+                                            "ID: ",
+                                            sub.id
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/components/sub.tab.tsx",
+                                        lineNumber: 169,
+                                        columnNumber: 19
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                        className: `px-2 py-1 text-xs font-bold text-white rounded-full ${getStatusColor(sub.status)}`,
+                                        children: sub.status
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/sub.tab.tsx",
+                                        lineNumber: 172,
+                                        columnNumber: 19
+                                    }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/sub.tab.tsx",
-                                lineNumber: 85,
-                                columnNumber: 15
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "text-gray-300",
-                                children: [
-                                    "Usuario: ",
-                                    sub.user.email,
-                                    " - ",
-                                    sub.user.name
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/components/sub.tab.tsx",
-                                lineNumber: 86,
-                                columnNumber: 15
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "text-gray-300",
-                                children: [
-                                    "Plan: ",
-                                    sub.plan.name
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/components/sub.tab.tsx",
-                                lineNumber: 89,
-                                columnNumber: 15
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "text-gray-300",
-                                children: [
-                                    "Estado: ",
-                                    sub.status
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/components/sub.tab.tsx",
-                                lineNumber: 90,
-                                columnNumber: 15
+                                lineNumber: 168,
+                                columnNumber: 17
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "flex gap-2 mt-2",
+                                className: "space-y-1",
                                 children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-xs text-gray-400",
+                                        children: [
+                                            "UserId",
+                                            sub.user.id
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/components/sub.tab.tsx",
+                                        lineNumber: 181,
+                                        columnNumber: 19
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-xs text-gray-400",
+                                        children: [
+                                            "Email: ",
+                                            sub.user.email
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/components/sub.tab.tsx",
+                                        lineNumber: 182,
+                                        columnNumber: 19
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-xs text-gray-400",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                className: "font-medium",
+                                                children: "Plan:"
+                                            }, void 0, false, {
+                                                fileName: "[project]/components/sub.tab.tsx",
+                                                lineNumber: 186,
+                                                columnNumber: 21
+                                            }, this),
+                                            " ",
+                                            sub.plan.name
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/components/sub.tab.tsx",
+                                        lineNumber: 185,
+                                        columnNumber: 19
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-xs text-gray-400",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                className: "font-medium",
+                                                children: "Inicio:"
+                                            }, void 0, false, {
+                                                fileName: "[project]/components/sub.tab.tsx",
+                                                lineNumber: 189,
+                                                columnNumber: 21
+                                            }, this),
+                                            " ",
+                                            formatDate(sub.fechaInicio)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/components/sub.tab.tsx",
+                                        lineNumber: 188,
+                                        columnNumber: 19
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-xs text-gray-400",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                className: "font-medium",
+                                                children: "Último pago:"
+                                            }, void 0, false, {
+                                                fileName: "[project]/components/sub.tab.tsx",
+                                                lineNumber: 193,
+                                                columnNumber: 21
+                                            }, this),
+                                            " ",
+                                            formatDate(sub.fechaUltimaPaga)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/components/sub.tab.tsx",
+                                        lineNumber: 192,
+                                        columnNumber: 19
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-xs text-gray-400",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                className: "font-medium",
+                                                children: "Vencimiento:"
+                                            }, void 0, false, {
+                                                fileName: "[project]/components/sub.tab.tsx",
+                                                lineNumber: 197,
+                                                columnNumber: 21
+                                            }, this),
+                                            " ",
+                                            formatDate(sub.fechaVencimiento)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/components/sub.tab.tsx",
+                                        lineNumber: 196,
+                                        columnNumber: 19
+                                    }, this),
+                                    sub.mercadopagoSubscriptionId && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-xs text-gray-400",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                className: "font-medium",
+                                                children: "MP ID:"
+                                            }, void 0, false, {
+                                                fileName: "[project]/components/sub.tab.tsx",
+                                                lineNumber: 202,
+                                                columnNumber: 23
+                                            }, this),
+                                            " ",
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                className: "text-xs text-gray-400 truncate",
+                                                children: sub.mercadopagoSubscriptionId
+                                            }, void 0, false, {
+                                                fileName: "[project]/components/sub.tab.tsx",
+                                                lineNumber: 203,
+                                                columnNumber: 23
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/components/sub.tab.tsx",
+                                        lineNumber: 201,
+                                        columnNumber: 21
+                                    }, this),
+                                    sub.cancellationDate && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-xs text-gray-400",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                className: "font-medium",
+                                                children: "Cancelada:"
+                                            }, void 0, false, {
+                                                fileName: "[project]/components/sub.tab.tsx",
+                                                lineNumber: 210,
+                                                columnNumber: 23
+                                            }, this),
+                                            " ",
+                                            formatDate(sub.cancellationDate)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/components/sub.tab.tsx",
+                                        lineNumber: 209,
+                                        columnNumber: 21
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/components/sub.tab.tsx",
+                                lineNumber: 180,
+                                columnNumber: 17
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex flex-wrap gap-2 mt-3",
+                                children: [
+                                    sub.status === __TURBOPACK__imported__module__$5b$project$5d2f$interfaces$2f$Subscripcion$2e$interface$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SubscriptionStatus"].ACTIVE && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                         onClick: ()=>handlePause(sub.id),
                                         className: "px-3 py-1 text-sm text-white bg-yellow-600 rounded hover:bg-yellow-700",
                                         children: "Pausar"
                                     }, void 0, false, {
                                         fileName: "[project]/components/sub.tab.tsx",
-                                        lineNumber: 92,
-                                        columnNumber: 17
+                                        lineNumber: 217,
+                                        columnNumber: 21
                                     }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                    sub.status === __TURBOPACK__imported__module__$5b$project$5d2f$interfaces$2f$Subscripcion$2e$interface$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SubscriptionStatus"].PAUSED && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                        onClick: ()=>handleActivate(sub.id),
+                                        className: "px-3 py-1 text-sm text-white bg-green-600 rounded hover:bg-green-700",
+                                        children: "Activar"
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/sub.tab.tsx",
+                                        lineNumber: 225,
+                                        columnNumber: 21
+                                    }, this),
+                                    sub.status === __TURBOPACK__imported__module__$5b$project$5d2f$interfaces$2f$Subscripcion$2e$interface$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SubscriptionStatus"].PENDING && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                onClick: ()=>handleActivate(sub.id),
+                                                className: "px-3 py-1 text-sm text-white bg-green-600 rounded hover:bg-green-700",
+                                                children: "Aprobar"
+                                            }, void 0, false, {
+                                                fileName: "[project]/components/sub.tab.tsx",
+                                                lineNumber: 234,
+                                                columnNumber: 23
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                onClick: ()=>handleCancel(sub.id),
+                                                className: "px-3 py-1 text-sm text-white bg-red-600 rounded hover:bg-red-700",
+                                                children: "Cancelar"
+                                            }, void 0, false, {
+                                                fileName: "[project]/components/sub.tab.tsx",
+                                                lineNumber: 240,
+                                                columnNumber: 23
+                                            }, this)
+                                        ]
+                                    }, void 0, true),
+                                    (sub.status === __TURBOPACK__imported__module__$5b$project$5d2f$interfaces$2f$Subscripcion$2e$interface$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SubscriptionStatus"].ACTIVE || sub.status === __TURBOPACK__imported__module__$5b$project$5d2f$interfaces$2f$Subscripcion$2e$interface$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SubscriptionStatus"].PAUSED) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                         onClick: ()=>handleCancel(sub.id),
                                         className: "px-3 py-1 text-sm text-white bg-red-600 rounded hover:bg-red-700",
                                         children: "Cancelar"
                                     }, void 0, false, {
                                         fileName: "[project]/components/sub.tab.tsx",
-                                        lineNumber: 98,
-                                        columnNumber: 17
+                                        lineNumber: 250,
+                                        columnNumber: 21
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/sub.tab.tsx",
-                                lineNumber: 91,
-                                columnNumber: 15
+                                lineNumber: 215,
+                                columnNumber: 17
                             }, this)
                         ]
                     }, sub.id, true, {
                         fileName: "[project]/components/sub.tab.tsx",
-                        lineNumber: 84,
-                        columnNumber: 13
+                        lineNumber: 167,
+                        columnNumber: 15
                     }, this)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "text-center text-gray-300",
+                    className: "text-center text-gray-300 col-span-full",
                     children: "No se encontraron suscripciones."
                 }, void 0, false, {
                     fileName: "[project]/components/sub.tab.tsx",
-                    lineNumber: 108,
-                    columnNumber: 11
+                    lineNumber: 261,
+                    columnNumber: 13
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/sub.tab.tsx",
-                lineNumber: 81,
-                columnNumber: 7
+                lineNumber: 164,
+                columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/sub.tab.tsx",
-        lineNumber: 79,
+        lineNumber: 130,
         columnNumber: 5
     }, this);
 };
-_s(SuscripcionesTab, "aKmHFUtIjRxkRQPxUxjlhDqfrSk=");
+_s(SuscripcionesTab, "LSQY8SY0dRySaeyQIaF8UjGy85k=");
 _c = SuscripcionesTab;
 const __TURBOPACK__default__export__ = SuscripcionesTab;
 var _c;
@@ -570,7 +809,7 @@ const UsuariosTab = ({ getUsers, planes })=>{
                         className: "flex-1 px-4 py-2 text-white bg-gray-700 rounded-lg"
                     }, void 0, false, {
                         fileName: "[project]/components/user.tab.tsx",
-                        lineNumber: 74,
+                        lineNumber: 73,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -582,18 +821,18 @@ const UsuariosTab = ({ getUsers, planes })=>{
                                 children: plan.name
                             }, plan.id, false, {
                                 fileName: "[project]/components/user.tab.tsx",
-                                lineNumber: 83,
+                                lineNumber: 82,
                                 columnNumber: 13
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/components/user.tab.tsx",
-                        lineNumber: 81,
+                        lineNumber: 80,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/user.tab.tsx",
-                lineNumber: 73,
+                lineNumber: 72,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -607,7 +846,7 @@ const UsuariosTab = ({ getUsers, planes })=>{
                                 children: user.name
                             }, void 0, false, {
                                 fileName: "[project]/components/user.tab.tsx",
-                                lineNumber: 105,
+                                lineNumber: 104,
                                 columnNumber: 15
                             }, this),
                             user.isAdmin && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -615,7 +854,7 @@ const UsuariosTab = ({ getUsers, planes })=>{
                                 children: "A"
                             }, void 0, false, {
                                 fileName: "[project]/components/user.tab.tsx",
-                                lineNumber: 107,
+                                lineNumber: 106,
                                 columnNumber: 17
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -623,7 +862,7 @@ const UsuariosTab = ({ getUsers, planes })=>{
                                 children: user.email
                             }, void 0, false, {
                                 fileName: "[project]/components/user.tab.tsx",
-                                lineNumber: 111,
+                                lineNumber: 110,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -634,25 +873,25 @@ const UsuariosTab = ({ getUsers, planes })=>{
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/user.tab.tsx",
-                                lineNumber: 112,
+                                lineNumber: 111,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, user.id, true, {
                         fileName: "[project]/components/user.tab.tsx",
-                        lineNumber: 100,
+                        lineNumber: 99,
                         columnNumber: 13
                     }, this)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "text-center text-gray-300 col-span-full",
                     children: "No se encontraron usuarios."
                 }, void 0, false, {
                     fileName: "[project]/components/user.tab.tsx",
-                    lineNumber: 116,
+                    lineNumber: 115,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/user.tab.tsx",
-                lineNumber: 97,
+                lineNumber: 96,
                 columnNumber: 7
             }, this),
             modalOpen && selectedUser && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$user$2e$modal$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -661,7 +900,7 @@ const UsuariosTab = ({ getUsers, planes })=>{
                 onEdit: redirectToEdit
             }, void 0, false, {
                 fileName: "[project]/components/user.tab.tsx",
-                lineNumber: 124,
+                lineNumber: 123,
                 columnNumber: 9
             }, this)
         ]
@@ -714,7 +953,7 @@ const AdminPanel = ()=>{
     const { getUsers, getAllPlans, deletePlan, getAllSubscriptions, updateSubscriptionStatus, cancelSubscription } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useContext"])(__TURBOPACK__imported__module__$5b$project$5d2f$context$2f$Administracion$2e$context$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AdminContext"]);
     const [activeTab, setActiveTab] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("usuarios");
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
-        className: "px-4 py-3 mx-auto max-w-7xl",
+        className: "w-11/12 px-4 py-3 mx-auto max-w-7xl",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
                 className: "mb-4 text-3xl font-bold text-white",
@@ -725,7 +964,7 @@ const AdminPanel = ()=>{
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "flex gap-4 mb-6",
+                className: "flex gap-2 mb-6",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         onClick: ()=>setActiveTab("usuarios"),
