@@ -6,6 +6,7 @@ WORKDIR /app
 # Copiar los archivos de configuración
 COPY server/package*.json ./
 
+
 # Instalar las dependencias de la aplicación
 RUN npm install
 
