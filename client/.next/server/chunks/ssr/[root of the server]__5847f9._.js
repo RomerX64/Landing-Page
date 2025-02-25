@@ -170,7 +170,7 @@ __turbopack_esm__({
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/axios/lib/axios.js [app-ssr] (ecmascript)");
 ;
 const api = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].create({
-    baseURL: process.env.APP_URL,
+    baseURL: ("TURBOPACK compile-time value", "http://localhost:3001"),
     headers: {
         "Content-Type": "application/json"
     }
@@ -915,16 +915,10 @@ const SuscribeProvider = ({ children })=>{
         const token = ("TURBOPACK compile-time value", "APP_USR-a88f991b-d04b-490f-b447-502303d60b9e");
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mercadopago$2f$sdk$2d$react$2f$esm$2f$mercadoPago$2f$initMercadoPago$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__initMercadoPago$3e$__["initMercadoPago"])(("TURBOPACK compile-time truthy", 1) ? token : ("TURBOPACK unreachable", undefined));
     }, []);
-    // Función para obtener planes
+    // Función para obtener planes - modificada para refrescar siempre
     const getPlanes = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async ()=>{
         try {
-            const storedPlanes = localStorage.getItem("planes");
-            if (storedPlanes) {
-                const parsed = JSON.parse(storedPlanes);
-                setPlanes(parsed);
-                console.log("Planes cargados desde LocalStorage");
-                return;
-            }
+            // Llamar siempre a la API sin revisar localStorage primero
             const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get(`/users/planes`));
             if (error || !data?.data) {
                 console.error("Error al obtener planes:", error || "No se retornaron datos");
@@ -933,6 +927,7 @@ const SuscribeProvider = ({ children })=>{
             const fetchedPlanes = data.data;
             setPlanes(fetchedPlanes);
             localStorage.setItem("planes", JSON.stringify(fetchedPlanes));
+            console.log("Planes actualizados desde la API");
         } catch (err) {
             console.error("Error en getPlanes:", err);
         }
@@ -1006,17 +1001,19 @@ const SuscribeProvider = ({ children })=>{
         planes,
         viewPlan
     ]);
-    // Cargar la suscripción y los planes al montar o cuando cambie el usuario
+    // Cargar la suscripción al montar el componente
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         const storedSub = localStorage.getItem("subscripcion");
         if (storedSub) {
             setSub(JSON.parse(storedSub));
         }
-        getPlanes();
     }, [
-        user,
-        getPlanes
+        user
     ]);
+    // Efecto específico para cargar planes cada vez que se refresque la página
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        getPlanes();
+    }, []); // Array vacío indica que se ejecuta solo al montar el componente (refrescar página)
     // Seleccionar el plan de vista si aún no está seleccionado
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         if (planes.length > 0 && !viewPlan) {
@@ -1092,7 +1089,7 @@ const SuscribeProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/context/Suscribe.context.tsx",
-        lineNumber: 276,
+        lineNumber: 274,
         columnNumber: 5
     }, this);
 };

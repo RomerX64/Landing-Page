@@ -8,6 +8,7 @@ import Spotlight from "@/components/spotlight";
 import { useContext } from "react";
 import { SuscribeContext } from "@/context/Suscribe.context";
 import { useRouter } from "next/navigation";
+import { IPlan } from "@/interfaces/Plan.interface";
 
 interface CardPlanProps {
   id: number;
@@ -107,7 +108,7 @@ const CardPlan: React.FC<CardPlanProps> = ({
             {/* Activos */}
             <span className="inline-block min-w-[100px] rounded-full bg-gradient-to-r from-green-500 to-teal-400 px-3 py-1 text-sm font-bold text-white shadow-sm animate-gradient text-center">
               {activos}
-              {activos !== "Sin límites" && <span className="ml-1">/act</span>}
+              {activos !== "Sin límites" && "/act"}
             </span>
 
             {/* Personalizable */}
@@ -149,7 +150,7 @@ export const TiposDePlanes: React.FC = () => {
 
   return (
     <Spotlight className="grid items-start max-w-sm gap-6 mx-auto group lg:max-w-none lg:grid-cols-3">
-      {sortedPlanes.map((plan) => (
+      {sortedPlanes.map((plan: IPlan) => (
         <CardPlan
           key={plan.id}
           id={plan.id}

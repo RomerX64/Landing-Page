@@ -3,5 +3,6 @@
   "/(default)/profile/page": "app/(default)/profile/page.js",
   "/(default)/page": "app/(default)/page.js",
   "/(auth)/signin/page": "app/(auth)/signin/page.js",
-  "/(default)/administracion/page": "app/(default)/administracion/page.js"
+  "/(default)/administracion/page": "app/(default)/administracion/page.js",
+  "/_not-found/page": "app/_not-found/page.js"
 }

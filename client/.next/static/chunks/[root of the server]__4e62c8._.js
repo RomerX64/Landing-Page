@@ -77,7 +77,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/build/polyfills/process.js [app-client] (ecmascript)");
 ;
 const api = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].create({
-    baseURL: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].env.APP_URL,
+    baseURL: ("TURBOPACK compile-time value", "http://localhost:3001"),
     headers: {
         "Content-Type": "application/json"
     }
@@ -890,17 +890,11 @@ const SuscribeProvider = ({ children })=>{
             (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mercadopago$2f$sdk$2d$react$2f$esm$2f$mercadoPago$2f$initMercadoPago$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__initMercadoPago$3e$__["initMercadoPago"])(("TURBOPACK compile-time truthy", 1) ? token : ("TURBOPACK unreachable", undefined));
         }
     }["SuscribeProvider.useEffect"], []);
-    // Función para obtener planes
+    // Función para obtener planes - modificada para refrescar siempre
     const getPlanes = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
         "SuscribeProvider.useCallback[getPlanes]": async ()=>{
             try {
-                const storedPlanes = localStorage.getItem("planes");
-                if (storedPlanes) {
-                    const parsed = JSON.parse(storedPlanes);
-                    setPlanes(parsed);
-                    console.log("Planes cargados desde LocalStorage");
-                    return;
-                }
+                // Llamar siempre a la API sin revisar localStorage primero
                 const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get(`/users/planes`));
                 if (error || !data?.data) {
                     console.error("Error al obtener planes:", error || "No se retornaron datos");
@@ -909,6 +903,7 @@ const SuscribeProvider = ({ children })=>{
                 const fetchedPlanes = data.data;
                 setPlanes(fetchedPlanes);
                 localStorage.setItem("planes", JSON.stringify(fetchedPlanes));
+                console.log("Planes actualizados desde la API");
             } catch (err) {
                 console.error("Error en getPlanes:", err);
             }
@@ -995,19 +990,23 @@ const SuscribeProvider = ({ children })=>{
         planes,
         viewPlan
     ]);
-    // Cargar la suscripción y los planes al montar o cuando cambie el usuario
+    // Cargar la suscripción al montar el componente
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "SuscribeProvider.useEffect": ()=>{
             const storedSub = localStorage.getItem("subscripcion");
             if (storedSub) {
                 setSub(JSON.parse(storedSub));
             }
-            getPlanes();
         }
     }["SuscribeProvider.useEffect"], [
-        user,
-        getPlanes
+        user
     ]);
+    // Efecto específico para cargar planes cada vez que se refresque la página
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "SuscribeProvider.useEffect": ()=>{
+            getPlanes();
+        }
+    }["SuscribeProvider.useEffect"], []); // Array vacío indica que se ejecuta solo al montar el componente (refrescar página)
     // Seleccionar el plan de vista si aún no está seleccionado
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "SuscribeProvider.useEffect": ()=>{
@@ -1091,11 +1090,11 @@ const SuscribeProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/context/Suscribe.context.tsx",
-        lineNumber: 276,
+        lineNumber: 274,
         columnNumber: 5
     }, this);
 };
-_s(SuscribeProvider, "Mfl/c+gbQFRPUmtocfExIjnVtoU=");
+_s(SuscribeProvider, "hmIk/gkjEYblcRDZCTcASrisucg=");
 _c = SuscribeProvider;
 var _c;
 __turbopack_refresh__.register(_c, "SuscribeProvider");

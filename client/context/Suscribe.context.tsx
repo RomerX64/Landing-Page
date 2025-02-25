@@ -65,17 +65,10 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
     initMercadoPago(token ? token : "");
   }, []);
 
-  // Función para obtener planes
+  // Función para obtener planes - modificada para refrescar siempre
   const getPlanes = useCallback(async () => {
     try {
-      const storedPlanes = localStorage.getItem("planes");
-      if (storedPlanes) {
-        const parsed = JSON.parse(storedPlanes) as IPlan[];
-        setPlanes(parsed);
-        console.log("Planes cargados desde LocalStorage");
-        return;
-      }
-
+      // Llamar siempre a la API sin revisar localStorage primero
       const { data, error } = await handleAsync(api.get(`/users/planes`));
       if (error || !data?.data) {
         console.error(
@@ -88,6 +81,7 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
       const fetchedPlanes: IPlan[] = data.data;
       setPlanes(fetchedPlanes);
       localStorage.setItem("planes", JSON.stringify(fetchedPlanes));
+      console.log("Planes actualizados desde la API");
     } catch (err) {
       console.error("Error en getPlanes:", err);
     }
@@ -178,14 +172,18 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
     [planes, viewPlan]
   );
 
-  // Cargar la suscripción y los planes al montar o cuando cambie el usuario
+  // Cargar la suscripción al montar el componente
   useEffect(() => {
     const storedSub = localStorage.getItem("subscripcion");
     if (storedSub) {
       setSub(JSON.parse(storedSub));
     }
+  }, [user]);
+
+  // Efecto específico para cargar planes cada vez que se refresque la página
+  useEffect(() => {
     getPlanes();
-  }, [user, getPlanes]);
+  }, []); // Array vacío indica que se ejecuta solo al montar el componente (refrescar página)
 
   // Seleccionar el plan de vista si aún no está seleccionado
   useEffect(() => {

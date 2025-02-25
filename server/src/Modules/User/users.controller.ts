@@ -117,7 +117,7 @@ export class UserController {
     }
   }
 
-  @Get('planes')
+  @Get('/planes')
   @ApiOperation({
     summary: 'Obtener planes',
     description: 'Obtiene los datos de los planes',
