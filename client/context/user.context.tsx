@@ -19,6 +19,7 @@ import {
   getSession,
 } from "next-auth/react";
 import { IUserContextProps } from "./DTO/IUserContextProps.interface";
+import Cookies from "js-cookie";
 
 const defaultContext: IUserContextProps = {
   token: "",
@@ -65,15 +66,18 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
   const [token, setToken] = useState<string>("");
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    const storedUser = localStorage.getItem("user");
+    const storedToken = localStorage.getItem("token") || Cookies.get("token");
+    const storedUser = localStorage.getItem("user") || Cookies.get("user");
 
     if (storedToken) setToken(storedToken);
     if (storedUser) {
       try {
         setUserState(JSON.parse(storedUser));
       } catch (error) {
-        console.error("Error al parsear el usuario del localStorage", error);
+        console.error(
+          "Error al parsear el usuario del localStorage o cookie",
+          error
+        );
       }
     }
   }, []);
@@ -106,6 +110,10 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
             "user",
             JSON.stringify(fetchedResponse.data.User)
           );
+          Cookies.set("token", fetchedResponse.data.token, { expires: 7 }); // Guarda en cookies
+          Cookies.set("user", JSON.stringify(fetchedResponse.data.User), {
+            expires: 7,
+          });
           return fetchedResponse.data.User;
         }
 
@@ -118,6 +126,9 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
         }
         setUserState(createdResponse.data);
         localStorage.setItem("user", JSON.stringify(createdResponse.data));
+        Cookies.set("user", JSON.stringify(createdResponse.data), {
+          expires: 7,
+        });
         return createdResponse.data;
       } catch (error) {
         console.error("Error en el proceso de registro:", error);
@@ -141,6 +152,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
         setUserState(returnedUser);
         localStorage.setItem("token", returnedToken);
         localStorage.setItem("user", JSON.stringify(returnedUser));
+        Cookies.set("token", returnedToken, { expires: 7 });
+        Cookies.set("user", JSON.stringify(returnedUser), { expires: 7 });
         return returnedUser;
       } catch (error) {
         console.error("Error en signIn:", error);
@@ -162,6 +175,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
     setUserState(returnedUser);
     localStorage.setItem("token", returnedToken);
     localStorage.setItem("user", JSON.stringify(returnedUser));
+    Cookies.set("token", returnedToken, { expires: 7 });
+    Cookies.set("user", JSON.stringify(returnedUser), { expires: 7 });
     return returnedUser;
   }, []);
 
@@ -178,6 +193,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
       setUserState(null);
       localStorage.removeItem("token");
       localStorage.removeItem("user");
+      Cookies.remove("token"); // Elimina las cookies
+      Cookies.remove("user");
       return deletedUser;
     },
     []
@@ -196,16 +213,12 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
     async (updateUserData: updateUserDTO): Promise<IUser> => {
       if (!user?.id) throw new Error("Usuario no autenticado");
       const { data: response, error } = await handleAsync(
-        api.post("/users/update", { ...updateUserData, id: user.id })
+        api.put(`/users/update/${user.id}`, { ...updateUserData })
       );
       if (error || !response?.data) {
         throw new Error(error?.message || "Error al actualizar usuario");
       }
       const { User: returnedUser, token: returnedToken } = response.data;
-      setToken(returnedToken);
-      setUserState(returnedUser);
-      localStorage.setItem("token", returnedToken);
-      localStorage.setItem("user", JSON.stringify(returnedUser));
       return returnedUser;
     },
     [user]
@@ -218,6 +231,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
       setUserState(null);
       localStorage.removeItem("token");
       localStorage.removeItem("user");
+      Cookies.remove("token"); // Elimina las cookies
+      Cookies.remove("user");
     } catch (error) {
       console.error("Error durante el cierre de sesión:", error);
     }
@@ -289,8 +304,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
       resetPassword,
     }),
     [
-      token,
       user,
+      token,
       signInO,
       signUp,
       deleteUser,
@@ -305,14 +320,6 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
   );
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
-};
-
-export const useAuth = () => {
-  const context = useContext(UserContext);
-  if (!context) {
-    throw new Error("useAuth debe usarse dentro de un UserProvider");
-  }
-  return context;
 };
 
 export default UserContext;

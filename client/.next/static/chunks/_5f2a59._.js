@@ -47,13 +47,59 @@ var _s = __turbopack_refresh__.signature();
 ;
 const SuscriberProfile = ()=>{
     _s();
-    const { sub } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useContext"])(__TURBOPACK__imported__module__$5b$project$5d2f$context$2f$Suscribe$2e$context$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SuscribeContext"]);
-    if (!sub) return;
-    const fechaInicio = sub.fechaInicio instanceof Date ? sub.fechaInicio : "";
-    const fechaUltimaPaga = sub.fechaUltimaPaga instanceof Date ? sub.fechaUltimaPaga : "";
-    const fechaVencimiento = sub.fechaVencimiento instanceof Date ? sub.fechaVencimiento : "";
-    const handleDesub = ()=>{};
-    return sub && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
+    const { sub, fetchSub } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useContext"])(__TURBOPACK__imported__module__$5b$project$5d2f$context$2f$Suscribe$2e$context$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SuscribeContext"]);
+    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
+    const [subscription, setSubscription] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "SuscriberProfile.useEffect": ()=>{
+            const getSubscription = {
+                "SuscriberProfile.useEffect.getSubscription": async ()=>{
+                    setLoading(true);
+                    const subs = await fetchSub();
+                    if (subs) {
+                        setSubscription(subs);
+                    }
+                    setLoading(false);
+                }
+            }["SuscriberProfile.useEffect.getSubscription"];
+            if (!sub) {
+                getSubscription();
+            } else {
+                setSubscription(sub);
+                setLoading(false);
+            }
+        }
+    }["SuscriberProfile.useEffect"], [
+        sub,
+        fetchSub
+    ]);
+    if (loading) {
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
+            className: "py-5 text-center text-gray-400",
+            children: "Cargando suscripción..."
+        }, void 0, false, {
+            fileName: "[project]/components/suscriberProfile.tsx",
+            lineNumber: 42,
+            columnNumber: 7
+        }, this);
+    }
+    if (!subscription) {
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
+            className: "py-5 text-center text-gray-400",
+            children: "No tienes una suscripción activa."
+        }, void 0, false, {
+            fileName: "[project]/components/suscriberProfile.tsx",
+            lineNumber: 50,
+            columnNumber: 7
+        }, this);
+    }
+    const fechaInicio = subscription.fechaInicio ? new Date(subscription.fechaInicio) : null;
+    const fechaUltimaPaga = subscription.fechaUltimaPaga ? new Date(subscription.fechaUltimaPaga) : null;
+    const fechaVencimiento = subscription.fechaVencimiento ? new Date(subscription.fechaVencimiento) : null;
+    const handleDesub = ()=>{
+    // Implementa la lógica para cancelar la suscripción
+    };
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
         className: "px-2 py-3 mx-auto max-w-7xl",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "relative w-[75vw] mx-auto overflow-hidden bg-gray-800 shadow-2xl sm:px-6 rounded-2xl flex flex-col",
@@ -64,8 +110,7 @@ const SuscriberProfile = ()=>{
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "flex items-center gap-3",
                             children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                    href: "/",
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                     onClick: handleDesub,
                                     className: "transition-transform transform hover:scale-110",
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$captions$2d$off$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CaptionsOff$3e$__["CaptionsOff"], {
@@ -73,13 +118,13 @@ const SuscriberProfile = ()=>{
                                         className: "text-red-400"
                                     }, void 0, false, {
                                         fileName: "[project]/components/suscriberProfile.tsx",
-                                        lineNumber: 39,
-                                        columnNumber: 17
+                                        lineNumber: 79,
+                                        columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/suscriberProfile.tsx",
-                                    lineNumber: 34,
-                                    columnNumber: 15
+                                    lineNumber: 75,
+                                    columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "flex flex-col",
@@ -89,70 +134,70 @@ const SuscriberProfile = ()=>{
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                                                     className: "text-2xl font-bold text-transparent sm:text-4xl bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400",
-                                                    children: sub.plan.name
+                                                    children: subscription.plan?.name
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/suscriberProfile.tsx",
-                                                    lineNumber: 43,
-                                                    columnNumber: 19
+                                                    lineNumber: 83,
+                                                    columnNumber: 17
                                                 }, this),
-                                                sub.status === __TURBOPACK__imported__module__$5b$project$5d2f$interfaces$2f$Subscripcion$2e$interface$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SubscriptionStatus"].ACTIVE ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2d$big$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle$3e$__["CheckCircle"], {
+                                                subscription.status === __TURBOPACK__imported__module__$5b$project$5d2f$interfaces$2f$Subscripcion$2e$interface$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SubscriptionStatus"].ACTIVE ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2d$big$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle$3e$__["CheckCircle"], {
                                                     className: "mt-1 ml-2 text-green-500"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/suscriberProfile.tsx",
-                                                    lineNumber: 47,
-                                                    columnNumber: 21
-                                                }, this) : sub.status === __TURBOPACK__imported__module__$5b$project$5d2f$interfaces$2f$Subscripcion$2e$interface$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SubscriptionStatus"].PAUSED ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$pause$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__PauseCircle$3e$__["PauseCircle"], {
+                                                    lineNumber: 87,
+                                                    columnNumber: 19
+                                                }, this) : subscription.status === __TURBOPACK__imported__module__$5b$project$5d2f$interfaces$2f$Subscripcion$2e$interface$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SubscriptionStatus"].PAUSED ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$pause$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__PauseCircle$3e$__["PauseCircle"], {
                                                     className: "mt-1 ml-2 text-teal-500"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/suscriberProfile.tsx",
-                                                    lineNumber: 49,
-                                                    columnNumber: 21
+                                                    lineNumber: 89,
+                                                    columnNumber: 19
                                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$x$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__XCircle$3e$__["XCircle"], {
                                                     className: "mt-1 ml-2 text-red-500"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/suscriberProfile.tsx",
-                                                    lineNumber: 51,
-                                                    columnNumber: 21
+                                                    lineNumber: 91,
+                                                    columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/suscriberProfile.tsx",
-                                            lineNumber: 42,
-                                            columnNumber: 17
+                                            lineNumber: 82,
+                                            columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                             className: "text-sm text-indigo-200/65",
-                                            children: sub.id
+                                            children: subscription.id
                                         }, void 0, false, {
                                             fileName: "[project]/components/suscriberProfile.tsx",
-                                            lineNumber: 54,
-                                            columnNumber: 17
+                                            lineNumber: 94,
+                                            columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/suscriberProfile.tsx",
-                                    lineNumber: 41,
-                                    columnNumber: 15
+                                    lineNumber: 81,
+                                    columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/suscriberProfile.tsx",
-                            lineNumber: 33,
-                            columnNumber: 13
+                            lineNumber: 74,
+                            columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                             className: "w-full text-xl font-bold text-transparent sm:text-2xl bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 md:text-right md:w-auto",
-                            children: sub.plan.precio > 0 ? `$${sub.plan.precio}/m` : "Free"
+                            children: subscription.plan?.precio > 0 ? `$${subscription.plan?.precio}/m` : "Free"
                         }, void 0, false, {
                             fileName: "[project]/components/suscriberProfile.tsx",
-                            lineNumber: 57,
-                            columnNumber: 13
+                            lineNumber: 97,
+                            columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/suscriberProfile.tsx",
-                    lineNumber: 32,
-                    columnNumber: 11
+                    lineNumber: 73,
+                    columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "p-4",
@@ -168,43 +213,43 @@ const SuscriberProfile = ()=>{
                                                 children: "Subscrito: "
                                             }, void 0, false, {
                                                 fileName: "[project]/components/suscriberProfile.tsx",
-                                                lineNumber: 66,
-                                                columnNumber: 19
+                                                lineNumber: 108,
+                                                columnNumber: 17
                                             }, this),
-                                            fechaInicio ? fechaInicio.toLocaleDateString() : ""
+                                            fechaInicio ? fechaInicio.toLocaleDateString() : "N/A"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/suscriberProfile.tsx",
-                                        lineNumber: 65,
-                                        columnNumber: 17
+                                        lineNumber: 107,
+                                        columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/suscriberProfile.tsx",
-                                    lineNumber: 64,
-                                    columnNumber: 15
+                                    lineNumber: 106,
+                                    columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                         className: "block text-gray-300",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
-                                                children: "Ultima paga: "
+                                                children: "Última paga: "
                                             }, void 0, false, {
                                                 fileName: "[project]/components/suscriberProfile.tsx",
-                                                lineNumber: 72,
-                                                columnNumber: 19
+                                                lineNumber: 114,
+                                                columnNumber: 17
                                             }, this),
-                                            fechaUltimaPaga ? fechaUltimaPaga.toLocaleDateString() : ""
+                                            fechaUltimaPaga ? fechaUltimaPaga.toLocaleDateString() : "N/A"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/suscriberProfile.tsx",
-                                        lineNumber: 71,
-                                        columnNumber: 17
+                                        lineNumber: 113,
+                                        columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/suscriberProfile.tsx",
-                                    lineNumber: 70,
-                                    columnNumber: 15
+                                    lineNumber: 112,
+                                    columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -214,26 +259,26 @@ const SuscriberProfile = ()=>{
                                                 children: "Vencimiento: "
                                             }, void 0, false, {
                                                 fileName: "[project]/components/suscriberProfile.tsx",
-                                                lineNumber: 78,
-                                                columnNumber: 19
+                                                lineNumber: 120,
+                                                columnNumber: 17
                                             }, this),
-                                            fechaVencimiento ? fechaVencimiento.toLocaleDateString() : ""
+                                            fechaVencimiento ? fechaVencimiento.toLocaleDateString() : "N/A"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/suscriberProfile.tsx",
-                                        lineNumber: 77,
-                                        columnNumber: 17
+                                        lineNumber: 119,
+                                        columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/suscriberProfile.tsx",
-                                    lineNumber: 76,
-                                    columnNumber: 15
+                                    lineNumber: 118,
+                                    columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/suscriberProfile.tsx",
-                            lineNumber: 63,
-                            columnNumber: 13
+                            lineNumber: 105,
+                            columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "flex justify-end my-4",
@@ -245,43 +290,43 @@ const SuscriberProfile = ()=>{
                                         size: 35
                                     }, void 0, false, {
                                         fileName: "[project]/components/suscriberProfile.tsx",
-                                        lineNumber: 89,
-                                        columnNumber: 19
+                                        lineNumber: 131,
+                                        columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/suscriberProfile.tsx",
-                                    lineNumber: 88,
-                                    columnNumber: 17
+                                    lineNumber: 130,
+                                    columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/suscriberProfile.tsx",
-                                lineNumber: 87,
-                                columnNumber: 15
+                                lineNumber: 129,
+                                columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/suscriberProfile.tsx",
-                            lineNumber: 86,
-                            columnNumber: 13
+                            lineNumber: 128,
+                            columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/suscriberProfile.tsx",
-                    lineNumber: 62,
-                    columnNumber: 11
+                    lineNumber: 104,
+                    columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/suscriberProfile.tsx",
-            lineNumber: 31,
-            columnNumber: 9
+            lineNumber: 72,
+            columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/suscriberProfile.tsx",
-        lineNumber: 30,
-        columnNumber: 7
+        lineNumber: 71,
+        columnNumber: 5
     }, this);
 };
-_s(SuscriberProfile, "ypWQ98DFDIyj+YxRtGYOeC92zSM=");
+_s(SuscriberProfile, "3A0fYj3HLbtcVP6B3wqmRLxIXZ0=");
 _c = SuscriberProfile;
 const __TURBOPACK__default__export__ = SuscriberProfile;
 var _c;

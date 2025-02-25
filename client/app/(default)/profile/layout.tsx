@@ -4,7 +4,7 @@ import { UserContext } from "@/context/user.context";
 import { UserPen, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import SuscriberProfile from "../../../components/suscriberProfile";
+import SuscriberProfile from "@/components/suscriberProfile";
 
 const UserProfile: React.FC = () => {
   const { user, updateUser, signOut } = useContext(UserContext);

@@ -65,10 +65,7 @@ export default function SignInLayout() {
     setIsLoading(true);
     setError("");
     try {
-      const user = await signInWithGoogle();
-      if (user) {
-        router.push("/");
-      }
+      await signInWithGoogle();
     } catch (err: any) {
       setError("Error al iniciar sesión con Google");
     } finally {

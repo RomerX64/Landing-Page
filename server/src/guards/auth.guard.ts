@@ -20,7 +20,6 @@ export class AuthGuard implements CanActivate {
         payLoad.iat = new Date(payLoad.iat * 1000) 
         payLoad.exp = new Date(payLoad.exp * 1000) 
         request.user = payLoad
-        console.log(request.user)
         return true
         } catch (error) {
             if(error instanceof HttpException)throw error

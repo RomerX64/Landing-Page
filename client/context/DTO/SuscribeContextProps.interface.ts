@@ -16,4 +16,6 @@ export interface SuscribeContextProps {
   refreshSubscription: () => Promise<void>;
   refreshPlanes: () => Promise<void>;
   loading: boolean;
+  fetchSub: () => {};
+  fetchPlan: () => {};
 }

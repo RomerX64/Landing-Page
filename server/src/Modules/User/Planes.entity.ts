@@ -1,6 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Subscripcion } from './Subscripcion.entity';
-import { IsEnum, IsString } from 'class-validator';
 
 export enum BillingCycle {
   MONTHLY = 'monthly',

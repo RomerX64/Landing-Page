@@ -142,19 +142,21 @@ export class UserService {
 
   async updateUser(
     updateUser: updateUserDto,
+    userId: string,
   ): Promise<{ user: User; token: string }> {
     try {
+      const user = await this.getUserById(userId);
       if (updateUser.password)
         updateUser.password = await bcrypt.hash(updateUser.password, 10);
       const userPayload = {
-        sub: updateUser.id,
-        id: updateUser.id,
+        sub: user.subscripcion,
+        id: user.id,
         email: updateUser.email,
         isAdmin: false,
       };
       const token = this.jwtService.sign(userPayload);
-      const user = await this.userRepository.save(updateUser);
-      return { user: user, token: token };
+      const U = await this.userRepository.save(updateUser);
+      return { user: U, token: token };
     } catch (error) {
       throw ErrorHandler.handle(error);
     }
@@ -213,6 +215,7 @@ export class UserService {
       const user: User = await this.getUserById(userId);
       const sub: Subscripcion = await this.subsRepository.findOne({
         where: { id: user.subscripcion?.id },
+        relations: ['planes'],
       });
       if (!sub) throw new NotFoundException('Sub not found');
       return sub;

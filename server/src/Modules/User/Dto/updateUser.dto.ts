@@ -9,10 +9,6 @@ import {
 } from 'class-validator';
 
 export class updateUserDto {
-  @IsNotEmpty()
-  @IsString()
-  id: string;
-
   @IsOptional()
   @IsEmail()
   email?: string;

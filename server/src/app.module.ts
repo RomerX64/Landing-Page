@@ -22,6 +22,10 @@ import { AdminModule } from './Modules/Admin/admin.module';
       useFactory: (configService: ConfigService) =>
         configService.get('typeorm'),
     }),
+    JwtModule.register({
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '1d' },
+    }),
 
     UserModule,
     SuscribeModule,

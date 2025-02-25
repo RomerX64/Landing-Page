@@ -130,7 +130,8 @@ export class UserController {
     }
   }
 
-  @Put('/update')
+  @ApiBearerAuth()
+  @Put('/update/:userId')
   @UseGuards(AuthGuard)
   @ApiOperation({
     summary: 'Actualizar usuario',
@@ -138,9 +139,10 @@ export class UserController {
   })
   async updateUser(
     @Body() updateUser: updateUserDto,
+    @Param('userId') userId: string,
   ): Promise<{ user: User; token: string }> {
     try {
-      return await this.userService.updateUser(updateUser);
+      return await this.userService.updateUser(updateUser, userId);
     } catch (error) {
       throw ErrorHandler.handle(error);
     }

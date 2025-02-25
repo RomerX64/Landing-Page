@@ -55,8 +55,8 @@ export default function RootLayout({
     <html lang="en">
       <SessionProvider>
         <AdminProvider>
-          <SuscribeProvider>
-            <UserProvider>
+          <UserProvider>
+            <SuscribeProvider>
               <body
                 className={`${inter.variable} ${nacelle.variable} bg-gray-950 font-inter text-base text-gray-200 antialiased`}
               >
@@ -65,8 +65,8 @@ export default function RootLayout({
                   {children}
                 </div>
               </body>
-            </UserProvider>
-          </SuscribeProvider>
+            </SuscribeProvider>
+          </UserProvider>
         </AdminProvider>
       </SessionProvider>
     </html>
