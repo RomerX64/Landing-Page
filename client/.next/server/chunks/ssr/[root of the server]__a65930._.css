@@ -836,11 +836,6 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   margin-right: auto;
 }
 
-.my-4 {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
 .-mb-24 {
   margin-bottom: -6rem;
 }
@@ -879,10 +874,6 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
 
 .ml-1 {
   margin-left: .25rem;
-}
-
-.ml-2 {
-  margin-left: .5rem;
 }
 
 .ml-20 {
@@ -1783,11 +1774,6 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   color: rgb(239 68 68 / var(--tw-text-opacity, 1));
 }
 
-.text-teal-500 {
-  --tw-text-opacity: 1;
-  color: rgb(20 184 166 / var(--tw-text-opacity, 1));
-}
-
 .text-transparent {
   color: #0000;
 }
@@ -2447,18 +2433,6 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   .sm\:px-6 {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
-  }
-
-  .sm\:text-2xl {
-    font-size: 1.5rem;
-    line-height: 1.415;
-    letter-spacing: -.0268em;
-  }
-
-  .sm\:text-4xl {
-    font-size: 2.5rem;
-    line-height: 1.1;
-    letter-spacing: -.0268em;
   }
 }
 
