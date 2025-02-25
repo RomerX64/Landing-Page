@@ -10,6 +10,7 @@ import { SuscribeProvider } from "@/context/Suscribe.context";
 import { UserProvider } from "@/context/user.context";
 import { SessionProvider } from "next-auth/react";
 import { initMercadoPago } from "@mercadopago/sdk-react";
+import { JSX, ReactNode } from "react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -43,14 +44,13 @@ const nacelle = localFont({
   variable: "--font-nacelle",
   display: "swap",
 });
-
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
-}) {
+  children: ReactNode;
+}): JSX.Element {
   const token = process.env.NEXT_PUBLIC_APP_MP_TOKEN;
-  if (!token) return console.error(new Error("APP_MP_TOKEN not Found"));
+  if (!token) throw new Error("NEXT_PUBLIC_APP_MP_TOKEN");
   initMercadoPago(token);
 
   return (
