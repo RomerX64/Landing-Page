@@ -49,7 +49,9 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  initMercadoPago("APP_USR-a88f991b-d04b-490f-b447-502303d60b9e");
+  const token = process.env.MP_TOKEN;
+  if (!token) throw new Error("APP_MP_TOKEN not Found");
+  initMercadoPago(token);
 
   return (
     <html lang="en">

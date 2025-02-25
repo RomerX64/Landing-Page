@@ -1,12 +1,8 @@
 // utils/api.ts
 import axios from "axios";
 
-const prod = false;
-const urlWeb = "https://assetly-landing-page-backend.onrender.com/";
-const API_URL = prod ? urlWeb : "http://localhost:3001";
-
 const api = axios.create({
-  baseURL: API_URL,
+  baseURL: process.env.APP_URL,
   headers: {
     "Content-Type": "application/json",
   },
