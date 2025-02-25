@@ -20,6 +20,7 @@
     "axios": "^1.7.9",
     "cookie": "^1.0.2",
     "crypto": "^1.0.1",
+    "dotenv": "^16.4.7",
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.474.0",
     "mercadopago": "^2.3.0",
