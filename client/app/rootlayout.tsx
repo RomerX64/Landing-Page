@@ -50,8 +50,7 @@ export default function RootLayout({
   children: ReactNode;
 }): JSX.Element {
   const token = process.env.NEXT_PUBLIC_APP_MP_TOKEN;
-  if (!token) throw new Error("NEXT_PUBLIC_APP_MP_TOKEN");
-  initMercadoPago(token);
+  initMercadoPago(token ? token : "");
 
   return (
     <html lang="en">

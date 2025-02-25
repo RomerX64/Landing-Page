@@ -62,8 +62,7 @@ export const SuscribeProvider = ({ children }: SuscribeProviderProps) => {
   // Inicializar MercadoPago (se ejecuta solo una vez)
   useEffect(() => {
     const token = process.env.NEXT_PUBLIC_APP_MP_TOKEN;
-    if (!token) return console.error(new Error("APP_MP_TOKEN not Found"));
-    initMercadoPago(token);
+    initMercadoPago(token ? token : "");
   }, []);
 
   // Función para obtener planes
