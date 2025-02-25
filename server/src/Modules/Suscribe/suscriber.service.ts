@@ -11,13 +11,11 @@ import { MercadoPagoConfig, PreApproval, User } from 'mercadopago';
 import { v4 as uuidv4 } from 'uuid';
 import { User as UserEntity } from '../User/User.entity';
 import { ConfigService } from '@nestjs/config';
-import {
-  CreateSubscriptionDto,
-  CancelSubscriptionDto,
-} from './dto/subscription.dto';
 import { Subscripcion, SubscriptionStatus } from '../User/Subscripcion.entity';
 import { Plan } from '../User/Planes.entity';
 import { UserService } from '../User/users.service';
+import CreateSubscriptionDto from './dto/createSubscription.dto';
+import CancelSubscriptionDto from './dto/cancelSubscription.dto';
 
 @Injectable()
 export class SubscriptionsService {

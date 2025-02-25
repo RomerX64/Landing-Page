@@ -11,10 +11,8 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { SubscriptionsService } from './suscriber.service';
-import {
-  CancelSubscriptionDto,
-  CreateSubscriptionDto,
-} from './dto/subscription.dto';
+import CreateSubscriptionDto from './dto/createSubscription.dto';
+import CancelSubscriptionDto from './dto/cancelSubscription.dto';
 
 @Controller('subscriptions')
 export class SubscriptionsController {
