@@ -3,10 +3,12 @@ import React, { useContext, useState } from "react";
 import { ChevronLeft } from "lucide-react";
 import { CardPayment } from "@mercadopago/sdk-react";
 import { useRouter } from "next/navigation";
-import { SuscribeContext } from "@/context/Suscribe.context";
+import { SubscriptionContext } from "@/context/Suscribe.context";
+import { PlansContext } from "@/context/Planes.context";
 
 const PaymentForm = () => {
-  const { viewPlan, suscribirse } = useContext(SuscribeContext);
+  const { suscribirse } = useContext(SubscriptionContext);
+  const { viewPlan } = useContext(PlansContext);
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [paymentProcessing, setPaymentProcessing] = useState(false);
@@ -48,7 +50,7 @@ const PaymentForm = () => {
   };
 
   return (
-    <section className="max-w-3xl px-4 py-12 mx-auto">
+    <section className="w-8/12 max-w-3xl px-4 py-12 mx-auto ">
       <div className="p-8 bg-gray-800 shadow-2xl rounded-2xl">
         <div className="flex items-center mb-6">
           <button
@@ -76,7 +78,7 @@ const PaymentForm = () => {
           </div>
         )}
 
-        <div id="cardPaymentBrick_container"></div>
+        <div id="cardPaymentBrick_container" className="min-h-96"></div>
 
         <CardPayment
           initialization={{ amount: viewPlan ? viewPlan.precio : 0 }}

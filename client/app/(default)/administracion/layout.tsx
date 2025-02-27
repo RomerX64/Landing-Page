@@ -3,10 +3,10 @@ import PlanesTab from "@/components/plan.tab";
 import SuscripcionesTab from "@/components/sub.tab";
 import UsuariosTab from "@/components/user.tab";
 import { AdminContext } from "@/context/Administracion.context";
-import { SuscribeContext } from "@/context/Suscribe.context";
+import { PlansContext } from "@/context/Planes.context";
 import { useContext, useState } from "react";
 const AdminPanel: React.FC = () => {
-  const { planes } = useContext(SuscribeContext);
+  const { planes } = useContext(PlansContext);
   const {
     getUsers,
     getAllPlans,

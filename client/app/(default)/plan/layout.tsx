@@ -1,11 +1,11 @@
 "use client";
 import React, { useContext, useEffect } from "react";
-import { SuscribeContext } from "@/context/Suscribe.context";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { PlansContext } from "@/context/Planes.context";
 
 const PlanDetail: React.FC = () => {
-  const { viewPlan, changePlan } = useContext(SuscribeContext);
+  const { viewPlan, changePlan } = useContext(PlansContext);
 
   // Detectar eventos del teclado
   useEffect(() => {

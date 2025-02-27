@@ -1,3 +1,0 @@
-{
-  "/(default)/administracion/user/[slug]/page": "app/(default)/administracion/user/[slug]/page.js"
-}
