@@ -1,5 +1,10 @@
 {
   "/(default)/profile/page": "app/(default)/profile/page.js",
   "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
-  "/(default)/page": "app/(default)/page.js"
+  "/(default)/page": "app/(default)/page.js",
+  "/(auth)/signin/page": "app/(auth)/signin/page.js",
+  "/(default)/plan/page": "app/(default)/plan/page.js",
+  "/(default)/suscribirse/page": "app/(default)/suscribirse/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/(default)/success/page": "app/(default)/success/page.js"
 }

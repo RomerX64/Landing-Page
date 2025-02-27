@@ -11,10 +11,13 @@ import { Plan } from './Planes.entity';
 import { IsEnum, IsISO8601, IsString } from 'class-validator';
 
 export enum SubscriptionStatus {
-  ACTIVE = 'active',
-  PAUSED = 'paused',
-  CANCELLED = 'cancelled',
-  PENDING = 'pending',
+  ACTIVE = 'active', // La suscripción está activa.
+  PAUSED = 'paused', // La suscripción ha sido pausada.
+  CANCELLED = 'cancelled', // La suscripción ha sido cancelada.
+  PENDING = 'pending', // La suscripción está pendiente de aprobación.
+  APPROVED = 'approved', // La suscripción ha sido aprobada.
+  REJECTED = 'rejected', // La suscripción ha sido rechazada.
+  EXPIRED = 'expired', // La suscripción ha expirado.
 }
 
 @Entity({ name: 'subscripciones' })
@@ -70,4 +73,7 @@ export class Subscripcion {
 
   @Column({ type: 'json', nullable: true })
   metadata: Record<string, any>;
+
+  @Column({ nullable: true })
+  paymentMethodId: string; // Añadir el campo paymentMethodId
 }

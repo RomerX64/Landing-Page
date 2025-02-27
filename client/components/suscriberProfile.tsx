@@ -83,13 +83,65 @@ const SuscriberProfile: React.FC = () => {
                 <h2 className="text-2xl font-bold text-transparent sm:text-4xl bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
                   {subscription.plan?.name}
                 </h2>
-                {subscription.status === SubscriptionStatus.ACTIVE ? (
-                  <CheckCircle className="mt-1 ml-2 text-green-500" />
-                ) : subscription.status === SubscriptionStatus.PAUSED ? (
-                  <PauseCircle className="mt-1 ml-2 text-teal-500" />
-                ) : (
-                  <XCircle className="mt-1 ml-2 text-red-500" />
-                )}
+                <div className="relative group">
+                  {subscription.status === SubscriptionStatus.ACTIVE ? (
+                    <>
+                      <span className="absolute hidden p-1 ml-2 text-sm text-green-500 left-7 group-hover:block">
+                        Active
+                      </span>
+                      <CheckCircle className="mt-1 ml-2 text-green-500" />
+                    </>
+                  ) : subscription.status === SubscriptionStatus.PAUSED ? (
+                    <>
+                      <PauseCircle className="mt-1 ml-2 text-teal-500" />
+                      <span className="absolute hidden p-1 ml-2 text-sm text-teal-500 left-7 group-hover:block">
+                        Paused
+                      </span>
+                    </>
+                  ) : subscription.status === SubscriptionStatus.CANCELLED ? (
+                    <>
+                      <XCircle className="mt-1 ml-2 text-red-500" />
+                      <span className="absolute hidden p-1 ml-2 text-sm text-red-500 left-7 group-hover:block">
+                        Cancelled
+                      </span>
+                    </>
+                  ) : subscription.status === SubscriptionStatus.PENDING ? (
+                    <>
+                      <CaptionsOff className="mt-1 ml-2 text-yellow-500" />
+                      <span className="absolute hidden p-1 ml-2 text-sm text-yellow-500 left-7 group-hover:block">
+                        Pending
+                      </span>
+                    </>
+                  ) : subscription.status === SubscriptionStatus.APPROVED ? (
+                    <>
+                      <CheckCircle className="mt-1 ml-2 text-blue-500" />
+                      <span className="absolute hidden p-1 ml-2 text-sm text-blue-500 left-7 group-hover:block">
+                        Approved
+                      </span>
+                    </>
+                  ) : subscription.status === SubscriptionStatus.REJECTED ? (
+                    <>
+                      <XCircle className="mt-1 ml-2 text-gray-500" />
+                      <span className="absolute hidden p-1 ml-2 text-sm text-gray-500 left-7 group-hover:block">
+                        Rejected
+                      </span>
+                    </>
+                  ) : subscription.status === SubscriptionStatus.EXPIRED ? (
+                    <>
+                      <XCircle className="mt-1 ml-2 text-indigo-500" />
+                      <span className="absolute hidden p-1 ml-2 text-sm text-indigo-500 left-7 group-hover:block">
+                        Expired
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <XCircle className="mt-1 ml-2 text-gray-500" />
+                      <span className="absolute hidden p-1 ml-2 text-sm text-gray-500 left-7 group-hover:block">
+                        Unknown
+                      </span>
+                    </>
+                  )}
+                </div>
               </div>
               <p className="text-sm text-indigo-200/65">{subscription.id}</p>
             </div>

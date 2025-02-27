@@ -39,8 +39,6 @@ const PaymentForm = () => {
       setPaymentProcessing(true);
       await suscribirse(viewPlan.id, paymentMethodToken, formData.payer.email);
 
-      // Show success message and redirect
-      router.push("/suscribirse/success");
     } catch (error) {
       console.error("Error al procesar el pago:", error);
       setError("Hubo un error al procesar el pago. Intenta nuevamente.");

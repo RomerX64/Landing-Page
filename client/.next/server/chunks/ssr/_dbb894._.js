@@ -13,6 +13,9 @@ var SubscriptionStatus = /*#__PURE__*/ function(SubscriptionStatus) {
     SubscriptionStatus["PAUSED"] = "paused";
     SubscriptionStatus["CANCELLED"] = "cancelled";
     SubscriptionStatus["PENDING"] = "pending";
+    SubscriptionStatus["APPROVED"] = "approved";
+    SubscriptionStatus["REJECTED"] = "rejected";
+    SubscriptionStatus["EXPIRED"] = "expired";
     return SubscriptionStatus;
 }({});
 }}),

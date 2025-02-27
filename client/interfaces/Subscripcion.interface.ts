@@ -16,8 +16,11 @@ export interface ISubscripcion {
 }
 
 export enum SubscriptionStatus {
-  ACTIVE = "active",
-  PAUSED = "paused",
-  CANCELLED = "cancelled",
-  PENDING = "pending",
+  ACTIVE = "active", // La suscripción está activa.
+  PAUSED = "paused", // La suscripción ha sido pausada.
+  CANCELLED = "cancelled", // La suscripción ha sido cancelada.
+  PENDING = "pending", // La suscripción está pendiente de aprobación.
+  APPROVED = "approved", // La suscripción ha sido aprobada.
+  REJECTED = "rejected", // La suscripción ha sido rechazada.
+  EXPIRED = "expired", // La suscripción ha expirado.
 }

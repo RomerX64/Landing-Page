@@ -798,6 +798,30 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   top: 440px;
 }
 
+.left-0 {
+  left: 0;
+}
+
+.left-10 {
+  left: 2.5rem;
+}
+
+.left-5 {
+  left: 1.25rem;
+}
+
+.left-7 {
+  left: 1.75rem;
+}
+
+.top-5 {
+  top: 1.25rem;
+}
+
+.top-1 {
+  top: .25rem;
+}
+
 .-z-10 {
   z-index: -10;
 }
@@ -1460,6 +1484,11 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   background-color: rgb(202 138 4 / var(--tw-bg-opacity, 1));
 }
 
+.bg-teal-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(13 148 136 / var(--tw-bg-opacity, 1));
+}
+
 .bg-opacity-50 {
   --tw-bg-opacity: .5;
 }
@@ -1958,6 +1987,21 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
 
 .text-white\/50 {
   color: #ffffff80;
+}
+
+.text-blue-500 {
+  --tw-text-opacity: 1;
+  color: rgb(59 130 246 / var(--tw-text-opacity, 1));
+}
+
+.text-gray-500 {
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity, 1));
+}
+
+.text-yellow-500 {
+  --tw-text-opacity: 1;
+  color: rgb(234 179 8 / var(--tw-text-opacity, 1));
 }
 
 .antialiased {
@@ -2593,6 +2637,10 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
 
 .disabled\:opacity-50:disabled {
   opacity: .5;
+}
+
+.group:hover .group-hover\:block {
+  display: block;
 }
 
 .group:hover .group-hover\:translate-x-0\.5 {

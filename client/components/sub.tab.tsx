@@ -87,6 +87,12 @@ const SuscripcionesTab: React.FC<{
         return "bg-red-600";
       case SubscriptionStatus.PENDING:
         return "bg-yellow-600";
+      case SubscriptionStatus.APPROVED:
+        return "bg-teal-600";
+      case SubscriptionStatus.REJECTED:
+        return "bg-gray-600";
+      case SubscriptionStatus.EXPIRED:
+        return "bg-indigo-600";
       default:
         return "bg-gray-600";
     }
