@@ -16,6 +16,7 @@ import { Plan } from '../User/Planes.entity';
 import { UserService } from '../User/users.service';
 import CreateSubscriptionDto from './dto/createSubscription.dto';
 import CancelSubscriptionDto from './dto/cancelSubscription.dto';
+import { ErrorHandler } from 'src/Utils/Error.Handler';
 
 @Injectable()
 export class SubscriptionsService {
@@ -186,33 +187,37 @@ export class SubscriptionsService {
   }
 
   async handleWebhook(notification: any) {
-    const { id, action } = notification;
-    const subscription = await this.subscriptionRepository.findOne({
-      where: { mercadopagoSubscriptionId: id },
-    });
-    if (!subscription) {
-      throw new HttpException(
-        'Suscripción no encontrada para el webhook',
-        HttpStatus.NOT_FOUND,
-      );
-    }
+    try {
+      const { id, action } = notification;
+      const subscription = await this.subscriptionRepository.findOne({
+        where: { mercadopagoSubscriptionId: id },
+      });
+      if (!subscription) {
+        throw new HttpException(
+          'Suscripción no encontrada para el webhook',
+          HttpStatus.NOT_FOUND,
+        );
+      }
 
-    if (action === 'payment_approved') {
-      subscription.fechaUltimaPaga = new Date();
-      subscription.fechaVencimiento = this.calculateExpiryDate(
-        new Date(),
-        subscription.plan.billingCycle,
-      );
-      subscription.status = SubscriptionStatus.ACTIVE;
-    } else if (action === 'payment_failed') {
-      subscription.status = SubscriptionStatus.PAUSED;
-    } else if (action === 'subscription_cancelled') {
-      subscription.status = SubscriptionStatus.CANCELLED;
-      subscription.cancellationDate = new Date();
-      subscription.cancellationReason =
-        notification.reason || 'No especificado';
+      if (action === 'payment_approved') {
+        subscription.fechaUltimaPaga = new Date();
+        subscription.fechaVencimiento = this.calculateExpiryDate(
+          new Date(),
+          subscription.plan.billingCycle,
+        );
+        subscription.status = SubscriptionStatus.ACTIVE;
+      } else if (action === 'payment_failed') {
+        subscription.status = SubscriptionStatus.PAUSED;
+      } else if (action === 'subscription_cancelled') {
+        subscription.status = SubscriptionStatus.CANCELLED;
+        subscription.cancellationDate = new Date();
+        subscription.cancellationReason =
+          notification.reason || 'No especificado';
+      }
+      await this.subscriptionRepository.save(subscription);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
     }
-    await this.subscriptionRepository.save(subscription);
   }
 
   private calculateExpiryDate(startDate: Date, billingCycle: string): Date {

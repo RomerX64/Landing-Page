@@ -13,6 +13,7 @@ import { Request, Response } from 'express';
 import { SubscriptionsService } from './suscriber.service';
 import CreateSubscriptionDto from './dto/createSubscription.dto';
 import CancelSubscriptionDto from './dto/cancelSubscription.dto';
+import { ErrorHandler } from 'src/Utils/Error.Handler';
 
 @Controller('subscriptions')
 export class SubscriptionsController {
@@ -49,13 +50,11 @@ export class SubscriptionsController {
    * Endpoint para procesar webhooks/notificaciones de Mercado Pago.
    */
   @Post('webhook')
-  async handleWebhook(@Req() req: Request, @Res() res: Response) {
+  async handleWebhook(@Body() body: any) {
     try {
-      // Puedes ajustar la forma en la que recibes y validas la notificación
-      await this.subscriptionsService.handleWebhook(req.body);
-      res.status(200).send('Webhook procesado correctamente');
+      return await this.subscriptionsService.handleWebhook(body);
     } catch (error) {
-      res.status(400).send('Error al procesar el webhook');
+      throw ErrorHandler.handle(error);
     }
   }
 }
