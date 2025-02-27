@@ -6,9 +6,9 @@ import WorkflowImg02 from "@/public/images/workflow-02.png";
 import WorkflowImg03 from "@/public/images/workflow-03.png";
 import Spotlight from "@/components/spotlight";
 import { useContext } from "react";
-import { SuscribeContext } from "@/context/Suscribe.context";
 import { useRouter } from "next/navigation";
 import { IPlan } from "@/interfaces/Plan.interface";
+import { PlansContext } from "@/context/Planes.context";
 
 interface CardPlanProps {
   id: number;
@@ -31,7 +31,7 @@ const CardPlan: React.FC<CardPlanProps> = ({
   descripcion,
   popular,
 }) => {
-  const { selectPlan } = useContext(SuscribeContext);
+  const { selectPlan } = useContext(PlansContext);
   const router = useRouter();
 
   // Función para manejar el evento onClick
@@ -132,7 +132,7 @@ const CardPlan: React.FC<CardPlanProps> = ({
 };
 
 export const TiposDePlanes: React.FC = () => {
-  const { planes } = useContext(SuscribeContext);
+  const { planes } = useContext(PlansContext);
 
   // Mapeo de imágenes
   const imagenMap: Record<string, StaticImageData> = {

@@ -64,7 +64,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
   const { data: session } = useSession();
   const [user, setUserState] = useState<IUser | null>(null);
   const [token, setToken] = useState<string>("");
-
+  console.log(user);
   useEffect(() => {
     const storedToken = localStorage.getItem("token") || Cookies.get("token");
     const storedUser = localStorage.getItem("user") || Cookies.get("user");

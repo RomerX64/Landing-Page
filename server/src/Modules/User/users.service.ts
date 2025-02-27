@@ -45,7 +45,9 @@ export class UserService {
     try {
       const user: User = await this.userRepository.findOne({
         where: { email: email },
+        relations: ['subscripcion'],
       });
+      console.log(user);
       if (!user)
         throw new HttpException('User not found', HttpStatus.NOT_FOUND);
       const userPayload = {
@@ -79,6 +81,7 @@ export class UserService {
     try {
       const user: User = await this.userRepository.findOne({
         where: { email: signIn.email },
+        relations: ['subscripcion'],
       });
       if (!user)
         throw new HttpException('Credencial inválida', HttpStatus.BAD_REQUEST);
@@ -215,7 +218,7 @@ export class UserService {
       const user: User = await this.getUserById(userId);
       const sub: Subscripcion = await this.subsRepository.findOne({
         where: { id: user.subscripcion?.id },
-        relations: ['planes'],
+        relations: ['plan'],
       });
       if (!sub) throw new NotFoundException('Sub not found');
       return sub;

@@ -876,63 +876,32 @@ const AdminProvider = ({ children })=>{
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, x: __turbopack_external_require__, y: __turbopack_external_import__, z: __turbopack_require_stub__ } = __turbopack_context__;
 {
 __turbopack_esm__({
-    "SuscribeContext": (()=>SuscribeContext),
-    "SuscribeProvider": (()=>SuscribeProvider)
+    "SubscriptionContext": (()=>SubscriptionContext),
+    "SubscriptionProvider": (()=>SubscriptionProvider)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mercadopago$2f$sdk$2d$react$2f$esm$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$module__evaluation$3e$__ = __turbopack_import__("[project]/node_modules/@mercadopago/sdk-react/esm/index.js [app-ssr] (ecmascript) <module evaluation>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/app/api/Api.ts [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/utils/error.helper.ts [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$context$2f$user$2e$context$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/context/user.context.tsx [app-ssr] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mercadopago$2f$sdk$2d$react$2f$esm$2f$mercadoPago$2f$initMercadoPago$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__initMercadoPago$3e$__ = __turbopack_import__("[project]/node_modules/@mercadopago/sdk-react/esm/mercadoPago/initMercadoPago/index.js [app-ssr] (ecmascript) <export default as initMercadoPago>");
 "use client";
 ;
 ;
 ;
 ;
 ;
-;
-const defaultContext = {
+const defaultSubscriptionContext = {
     sub: null,
-    planes: [],
-    viewPlan: null,
     suscribirse: async ()=>{},
     desuscribirse: async ()=>{},
-    selectPlan: async ()=>null,
-    changePlan: ()=>{},
     fetchSub: async ()=>null,
     fetchPlan: async ()=>null
 };
-const SuscribeContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["createContext"])(defaultContext);
-const SuscribeProvider = ({ children })=>{
-    const { user } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useContext"])(__TURBOPACK__imported__module__$5b$project$5d2f$context$2f$user$2e$context$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["UserContext"]);
+const SubscriptionContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["createContext"])(defaultSubscriptionContext);
+const SubscriptionProvider = ({ children })=>{
+    const { user } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useContext"])(__TURBOPACK__imported__module__$5b$project$5d2f$context$2f$user$2e$context$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"]);
     const [sub, setSub] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
-    const [planes, setPlanes] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
-    const [viewPlan, setViewPlan] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
-    // Inicializar MercadoPago (se ejecuta solo una vez)
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        const token = ("TURBOPACK compile-time value", "APP_USR-a88f991b-d04b-490f-b447-502303d60b9e");
-        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mercadopago$2f$sdk$2d$react$2f$esm$2f$mercadoPago$2f$initMercadoPago$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__initMercadoPago$3e$__["initMercadoPago"])(("TURBOPACK compile-time truthy", 1) ? token : ("TURBOPACK unreachable", undefined));
-    }, []);
-    // Función para obtener planes - modificada para refrescar siempre
-    const getPlanes = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async ()=>{
-        try {
-            // Llamar siempre a la API sin revisar localStorage primero
-            const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get(`/users/planes`));
-            if (error || !data?.data) {
-                console.error("Error al obtener planes:", error || "No se retornaron datos");
-                return;
-            }
-            const fetchedPlanes = data.data;
-            setPlanes(fetchedPlanes);
-            localStorage.setItem("planes", JSON.stringify(fetchedPlanes));
-            console.log("Planes actualizados desde la API");
-        } catch (err) {
-            console.error("Error en getPlanes:", err);
-        }
-    }, []);
-    const suscribirse = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async (planId, paymentMethodToken, email)=>{
+    const suscribirse = async (planId, paymentMethodToken, email)=>{
         try {
             const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post(`/subscriptions`, {
                 planId,
@@ -949,10 +918,8 @@ const SuscribeProvider = ({ children })=>{
         } catch (err) {
             console.error("Excepción en suscribirse:", err);
         }
-    }, [
-        user
-    ]);
-    const desuscribirse = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async ()=>{
+    };
+    const desuscribirse = async ()=>{
         if (!sub) return;
         try {
             const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post(`/subscriptions/cancel`, {
@@ -968,88 +935,27 @@ const SuscribeProvider = ({ children })=>{
         } catch (err) {
             console.error("Excepción en desuscribirse:", err);
         }
-    }, [
-        sub
-    ]);
-    const selectPlan = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async (planId)=>{
-        if (planes.length === 0) {
-            await getPlanes();
-        }
-        const foundPlan = planes.find((plan)=>plan.id === planId);
-        if (!foundPlan) {
-            console.error("Plan no encontrado");
-            return null;
-        }
-        setViewPlan(foundPlan);
-        localStorage.setItem("viewPlan", JSON.stringify(foundPlan));
-        return foundPlan;
-    }, [
-        planes,
-        getPlanes
-    ]);
-    const changePlan = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])((direction)=>{
-        if (!viewPlan || planes.length === 0) return;
-        const currentIndex = planes.findIndex((plan)=>plan.id === viewPlan.id);
-        if (currentIndex === -1) return;
-        let newIndex = direction === "next" ? currentIndex + 1 : currentIndex - 1;
-        if (newIndex < 0) newIndex = planes.length - 1;
-        if (newIndex >= planes.length) newIndex = 0;
-        const newPlan = planes[newIndex];
-        setViewPlan(newPlan);
-        localStorage.setItem("viewPlan", JSON.stringify(newPlan));
-    }, [
-        planes,
-        viewPlan
-    ]);
-    // Cargar la suscripción al montar el componente
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        const storedSub = localStorage.getItem("subscripcion");
-        if (storedSub) {
-            setSub(JSON.parse(storedSub));
-        }
-    }, [
-        user
-    ]);
-    // Efecto específico para cargar planes cada vez que se refresque la página
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        getPlanes();
-    }, []); // Array vacío indica que se ejecuta solo al montar el componente (refrescar página)
-    // Seleccionar el plan de vista si aún no está seleccionado
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        if (planes.length > 0 && !viewPlan) {
-            const storedViewPlan = localStorage.getItem("viewPlan");
-            if (storedViewPlan) {
-                setViewPlan(JSON.parse(storedViewPlan));
-            } else {
-                const popularPlan = planes.find((plan)=>plan.popular === true);
-                setViewPlan(popularPlan || planes[0]);
-            }
-        }
-    }, [
-        planes,
-        viewPlan
-    ]);
+    };
     const fetchSub = async ()=>{
         if (!user) return null;
-        if (sub) return null;
-        console.log("Obteniendo suscripción para el usuario:", user.id);
         const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get(`/users/sub/${user.id}`));
-        console.log("Respuesta de la API de suscripción:", data);
         if (error || !data?.data) {
             console.error("Error al obtener suscripción:", error || "No se retornaron datos");
             return null;
         }
-        setSub(data.data);
-        fetchPlan();
-        localStorage.setItem("subscripcion", JSON.stringify(data.data));
-        return data.data;
+        const newSub = data.data;
+        setSub(newSub);
+        localStorage.setItem("subscripcion", JSON.stringify(newSub));
+        // Se puede llamar a fetchPlan(newSub) aquí si se requiere actualizar el plan asociado
+        return newSub;
     };
-    const fetchPlan = async ()=>{
-        if (!sub || !sub.plan) {
+    const fetchPlan = async (subscription)=>{
+        const currentSub = subscription || sub;
+        if (!currentSub || !currentSub.plan) {
             console.error("No hay suscripción activa para obtener el plan.");
             return null;
         }
-        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get(`/users/plan/${sub.plan.id}`));
+        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get(`/users/plan/${currentSub.plan.id}`));
         console.log("Respuesta de la API del plan:", data);
         if (error || !data?.data) {
             console.error("Error al obtener el plan:", error || "No se retornaron datos");
@@ -1057,39 +963,33 @@ const SuscribeProvider = ({ children })=>{
         }
         return data.data;
     };
+    // Cargar suscripción almacenada o actualizarla cuando el usuario cambie
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         if (!user) return;
+        const storedSub = localStorage.getItem("subscripcion");
+        if (storedSub) {
+            setSub(JSON.parse(storedSub));
+        }
         fetchSub();
     }, [
         user
     ]);
     const value = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>({
             sub,
-            planes,
-            viewPlan,
             suscribirse,
             desuscribirse,
-            selectPlan,
-            changePlan,
             fetchSub,
             fetchPlan
         }), [
         sub,
-        planes,
-        viewPlan,
-        suscribirse,
-        desuscribirse,
-        selectPlan,
-        changePlan,
-        fetchSub,
-        fetchPlan
+        user
     ]);
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(SuscribeContext.Provider, {
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(SubscriptionContext.Provider, {
         value: value,
         children: children
     }, void 0, false, {
         fileName: "[project]/context/Suscribe.context.tsx",
-        lineNumber: 274,
+        lineNumber: 156,
         columnNumber: 5
     }, this);
 };

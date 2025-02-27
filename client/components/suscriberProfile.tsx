@@ -12,10 +12,10 @@ import {
   ISubscripcion,
   SubscriptionStatus,
 } from "@/interfaces/Subscripcion.interface";
-import { SuscribeContext } from "@/context/Suscribe.context";
+import { SubscriptionContext } from "@/context/Suscribe.context";
 
 const SuscriberProfile: React.FC = () => {
-  const { sub, fetchSub } = useContext(SuscribeContext);
+  const { sub, fetchSub } = useContext(SubscriptionContext);
   const [loading, setLoading] = useState<boolean>(true);
   const [subscription, setSubscription] = useState<ISubscripcion | null>(null);
 

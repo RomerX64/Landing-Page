@@ -6,11 +6,12 @@ import localFont from "next/font/local";
 
 import Header from "@/components/ui/header";
 import { AdminProvider } from "@/context/Administracion.context";
-import { SuscribeProvider } from "@/context/Suscribe.context";
 import { UserProvider } from "@/context/user.context";
 import { SessionProvider } from "next-auth/react";
 import { initMercadoPago } from "@mercadopago/sdk-react";
 import { JSX, ReactNode } from "react";
+import { SubscriptionProvider } from "@/context/Suscribe.context";
+import { PlansProvider } from "@/context/Planes.context";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -57,16 +58,18 @@ export default function RootLayout({
       <SessionProvider>
         <AdminProvider>
           <UserProvider>
-            <SuscribeProvider>
-              <body
-                className={`${inter.variable} ${nacelle.variable} bg-gray-950 font-inter text-base text-gray-200 antialiased`}
-              >
-                <div className="flex min-h-screen flex-col overflow-hidden supports-[overflow:clip]:overflow-clip">
-                  <Header />
-                  {children}
-                </div>
-              </body>
-            </SuscribeProvider>
+            <SubscriptionProvider>
+              <PlansProvider>
+                <body
+                  className={`${inter.variable} ${nacelle.variable} bg-gray-950 font-inter text-base text-gray-200 antialiased`}
+                >
+                  <div className="flex min-h-screen flex-col overflow-hidden supports-[overflow:clip]:overflow-clip">
+                    <Header />
+                    {children}
+                  </div>
+                </body>
+              </PlansProvider>
+            </SubscriptionProvider>
           </UserProvider>
         </AdminProvider>
       </SessionProvider>
