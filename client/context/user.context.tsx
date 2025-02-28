@@ -64,7 +64,25 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
   const { data: session } = useSession();
   const [user, setUserState] = useState<IUser | null>(null);
   const [token, setToken] = useState<string>("");
-  console.log(user);
+
+  // Effect para manejar la sesión de Google
+  useEffect(() => {
+    const handleGoogleSession = async () => {
+      if (session && session.user && !user) {
+        try {
+          const { email, name } = session.user as any;
+          if (email && name) {
+            await registerUser(email, name);
+          }
+        } catch (error) {
+          console.error("Error al procesar la sesión de Google:", error);
+        }
+      }
+    };
+
+    handleGoogleSession();
+  }, [session]);
+
   useEffect(() => {
     const storedToken = localStorage.getItem("token") || Cookies.get("token");
     const storedUser = localStorage.getItem("user") || Cookies.get("user");
@@ -240,18 +258,15 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
 
   const signInWithGoogle = useCallback(async (): Promise<IUser | null> => {
     try {
+      // Solo inicia el flujo de Google y no intenta obtener la sesión inmediatamente
       await signIn("google", { callbackUrl: "/" });
-      const session = await getSession();
-      if (!session?.user) {
-        throw new Error("No se pudo obtener la sesión del usuario");
-      }
-      const { email, name } = session.user as IUser;
-      return registerUser(email, name);
+      // La sesión se manejará a través del useEffect cuando esté disponible
+      return null;
     } catch (error) {
       console.error("Error en signInWithGoogle:", error);
       return null;
     }
-  }, [registerUser]);
+  }, []);
 
   const signUpWithGoogle = useCallback(async (): Promise<IUser | null> => {
     return signInWithGoogle();

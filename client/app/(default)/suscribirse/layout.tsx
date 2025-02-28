@@ -26,9 +26,6 @@ const PaymentForm = () => {
   };
 
   const handleFormSubmit = async (formData: any) => {
-    console.log(formData);
-    console.log(formData.payer);
-    console.log(formData.payer.email);
     if (!viewPlan) return;
 
     if (!validateCardData(formData)) return;
@@ -38,7 +35,6 @@ const PaymentForm = () => {
 
       setPaymentProcessing(true);
       await suscribirse(viewPlan.id, paymentMethodToken, formData.payer.email);
-
     } catch (error) {
       console.error("Error al procesar el pago:", error);
       setError("Hubo un error al procesar el pago. Intenta nuevamente.");
@@ -48,7 +44,7 @@ const PaymentForm = () => {
   };
 
   return (
-    <section className="w-8/12 max-w-3xl px-4 py-12 mx-auto ">
+    <section className="w-10/12 max-w-3xl px-1 py-5 mx-auto ">
       <div className="p-8 bg-gray-800 shadow-2xl rounded-2xl">
         <div className="flex items-center mb-6">
           <button
@@ -76,7 +72,7 @@ const PaymentForm = () => {
           </div>
         )}
 
-        <div id="cardPaymentBrick_container" className="min-h-96"></div>
+        <div id="cardPaymentBrick_container"></div>
 
         <CardPayment
           initialization={{ amount: viewPlan ? viewPlan.precio : 0 }}

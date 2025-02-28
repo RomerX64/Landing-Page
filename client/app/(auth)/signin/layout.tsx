@@ -8,7 +8,7 @@ import { Loader2 } from "lucide-react";
 
 export default function SignInLayout() {
   const { signInWithGoogle, signInO, user } = useContext(UserContext);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
 
   // Form state
@@ -53,6 +53,8 @@ export default function SignInLayout() {
       });
       if (user) {
         router.push("/");
+      } else {
+        setError("Credenciales inválidas");
       }
     } catch (err: any) {
       setError(err.message || "Hubo un error al iniciar sesión.");
@@ -66,11 +68,12 @@ export default function SignInLayout() {
     setError("");
     try {
       await signInWithGoogle();
+      // No need to do anything else here, the session effect in UserContext will handle the rest
     } catch (err: any) {
       setError("Error al iniciar sesión con Google");
-    } finally {
       setIsLoading(false);
     }
+    // Notice we don't set isLoading to false here - this will be handled by the redirect
   };
 
   return (
@@ -101,7 +104,7 @@ export default function SignInLayout() {
                 placeholder="Su email"
                 value={formData.email}
                 onChange={handleInputChange}
-                disabled={isLoading}
+                disabled={isLoading || status === "loading"}
                 aria-describedby={error ? "error-message" : undefined}
               />
             </div>
@@ -131,7 +134,7 @@ export default function SignInLayout() {
                 placeholder="Su contraseña"
                 value={formData.password}
                 onChange={handleInputChange}
-                disabled={isLoading}
+                disabled={isLoading || status === "loading"}
                 aria-describedby={error ? "error-message" : undefined}
               />
             </div>
@@ -150,7 +153,7 @@ export default function SignInLayout() {
           <div className="space-y-4">
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={isLoading || status === "loading"}
               className="btn w-full bg-gradient-to-t from-indigo-600 to-indigo-500 text-white hover:bg-[length:100%_150%] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center"
             >
               {isLoading ? (
@@ -162,10 +165,10 @@ export default function SignInLayout() {
             <button
               type="button"
               onClick={handleGoogleSignIn}
-              disabled={isLoading}
+              disabled={isLoading || status === "loading"}
               className="flex items-center justify-center w-full text-gray-300 transition-all duration-200 btn bg-gradient-to-b from-gray-800 to-gray-800/60 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoading ? (
+              {isLoading || status === "loading" ? (
                 <Loader2 className="w-5 h-5 mr-2 animate-spin" />
               ) : (
                 <svg
@@ -179,7 +182,7 @@ export default function SignInLayout() {
                   <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
                 </svg>
               )}
-              Continuar con Google
+              {status === "loading" ? "Procesando..." : "Continuar con Google"}
             </button>
           </div>
         </form>

@@ -80,7 +80,7 @@ export class SubscriptionsService {
           payer_email: createSubscriptionDto.userEmail,
           reason: `Subscripción a Assetly - Plan ${plan.name || 'Premium'}`,
           card_token_id: createSubscriptionDto.paymentMethodToken,
-          status: 'authorized',
+          status: 'pending',
           back_url:
             this.configService.get<string>('SUBSCRIPTION_SUCCESS_URL') ||
             'https://assetly-m977.onrender.com/success',
@@ -88,7 +88,7 @@ export class SubscriptionsService {
             frequency: 1,
             frequency_type: 'months',
             transaction_amount: plan.precio || 200,
-            currency_id: 'ARS',
+            currency_id: 'USD',
           },
         },
         requestOptions: {
@@ -347,7 +347,7 @@ export class SubscriptionsService {
     return {
       message: 'Suscripción creada correctamente en estado pendiente',
       subscription: savedSubscription,
-    }; 
+    };
   }
 
   private async handleExistingSubscription(user: UserEntity) {
