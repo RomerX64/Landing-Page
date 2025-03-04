@@ -3,34 +3,35 @@
   "middleware": {
     "/": {
       "files": [
-        "server/edge-runtime-webpack.js",
-        "server/middleware.js"
+        "server/edge/chunks/_d732ef._.js",
+        "server/edge/chunks/[root of the server]__70655b._.js",
+        "server/edge/chunks/edge-wrapper_734d15.js"
       ],
       "name": "middleware",
       "page": "/",
       "matchers": [
         {
-          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/administracion(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?(\\.json)?[\\/#\\?]?$",
+          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/administracion(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?(\\\\.json)?[\\/#\\?]?$",
           "originalSource": "/administracion/:path*"
         },
         {
-          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/user(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?(\\.json)?[\\/#\\?]?$",
+          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/user(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?(\\\\.json)?[\\/#\\?]?$",
           "originalSource": "/user/:path*"
         }
       ],
       "wasm": [],
       "assets": [],
       "env": {
-        "__NEXT_BUILD_ID": "jwdfX9Bjggn9fpWrRKGqh",
+        "__NEXT_BUILD_ID": "development",
         "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "K8ES/gBJBez6lnYAzECTC1mh6fesht29ZURRisYVaBs=",
-        "__NEXT_PREVIEW_MODE_ID": "dfce0246e284fce5772130dfafc3f774",
-        "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "8c6a57831cea1e27b902e488af8f8e10eaff5c9d561d99ab4d9392a1e012191f",
-        "__NEXT_PREVIEW_MODE_SIGNING_KEY": "74b6e7503e9f7c6bc2a1264494b56a8f5c3488ee486ed4a9a9427ee55c4e5260"
+        "__NEXT_PREVIEW_MODE_ID": "6ceb69428a43a2494b4e3bf303d8d4e7",
+        "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "bbc81696082e5aabc1c1bf7981ce3f65b09a75b326e70e426ac1a58bef48be97",
+        "__NEXT_PREVIEW_MODE_SIGNING_KEY": "d45362d8a30a504833d375b7568c1ba4a5a72824adf25d076f75b203f3d04f51"
       }
     }
   },
-  "functions": {},
   "sortedMiddleware": [
     "/"
-  ]
+  ],
+  "functions": {}
 }
