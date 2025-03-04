@@ -62,18 +62,18 @@ export class SubscriptionsController {
   ) {
     try {
       // Verificar la firma del webhook
-      // this.verifyWebhookSignature(body, signature);
+      this.verifyWebhookSignature(body, signature);
 
       // Procesar el webhook
       return await this.subscriptionsService.handleWebhook(body);
     } catch (error) {
       // Log the error for internal tracking
       console.error('Webhook verification failed:', error);
-      
+
       // Throw a specific error for unauthorized webhook
       throw new HttpException(
         'Webhook verification failed',
-        HttpStatus.UNAUTHORIZED
+        HttpStatus.UNAUTHORIZED,
       );
     }
   }
@@ -86,29 +86,36 @@ export class SubscriptionsController {
   private verifyWebhookSignature(body: any, signature: string) {
     // Obtener la clave secreta de Mercado Pago desde variables de entorno
     const secretKey = this.configService.get<string>('MERCADO_PAGO_WEBHOOK_SECRET');
-    
-    
+  
     if (!secretKey) {
       throw new Error('Mercado Pago webhook secret key is not configured');
     }
-
+  
     // Convertir el cuerpo a string para la verificación
     const bodyString = JSON.stringify(body);
-
+  
     // Generar un hash HMAC-SHA256 con la clave secreta
     const generatedSignature = crypto
       .createHmac('sha256', secretKey)
       .update(bodyString)
       .digest('hex');
-
-    // Comparar la firma generada con la recibida
-    // Mercado Pago generalmente envía la firma con un prefijo (por ejemplo, 'sha256=')
-    const isSignatureValid = 
-      signature === generatedSignature || 
-      signature === `sha256=${generatedSignature}`;
-
-    if (!isSignatureValid) {
+  
+    // El header tiene el formato "ts=...,v1=..."
+    // Extraer la parte de la firma que comienza con "v1="
+    const parts = signature.split(',');
+    const v1Part = parts.find(part => part.trim().startsWith('v1='));
+  
+    if (!v1Part) {
+      throw new Error('Formato del header x-signature no es válido');
+    }
+  
+    // Extraer la firma (valor después de "v1=")
+    const receivedSignature = v1Part.split('=')[1].trim();
+  
+    // Comparar la firma generada con la firma recibida
+    if (receivedSignature !== generatedSignature) {
       throw new Error('Invalid webhook signature');
     }
   }
+  
 }
