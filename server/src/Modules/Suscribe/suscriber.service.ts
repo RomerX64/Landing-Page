@@ -18,6 +18,7 @@ import { UserService } from '../User/users.service';
 import CreateSubscriptionDto from './dto/createSubscription.dto';
 import CancelSubscriptionDto from './dto/cancelSubscription.dto';
 import { ErrorHandler } from 'src/Utils/Error.Handler';
+import { PreApprovalResponse } from 'mercadopago/dist/clients/preApproval/commonTypes';
 
 @Injectable()
 export class SubscriptionsService {
@@ -81,13 +82,15 @@ export class SubscriptionsService {
           reason: `Subscripción a Assetly - Plan ${plan.name || 'Premium'}`,
           card_token_id: createSubscriptionDto.paymentMethodToken,
           status: 'pending',
-          back_url:
-            this.configService.get<string>('SUBSCRIPTION_SUCCESS_URL') ||
-            'https://assetly-m977.onrender.com/success',
+          //! Solo funciona en producion back_url
+          //! toma error http://localhost:3000/success, http no es valido
+          //? back_url: 
+          //?  this.configService.get<string>('SUBSCRIPTION_SUCCESS_URL') ||
+          //? 'https://assetly-m977.onrender.com/success',
           auto_recurring: {
             frequency: 1,
             frequency_type: 'months',
-            transaction_amount: plan.precio || 200,
+            transaction_amount: plan.precio,
             currency_id: 'USD',
           },
         },
@@ -292,7 +295,7 @@ export class SubscriptionsService {
     }
   }
 
-  private async getPlanById(planId: number) {
+  private async getPlanById(planId: number): Promise<Plan> {
     const plan = await this.planRepository.findOne({
       where: { id: planId },
     });
@@ -307,7 +310,7 @@ export class SubscriptionsService {
   private async saveSubscriptionData(
     userEmail: string,
     plan: Plan,
-    mpResponse: any,
+    mpResponse: PreApprovalResponse,
   ) {
     const user = await this.userRepository.findOne({
       where: { email: userEmail },

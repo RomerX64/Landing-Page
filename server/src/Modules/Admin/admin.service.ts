@@ -113,6 +113,16 @@ export class AdminService {
     }
   }
 
+  async verifyEmail(userId: string): Promise<User> {
+    try {
+      const user = await this.userService.getUserById(userId);
+      await this.userRepository.update(user.id, { emailVerified: true });
+      return await this.userService.getUserById(userId);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
   // Planes
   async getAllPlans(): Promise<Plan[]> {
     try {

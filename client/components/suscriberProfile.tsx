@@ -15,9 +15,14 @@ import {
 import { SubscriptionContext } from "@/context/Suscribe.context";
 
 const SuscriberProfile: React.FC = () => {
-  const { sub, fetchSub } = useContext(SubscriptionContext);
+  const { sub, fetchSub, desuscribirse } = useContext(SubscriptionContext);
   const [loading, setLoading] = useState<boolean>(true);
   const [subscription, setSubscription] = useState<ISubscripcion | null>(null);
+  const [showCancelModal, setShowCancelModal] = useState<boolean>(false);
+  const [cancellationReason, setCancellationReason] = useState<string>("");
+  const [cancelLoading, setCancelLoading] = useState<boolean>(false);
+  const [cancelSuccess, setCancelSuccess] = useState<boolean>(false);
+  const [cancelError, setCancelError] = useState<string | null>(null);
 
   useEffect(() => {
     const getSubscription = async () => {
@@ -64,7 +69,38 @@ const SuscriberProfile: React.FC = () => {
     : null;
 
   const handleDesub = () => {
-    // Implementa la lógica para cancelar la suscripción
+    setShowCancelModal(true);
+  };
+
+  const handleCancelSubscription = async () => {
+    setCancelLoading(true);
+    setCancelError(null);
+
+    try {
+      const success = await desuscribirse(cancellationReason);
+
+      if (success) {
+        setCancelSuccess(true);
+        // Actualizamos la suscripción mostrada
+        await fetchSub();
+      } else {
+        setCancelError(
+          "No se pudo cancelar la suscripción. Por favor, intenta de nuevo más tarde."
+        );
+      }
+    } catch (error) {
+      setCancelError("Error al procesar la cancelación.");
+      console.error("Error en cancelación:", error);
+    } finally {
+      setCancelLoading(false);
+    }
+  };
+
+  const closeModal = () => {
+    setShowCancelModal(false);
+    setCancellationReason("");
+    setCancelSuccess(false);
+    setCancelError(null);
   };
 
   return (
@@ -93,52 +129,52 @@ const SuscriberProfile: React.FC = () => {
                     </>
                   ) : subscription.status === SubscriptionStatus.PAUSED ? (
                     <>
-                      <PauseCircle className="mt-1 ml-2 text-teal-500" />
                       <span className="absolute hidden p-1 ml-2 text-sm text-teal-500 left-7 group-hover:block">
                         Paused
                       </span>
+                      <PauseCircle className="mt-1 ml-2 text-teal-500" />
                     </>
                   ) : subscription.status === SubscriptionStatus.CANCELLED ? (
                     <>
-                      <XCircle className="mt-1 ml-2 text-red-500" />
                       <span className="absolute hidden p-1 ml-2 text-sm text-red-500 left-7 group-hover:block">
                         Cancelled
                       </span>
+                      <XCircle className="mt-1 ml-2 text-red-500" />
                     </>
                   ) : subscription.status === SubscriptionStatus.PENDING ? (
                     <>
-                      <CaptionsOff className="mt-1 ml-2 text-yellow-500" />
                       <span className="absolute hidden p-1 ml-2 text-sm text-yellow-500 left-7 group-hover:block">
                         Pending
                       </span>
+                      <CaptionsOff className="mt-1 ml-2 text-yellow-500" />
                     </>
                   ) : subscription.status === SubscriptionStatus.APPROVED ? (
                     <>
-                      <CheckCircle className="mt-1 ml-2 text-blue-500" />
                       <span className="absolute hidden p-1 ml-2 text-sm text-blue-500 left-7 group-hover:block">
                         Approved
                       </span>
+                      <CheckCircle className="mt-1 ml-2 text-blue-500" />
                     </>
                   ) : subscription.status === SubscriptionStatus.REJECTED ? (
                     <>
-                      <XCircle className="mt-1 ml-2 text-gray-500" />
                       <span className="absolute hidden p-1 ml-2 text-sm text-gray-500 left-7 group-hover:block">
                         Rejected
                       </span>
+                      <XCircle className="mt-1 ml-2 text-gray-500" />
                     </>
                   ) : subscription.status === SubscriptionStatus.EXPIRED ? (
                     <>
-                      <XCircle className="mt-1 ml-2 text-indigo-500" />
                       <span className="absolute hidden p-1 ml-2 text-sm text-indigo-500 left-7 group-hover:block">
                         Expired
                       </span>
+                      <XCircle className="mt-1 ml-2 text-indigo-500" />
                     </>
                   ) : (
                     <>
-                      <XCircle className="mt-1 ml-2 text-gray-500" />
                       <span className="absolute hidden p-1 ml-2 text-sm text-gray-500 left-7 group-hover:block">
                         Unknown
                       </span>
+                      <XCircle className="mt-1 ml-2 text-gray-500" />
                     </>
                   )}
                 </div>
@@ -186,6 +222,79 @@ const SuscriberProfile: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Modal de cancelación */}
+      {showCancelModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="w-full max-w-md p-6 mx-auto bg-gray-800 rounded-lg">
+            <h3 className="mb-4 text-xl font-bold text-white">
+              Cancelar Suscripción
+            </h3>
+
+            {cancelSuccess ? (
+              <div className="mb-6">
+                <div className="p-4 mb-4 text-green-400 bg-green-900 rounded-md bg-opacity-20">
+                  Tu suscripción ha sido cancelada correctamente.
+                </div>
+                <button
+                  onClick={closeModal}
+                  className="w-full px-4 py-2 font-bold text-white bg-indigo-600 rounded hover:bg-indigo-700"
+                >
+                  Cerrar
+                </button>
+              </div>
+            ) : (
+              <>
+                <p className="mb-4 text-gray-300">
+                  ¿Estás seguro de que deseas cancelar tu suscripción? Perderás
+                  acceso a todos los beneficios al final del período actual.
+                </p>
+
+                <div className="mb-4">
+                  <label
+                    htmlFor="cancellationReason"
+                    className="block mb-2 text-sm font-medium text-gray-300"
+                  >
+                    Motivo de cancelación (opcional)
+                  </label>
+                  <textarea
+                    id="cancellationReason"
+                    value={cancellationReason}
+                    onChange={(e) => setCancellationReason(e.target.value)}
+                    className="w-full p-2 text-white bg-gray-700 border border-gray-600 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                    rows={3}
+                    placeholder="¿Por qué deseas cancelar tu suscripción?"
+                  ></textarea>
+                </div>
+
+                {cancelError && (
+                  <div className="p-4 mb-4 text-red-400 bg-red-900 rounded-md bg-opacity-20">
+                    {cancelError}
+                  </div>
+                )}
+
+                <div className="flex gap-3">
+                  <button
+                    onClick={closeModal}
+                    className="flex-1 px-4 py-2 font-bold text-white bg-gray-600 rounded hover:bg-gray-700"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={handleCancelSubscription}
+                    disabled={cancelLoading}
+                    className={`flex-1 px-4 py-2 font-bold text-white bg-red-600 rounded hover:bg-red-700 ${
+                      cancelLoading ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                  >
+                    {cancelLoading ? "Procesando..." : "Confirmar"}
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </section>
   );
 };

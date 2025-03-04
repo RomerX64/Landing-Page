@@ -878,7 +878,7 @@ const AdminProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/context/Administracion.context.tsx",
-        lineNumber: 244,
+        lineNumber: 245,
         columnNumber: 5
     }, this);
 };
@@ -906,12 +906,12 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$context$2f$user$2e$context$2
 const defaultSubscriptionContext = {
     sub: null,
     suscribirse: async ()=>{},
-    desuscribirse: async ()=>{},
+    desuscribirse: async ()=>false,
     fetchSub: async ()=>null
 };
 const SubscriptionContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["createContext"])(defaultSubscriptionContext);
 const SubscriptionProvider = ({ children })=>{
-    const { user } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useContext"])(__TURBOPACK__imported__module__$5b$project$5d2f$context$2f$user$2e$context$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"]);
+    const { user, signOut } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useContext"])(__TURBOPACK__imported__module__$5b$project$5d2f$context$2f$user$2e$context$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"]);
     const [sub, setSub] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
     const suscribirse = async (planId, paymentMethodToken, email)=>{
         try {
@@ -931,26 +931,38 @@ const SubscriptionProvider = ({ children })=>{
             console.error("Excepción en suscribirse:", err);
         }
     };
-    const desuscribirse = async ()=>{
-        if (!sub) return;
+    const desuscribirse = async (cancellationReason)=>{
         try {
-            const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post(`/subscriptions/cancel`, {
-                subscriptionId: sub.mercadopagoSubscriptionId,
-                cancellationReason: "Cancelación solicitada por el usuario"
-            }));
-            if (error || !data?.data?.subscription) {
-                console.error("Error al desuscribirse:", error || "No se retornaron datos");
-                return;
+            if (!sub || !sub.id) {
+                console.error("No hay suscripción activa para cancelar");
+                return false;
             }
-            setSub(null);
-            localStorage.removeItem("subscripcion");
+            const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post(`/subscriptions/cancel`, {
+                subscriptionId: sub.id,
+                cancellationReason: cancellationReason || "Cancelado por el usuario"
+            }));
+            if (error || !data?.data) {
+                console.error("Error al cancelar la suscripción:", error || "No se retornaron datos");
+                return false;
+            }
+            // Actualizamos el estado con la suscripción cancelada
+            const updatedSubscription = data.data.subscription;
+            setSub(updatedSubscription);
+            // Si guardas la suscripción en localStorage, actualízala
+            if (updatedSubscription) {
+                localStorage.setItem("subscripcion", JSON.stringify(updatedSubscription));
+            } else {
+                localStorage.removeItem("subscripcion");
+            }
+            return true;
         } catch (err) {
             console.error("Excepción en desuscribirse:", err);
+            return false;
         }
     };
     const fetchSub = async ()=>{
         if (!user) return null;
-        if (!user.subscripcion) setSub(user.subscripcion);
+        if (user.subscripcion) setSub(user.subscripcion);
         const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get(`/users/sub/${user.id}`));
         if (error || !data?.data) {
             console.log("Error al obtener la Subscripcion, error:", error || "No se retornaron datos");
@@ -960,7 +972,12 @@ const SubscriptionProvider = ({ children })=>{
         return data.data;
     };
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        fetchSub();
+        if (!user) {
+            setSub(null);
+            localStorage.removeItem("subscripcion");
+        } else {
+            fetchSub();
+        }
     }, [
         user
     ]);
@@ -978,7 +995,7 @@ const SubscriptionProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/context/Suscribe.context.tsx",
-        lineNumber: 127,
+        lineNumber: 153,
         columnNumber: 5
     }, this);
 };

@@ -82,7 +82,7 @@ const SuscripcionesTab: React.FC<{
       case SubscriptionStatus.ACTIVE:
         return "bg-green-600";
       case SubscriptionStatus.PAUSED:
-        return "bg-blue-600";
+        return "bg-indigo-600";
       case SubscriptionStatus.CANCELLED:
         return "bg-red-600";
       case SubscriptionStatus.PENDING:
@@ -90,14 +90,13 @@ const SuscripcionesTab: React.FC<{
       case SubscriptionStatus.APPROVED:
         return "bg-teal-600";
       case SubscriptionStatus.REJECTED:
-        return "bg-gray-600";
+        return "bg-red-400";
       case SubscriptionStatus.EXPIRED:
-        return "bg-indigo-600";
+        return "bg-blue-600";
       default:
         return "bg-gray-600";
     }
   };
-
   // Función para formatear fecha
   const formatDate = (date: Date) => {
     if (!date) return "N/A";
@@ -134,8 +133,6 @@ const SuscripcionesTab: React.FC<{
 
   return (
     <div>
-      <h2 className="mb-4 text-2xl font-bold text-white">Suscripciones</h2>
-
       {/* Filtros */}
       <div className="flex flex-col gap-4 mb-6 md:flex-row">
         <input
@@ -143,7 +140,7 @@ const SuscripcionesTab: React.FC<{
           placeholder="Buscar por ID, email o plan..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="flex-1 px-4 py-2 text-white bg-gray-700 rounded-lg"
+          className="flex-1 px-4 py-2 text-white bg-gray-700 rounded-lg max-h-10" 
         />
         <div className="flex flex-wrap gap-4">
           {Object.values(SubscriptionStatus).map((status) => (

@@ -56,6 +56,7 @@ interface AdminProviderProps {
 }
 
 export const AdminProvider = ({ children }: AdminProviderProps) => {
+
   const getUsers = async (): Promise<IUser[]> => {
     const cached = localStorage.getItem("admin_users");
     if (cached) {
@@ -68,7 +69,7 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
     localStorage.setItem("admin_users", JSON.stringify(data.data));
     return data.data;
   };
-
+  
   const getUsersSubscribed = async (): Promise<IUser[]> => {
     const cached = localStorage.getItem("admin_usersSubscribed");
     if (cached) {

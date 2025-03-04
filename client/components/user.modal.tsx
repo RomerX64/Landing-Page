@@ -17,9 +17,13 @@ const UserModal: React.FC<{
             .filter(([key]) => key !== "password" && key !== "isAdmin")
             .map(([key, value]) => (
               <div key={key} className="flex">
-                <span className="mr-2 font-bold">{key}:</span>
-                <span>
-                  {typeof value === "object"
+                <span className="mr-2 font-bold<">{key}:</span>
+                <span className="text-sm text-gray-400 ">
+                  {key === "subscripcion" &&
+                  typeof value === "object" &&
+                  value !== null
+                    ? value.id
+                    : typeof value === "object"
                     ? JSON.stringify(value)
                     : String(value)}
                 </span>

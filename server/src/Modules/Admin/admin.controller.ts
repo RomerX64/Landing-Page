@@ -99,6 +99,18 @@ export class AdminController {
     }
   }
 
+  @Put('/verifyEmail/:userId')
+  @ApiOperation({
+    summary: 'verifica el mail',
+  })
+  async verifyEmail(@Param('userId') userId: string): Promise<User> {
+    try {
+      return await this.adminService.verifyEmail(userId);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
   // =====================
   // Endpoints para PLANES
   // =====================

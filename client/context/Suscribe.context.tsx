@@ -18,14 +18,14 @@ interface SubscriptionContextProps {
     paymentMethodToken: string,
     email: string
   ) => Promise<void>;
-  desuscribirse: () => Promise<void>;
+  desuscribirse: (cancellationReason?: string) => Promise<boolean>;
   fetchSub: () => Promise<ISubscripcion | null>;
 }
 
 const defaultSubscriptionContext: SubscriptionContextProps = {
   sub: null,
   suscribirse: async () => {},
-  desuscribirse: async () => {},
+  desuscribirse: async () => false,
   fetchSub: async () => null,
 };
 
@@ -38,7 +38,7 @@ export const SubscriptionProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { user } = useContext(UserContext);
+  const { user, signOut } = useContext(UserContext);
   const [sub, setSub] = useState<ISubscripcion | null>(null);
 
   const suscribirse = async (
@@ -69,32 +69,54 @@ export const SubscriptionProvider = ({
     }
   };
 
-  const desuscribirse = async () => {
-    if (!sub) return;
+  const desuscribirse = async (
+    cancellationReason?: string
+  ): Promise<boolean> => {
     try {
+      if (!sub || !sub.id) {
+        console.error("No hay suscripción activa para cancelar");
+        return false;
+      }
+
       const { data, error } = await handleAsync(
         api.post(`/subscriptions/cancel`, {
-          subscriptionId: sub.mercadopagoSubscriptionId,
-          cancellationReason: "Cancelación solicitada por el usuario",
+          subscriptionId: sub.id,
+          cancellationReason: cancellationReason || "Cancelado por el usuario",
         })
       );
-      if (error || !data?.data?.subscription) {
+
+      if (error || !data?.data) {
         console.error(
-          "Error al desuscribirse:",
+          "Error al cancelar la suscripción:",
           error || "No se retornaron datos"
         );
-        return;
+        return false;
       }
-      setSub(null);
-      localStorage.removeItem("subscripcion");
+
+      // Actualizamos el estado con la suscripción cancelada
+      const updatedSubscription = data.data.subscription;
+      setSub(updatedSubscription);
+
+      // Si guardas la suscripción en localStorage, actualízala
+      if (updatedSubscription) {
+        localStorage.setItem(
+          "subscripcion",
+          JSON.stringify(updatedSubscription)
+        );
+      } else {
+        localStorage.removeItem("subscripcion");
+      }
+
+      return true;
     } catch (err) {
       console.error("Excepción en desuscribirse:", err);
+      return false;
     }
   };
 
   const fetchSub = async (): Promise<ISubscripcion | null> => {
     if (!user) return null;
-    if (!user.subscripcion) setSub(user.subscripcion);
+    if (user.subscripcion) setSub(user.subscripcion);
 
     const { data, error } = await handleAsync(api.get(`/users/sub/${user.id}`));
     if (error || !data?.data) {
@@ -110,9 +132,13 @@ export const SubscriptionProvider = ({
   };
 
   useEffect(() => {
-    fetchSub();
+    if (!user) {
+      setSub(null);
+      localStorage.removeItem("subscripcion");
+    } else {
+      fetchSub();
+    }
   }, [user]);
-
   const value = useMemo(
     () => ({
       sub,

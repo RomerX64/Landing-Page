@@ -16,6 +16,7 @@ interface PreLoadPlan {
   activos: string;
   descripcion: string;
   popular?: boolean;
+  billingCycle?: BillingCycle;
 }
 
 @Injectable()
@@ -44,6 +45,7 @@ export class UsersPreLoad implements OnApplicationBootstrap {
       activos: '300',
       descripcion:
         'Podrá tener todas las funcionalidades del servicio, a excepción de las personalizaciones.',
+      billingCycle: BillingCycle.MONTHLY, 
     },
     {
       imagen: 'WorkflowImg02',
@@ -53,6 +55,7 @@ export class UsersPreLoad implements OnApplicationBootstrap {
       activos: '500',
       descripcion:
         'En este plan podrá tener todas las funcionalidades, además de personalizaciones en Reportes.',
+      billingCycle: BillingCycle.MONTHLY, 
     },
     {
       imagen: 'WorkflowImg03',
@@ -63,6 +66,7 @@ export class UsersPreLoad implements OnApplicationBootstrap {
       descripcion:
         'Tendrá todas las funcionalidades, y personalizaciones deseadas.',
       popular: true,
+      billingCycle: BillingCycle.MONTHLY, 
     },
     {
       imagen: 'WorkflowImg01',
@@ -71,6 +75,7 @@ export class UsersPreLoad implements OnApplicationBootstrap {
       precio: 300,
       activos: '10000',
       descripcion: 'Todo lo mencionado.',
+      billingCycle: BillingCycle.MONTHLY, 
     },
     {
       imagen: 'WorkflowImg02',
@@ -79,6 +84,7 @@ export class UsersPreLoad implements OnApplicationBootstrap {
       precio: 600,
       activos: '50000',
       descripcion: 'Todo lo mencionado.',
+      billingCycle: BillingCycle.MONTHLY, 
     },
     {
       imagen: 'WorkflowImg03',
@@ -87,6 +93,7 @@ export class UsersPreLoad implements OnApplicationBootstrap {
       precio: 15000,
       activos: 'Sin límites',
       descripcion: 'Todo lo mencionado.',
+      billingCycle: BillingCycle.MONTHLY, 
     },
   ];
 
@@ -122,26 +129,27 @@ export class UsersPreLoad implements OnApplicationBootstrap {
   async preLoadPlans() {
     try {
       for (const planData of this.planes) {
+        // Buscamos el plan por su nombre
         const existingPlan = await this.planRepository.findOne({
           where: { name: planData.name },
         });
 
-        if (!existingPlan) {
-          let processedPrecio: number;
-          // Si viene como string, lo procesamos; si ya es number, lo usamos directamente.
-          if (typeof planData.precio === 'string') {
-            if (planData.precio.toLowerCase() === 'free') {
-              processedPrecio = 0;
-            } else {
-              const numericString = planData.precio.replace(/[^0-9.]/g, '');
-              processedPrecio = parseFloat(numericString);
-            }
+        let processedPrecio: number;
+        // Procesamos el precio en caso de venir como string
+        if (typeof planData.precio === 'string') {
+          if (planData.precio.toLowerCase() === 'free') {
+            processedPrecio = 0;
           } else {
-            processedPrecio = planData.precio;
+            const numericString = planData.precio.replace(/[^0-9.]/g, '');
+            processedPrecio = parseFloat(numericString);
           }
+        } else {
+          processedPrecio = planData.precio;
+        }
 
-          // Convertimos el precio a string con dos decimales
-          const plan = this.planRepository.create({
+        if (!existingPlan) {
+          // Si el plan no existe, se crea uno nuevo
+          const newPlan = this.planRepository.create({
             name: planData.name,
             descripcion: planData.descripcion,
             imagen: planData.imagen,
@@ -153,13 +161,27 @@ export class UsersPreLoad implements OnApplicationBootstrap {
             billingCycle: BillingCycle.MONTHLY,
             activo: true,
           });
-
-          await this.planRepository.save(plan);
+          await this.planRepository.save(newPlan);
+          console.log(`El plan con nombre ${planData.name} ha sido creado`);
         } else {
-          console.log(`El plan con nombre ${planData.name} ya existe`);
+          // Si el plan ya existe, se actualizan sus propiedades
+          existingPlan.descripcion = planData.descripcion;
+          existingPlan.imagen = planData.imagen;
+          existingPlan.alt = planData.alt;
+          existingPlan.precio = Number(processedPrecio.toFixed(2));
+          existingPlan.activos = planData.activos;
+          existingPlan.popular = planData.popular || false;
+          existingPlan.mercadopagoPlanId = `mp_${planData.name.toLowerCase().replace(/\s+/g, '_')}`;
+          existingPlan.billingCycle = BillingCycle.MONTHLY;
+          existingPlan.activo = true;
+          existingPlan.fechaActualizacion = new Date();
+          await this.planRepository.save(existingPlan);
+          console.log(
+            `El plan con nombre ${planData.name} ha sido actualizado`,
+          );
         }
       }
-      console.log('Planes cargados con éxito');
+      console.log('Planes cargados y actualizados con éxito');
     } catch (error) {
       throw ErrorHandler.handle(error);
     }
