@@ -7,18 +7,33 @@ import {
   Logger,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { MercadoPagoConfig, PreApproval, User } from 'mercadopago';
+import { LessThan, Repository } from 'typeorm';
+import { MercadoPagoConfig, PreApproval } from 'mercadopago';
 import { v4 as uuidv4 } from 'uuid';
+
+// Entity Imports
 import { User as UserEntity } from '../User/User.entity';
-import { ConfigService } from '@nestjs/config';
 import { Subscripcion, SubscriptionStatus } from '../User/Subscripcion.entity';
 import { Plan } from '../User/Planes.entity';
+
+// Service Imports
 import { UserService } from '../User/users.service';
+import { ConfigService } from '@nestjs/config';
+
+// DTO Imports
 import CreateSubscriptionDto from './dto/createSubscription.dto';
 import CancelSubscriptionDto from './dto/cancelSubscription.dto';
+
+// Utility Imports
 import { ErrorHandler } from 'src/Utils/Error.Handler';
-import { PreApprovalResponse } from 'mercadopago/dist/clients/preApproval/commonTypes';
+
+interface MercadoPagoWebhookNotification {
+  id?: string;
+  action: string;
+  data?: {
+    id?: string;
+  };
+}
 
 @Injectable()
 export class SubscriptionsService {
@@ -39,7 +54,8 @@ export class SubscriptionsService {
     this.initializeMercadoPago();
   }
 
-  private initializeMercadoPago() {
+  // Mercado Pago Initialization
+  private initializeMercadoPago(): void {
     const accessToken = this.configService.get<string>(
       'MERCADO_PAGO_ACCESS_TOKEN',
     );
@@ -55,8 +71,7 @@ export class SubscriptionsService {
   }
 
   /**
-   * Crea una suscripción utilizando la API de preaprobaciones.
-   * Esta API (https://api.mercadopago.com/preapproval) se encarga de gestionar pagos recurrentes.
+   * Crea una suscripción utilizando la API de preaprobaciones de Mercado Pago
    * @param createSubscriptionDto Datos para crear la suscripción
    * @returns Objeto con mensaje y datos de la suscripción creada
    */
@@ -82,15 +97,13 @@ export class SubscriptionsService {
           reason: `Subscripción a Assetly - Plan ${plan.name || 'Premium'}`,
           card_token_id: createSubscriptionDto.paymentMethodToken,
           status: 'pending',
-          //! Solo funciona en producion back_url
-          //! toma error http://localhost:3000/success, http no es valido
-          //? back_url: 
-          //?  this.configService.get<string>('SUBSCRIPTION_SUCCESS_URL') ||
-          //? 'https://assetly-m977.onrender.com/success',
+          back_url:
+            this.configService.get<string>('SUBSCRIPTION_SUCCESS_URL') ||
+            'https://assetly-m977.onrender.com/success',
           auto_recurring: {
             frequency: 1,
             frequency_type: 'months',
-            transaction_amount: plan.precio,
+            transaction_amount: plan.precio || 200,
             currency_id: 'USD',
           },
         },
@@ -112,7 +125,7 @@ export class SubscriptionsService {
         response,
       );
     } catch (error) {
-      this.handleSubscriptionError(error);
+      return this.handleSubscriptionError(error);
     }
   }
 
@@ -154,14 +167,6 @@ export class SubscriptionsService {
         dto.cancellationReason || 'Cancelado por el usuario';
       await this.subscriptionRepository.save(subscription);
 
-      // Notificar al usuario si es necesario
-      if (subscription.user && subscription.user.email) {
-        // Aquí podrías implementar el envío de notificaciones por email
-        this.logger.log(
-          `Notificación de cancelación enviada a: ${subscription.user.email}`,
-        );
-      }
-
       return {
         message: 'Suscripción cancelada correctamente',
         subscription,
@@ -173,6 +178,148 @@ export class SubscriptionsService {
         HttpStatus.BAD_REQUEST,
       );
     }
+  }
+
+  /**
+   * Webhook de Mercado Pago para procesar eventos de suscripción
+   * @param notification Datos de la notificación de Mercado Pago
+   */
+  async handleWebhook(notification: MercadoPagoWebhookNotification) {
+    this.logger.log(`Webhook recibido: ${JSON.stringify(notification)}`);
+
+    try {
+      const subscriptionId = notification.id || notification.data?.id;
+
+      if (!subscriptionId) {
+        throw new HttpException(
+          'ID de suscripción no encontrado en la notificación',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+
+      const subscription = await this.findSubscriptionById(subscriptionId);
+
+      if (!subscription) {
+        this.logger.warn(
+          `Suscripción no encontrada para el webhook: ${subscriptionId}`,
+        );
+        throw new HttpException(
+          'Suscripción no encontrada para el webhook',
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      await this.processWebhookAction(
+        subscription,
+        notification.action,
+        notification,
+      );
+
+      return {
+        success: true,
+        message: 'Webhook procesado correctamente',
+        subscriptionId,
+      };
+    } catch (error) {
+      this.logger.error('Error al procesar webhook:', error);
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  /**
+   * Procesa la acción específica del webhook
+   */
+  private async processWebhookAction(
+    subscription: Subscripcion,
+    action: string,
+    notification: MercadoPagoWebhookNotification,
+  ) {
+    const statusMap = {
+      'payment.created': () => this.handlePaymentCreated(subscription),
+      'payment.updated': () => this.handlePaymentUpdated(subscription),
+      payment_approved: () => this.handlePaymentApproved(subscription),
+      'payment.failed': () => this.handlePaymentFailed(subscription),
+      payment_failed: () => this.handlePaymentFailed(subscription),
+      'subscription.cancelled': () =>
+        this.handleSubscriptionCancelled(subscription, notification),
+      subscription_cancelled: () =>
+        this.handleSubscriptionCancelled(subscription, notification),
+      'subscription.expired': () =>
+        this.handleSubscriptionExpired(subscription),
+      subscription_expired: () => this.handleSubscriptionExpired(subscription),
+      'subscription.renewed': () =>
+        this.handleSubscriptionRenewed(subscription),
+      subscription_renewed: () => this.handleSubscriptionRenewed(subscription),
+      'subscription.paused': () => this.handleSubscriptionPaused(subscription),
+      subscription_paused: () => this.handleSubscriptionPaused(subscription),
+    };
+
+    const handler = statusMap[action];
+    if (handler) {
+      await handler();
+    } else {
+      this.logger.warn(`Acción de webhook no manejada: ${action}`);
+    }
+  }
+
+  // Handlers para diferentes eventos de webhook
+  private async handlePaymentCreated(subscription: Subscripcion) {
+    subscription.status = SubscriptionStatus.APPROVED;
+    subscription.fechaUltimaPaga = new Date();
+    await this.subscriptionRepository.save(subscription);
+    this.logger.log('Pago creado, suscripción aprobada');
+  }
+
+  private async handlePaymentUpdated(subscription: Subscripcion) {
+    subscription.status = SubscriptionStatus.APPROVED;
+    await this.subscriptionRepository.save(subscription);
+    this.logger.log('Pago actualizado');
+  }
+
+  private async handlePaymentApproved(subscription: Subscripcion) {
+    subscription.status = SubscriptionStatus.ACTIVE;
+    subscription.fechaUltimaPaga = new Date();
+    await this.subscriptionRepository.save(subscription);
+    this.logger.log('Pago aprobado, suscripción activada');
+  }
+
+  private async handlePaymentFailed(subscription: Subscripcion) {
+    subscription.status = SubscriptionStatus.REJECTED;
+    await this.subscriptionRepository.save(subscription);
+    this.logger.log('Pago fallido, suscripción rechazada');
+  }
+
+  private async handleSubscriptionCancelled(
+    subscription: Subscripcion,
+    notification: MercadoPagoWebhookNotification,
+  ) {
+    subscription.status = SubscriptionStatus.CANCELLED;
+    subscription.cancellationDate = new Date();
+    subscription.cancellationReason = 'Cancelado por Mercado Pago';
+    await this.subscriptionRepository.save(subscription);
+    this.logger.log('Suscripción cancelada');
+  }
+
+  private async handleSubscriptionExpired(subscription: Subscripcion) {
+    subscription.status = SubscriptionStatus.EXPIRED;
+    await this.subscriptionRepository.save(subscription);
+    this.logger.log('Suscripción expirada');
+  }
+
+  private async handleSubscriptionRenewed(subscription: Subscripcion) {
+    subscription.fechaUltimaPaga = new Date();
+    subscription.fechaVencimiento = this.calculateExpiryDate(
+      new Date(),
+      subscription.plan.billingCycle,
+    );
+    await this.subscriptionRepository.save(subscription);
+    this.logger.log('Suscripción renovada');
+  }
+
+  private async handleSubscriptionPaused(subscription: Subscripcion) {
+    subscription.status = SubscriptionStatus.PAUSED;
+    await this.subscriptionRepository.save(subscription);
+    this.logger.log('Suscripción pausada');
   }
 
   /**
@@ -212,14 +359,6 @@ export class SubscriptionsService {
 
     await this.subscriptionRepository.save(subscription);
 
-    // Activar beneficios del plan para el usuario
-    if (subscription.user) {
-      this.logger.log(
-        `Activando beneficios para usuario ${subscription.user.id}`,
-      );
-      // Aquí podrías implementar la lógica para activar beneficios
-    }
-
     return {
       message: 'Suscripción aprobada correctamente',
       subscription,
@@ -227,54 +366,29 @@ export class SubscriptionsService {
   }
 
   /**
-   * Maneja los webhooks entrantes de Mercado Pago para actualizar el estado de las suscripciones
-   * @param notification Datos de la notificación de Mercado Pago
+   * Obtiene todas las suscripciones pendientes
+   * @returns Lista de suscripciones en estado pendiente
    */
-  async handleWebhook(notification: any) {
-    this.logger.log(`Webhook recibido: ${JSON.stringify(notification)}`);
-
-    try {
-      const { id, action, data } = notification;
-
-      // Obtener el ID correcto dependiendo del formato del webhook
-      const subscriptionId = id || (data && data.id);
-
-      if (!subscriptionId) {
-        throw new HttpException(
-          'ID de suscripción no encontrado en la notificación',
-          HttpStatus.BAD_REQUEST,
-        );
-      }
-
-      const subscription = await this.subscriptionRepository.findOne({
-        where: { mercadopagoSubscriptionId: subscriptionId },
-        relations: ['plan', 'user'],
-      });
-
-      if (!subscription) {
-        this.logger.warn(
-          `Suscripción no encontrada para el webhook: ${subscriptionId}`,
-        );
-        throw new HttpException(
-          'Suscripción no encontrada para el webhook',
-          HttpStatus.NOT_FOUND,
-        );
-      }
-
-      // Actualizar estado según la acción del webhook
-      await this.updateSubscriptionStatus(subscription, action, notification);
-
-      return { success: true, message: 'Webhook procesado correctamente' };
-    } catch (error) {
-      this.logger.error('Error al procesar webhook:', error);
-      throw ErrorHandler.handle(error);
-    }
+  async getPendingSubscriptions() {
+    return await this.subscriptionRepository.find({
+      where: { status: SubscriptionStatus.PENDING },
+      relations: ['user', 'plan'],
+    });
   }
 
   /**
-   * Métodos privados auxiliares
+   * Obtiene las suscripciones de un usuario
+   * @param userId ID del usuario
+   * @returns Lista de suscripciones del usuario
    */
+  async getUserSubscriptions(userId: string) {
+    return await this.subscriptionRepository.find({
+      where: { user: { id: userId } },
+      relations: ['plan'],
+    });
+  }
 
+  // Métodos privados auxiliares
   private validateSubscriptionData(
     createSubscriptionDto: CreateSubscriptionDto,
   ) {
@@ -295,7 +409,7 @@ export class SubscriptionsService {
     }
   }
 
-  private async getPlanById(planId: number): Promise<Plan> {
+  private async getPlanById(planId: number) {
     const plan = await this.planRepository.findOne({
       where: { id: planId },
     });
@@ -310,7 +424,7 @@ export class SubscriptionsService {
   private async saveSubscriptionData(
     userEmail: string,
     plan: Plan,
-    mpResponse: PreApprovalResponse,
+    mpResponse: any,
   ) {
     const user = await this.userRepository.findOne({
       where: { email: userEmail },
@@ -335,6 +449,7 @@ export class SubscriptionsService {
       plan,
       fechaInicio: new Date(),
       mercadopagoSubscriptionId: mpResponse.id,
+      // Continuación del método saveSubscriptionData
       status: SubscriptionStatus.PENDING, // Siempre inicia como pendiente
       user: user,
       fechaVencimiento: this.calculateExpiryDate(new Date(), plan.billingCycle),
@@ -398,138 +513,108 @@ export class SubscriptionsService {
     );
   }
 
-  private async updateSubscriptionStatus(
-    subscription: Subscripcion,
-    action: string,
-    notification: any,
-  ) {
-    const previousStatus = subscription.status;
-    let statusChanged = false;
-
-    switch (action) {
-      case 'payment.created':
-      case 'payment.updated':
-      case 'payment_approved':
-        // Registramos la fecha del pago pero mantenemos el estado como PENDING
-        subscription.status = SubscriptionStatus.APPROVED;
-        subscription.fechaUltimaPaga = new Date();
-        // Solo actualizamos la fecha de vencimiento
-        subscription.fechaVencimiento = this.calculateExpiryDate(
-          new Date(),
-          subscription.plan.billingCycle,
-        );
-        this.logger.log(
-          'Pago recibido, la suscripción permanece en estado pendiente hasta aprobación manual',
-        );
-        break;
-
-      case 'payment.failed':
-      case 'payment_failed':
-        subscription.status = SubscriptionStatus.REJECTED;
-        statusChanged = true;
-        break;
-
-      case 'subscription.cancelled':
-      case 'subscription_cancelled':
-        subscription.status = SubscriptionStatus.CANCELLED;
-        subscription.cancellationDate = new Date();
-        subscription.cancellationReason =
-          notification.reason || 'Cancelado por Mercado Pago';
-        statusChanged = true;
-        break;
-
-      case 'subscription.expired':
-      case 'subscription_expired':
-        subscription.status = SubscriptionStatus.EXPIRED;
-        statusChanged = true;
-        break;
-
-      case 'subscription.renewed':
-      case 'subscription_renewed':
-        // Solo actualizamos fechas, mantenemos el estado como PENDING
-        subscription.fechaUltimaPaga = new Date();
-        subscription.fechaVencimiento = this.calculateExpiryDate(
-          new Date(),
-          subscription.plan.billingCycle,
-        );
-        this.logger.log(
-          'Suscripción renovada, permanece en estado pendiente hasta aprobación manual',
-        );
-        break;
-
-      case 'subscription.paused':
-      case 'subscription_paused':
-        subscription.status = SubscriptionStatus.PAUSED;
-        statusChanged = true;
-        break;
-
-      case 'subscription.updated':
-      case 'subscription_updated':
-        // Aquí podríamos actualizar otros campos según sea necesario
-        this.logger.log(
-          `Actualización de suscripción: ${JSON.stringify(notification)}`,
-        );
-        break;
-
-      default:
-        this.logger.warn(`Acción de webhook no manejada: ${action}`);
-        break;
-    }
-
-    await this.subscriptionRepository.save(subscription);
-
-    if (statusChanged && previousStatus !== subscription.status) {
-      this.logger.log(
-        `Cambio de estado en suscripción ${subscription.id}: ${previousStatus} -> ${subscription.status}`,
-      );
-
-      // Notificaciones adicionales según el cambio de estado
-      if (
-        subscription.user &&
-        subscription.status === SubscriptionStatus.CANCELLED
-      ) {
-        this.logger.log(
-          `Notificando cancelación al usuario ${subscription.user.id}`,
-        );
-        // Implementar notificación de cancelación
-      }
-    }
-  }
-
-  /**
-   * Obtiene todas las suscripciones pendientes
-   * @returns Lista de suscripciones en estado pendiente
-   */
-  async getPendingSubscriptions() {
-    return await this.subscriptionRepository.find({
-      where: { status: SubscriptionStatus.PENDING },
-      relations: ['user', 'plan'],
+  private async findSubscriptionById(subscriptionId: string) {
+    return await this.subscriptionRepository.findOne({
+      where: { mercadopagoSubscriptionId: subscriptionId },
+      relations: ['plan', 'user'],
     });
   }
 
   /**
-   * Obtiene las suscripciones de un usuario
-   * @param userId ID del usuario
-   * @returns Lista de suscripciones del usuario
+   * Calcula la fecha de vencimiento basada en el ciclo de facturación
+   * @param startDate Fecha de inicio
+   * @param billingCycle Ciclo de facturación
+   * @returns Fecha de vencimiento
    */
-  async getUserSubscriptions(userId: string) {
-    return await this.subscriptionRepository.find({
-      where: { user: { id: userId } },
-      relations: ['plan'],
-    });
-  }
-
   private calculateExpiryDate(startDate: Date, billingCycle: string): Date {
     const expiryDate = new Date(startDate);
-    if (!billingCycle || billingCycle === 'monthly') {
-      expiryDate.setMonth(expiryDate.getMonth() + 1);
-    } else if (billingCycle === 'yearly') {
-      expiryDate.setFullYear(expiryDate.getFullYear() + 1);
-    } else if (billingCycle === 'weekly') {
-      expiryDate.setDate(expiryDate.getDate() + 7);
-    } else if (billingCycle === 'biweekly') {
-      expiryDate.setDate(expiryDate.getDate() + 14);
+
+    switch (billingCycle) {
+      case 'weekly':
+        expiryDate.setDate(expiryDate.getDate() + 7);
+        break;
+      case 'biweekly':
+        expiryDate.setDate(expiryDate.getDate() + 14);
+        break;
+      case 'monthly':
+      default:
+        expiryDate.setMonth(expiryDate.getMonth() + 1);
+        break;
+      case 'yearly':
+        expiryDate.setFullYear(expiryDate.getFullYear() + 1);
+        break;
     }
+
     return expiryDate;
   }
+
+  /**
+   * Obtiene información detallada de una suscripción
+   * @param subscriptionId ID de la suscripción
+   * @returns Detalles de la suscripción
+   */
+  async getSubscriptionDetails(subscriptionId: string) {
+    const subscription = await this.subscriptionRepository.findOne({
+      where: { id: subscriptionId },
+      relations: ['user', 'plan'],
+    });
+
+    if (!subscription) {
+      throw new HttpException(
+        'Suscripción no encontrada',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    return {
+      id: subscription.id,
+      status: subscription.status,
+      plan: {
+        id: subscription.plan.id,
+        name: subscription.plan.name,
+        price: subscription.plan.precio,
+      },
+      user: {
+        id: subscription.user.id,
+        email: subscription.user.email,
+      },
+      startDate: subscription.fechaInicio,
+      lastPaymentDate: subscription.fechaUltimaPaga,
+      expiryDate: subscription.fechaVencimiento,
+      mercadoPagoSubscriptionId: subscription.mercadopagoSubscriptionId,
+    };
+  }
+
+  /**
+   * Verifica y actualiza suscripciones expiradas
+   * @returns Número de suscripciones actualizadas
+   */
+  async checkAndUpdateExpiredSubscriptions() {
+    const now = new Date();
+    const expiredSubscriptions = await this.subscriptionRepository.find({
+      where: {
+        status: SubscriptionStatus.ACTIVE,
+        fechaVencimiento: LessThan(now),
+      },
+      relations: ['user', 'plan'],
+    });
+
+    const updatedSubscriptions = [];
+
+    for (const subscription of expiredSubscriptions) {
+      subscription.status = SubscriptionStatus.EXPIRED;
+      await this.subscriptionRepository.save(subscription);
+      updatedSubscriptions.push(subscription.id);
+
+      // Opcional: Notificar al usuario sobre la expiración
+      this.logger.log(`Suscripción expirada: ${subscription.id}`);
+    }
+
+    return {
+      totalExpired: expiredSubscriptions.length,
+      updatedSubscriptionIds: updatedSubscriptions,
+    };
+  }
 }
+
+export default SubscriptionsService;
