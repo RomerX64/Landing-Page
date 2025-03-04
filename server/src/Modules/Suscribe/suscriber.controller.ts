@@ -57,17 +57,20 @@ export class SubscriptionsController {
   @Post('webhook')
   async handleWebhook(
     @Body() body: any,
-    @Headers('x-signature') signature: string,
-    @Headers('x-request-id') requestId: string,
+    @Headers() headers: Record<string, string>,
   ) {
-    try {
-      // Verificar la firma del webhook
-      this.verifyWebhookSignature(body, signature, requestId);
+    const secret = this.configService.get<string>(
+      'MERCADO_PAGO_WEBHOOK_SECRET',
+    );
 
-      // Procesar el webhook
+    try {
+      this.verifyWebhook(headers, body, secret);
+      console.log('✅ Webhook verificado correctamente');
+
+      // Procesa la notificación si la verificación fue exitosa
       return await this.subscriptionsService.handleWebhook(body);
     } catch (error) {
-      console.error('Webhook verification failed:', error);
+      console.error(error.message);
       throw new HttpException(
         'Webhook verification failed',
         HttpStatus.UNAUTHORIZED,
@@ -80,44 +83,49 @@ export class SubscriptionsController {
    * @param body Cuerpo de la notificación
    * @param signature Firma recibida en los headers
    */
-  private verifyWebhookSignature(
+  private verifyWebhook(
+    headers: Record<string, string>,
     body: any,
-    signature: string,
-    requestId: string,
+    secret: string,
   ) {
-    const secretKey = this.configService.get<string>(
-      'MERCADO_PAGO_WEBHOOK_SECRET',
-    );
+    const xSignature = headers['x-signature'];
+    const xRequestId = headers['x-request-id'];
 
-    if (!secretKey) {
-      throw new Error('Mercado Pago webhook secret key is not configured');
+    if (!xSignature || !xRequestId) {
+      throw new Error('Missing signature or request-id headers');
     }
 
-    // Extraer `ts` y `v1` del `x-signature`
-    const signatureParts = signature.split(',');
-    const tsPart = signatureParts.find((part) => part.startsWith('ts='));
-    const v1Part = signatureParts.find((part) => part.startsWith('v1='));
+    // Separar la firma en `ts` y `v1`
+    const parts = xSignature.split(',');
 
-    if (!tsPart || !v1Part) {
+    let ts: string | undefined;
+    let hash: string | undefined;
+
+    parts.forEach((part) => {
+      const [key, value] = part.split('=');
+      if (key === 'ts') ts = value;
+      if (key === 'v1') hash = value;
+    });
+
+    if (!ts || !hash) {
       throw new Error('Invalid signature format');
     }
 
-    const ts = tsPart.split('=')[1];
-    const v1 = v1Part.split('=')[1];
-
-    // Construir el string con el formato requerido
-    const dataId = body.data.id.toString().toLowerCase(); // data.id debe ir en minúsculas si es alfanumérico
-    const validationString = `id:${dataId};request-id:${requestId};ts:${ts};`;
+    // Obtener el ID del body
+    const dataID = body.data.id.toString().toLowerCase(); // Convertir a minúsculas si es alfanumérico
+    const manifest = `id:${dataID};request-id:${xRequestId};ts:${ts};`;
 
     // Generar la firma HMAC-SHA256
-    const generatedSignature = crypto
-      .createHmac('sha256', secretKey)
-      .update(validationString)
-      .digest('hex');
+    const hmac = crypto.createHmac('sha256', secret);
+    hmac.update(manifest);
+    const sha = hmac.digest('hex');
 
-    // Comparar la firma generada con la recibida en `v1`
-    if (v1 !== generatedSignature) {
+    // Comparar la firma generada con la que envió Mercado Pago
+    if (sha !== hash) {
+      console.log('Webhook verification failed');
       throw new Error('Invalid webhook signature');
     }
+
+    console.log('Webhook verification passed');
   }
 }
