@@ -16,7 +16,7 @@ const authOptions: NextAuthOptions = {
       return session;
     },
     async redirect({ url, baseUrl }) {
-      return `${process.env.NEXT_PUBLIC_BASE_URL}/`;
+      return `${process.env.NEXTAUTH_URL}/`;
     },
   },
 };
