@@ -6,7 +6,7 @@ import React, {
   useMemo,
   useContext,
 } from "react";
-import api from "@/app/api/Api";
+import api from "@/utils/Api";
 import { handleAsync } from "@/utils/error.helper";
 import { ISubscripcion } from "@/interfaces/Subscripcion.interface";
 import UserContext from "@/context/user.context";

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, createContext, useEffect, useMemo } from "react";
-import api from "@/app/api/Api";
+import api from "@/utils/Api";
 import { handleAsync } from "@/utils/error.helper";
 import { IPlan } from "@/interfaces/Plan.interface";
 

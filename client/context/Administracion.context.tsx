@@ -1,6 +1,6 @@
 "use client";
 import React, { createContext, ReactNode } from "react";
-import api from "@/app/api/Api";
+import api from "@/utils/Api";
 import { handleAsync } from "@/utils/error.helper";
 import { IUser } from "@/interfaces/User.interface";
 import { IPlan } from "@/interfaces/Plan.interface";

@@ -9,7 +9,7 @@ import React, {
   useContext,
 } from "react";
 import { IUser } from "@/interfaces/User.interface";
-import api from "@/app/api/Api";
+import api from "@/utils/Api";
 import { SignInDTO, SignUpDTO, updateUserDTO } from "./DTO/sing.user.dto";
 import { handleAsync } from "@/utils/error.helper";
 import {
