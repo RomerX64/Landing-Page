@@ -1,7 +1,9 @@
 import {
   BadRequestException,
+  forwardRef,
   HttpException,
   HttpStatus,
+  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -17,7 +19,7 @@ import { updateUserDto } from './Dto/updateUser.dto';
 import { signIn } from './Dto/singIn.dto';
 import { signUp } from './Dto/singUp.dto';
 import { signInGoogleDTO } from './Dto/singInGoogle.dto';
-import { MailService } from '../mail/mail.service';
+import { MailService } from '../Mail/mail.service';
 
 @Injectable()
 export class UserService {
@@ -27,6 +29,7 @@ export class UserService {
     @InjectRepository(Subscripcion)
     private subsRepository: Repository<Subscripcion>,
     private readonly jwtService: JwtService,
+    @Inject(forwardRef(() => MailService))
     private readonly mailService: MailService,
   ) {}
 

@@ -1,16 +1,10 @@
-import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { MailService } from './mail.service';
+import { Module } from '@nestjs/common';
 
 @Module({
-  imports: [
-    ConfigModule, // For environment configuration
-    JwtModule.register({
-      secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '1h' },
-    }),
-  ],
+  imports: [],
   providers: [MailService],
   exports: [MailService],
 })

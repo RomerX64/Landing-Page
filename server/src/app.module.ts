@@ -10,6 +10,7 @@ import { PreLoadModule } from './Modules/preLoad/preLoad.module';
 import { SuscribeModule } from './Modules/Suscribe/suscriber.module';
 import { AdminService } from './Modules/Admin/admin.service';
 import { AdminModule } from './Modules/Admin/admin.module';
+import { MailModule } from './Modules/Mail/mail.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -30,6 +31,7 @@ import { AdminModule } from './Modules/Admin/admin.module';
     UserModule,
     SuscribeModule,
     AdminModule,
+    MailModule,
 
     JwtModule.register({
       global: true,

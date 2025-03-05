@@ -7,5 +7,6 @@
   "/(default)/suscribirse/page": "app/(default)/suscribirse/page.js",
   "/(default)/administracion/page": "app/(default)/administracion/page.js",
   "/_not-found/page": "app/_not-found/page.js",
-  "/(default)/plan/page": "app/(default)/plan/page.js"
+  "/(default)/plan/page": "app/(default)/plan/page.js",
+  "/(default)/success/page": "app/(default)/success/page.js"
 }

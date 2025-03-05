@@ -22,11 +22,12 @@ export class MercadoPagoService {
 
       return response.data.results.map((plan) => {
         return {
-        name: plan.reason,
-        price: plan.auto_recurring.transaction_amount,
-        mercadopagoPlanId: plan.id,
-        description: `${plan.reason} Plan - ${plan.auto_recurring.frequency} ${plan.auto_recurring.frequency_type}`,
-      }});
+          name: plan.reason,
+          price: plan.auto_recurring.transaction_amount,
+          mercadopagoPlanId: plan.id,
+          description: `${plan.reason} Plan - ${plan.auto_recurring.frequency} ${plan.auto_recurring.frequency_type}`,
+        };
+      });
     } catch (error) {
       console.error('Error fetching Mercado Pago plans:', error);
       throw ErrorHandler.handle(error);
