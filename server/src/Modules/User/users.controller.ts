@@ -153,9 +153,69 @@ export class UserController {
     summary: 'Get sub by UserId',
     description: 'obtiene el Id mediante el UserId',
   })
-  async getSubByUserId(@Param('userId') userId: string): Promise<Subscripcion | null> {
+  async getSubByUserId(
+    @Param('userId') userId: string,
+  ): Promise<Subscripcion | null> {
     try {
       return await this.userService.getSubByUserId(userId);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  // New endpoints for email verification and password reset
+  @Post('/verify-email')
+  @ApiOperation({
+    summary: 'Verify Email',
+    description: 'Verify user email using the verification token',
+  })
+  async verifyEmail(
+    @Body('token') token: string,
+  ): Promise<{ message: string; user: User }> {
+    try {
+      const user = await this.userService.verifyEmail(token);
+      return {
+        message: 'Email verified successfully',
+        user,
+      };
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  @Post('/initiate-password-reset')
+  @ApiOperation({
+    summary: 'Initiate Password Reset',
+    description: "Send password reset link to user's email",
+  })
+  async initiatePasswordReset(
+    @Body('email') email: string,
+  ): Promise<{ message: string }> {
+    try {
+      await this.userService.initiatePasswordReset(email);
+      return {
+        message: 'Password reset link sent to your email',
+      };
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  @Post('/reset-password')
+  @ApiOperation({
+    summary: 'Reset Password',
+    description: 'Reset user password using reset token',
+  })
+  async resetPassword(
+    @Body('token') token: string,
+    @Body('newPassword') newPassword: string,
+  ): Promise<{ message: string; user: User }> {
+    try {
+      const user = await this.userService.resetPassword(token, newPassword);
+      return {
+        message: 'Password reset successfully',
+        user,
+      };
     } catch (error) {
       throw ErrorHandler.handle(error);
     }

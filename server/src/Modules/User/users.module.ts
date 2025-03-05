@@ -6,10 +6,12 @@ import { UserController } from './users.controller';
 import { Subscripcion } from './Subscripcion.entity';
 import { Plan } from './Planes.entity';
 import { PreLoadModule } from '../preLoad/preLoad.module';
+import { MailModule } from '../Mail/mail.module';
 
 @Module({
   imports: [
     forwardRef(() => PreLoadModule),
+    forwardRef(() => MailModule),
     TypeOrmModule.forFeature([User, Subscripcion, Plan]),
   ],
   providers: [UserService],

@@ -17,6 +17,7 @@ import { updateUserDto } from './Dto/updateUser.dto';
 import { signIn } from './Dto/singIn.dto';
 import { signUp } from './Dto/singUp.dto';
 import { signInGoogleDTO } from './Dto/singInGoogle.dto';
+import { MailService } from '../mail/mail.service';
 
 @Injectable()
 export class UserService {
@@ -26,6 +27,7 @@ export class UserService {
     @InjectRepository(Subscripcion)
     private subsRepository: Repository<Subscripcion>,
     private readonly jwtService: JwtService,
+    private readonly mailService: MailService,
   ) {}
 
   async getUserById(userId: string): Promise<User> {
@@ -118,17 +120,16 @@ export class UserService {
       const user: User = this.userRepository.create({
         ...signUp,
         password: hashedPassword,
-        // Suponemos que el usuario recién creado aún no tiene el email confirmado
         emailVerified: false,
       });
       const savedUser = await this.userRepository.save(user);
 
-      // Genera token de confirmación (válido por 1 día)
-      const emailToken = this.jwtService.sign(
-        { email: savedUser.email },
-        { expiresIn: '1d' },
+      // Send verification email
+      await this.mailService.sendVerificationEmail(
+        savedUser.email,
+        savedUser.id,
       );
-      // Envía el email de confirmación
+
       const userPayload = {
         sub: savedUser.id,
         id: savedUser.id,
@@ -220,8 +221,72 @@ export class UserService {
         where: { id: user.subscripcion?.id },
         relations: ['plan'],
       });
-      if (!sub) return null
+      if (!sub) return null;
       return sub;
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  // New methods for email verification and password reset
+  async verifyEmail(token: string): Promise<User> {
+    try {
+      // Verify the token
+      const { email, userId } =
+        await this.mailService.verifyEmailVerificationToken(token);
+
+      // Find the user
+      const user = await this.getUserById(userId);
+
+      // Check if email matches
+      if (user.email !== email) {
+        throw new BadRequestException('Invalid verification token');
+      }
+
+      // Mark email as verified
+      user.emailVerified = true;
+      return await this.userRepository.save(user);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  async initiatePasswordReset(email: string): Promise<void> {
+    try {
+      // Find user by email
+      const user = await this.userRepository.findOne({ where: { email } });
+
+      if (!user) {
+        throw new NotFoundException('User not found');
+      }
+
+      // Send password reset email
+      await this.mailService.sendPasswordResetEmail(user.email, user.id);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  async resetPassword(token: string, newPassword: string): Promise<User> {
+    try {
+      // Verify the token
+      const { email, userId } =
+        await this.mailService.verifyPasswordResetToken(token);
+
+      // Find the user
+      const user = await this.getUserById(userId);
+
+      // Check if email matches
+      if (user.email !== email) {
+        throw new BadRequestException('Invalid reset token');
+      }
+
+      // Hash new password
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+      // Update user's password
+      user.password = hashedPassword;
+      return await this.userRepository.save(user);
     } catch (error) {
       throw ErrorHandler.handle(error);
     }

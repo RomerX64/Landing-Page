@@ -11,6 +11,7 @@ import { Plan } from '../User/Planes.entity';
 import { User } from '../User/User.entity';
 import { UserService } from '../User/users.service';
 import { SubscriptionsService } from '../Suscribe/suscriber.service';
+import { MercadoPagoService } from './mp.service';
 import { ErrorHandler } from 'src/Utils/Error.Handler';
 import { updateUserDto } from '../User/Dto/updateUser.dto';
 import { CreatePlanDto, UpdatePlanDto } from './dto/plan.dto';
@@ -28,6 +29,7 @@ export class AdminService {
     private readonly userService: UserService,
     @Inject(forwardRef(() => SubscriptionsService))
     private readonly subService: SubscriptionsService,
+    private readonly mercadoPagoService: MercadoPagoService,
   ) {}
 
   // Usuarios
@@ -59,7 +61,6 @@ export class AdminService {
     dataUserToUpdate: updateUserDto,
   ): Promise<User> {
     try {
-      // Se puede obtener el usuario, actualizar sus propiedades y luego guardar
       let user = await this.getUserById(userId);
       user = { ...user, ...dataUserToUpdate };
       await this.userRepository.save(user);
@@ -166,7 +167,6 @@ export class AdminService {
     }
   }
 
-  // Suscripciones
   async getAllSubscriptions(): Promise<Subscripcion[]> {
     try {
       return await this.subRepository.find({ relations: ['user', 'plan'] });
@@ -212,6 +212,31 @@ export class AdminService {
         cancellationReason: reason,
       });
       return await this.getSubscriptionById(subscriptionId);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  // Mercado Pago Subscriptions
+  async getMercadoPagoSubscriptions(): Promise<any[]> {
+    try {
+      return await this.mercadoPagoService.getAllSubscriptions();
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  async getMercadoPagoSubscriptionById(subscriptionId: string): Promise<any> {
+    try {
+      return await this.mercadoPagoService.getSubscriptionById(subscriptionId);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  async cancelMercadoPagoSubscription(subscriptionId: string): Promise<any> {
+    try {
+      return await this.mercadoPagoService.cancelSubscription(subscriptionId);
     } catch (error) {
       throw ErrorHandler.handle(error);
     }

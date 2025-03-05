@@ -1,13 +1,13 @@
+import { Module, forwardRef } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { AdminService } from './admin.service';
+import { User } from '../User/User.entity';
 import { Subscripcion } from '../User/Subscripcion.entity';
 import { Plan } from '../User/Planes.entity';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { forwardRef, Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { UserModule } from '../User/users.module';
 import { SuscribeModule } from '../Suscribe/suscriber.module';
-import { AdminService } from './admin.service';
+import { MercadoPagoService } from './mp.service';
 import { AdminController } from './admin.controller';
-import { User } from '../User/User.entity';
 
 @Module({
   imports: [
@@ -15,7 +15,11 @@ import { User } from '../User/User.entity';
     forwardRef(() => UserModule),
     forwardRef(() => SuscribeModule),
   ],
-  providers: [AdminService],
-  controllers: [AdminController],
+  providers: [
+    AdminService,
+    MercadoPagoService, 
+  ],
+  controllers:[AdminController],
+  exports: [AdminService, MercadoPagoService],
 })
 export class AdminModule {}
