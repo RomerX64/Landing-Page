@@ -76,7 +76,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/build/polyfills/process.js [app-client] (ecmascript)");
 ;
 const api = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].create({
-    baseURL: ("TURBOPACK compile-time value", "http://localhost:3001"),
+    baseURL: ("TURBOPACK compile-time value", "https://assetly-landing-page-backend.onrender.com"),
     headers: {
         "Content-Type": "application/json"
     }
@@ -937,13 +937,20 @@ const SubscriptionProvider = ({ children })=>{
     };
     const fetchSub = async ()=>{
         if (!user) return null;
-        if (user.subscripcion) setSub(user.subscripcion);
+        if (user.subscripcion) {
+            setSub(user.subscripcion);
+            return user.subscripcion;
+        }
         const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get(`/users/sub/${user.id}`));
-        if (error || !data?.data) {
-            console.log("Error al obtener la Subscripcion, error:", error || "No se retornaron datos");
+        if (error) {
+            if (error.response?.status === 404) {
+                return null;
+            }
+            console.error("Error al obtener la suscripción:", error);
             return null;
         }
-        setSub(data?.data);
+        if (!data?.data) return null;
+        setSub(data.data);
         return data.data;
     };
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
@@ -974,7 +981,7 @@ const SubscriptionProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/context/Suscribe.context.tsx",
-        lineNumber: 153,
+        lineNumber: 161,
         columnNumber: 5
     }, this);
 };

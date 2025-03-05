@@ -116,18 +116,25 @@ export const SubscriptionProvider = ({
 
   const fetchSub = async (): Promise<ISubscripcion | null> => {
     if (!user) return null;
-    if (user.subscripcion) setSub(user.subscripcion);
+
+    if (user.subscripcion) {
+      setSub(user.subscripcion);
+      return user.subscripcion;
+    }
 
     const { data, error } = await handleAsync(api.get(`/users/sub/${user.id}`));
-    if (error || !data?.data) {
-      console.log(
-        "Error al obtener la Subscripcion, error:",
-        error || "No se retornaron datos"
-      );
+
+    if (error) {
+      if (error.response?.status === 404) {
+        return null;
+      }
+      console.error("Error al obtener la suscripción:", error);
       return null;
     }
 
-    setSub(data?.data);
+    if (!data?.data) return null;
+
+    setSub(data.data);
     return data.data;
   };
 
@@ -139,6 +146,7 @@ export const SubscriptionProvider = ({
       fetchSub();
     }
   }, [user]);
+
   const value = useMemo(
     () => ({
       sub,

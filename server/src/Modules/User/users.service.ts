@@ -213,14 +213,14 @@ export class UserService {
     }
   }
 
-  async getSubByUserId(userId: string): Promise<Subscripcion> {
+  async getSubByUserId(userId: string): Promise<Subscripcion | null> {
     try {
       const user: User = await this.getUserById(userId);
       const sub: Subscripcion = await this.subsRepository.findOne({
         where: { id: user.subscripcion?.id },
         relations: ['plan'],
       });
-      if (!sub) throw new NotFoundException('Sub not found');
+      if (!sub) return null
       return sub;
     } catch (error) {
       throw ErrorHandler.handle(error);

@@ -30,6 +30,8 @@ const SuscriberProfile: React.FC = () => {
       const subs = await fetchSub();
       if (subs) {
         setSubscription(subs);
+      }else{
+        setSubscription(null)
       }
       setLoading(false);
     };
@@ -40,7 +42,7 @@ const SuscriberProfile: React.FC = () => {
       setSubscription(sub);
       setLoading(false);
     }
-  }, [sub, fetchSub]);
+  }, [sub]);
 
   if (loading) {
     return (

@@ -153,7 +153,7 @@ export class UserController {
     summary: 'Get sub by UserId',
     description: 'obtiene el Id mediante el UserId',
   })
-  async getSubByUserId(@Param('userId') userId: string): Promise<Subscripcion> {
+  async getSubByUserId(@Param('userId') userId: string): Promise<Subscripcion | null> {
     try {
       return await this.userService.getSubByUserId(userId);
     } catch (error) {
