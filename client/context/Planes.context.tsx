@@ -43,7 +43,11 @@ export const PlansProvider = ({ children }: { children: React.ReactNode }) => {
         return;
       }
 
-      const fetchedPlanes: IPlan[] = data.data;
+      // Sort planes by price in ascending order
+      const fetchedPlanes: IPlan[] = data.data.sort(
+        (a: IPlan, b: IPlan) => a.precio - b.precio
+      );
+
       setPlanes(fetchedPlanes);
       localStorage.setItem("planes", JSON.stringify(fetchedPlanes));
     } catch (err) {

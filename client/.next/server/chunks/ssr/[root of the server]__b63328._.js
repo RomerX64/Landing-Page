@@ -1045,7 +1045,8 @@ const PlansProvider = ({ children })=>{
                 console.error("Error al obtener planes:", error || "No se retornaron datos");
                 return;
             }
-            const fetchedPlanes = data.data;
+            // Sort planes by price in ascending order
+            const fetchedPlanes = data.data.sort((a, b)=>a.precio - b.precio);
             setPlanes(fetchedPlanes);
             localStorage.setItem("planes", JSON.stringify(fetchedPlanes));
         } catch (err) {
@@ -1140,7 +1141,7 @@ const PlansProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/context/Planes.context.tsx",
-        lineNumber: 154,
+        lineNumber: 158,
         columnNumber: 5
     }, this);
 };
