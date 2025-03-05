@@ -91,21 +91,19 @@ export class SubscriptionsService {
     const idempotencyKey = uuidv4();
 
     try {
+      // Fetch plan details directly from Mercado Pago API
+      const planResponse = await this.fetchMercadoPagoPlanDetails(
+        plan.mercadopagoPlanId,
+      );
+
       const response = await preApproval.create({
         body: {
           payer_email: createSubscriptionDto.userEmail,
-          reason: `Subscripción a Assetly - Plan ${plan.name || 'Premium'}`,
+          reason: planResponse.reason,
           card_token_id: createSubscriptionDto.paymentMethodToken,
           status: 'pending',
-          back_url:
-            this.configService.get<string>('SUBSCRIPTION_SUCCESS_URL') ||
-            'https://assetly-m977.onrender.com/success',
-          auto_recurring: {
-            frequency: 1,
-            frequency_type: 'months',
-            transaction_amount: plan.precio || 200,
-            currency_id: 'USD',
-          },
+          preapproval_plan_id: planResponse.id,
+          back_url: planResponse.back_url,
         },
         requestOptions: {
           idempotencyKey: idempotencyKey,
@@ -126,6 +124,50 @@ export class SubscriptionsService {
       );
     } catch (error) {
       return this.handleSubscriptionError(error);
+    }
+  }
+
+  // Método privado para obtener detalles del plan desde Mercado Pago
+  private async fetchMercadoPagoPlanDetails(planId: string) {
+    try {
+      const response = await fetch(
+        `https://api.mercadopago.com/preapproval_plan/${planId}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${this.configService.get<string>('MERCADO_PAGO_ACCESS_TOKEN')}`,
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+
+      if (!response.ok) {
+        throw new HttpException(
+          `Error al obtener detalles del plan de Mercado Pago: ${response.statusText}`,
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+
+      const planDetails = await response.json();
+
+      // Validar que el plan esté activo
+      if (planDetails.status !== 'active') {
+        throw new HttpException(
+          `El plan ${planId} no está activo. Estado actual: ${planDetails.status}`,
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+
+      return planDetails;
+    } catch (error) {
+      this.logger.error(
+        'Error al obtener detalles del plan de Mercado Pago:',
+        error,
+      );
+      throw new HttpException(
+        `Error al obtener detalles del plan: ${error.message}`,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 

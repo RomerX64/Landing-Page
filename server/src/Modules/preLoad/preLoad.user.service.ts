@@ -1,29 +1,21 @@
-import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
+import { Injectable, OnApplicationBootstrap, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Plan } from '../User/Planes.entity';
 import { User } from '../User/User.entity';
 import { ErrorHandler } from '../../Utils/Error.Handler';
+import { MercadoPagoService } from './mp.service';
 import * as bcrypt from 'bcrypt';
-import { BillingCycle } from '../User/Planes.entity'; // Asegúrate de importar el enum si lo necesitas
 import { signUp } from '../User/Dto/singUp.dto';
-interface PreLoadPlan {
-  imagen?: string;
-  name: string;
-  alt?: string;
-  // El precio puede venir como number o string
-  precio: number | string;
-  activos: string;
-  descripcion: string;
-  popular?: boolean;
-  billingCycle?: BillingCycle;
-}
 
 @Injectable()
 export class UsersPreLoad implements OnApplicationBootstrap {
+  private readonly logger = new Logger(UsersPreLoad.name);
+
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
     @InjectRepository(Plan) private planRepository: Repository<Plan>,
+    private mercadoPagoService: MercadoPagoService,
   ) {}
 
   users: signUp[] = [
@@ -36,64 +28,28 @@ export class UsersPreLoad implements OnApplicationBootstrap {
     },
   ];
 
-  planes: PreLoadPlan[] = [
+  // Planes predefinidos por si falla la carga desde Mercado Pago
+  defaultPlans: Partial<Plan>[] = [
     {
-      imagen: 'WorkflowImg01',
       name: 'Free Pass',
-      alt: 'Workflow 01',
       precio: 0,
+      descripcion: 'Plan gratuito básico',
       activos: '300',
-      descripcion:
-        'Podrá tener todas las funcionalidades del servicio, a excepción de las personalizaciones.',
-      billingCycle: BillingCycle.MONTHLY, 
+      mercadopagoPlanId: 'free_pass',
     },
     {
-      imagen: 'WorkflowImg02',
       name: 'AssetsOK',
-      alt: 'WorkflowImg02',
       precio: 80,
+      descripcion: 'Plan estándar',
       activos: '500',
-      descripcion:
-        'En este plan podrá tener todas las funcionalidades, además de personalizaciones en Reportes.',
-      billingCycle: BillingCycle.MONTHLY, 
+      mercadopagoPlanId: 'assets_ok',
     },
     {
-      imagen: 'WorkflowImg03',
       name: 'UltraAssets',
-      alt: 'WorkflowImg03',
       precio: 200,
+      descripcion: 'Plan premium',
       activos: '2500',
-      descripcion:
-        'Tendrá todas las funcionalidades, y personalizaciones deseadas.',
-      popular: true,
-      billingCycle: BillingCycle.MONTHLY, 
-    },
-    {
-      imagen: 'WorkflowImg01',
-      name: 'MegaAssets',
-      alt: 'WorkflowImg01',
-      precio: 300,
-      activos: '10000',
-      descripcion: 'Todo lo mencionado.',
-      billingCycle: BillingCycle.MONTHLY, 
-    },
-    {
-      imagen: 'WorkflowImg02',
-      name: 'AssetsGod',
-      alt: 'Workflow Img02',
-      precio: 600,
-      activos: '50000',
-      descripcion: 'Todo lo mencionado.',
-      billingCycle: BillingCycle.MONTHLY, 
-    },
-    {
-      imagen: 'WorkflowImg03',
-      name: 'Unlimit',
-      alt: 'Workflow Img03',
-      precio: 15000,
-      activos: 'Sin límites',
-      descripcion: 'Todo lo mencionado.',
-      billingCycle: BillingCycle.MONTHLY, 
+      mercadopagoPlanId: 'ultra_assets',
     },
   ];
 
@@ -105,7 +61,6 @@ export class UsersPreLoad implements OnApplicationBootstrap {
   async preLoadUsers() {
     try {
       for (const userData of this.users) {
-        // Verificar si el usuario ya existe por su correo electrónico
         const existingUser = await this.userRepository.findOne({
           where: { email: userData.email },
         });
@@ -117,72 +72,64 @@ export class UsersPreLoad implements OnApplicationBootstrap {
           user.password = hashedPassword;
           await this.userRepository.save(user);
         } else {
-          console.log(`El usuario con correo ${userData.email} ya existe`);
+          this.logger.log(`El usuario con correo ${userData.email} ya existe`);
         }
       }
-      console.log('Usuarios cargados con éxito');
+      this.logger.log('Usuarios cargados con éxito');
     } catch (error) {
+      this.logger.error('Error al cargar usuarios', error);
       throw ErrorHandler.handle(error);
     }
   }
 
   async preLoadPlans() {
     try {
-      for (const planData of this.planes) {
-        // Buscamos el plan por su nombre
-        const existingPlan = await this.planRepository.findOne({
-          where: { name: planData.name },
-        });
+      let plans = [];
+      try {
+        // Intenta cargar planes desde Mercado Pago
+        plans = await this.mercadoPagoService.fetchPlans();
+        this.logger.log(`Cargados ${plans.length} planes desde Mercado Pago`);
+      } catch (mercadoPagoError) {
+        // Si falla, usa planes predefinidos
+        this.logger.warn('No se pudieron cargar planes desde Mercado Pago, usando planes predefinidos');
+        plans = this.defaultPlans;
+      }
 
-        let processedPrecio: number;
-        // Procesamos el precio en caso de venir como string
-        if (typeof planData.precio === 'string') {
-          if (planData.precio.toLowerCase() === 'free') {
-            processedPrecio = 0;
-          } else {
-            const numericString = planData.precio.replace(/[^0-9.]/g, '');
-            processedPrecio = parseFloat(numericString);
-          }
-        } else {
-          processedPrecio = planData.precio;
-        }
+      for (const planData of plans) {
+        // Buscamos el plan por su ID de Mercado Pago o nombre
+        const existingPlan = await this.planRepository.findOne({
+          where: [
+            { mercadopagoPlanId: planData.id || planData.mercadopagoPlanId },
+            { name: planData.name }
+          ],
+        });
 
         if (!existingPlan) {
           // Si el plan no existe, se crea uno nuevo
           const newPlan = this.planRepository.create({
             name: planData.name,
-            descripcion: planData.descripcion,
-            imagen: planData.imagen,
-            alt: planData.alt,
-            precio: Number(processedPrecio.toFixed(2)),
-            activos: planData.activos,
-            popular: planData.popular || false,
-            mercadopagoPlanId: `mp_${planData.name.toLowerCase().replace(/\s+/g, '_')}`,
-            billingCycle: BillingCycle.MONTHLY,
+            mercadopagoPlanId: planData.mercadopagoPlanId,
+            precio: planData.price || planData.precio,
+            descripcion: planData.description || planData.descripcion || `Plan ${planData.name}`,
             activo: true,
+            imagen: 'default-plan-image',
+            alt: `Plan ${planData.name}`,
           });
           await this.planRepository.save(newPlan);
-          console.log(`El plan con nombre ${planData.name} ha sido creado`);
+          this.logger.log(`El plan con nombre ${newPlan.name} ha sido creado`);
         } else {
-          // Si el plan ya existe, se actualizan sus propiedades
-          existingPlan.descripcion = planData.descripcion;
-          existingPlan.imagen = planData.imagen;
-          existingPlan.alt = planData.alt;
-          existingPlan.precio = Number(processedPrecio.toFixed(2));
-          existingPlan.activos = planData.activos;
-          existingPlan.popular = planData.popular || false;
-          existingPlan.mercadopagoPlanId = `mp_${planData.name.toLowerCase().replace(/\s+/g, '_')}`;
-          existingPlan.billingCycle = BillingCycle.MONTHLY;
-          existingPlan.activo = true;
+          // Si el plan ya existe, actualizamos sus propiedades
+          existingPlan.name = planData.name;
+          existingPlan.precio = planData.price || planData.precio;
+          existingPlan.descripcion = planData.description || planData.descripcion || existingPlan.descripcion;
           existingPlan.fechaActualizacion = new Date();
           await this.planRepository.save(existingPlan);
-          console.log(
-            `El plan con nombre ${planData.name} ha sido actualizado`,
-          );
+          this.logger.log(`El plan con nombre ${existingPlan.name} ha sido actualizado`);
         }
       }
-      console.log('Planes cargados y actualizados con éxito');
+      this.logger.log('Planes cargados y actualizados con éxito');
     } catch (error) {
+      this.logger.error('Error al cargar planes', error);
       throw ErrorHandler.handle(error);
     }
   }

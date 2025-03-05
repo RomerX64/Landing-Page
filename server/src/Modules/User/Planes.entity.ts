@@ -17,7 +17,18 @@ export class Plan {
   @Column()
   descripcion: string;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    nullable: false, 
+    transformer: {
+      to: (value: number | string) => {
+        return value !== null && value !== undefined
+          ? value.toString()
+          : 'Sin límites';
+      },
+      from: (value: string) => value,
+    },
+  })
   activos: string;
 
   @Column({
