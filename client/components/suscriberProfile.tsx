@@ -6,6 +6,7 @@ import {
   NotebookPen,
   PauseCircle,
   XCircle,
+  CircleDotDashed,
 } from "lucide-react";
 import Link from "next/link";
 import {
@@ -30,8 +31,8 @@ const SuscriberProfile: React.FC = () => {
       const subs = await fetchSub();
       if (subs) {
         setSubscription(subs);
-      }else{
-        setSubscription(null)
+      } else {
+        setSubscription(null);
       }
       setLoading(false);
     };
@@ -148,7 +149,7 @@ const SuscriberProfile: React.FC = () => {
                       <span className="absolute hidden p-1 ml-2 text-sm text-yellow-500 left-7 group-hover:block">
                         Pending
                       </span>
-                      <CaptionsOff className="mt-1 ml-2 text-yellow-500" />
+                      <CircleDotDashed className="mt-1 ml-2 text-yellow-500" />
                     </>
                   ) : subscription.status === SubscriptionStatus.APPROVED ? (
                     <>

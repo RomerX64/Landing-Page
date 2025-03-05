@@ -52,6 +52,7 @@ export const SubscriptionProvider = ({
           planId,
           userEmail: email,
           paymentMethodToken,
+          userId: user?.id
         })
       );
       if (error || !data?.data?.subscription) {

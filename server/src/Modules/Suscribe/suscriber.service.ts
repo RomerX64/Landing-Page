@@ -96,32 +96,71 @@ export class SubscriptionsService {
         plan.mercadopagoPlanId,
       );
 
-      const response = await preApproval.create({
-        body: {
-          payer_email: createSubscriptionDto.userEmail,
-          reason: planResponse.reason,
-          card_token_id: createSubscriptionDto.paymentMethodToken,
-          status: 'pending',
-          preapproval_plan_id: planResponse.id,
-          back_url: planResponse.back_url,
-        },
-        requestOptions: {
-          idempotencyKey: idempotencyKey,
-        },
-      });
+      try {
+        const response = await preApproval.create({
+          body: {
+            payer_email: createSubscriptionDto.userEmail,
+            reason: planResponse.reason,
+            card_token_id: createSubscriptionDto.paymentMethodToken,
+            status: 'pending',
+            preapproval_plan_id: planResponse.id,
+            back_url: planResponse.back_url,
+          },
+          requestOptions: {
+            idempotencyKey: idempotencyKey,
+          },
+        });
 
-      this.logger.debug('Respuesta de Mercado Pago:', response);
+        this.logger.debug('Respuesta de Mercado Pago:', response);
 
-      if (!response || !response.id) {
-        throw new Error('No se recibió ID de suscripción de Mercado Pago');
+        if (!response || !response.id) {
+          throw new Error('No se recibió ID de suscripción de Mercado Pago');
+        }
+
+        // Obtener usuario y crear suscripción local
+        return await this.saveSubscriptionData(
+          createSubscriptionDto.userId,
+          plan,
+          response,
+        );
+      } catch (error) {
+        // Verificar específicamente si el error es por usuario no existente
+        if (
+          error.response &&
+          error.response.status === 400 &&
+          error.response.data.message.includes('payer_email')
+        ) {
+          // Reintentar sin especificar el correo electrónico
+          const response = await preApproval.create({
+            body: {
+              reason: planResponse.reason,
+              card_token_id: createSubscriptionDto.paymentMethodToken,
+              status: 'pending',
+              preapproval_plan_id: planResponse.id,
+              back_url: planResponse.back_url,
+            },
+            requestOptions: {
+              idempotencyKey: idempotencyKey,
+            },
+          });
+
+          this.logger.debug('Respuesta de Mercado Pago (sin email):', response);
+
+          if (!response || !response.id) {
+            throw new Error('No se recibió ID de suscripción de Mercado Pago');
+          }
+
+          // Obtener usuario y crear suscripción local
+          return await this.saveSubscriptionData(
+            createSubscriptionDto.userEmail,
+            plan,
+            response,
+          );
+        }
+
+        // Si es otro tipo de error, manejarlo como antes
+        return this.handleSubscriptionError(error);
       }
-
-      // Obtener usuario y crear suscripción local
-      return await this.saveSubscriptionData(
-        createSubscriptionDto.userEmail,
-        plan,
-        response,
-      );
     } catch (error) {
       return this.handleSubscriptionError(error);
     }
@@ -464,12 +503,12 @@ export class SubscriptionsService {
   }
 
   private async saveSubscriptionData(
-    userEmail: string,
+    userId: string,
     plan: Plan,
     mpResponse: any,
   ) {
     const user = await this.userRepository.findOne({
-      where: { email: userEmail },
+      where: { id: userId },
       relations: ['subscripcion'],
     });
 
