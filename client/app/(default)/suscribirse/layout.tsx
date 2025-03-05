@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { ChevronLeft } from "lucide-react";
 import { CardPayment } from "@mercadopago/sdk-react";
 import { useRouter } from "next/navigation";
@@ -7,11 +7,48 @@ import { SubscriptionContext } from "@/context/Suscribe.context";
 import { PlansContext } from "@/context/Planes.context";
 
 const PaymentForm = () => {
-  const { suscribirse } = useContext(SubscriptionContext);
+  const { suscribirse, sub } = useContext(SubscriptionContext);
   const { viewPlan } = useContext(PlansContext);
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [paymentProcessing, setPaymentProcessing] = useState(false);
+  const [progress, setProgress] = useState(0);
+
+  // Effect to handle successful subscription and redirect
+  useEffect(() => {
+    if (sub && sub.id) {
+      // Reset progress to full
+      setProgress(100);
+      
+      // Short delay to allow progress bar to complete visually
+      const redirectTimer = setTimeout(() => {
+        router.push('/success');
+      }, 500);
+
+      return () => clearTimeout(redirectTimer);
+    }
+  }, [sub, router]);
+
+  // Progress bar effect during payment processing
+  useEffect(() => {
+    let progressInterval: NodeJS.Timeout;
+    
+    if (paymentProcessing) {
+      progressInterval = setInterval(() => {
+        setProgress((prevProgress) => {
+          if (prevProgress >= 90) {
+            clearInterval(progressInterval);
+            return 90;
+          }
+          return prevProgress + 10;
+        });
+      }, 500);
+    }
+
+    return () => {
+      if (progressInterval) clearInterval(progressInterval);
+    };
+  }, [paymentProcessing]);
 
   const validateCardData = (formData: any) => {
     if (!formData.token) {
@@ -34,17 +71,25 @@ const PaymentForm = () => {
       const paymentMethodToken = formData.token;
 
       setPaymentProcessing(true);
+      setProgress(10);
       await suscribirse(viewPlan.id, paymentMethodToken, formData.payer.email);
     } catch (error) {
       console.error("Error al procesar el pago:", error);
       setError("Hubo un error al procesar el pago. Intenta nuevamente.");
-    } finally {
       setPaymentProcessing(false);
+      setProgress(0);
     }
   };
 
   return (
-    <section className="w-10/12 max-w-3xl px-1 py-5 mx-auto ">
+    <section className="w-10/12 max-w-3xl px-1 py-5 mx-auto">
+      {/* Progress bar */}
+      {(paymentProcessing || progress > 0) && (
+        <div 
+          className="fixed top-0 left-0 z-50 h-1 transition-all duration-300 ease-out bg-blue-500" 
+          style={{ width: `${progress}%` }}
+        />
+      )}
       
       <div className="p-8 bg-gray-800 shadow-2xl rounded-2xl">
         <div className="flex items-center mb-6">
