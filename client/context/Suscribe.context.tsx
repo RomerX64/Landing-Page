@@ -172,7 +172,10 @@ export const SubscriptionProvider = ({
   };
 
   const fetchSub = async (): Promise<ISubscripcion | null> => {
-    if (!user) return null;
+    if (!user) {
+      setSub(null);
+      return null;
+    }
     setIsLoading(true);
 
     try {
@@ -225,7 +228,6 @@ export const SubscriptionProvider = ({
   // Efecto para manejar cambios en el usuario
   useEffect(() => {
     if (!user) {
-      // Si no hay usuario, limpiar estado de suscripción
       setSub(null);
     } else {
       // Si hay un usuario, intentar cargar su suscripción específica
