@@ -72,12 +72,12 @@ export class UsersPreLoad implements OnApplicationBootstrap {
           user.password = hashedPassword;
           await this.userRepository.save(user);
         } else {
-         console.log(`El usuario con correo ${userData.email} ya existe`);
+          console.log(`El usuario con correo ${userData.email} ya existe`);
         }
       }
-     console.log('Usuarios cargados con éxito');
+      console.log('Usuarios cargados con éxito');
     } catch (error) {
-     console.error('Error al cargar usuarios', error);
+      console.error('Error al cargar usuarios', error);
       throw ErrorHandler.handle(error);
     }
   }
@@ -88,10 +88,12 @@ export class UsersPreLoad implements OnApplicationBootstrap {
       try {
         // Intenta cargar planes desde Mercado Pago
         plans = await this.mercadoPagoService.fetchPlans();
-       console.log(`Cargados ${plans.length} planes desde Mercado Pago`);
+        console.log(`Cargados ${plans.length} planes desde Mercado Pago`);
       } catch (mercadoPagoError) {
         // Si falla, usa planes predefinidos
-       console.warn('No se pudieron cargar planes desde Mercado Pago, usando planes predefinidos');
+        console.warn(
+          'No se pudieron cargar planes desde Mercado Pago, usando planes predefinidos',
+        );
         plans = this.defaultPlans;
       }
 
@@ -100,7 +102,7 @@ export class UsersPreLoad implements OnApplicationBootstrap {
         const existingPlan = await this.planRepository.findOne({
           where: [
             { mercadopagoPlanId: planData.id || planData.mercadopagoPlanId },
-            { name: planData.name }
+            { name: planData.name },
           ],
         });
 
@@ -110,26 +112,35 @@ export class UsersPreLoad implements OnApplicationBootstrap {
             name: planData.name,
             mercadopagoPlanId: planData.mercadopagoPlanId,
             precio: planData.price || planData.precio,
-            descripcion: planData.description || planData.descripcion || `Plan ${planData.name}`,
+            descripcion:
+              planData.description ||
+              planData.descripcion ||
+              `Plan ${planData.name}`,
             activo: true,
             imagen: 'default-plan-image',
             alt: `Plan ${planData.name}`,
           });
           await this.planRepository.save(newPlan);
-         console.log(`El plan con nombre ${newPlan.name} ha sido creado`);
+          console.log(`El plan con nombre ${newPlan.name} ha sido creado`);
         } else {
           // Si el plan ya existe, actualizamos sus propiedades
           existingPlan.name = planData.name;
           existingPlan.precio = planData.price || planData.precio;
-          existingPlan.descripcion = planData.description || planData.descripcion || existingPlan.descripcion;
+          mercadopagoPlanId: planData.mercadopagoPlanId,
+            (existingPlan.descripcion =
+              planData.description ||
+              planData.descripcion ||
+              existingPlan.descripcion);
           existingPlan.fechaActualizacion = new Date();
           await this.planRepository.save(existingPlan);
-         console.log(`El plan con nombre ${existingPlan.name} ha sido actualizado`);
+          console.log(
+            `El plan con nombre ${existingPlan.name} ha sido actualizado`,
+          );
         }
       }
-     console.log('Planes cargados y actualizados con éxito');
+      console.log('Planes cargados y actualizados con éxito');
     } catch (error) {
-     console.error('Error al cargar planes', error);
+      console.error('Error al cargar planes', error);
       throw ErrorHandler.handle(error);
     }
   }
