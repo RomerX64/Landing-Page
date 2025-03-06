@@ -52,14 +52,14 @@ export const SubscriptionProvider = ({
     const initMP = () => {
       try {
         // Intentamos obtener la clave pública de las variables de entorno
-        const token = process.env.NEXT_PUBLIC_APP_MP_TOKEN;
+        // const token = process.env.NEXT_PUBLIC_APP_MP_TOKEN;
 
-        if (!token) {
-          console.error("Mercado Pago PUBLIC_KEY no está configurada");
-          return false;
-        }
+        // if (!token) {
+        //   console.error("Mercado Pago PUBLIC_KEY no está configurada");
+        //   return false;
+        // }
 
-        initMercadoPago(token);
+        initMercadoPago("APP_USR-8c3216f3-8ec0-4106-9522-f580b88cf1c4");
         setMpInitialized(true);
         return true;
       } catch (error) {

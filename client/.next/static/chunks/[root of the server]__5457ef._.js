@@ -867,7 +867,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$Api$2e$ts__$5b$app$
 var __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/utils/error.helper.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$context$2f$user$2e$context$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/context/user.context.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mercadopago$2f$sdk$2d$react$2f$esm$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$module__evaluation$3e$__ = __turbopack_import__("[project]/node_modules/@mercadopago/sdk-react/esm/index.js [app-client] (ecmascript) <module evaluation>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/build/polyfills/process.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mercadopago$2f$sdk$2d$react$2f$esm$2f$mercadoPago$2f$initMercadoPago$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__initMercadoPago$3e$__ = __turbopack_import__("[project]/node_modules/@mercadopago/sdk-react/esm/mercadoPago/initMercadoPago/index.js [app-client] (ecmascript) <export default as initMercadoPago>");
 ;
 var _s = __turbopack_refresh__.signature();
@@ -900,11 +899,12 @@ const SubscriptionProvider = ({ children })=>{
                 "SubscriptionProvider.useEffect.initMP": ()=>{
                     try {
                         // Intentamos obtener la clave pública de las variables de entorno
-                        const token = ("TURBOPACK compile-time value", "APP_USR-8c3216f3-8ec0-4106-9522-f580b88cf1c4");
-                        if ("TURBOPACK compile-time falsy", 0) {
-                            "TURBOPACK unreachable";
-                        }
-                        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mercadopago$2f$sdk$2d$react$2f$esm$2f$mercadoPago$2f$initMercadoPago$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__initMercadoPago$3e$__["initMercadoPago"])(token);
+                        // const token = process.env.NEXT_PUBLIC_APP_MP_TOKEN;
+                        // if (!token) {
+                        //   console.error("Mercado Pago PUBLIC_KEY no está configurada");
+                        //   return false;
+                        // }
+                        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mercadopago$2f$sdk$2d$react$2f$esm$2f$mercadoPago$2f$initMercadoPago$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__initMercadoPago$3e$__["initMercadoPago"])("APP_USR-8c3216f3-8ec0-4106-9522-f580b88cf1c4");
                         setMpInitialized(true);
                         return true;
                     } catch (error) {
