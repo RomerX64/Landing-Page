@@ -247,6 +247,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
       setUserState(null);
       localStorage.removeItem("token");
       localStorage.removeItem("user");
+      localStorage.removeItem("subscripcion");
       Cookies.remove("token"); // Elimina las cookies
       Cookies.remove("user");
     } catch (error) {

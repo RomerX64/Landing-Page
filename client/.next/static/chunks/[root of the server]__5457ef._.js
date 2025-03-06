@@ -369,6 +369,7 @@ const UserProvider = ({ children })=>{
                 setUserState(null);
                 localStorage.removeItem("token");
                 localStorage.removeItem("user");
+                localStorage.removeItem("subscripcion");
                 __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].remove("token"); // Elimina las cookies
                 __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].remove("user");
             } catch (error) {
@@ -455,7 +456,7 @@ const UserProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/context/user.context.tsx",
-        lineNumber: 335,
+        lineNumber: 336,
         columnNumber: 10
     }, this);
 };
