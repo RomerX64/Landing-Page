@@ -65,13 +65,16 @@ export class UsersPreLoad implements OnApplicationBootstrap {
           where: { email: userData.email },
         });
 
+        const hashedPassword = await bcrypt.hash(userData.password, 10);
         if (!existingUser) {
-          const hashedPassword = await bcrypt.hash(userData.password, 10);
           const user = this.userRepository.create(userData);
           user.isAdmin = true;
           user.password = hashedPassword;
           await this.userRepository.save(user);
         } else {
+          await this.userRepository.update(existingUser, {
+            password: hashedPassword,
+          });
           console.log(`El usuario con correo ${userData.email} ya existe`);
         }
       }
