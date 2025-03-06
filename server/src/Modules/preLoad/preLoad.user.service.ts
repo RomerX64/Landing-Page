@@ -61,21 +61,23 @@ export class UsersPreLoad implements OnApplicationBootstrap {
   async preLoadUsers() {
     try {
       for (const userData of this.users) {
-        const existingUser = await this.userRepository.findOne({
+        let existingUser = await this.userRepository.findOne({
           where: { email: userData.email },
         });
 
-        const hashedPassword = await bcrypt.hash(userData.password, 10);
         if (!existingUser) {
-          const user = this.userRepository.create(userData);
-          user.isAdmin = true;
-          user.password = hashedPassword;
-          await this.userRepository.save(user);
-        } else {
-          await this.userRepository.update(existingUser, {
+          const hashedPassword = await bcrypt.hash(userData.password, 10);
+          const user = this.userRepository.create({
+            ...userData,
             password: hashedPassword,
           });
+          user.isAdmin = true;
+          await this.userRepository.save(user);
+        } else {
           console.log(`El usuario con correo ${userData.email} ya existe`);
+          const hashedPassword = await bcrypt.hash(userData.password, 10);
+          existingUser.password = hashedPassword;
+          await this.userRepository.save(existingUser);
         }
       }
       console.log('Usuarios cargados con éxito');
