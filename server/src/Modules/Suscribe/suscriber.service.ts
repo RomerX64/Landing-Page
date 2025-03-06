@@ -76,9 +76,7 @@ export class SubscriptionsService {
    * @returns Objeto con mensaje y datos de la suscripción creada
    */
   async createSubscription(createSubscriptionDto: CreateSubscriptionDto) {
-    this.logger.log(
-      `Creando suscripción para: ${createSubscriptionDto.userEmail}`,
-    );
+    console.log(`Creando suscripción para: ${createSubscriptionDto.userEmail}`);
 
     // Validaciones
     this.validateSubscriptionData(createSubscriptionDto);
@@ -111,7 +109,7 @@ export class SubscriptionsService {
           },
         });
 
-        this.logger.debug('Respuesta de Mercado Pago:', response);
+        console.debug('Respuesta de Mercado Pago:', response);
 
         if (!response || !response.id) {
           throw new Error('No se recibió ID de suscripción de Mercado Pago');
@@ -144,7 +142,7 @@ export class SubscriptionsService {
             },
           });
 
-          this.logger.debug('Respuesta de Mercado Pago (sin email):', response);
+          console.debug('Respuesta de Mercado Pago (sin email):', response);
 
           if (!response || !response.id) {
             throw new Error('No se recibió ID de suscripción de Mercado Pago');
@@ -199,7 +197,7 @@ export class SubscriptionsService {
 
       return planDetails;
     } catch (error) {
-      this.logger.error(
+      console.error(
         'Error al obtener detalles del plan de Mercado Pago:',
         error,
       );
@@ -216,7 +214,7 @@ export class SubscriptionsService {
    * @returns Objeto con mensaje y datos de la suscripción cancelada
    */
   async cancelSubscription(dto: CancelSubscriptionDto) {
-    this.logger.log(`Cancelando suscripción: ${dto.subscriptionId}`);
+    console.log(`Cancelando suscripción: ${dto.subscriptionId}`);
 
     const subscription = await this.subscriptionRepository.findOne({
       where: { mercadopagoSubscriptionId: dto.subscriptionId },
@@ -253,7 +251,7 @@ export class SubscriptionsService {
         subscription,
       };
     } catch (error) {
-      this.logger.error('Error al cancelar suscripción:', error);
+      console.error('Error al cancelar suscripción:', error);
       throw new HttpException(
         `Error al cancelar la suscripción: ${error.message || 'Error desconocido'}`,
         HttpStatus.BAD_REQUEST,
@@ -266,7 +264,7 @@ export class SubscriptionsService {
    * @param notification Datos de la notificación de Mercado Pago
    */
   async handleWebhook(notification: MercadoPagoWebhookNotification) {
-    this.logger.log(`Webhook recibido: ${JSON.stringify(notification)}`);
+    console.log(`Webhook recibido: ${JSON.stringify(notification)}`);
 
     try {
       const subscriptionId = notification.id || notification.data?.id;
@@ -281,7 +279,7 @@ export class SubscriptionsService {
       const subscription = await this.findSubscriptionById(subscriptionId);
 
       if (!subscription) {
-        this.logger.warn(
+        console.warn(
           `Suscripción no encontrada para el webhook: ${subscriptionId}`,
         );
         throw new HttpException(
@@ -302,7 +300,7 @@ export class SubscriptionsService {
         subscriptionId,
       };
     } catch (error) {
-      this.logger.error('Error al procesar webhook:', error);
+      console.error('Error al procesar webhook:', error);
       throw ErrorHandler.handle(error);
     }
   }
@@ -339,7 +337,7 @@ export class SubscriptionsService {
     if (handler) {
       await handler();
     } else {
-      this.logger.warn(`Acción de webhook no manejada: ${action}`);
+      console.warn(`Acción de webhook no manejada: ${action}`);
     }
   }
 
@@ -348,26 +346,26 @@ export class SubscriptionsService {
     subscription.status = SubscriptionStatus.APPROVED;
     subscription.fechaUltimaPaga = new Date();
     await this.subscriptionRepository.save(subscription);
-    this.logger.log('Pago creado, suscripción aprobada');
+    console.log('Pago creado, suscripción aprobada');
   }
 
   private async handlePaymentUpdated(subscription: Subscripcion) {
     subscription.status = SubscriptionStatus.APPROVED;
     await this.subscriptionRepository.save(subscription);
-    this.logger.log('Pago actualizado');
+    console.log('Pago actualizado');
   }
 
   private async handlePaymentApproved(subscription: Subscripcion) {
     subscription.status = SubscriptionStatus.ACTIVE;
     subscription.fechaUltimaPaga = new Date();
     await this.subscriptionRepository.save(subscription);
-    this.logger.log('Pago aprobado, suscripción activada');
+    console.log('Pago aprobado, suscripción activada');
   }
 
   private async handlePaymentFailed(subscription: Subscripcion) {
     subscription.status = SubscriptionStatus.REJECTED;
     await this.subscriptionRepository.save(subscription);
-    this.logger.log('Pago fallido, suscripción rechazada');
+    console.log('Pago fallido, suscripción rechazada');
   }
 
   private async handleSubscriptionCancelled(
@@ -378,13 +376,13 @@ export class SubscriptionsService {
     subscription.cancellationDate = new Date();
     subscription.cancellationReason = 'Cancelado por Mercado Pago';
     await this.subscriptionRepository.save(subscription);
-    this.logger.log('Suscripción cancelada');
+    console.log('Suscripción cancelada');
   }
 
   private async handleSubscriptionExpired(subscription: Subscripcion) {
     subscription.status = SubscriptionStatus.EXPIRED;
     await this.subscriptionRepository.save(subscription);
-    this.logger.log('Suscripción expirada');
+    console.log('Suscripción expirada');
   }
 
   private async handleSubscriptionRenewed(subscription: Subscripcion) {
@@ -394,13 +392,13 @@ export class SubscriptionsService {
       subscription.plan.billingCycle,
     );
     await this.subscriptionRepository.save(subscription);
-    this.logger.log('Suscripción renovada');
+    console.log('Suscripción renovada');
   }
 
   private async handleSubscriptionPaused(subscription: Subscripcion) {
     subscription.status = SubscriptionStatus.PAUSED;
     await this.subscriptionRepository.save(subscription);
-    this.logger.log('Suscripción pausada');
+    console.log('Suscripción pausada');
   }
 
   /**
@@ -409,7 +407,7 @@ export class SubscriptionsService {
    * @returns Objeto con mensaje y datos de la suscripción aprobada
    */
   async approveSubscription(subscriptionId: string) {
-    this.logger.log(`Aprobando suscripción: ${subscriptionId}`);
+    console.log(`Aprobando suscripción: ${subscriptionId}`);
 
     const subscription = await this.subscriptionRepository.findOne({
       where: { mercadopagoSubscriptionId: subscriptionId },
@@ -550,9 +548,7 @@ export class SubscriptionsService {
   }
 
   private async handleExistingSubscription(user: UserEntity) {
-    this.logger.log(
-      `Cancelando suscripción existente para usuario: ${user.email}`,
-    );
+    console.log(`Cancelando suscripción existente para usuario: ${user.email}`);
     try {
       if (user.subscripcion.mercadopagoSubscriptionId) {
         // Cancelar en Mercado Pago
@@ -573,13 +569,13 @@ export class SubscriptionsService {
         'Reemplazado por nueva suscripción';
       await this.subscriptionRepository.save(user.subscripcion);
     } catch (error) {
-      this.logger.error('Error al cancelar suscripción existente:', error);
+      console.error('Error al cancelar suscripción existente:', error);
       // Continuamos con la nueva suscripción aunque falle la cancelación de la anterior
     }
   }
 
   private handleSubscriptionError(error: any) {
-    this.logger.error('Error al crear suscripción:', error);
+    console.error('Error al crear suscripción:', error);
 
     if (error.response?.data) {
       throw new HttpException(
@@ -688,7 +684,7 @@ export class SubscriptionsService {
       updatedSubscriptions.push(subscription.id);
 
       // Opcional: Notificar al usuario sobre la expiración
-      this.logger.log(`Suscripción expirada: ${subscription.id}`);
+      console.log(`Suscripción expirada: ${subscription.id}`);
     }
 
     return {
