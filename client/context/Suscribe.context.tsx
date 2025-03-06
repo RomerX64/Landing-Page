@@ -22,6 +22,7 @@ interface SubscriptionContextProps {
   desuscribirse: (cancellationReason?: string) => Promise<boolean>;
   fetchSub: () => Promise<ISubscripcion | null>;
   isLoading: boolean;
+  mpInitialized: boolean;
 }
 
 const defaultSubscriptionContext: SubscriptionContextProps = {
@@ -30,6 +31,7 @@ const defaultSubscriptionContext: SubscriptionContextProps = {
   desuscribirse: async () => false,
   fetchSub: async () => null,
   isLoading: false,
+  mpInitialized: false,
 };
 
 export const SubscriptionContext = createContext<SubscriptionContextProps>(
@@ -44,16 +46,30 @@ export const SubscriptionProvider = ({
   const { user } = useContext(UserContext);
   const [sub, setSub] = useState<ISubscripcion | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const token = process.env.NEXT_PUBLIC_APP_MP_TOKEN;
+  const [mpInitialized, setMpInitialized] = useState<boolean>(false);
 
   useEffect(() => {
-    if (token) {
-      initMercadoPago(token);
-    } else {
-      console.error("Mercado Pago token is missing");
-    }
-  }, [token]);
+    const initMP = () => {
+      try {
+        // Intentamos obtener la clave pública de las variables de entorno
+        const token = process.env.NEXT_PUBLIC_APP_MP_TOKEN;
+
+        if (!token) {
+          console.error("Mercado Pago PUBLIC_KEY no está configurada");
+          return false;
+        }
+
+        initMercadoPago(token);
+        setMpInitialized(true);
+        return true;
+      } catch (error) {
+        console.error("Error al inicializar Mercado Pago:", error);
+        return false;
+      }
+    };
+
+    initMP();
+  }, []);
 
   const suscribirse = async (
     planId: number,
@@ -62,6 +78,14 @@ export const SubscriptionProvider = ({
   ): Promise<{ success: boolean; error?: string }> => {
     setIsLoading(true);
     try {
+      if (!mpInitialized) {
+        return {
+          success: false,
+          error:
+            "Error al inicializar el servicio de pagos. Por favor, recarga la página.",
+        };
+      }
+
       if (!user?.id) {
         return { success: false, error: "Usuario no identificado" };
       }
@@ -200,8 +224,9 @@ export const SubscriptionProvider = ({
       desuscribirse,
       fetchSub,
       isLoading,
+      mpInitialized,
     }),
-    [sub, isLoading, user]
+    [sub, isLoading, mpInitialized, user]
   );
 
   return (

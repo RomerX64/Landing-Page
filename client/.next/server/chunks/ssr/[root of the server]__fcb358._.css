@@ -1022,6 +1022,10 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   height: 100%;
 }
 
+.h-16 {
+  height: 4rem;
+}
+
 .max-h-10 {
   max-height: 2.5rem;
 }
@@ -1088,6 +1092,10 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
 
 .w-px {
   width: 1px;
+}
+
+.w-16 {
+  width: 4rem;
 }
 
 .min-w-\[100px\] {
@@ -2074,6 +2082,11 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
 .text-yellow-500 {
   --tw-text-opacity: 1;
   color: rgb(234 179 8 / var(--tw-text-opacity, 1));
+}
+
+.text-yellow-400 {
+  --tw-text-opacity: 1;
+  color: rgb(250 204 21 / var(--tw-text-opacity, 1));
 }
 
 .antialiased {

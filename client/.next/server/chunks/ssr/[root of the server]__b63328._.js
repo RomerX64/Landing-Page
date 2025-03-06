@@ -908,26 +908,42 @@ const defaultSubscriptionContext = {
         }),
     desuscribirse: async ()=>false,
     fetchSub: async ()=>null,
-    isLoading: false
+    isLoading: false,
+    mpInitialized: false
 };
 const SubscriptionContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["createContext"])(defaultSubscriptionContext);
 const SubscriptionProvider = ({ children })=>{
     const { user } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useContext"])(__TURBOPACK__imported__module__$5b$project$5d2f$context$2f$user$2e$context$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"]);
     const [sub, setSub] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
     const [isLoading, setIsLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
-    const token = ("TURBOPACK compile-time value", "APP_USR-8c3216f3-8ec0-4106-9522-f580b88cf1c4");
+    const [mpInitialized, setMpInitialized] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        if ("TURBOPACK compile-time truthy", 1) {
-            (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mercadopago$2f$sdk$2d$react$2f$esm$2f$mercadoPago$2f$initMercadoPago$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__initMercadoPago$3e$__["initMercadoPago"])(token);
-        } else {
-            "TURBOPACK unreachable";
-        }
-    }, [
-        token
-    ]);
+        const initMP = ()=>{
+            try {
+                // Intentamos obtener la clave pública de las variables de entorno
+                const token = ("TURBOPACK compile-time value", "APP_USR-8c3216f3-8ec0-4106-9522-f580b88cf1c4");
+                if ("TURBOPACK compile-time falsy", 0) {
+                    "TURBOPACK unreachable";
+                }
+                (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mercadopago$2f$sdk$2d$react$2f$esm$2f$mercadoPago$2f$initMercadoPago$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__initMercadoPago$3e$__["initMercadoPago"])(token);
+                setMpInitialized(true);
+                return true;
+            } catch (error) {
+                console.error("Error al inicializar Mercado Pago:", error);
+                return false;
+            }
+        };
+        initMP();
+    }, []);
     const suscribirse = async (planId, paymentMethodToken, email)=>{
         setIsLoading(true);
         try {
+            if (!mpInitialized) {
+                return {
+                    success: false,
+                    error: "Error al inicializar el servicio de pagos. Por favor, recarga la página."
+                };
+            }
             if (!user?.id) {
                 return {
                     success: false,
@@ -1044,10 +1060,12 @@ const SubscriptionProvider = ({ children })=>{
             suscribirse,
             desuscribirse,
             fetchSub,
-            isLoading
+            isLoading,
+            mpInitialized
         }), [
         sub,
         isLoading,
+        mpInitialized,
         user
     ]);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(SubscriptionContext.Provider, {
@@ -1055,7 +1073,7 @@ const SubscriptionProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/context/Suscribe.context.tsx",
-        lineNumber: 208,
+        lineNumber: 233,
         columnNumber: 5
     }, this);
 };

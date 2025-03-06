@@ -1,6 +1,6 @@
 "use client";
 import React, { useContext, useState, useEffect, useRef } from "react";
-import { ChevronLeft, AlertCircle } from "lucide-react";
+import { ChevronLeft, AlertCircle, RefreshCw } from "lucide-react";
 import { CardPayment } from "@mercadopago/sdk-react";
 import { useRouter } from "next/navigation";
 import { SubscriptionContext } from "@/context/Suscribe.context";
@@ -12,7 +12,8 @@ import {
 } from "@mercadopago/sdk-react/esm/bricks/cardPayment/type";
 
 const PaymentForm = () => {
-  const { suscribirse, sub, isLoading } = useContext(SubscriptionContext);
+  const { suscribirse, sub, isLoading, mpInitialized } =
+    useContext(SubscriptionContext);
   const { viewPlan } = useContext(PlansContext);
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
@@ -40,6 +41,20 @@ const PaymentForm = () => {
       return () => clearTimeout(redirectTimer);
     }
   }, [sub, router]);
+
+  // Verificar si MercadoPago está inicializado
+  useEffect(() => {
+    if (!mpInitialized) {
+      setError(
+        "No se pudo inicializar el servicio de pago. Verifica que la clave pública esté configurada correctamente."
+      );
+    } else if (
+      error ===
+      "No se pudo inicializar el servicio de pago. Verifica que la clave pública esté configurada correctamente."
+    ) {
+      setError(null);
+    }
+  }, [mpInitialized]);
 
   // Progress bar effect during payment processing
   useEffect(() => {
@@ -94,12 +109,20 @@ const PaymentForm = () => {
     setError(null);
     setPaymentProcessing(false);
     setProgress(0);
+    window.location.reload(); // Recargamos la página para reiniciar MercadoPago si es necesario
   };
 
   const handleFormSubmit = async (
     formData: ICardPaymentFormData<ICardPaymentBrickPayer>,
     additionalData?: IAdditionalData
   ): Promise<void> => {
+    if (!mpInitialized) {
+      setError(
+        "El servicio de pago no está inicializado. Por favor, recarga la página."
+      );
+      return;
+    }
+
     if (!viewPlan) {
       setError("No se ha seleccionado un plan.");
       return;
@@ -123,11 +146,7 @@ const PaymentForm = () => {
       setPaymentProcessing(true);
       setProgress(10);
 
-      const result = await suscribirse(
-        viewPlan.id,
-        paymentMethodToken,
-        email // Ahora TypeScript sabe que email no es undefined
-      );
+      const result = await suscribirse(viewPlan.id, paymentMethodToken, email);
 
       if (!result.success) {
         setError(result.error || "Hubo un error al procesar la suscripción.");
@@ -144,6 +163,44 @@ const PaymentForm = () => {
       setProgress(0);
     }
   };
+
+  // Si MercadoPago no está inicializado, mostramos un mensaje específico
+  if (!mpInitialized) {
+    return (
+      <section className="w-10/12 max-w-3xl px-1 py-5 mx-auto">
+        <div className="p-8 bg-gray-800 shadow-2xl rounded-2xl">
+          <div className="flex items-center mb-6">
+            <button
+              onClick={() => router.back()}
+              className="p-2 mr-4 text-white bg-gray-700 rounded-full hover:bg-gray-600"
+            >
+              <ChevronLeft size={24} />
+            </button>
+            <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
+              Completa tu Pago
+            </h2>
+          </div>
+
+          <div className="p-6 text-center">
+            <AlertCircle className="w-16 h-16 mx-auto mb-4 text-yellow-400" />
+            <h3 className="mb-2 text-xl font-bold text-white">
+              Error al inicializar el servicio de pago
+            </h3>
+            <p className="mb-6 text-gray-300">
+              No se pudo inicializar el servicio de pagos. Esto puede suceder si
+              la clave pública no está configurada correctamente.
+            </p>
+            <button
+              onClick={() => window.location.reload()}
+              className="flex items-center justify-center px-4 py-2 mx-auto font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700"
+            >
+              <RefreshCw className="w-4 h-4 mr-2" /> Reintentar
+            </button>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="w-10/12 max-w-3xl px-1 py-5 mx-auto">
