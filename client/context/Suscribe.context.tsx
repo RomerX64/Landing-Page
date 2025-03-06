@@ -10,6 +10,7 @@ import api from "@/utils/Api";
 import { handleAsync } from "@/utils/error.helper";
 import { ISubscripcion } from "@/interfaces/Subscripcion.interface";
 import UserContext from "@/context/user.context";
+import { initMercadoPago } from "@mercadopago/sdk-react";
 
 interface SubscriptionContextProps {
   sub: ISubscripcion | null;
@@ -41,6 +42,9 @@ export const SubscriptionProvider = ({
   const { user, signOut } = useContext(UserContext);
   const [sub, setSub] = useState<ISubscripcion | null>(null);
 
+  const token = process.env.NEXT_PUBLIC_APP_MP_TOKEN;
+  initMercadoPago(token ? token : "");
+  
   const suscribirse = async (
     planId: number,
     paymentMethodToken: string,
@@ -52,7 +56,7 @@ export const SubscriptionProvider = ({
           planId,
           userEmail: email,
           paymentMethodToken,
-          userId: user?.id
+          userId: user?.id,
         })
       );
       if (error || !data?.data?.subscription) {

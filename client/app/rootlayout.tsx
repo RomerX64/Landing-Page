@@ -8,7 +8,6 @@ import Header from "@/components/ui/header";
 import { AdminProvider } from "@/context/Administracion.context";
 import { UserProvider } from "@/context/user.context";
 import { SessionProvider } from "next-auth/react";
-import { initMercadoPago } from "@mercadopago/sdk-react";
 import { JSX, ReactNode } from "react";
 import { SubscriptionProvider } from "@/context/Suscribe.context";
 import { PlansProvider } from "@/context/Planes.context";
@@ -50,8 +49,7 @@ export default function RootLayout({
 }: {
   children: ReactNode;
 }): JSX.Element {
-  const token = process.env.NEXT_PUBLIC_APP_MP_TOKEN;
-  initMercadoPago(token ? token : "");
+
 
   return (
     <html lang="en">
