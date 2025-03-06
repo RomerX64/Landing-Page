@@ -72,12 +72,12 @@ export class UsersPreLoad implements OnApplicationBootstrap {
           user.password = hashedPassword;
           await this.userRepository.save(user);
         } else {
-          this.logger.log(`El usuario con correo ${userData.email} ya existe`);
+         console.log(`El usuario con correo ${userData.email} ya existe`);
         }
       }
-      this.logger.log('Usuarios cargados con éxito');
+     console.log('Usuarios cargados con éxito');
     } catch (error) {
-      this.logger.error('Error al cargar usuarios', error);
+     console.error('Error al cargar usuarios', error);
       throw ErrorHandler.handle(error);
     }
   }
@@ -88,10 +88,10 @@ export class UsersPreLoad implements OnApplicationBootstrap {
       try {
         // Intenta cargar planes desde Mercado Pago
         plans = await this.mercadoPagoService.fetchPlans();
-        this.logger.log(`Cargados ${plans.length} planes desde Mercado Pago`);
+       console.log(`Cargados ${plans.length} planes desde Mercado Pago`);
       } catch (mercadoPagoError) {
         // Si falla, usa planes predefinidos
-        this.logger.warn('No se pudieron cargar planes desde Mercado Pago, usando planes predefinidos');
+       console.warn('No se pudieron cargar planes desde Mercado Pago, usando planes predefinidos');
         plans = this.defaultPlans;
       }
 
@@ -116,7 +116,7 @@ export class UsersPreLoad implements OnApplicationBootstrap {
             alt: `Plan ${planData.name}`,
           });
           await this.planRepository.save(newPlan);
-          this.logger.log(`El plan con nombre ${newPlan.name} ha sido creado`);
+         console.log(`El plan con nombre ${newPlan.name} ha sido creado`);
         } else {
           // Si el plan ya existe, actualizamos sus propiedades
           existingPlan.name = planData.name;
@@ -124,12 +124,12 @@ export class UsersPreLoad implements OnApplicationBootstrap {
           existingPlan.descripcion = planData.description || planData.descripcion || existingPlan.descripcion;
           existingPlan.fechaActualizacion = new Date();
           await this.planRepository.save(existingPlan);
-          this.logger.log(`El plan con nombre ${existingPlan.name} ha sido actualizado`);
+         console.log(`El plan con nombre ${existingPlan.name} ha sido actualizado`);
         }
       }
-      this.logger.log('Planes cargados y actualizados con éxito');
+     console.log('Planes cargados y actualizados con éxito');
     } catch (error) {
-      this.logger.error('Error al cargar planes', error);
+     console.error('Error al cargar planes', error);
       throw ErrorHandler.handle(error);
     }
   }
