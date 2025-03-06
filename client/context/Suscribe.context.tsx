@@ -48,6 +48,20 @@ export const SubscriptionProvider = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [mpInitialized, setMpInitialized] = useState<boolean>(false);
 
+  useEffect(() => {
+    const initMP = () => {
+      try {
+        initMercadoPago("APP_USR-8c3216f3-8ec0-4106-9522-f580b88cf1c4");
+        setMpInitialized(true);
+        return true;
+      } catch (error) {
+        console.error("Error al inicializar Mercado Pago:", error);
+        return false;
+      }
+    };
+
+    initMP();
+  }, []);
 
   const suscribirse = async (
     planId: number,

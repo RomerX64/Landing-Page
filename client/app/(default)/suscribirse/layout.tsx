@@ -1,7 +1,7 @@
 "use client";
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { ChevronLeft, AlertCircle, RefreshCw } from "lucide-react";
-import { CardPayment } from "@mercadopago/sdk-react";
+import { CardPayment, initMercadoPago } from "@mercadopago/sdk-react";
 import { useRouter } from "next/navigation";
 import { SubscriptionContext } from "@/context/Suscribe.context";
 import { PlansContext } from "@/context/Planes.context";
@@ -12,6 +12,8 @@ import {
 } from "@mercadopago/sdk-react/esm/bricks/cardPayment/type";
 
 const PaymentForm = () => {
+  initMercadoPago("APP_USR-8c3216f3-8ec0-4106-9522-f580b88cf1c4");
+
   const { suscribirse, sub, isLoading, mpInitialized } =
     useContext(SubscriptionContext);
   const { viewPlan } = useContext(PlansContext);
