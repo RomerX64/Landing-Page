@@ -50,7 +50,7 @@ export class UserService {
     try {
       const user: User = await this.userRepository.findOne({
         where: { email: email },
-        relations: ['subscripcion'],
+        relations: ['subscripcion', 'subscripcion.plan'],
       });
       if (!user)
         throw new HttpException('User not found', HttpStatus.NOT_FOUND);
@@ -85,7 +85,7 @@ export class UserService {
     try {
       const user: User = await this.userRepository.findOne({
         where: { email: signIn.email },
-        relations: ['subscripcion'],
+        relations: ['subscripcion', 'subscripcion.plan'],
       });
       if (!user)
         throw new HttpException('Credencial inválida', HttpStatus.BAD_REQUEST);
