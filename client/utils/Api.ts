@@ -1,7 +1,11 @@
 import axios from "axios";
 
+const url =
+  process.env.NEXT_PUBLIC_API_URL ||
+  "https://assetly-landing-page-backend.onrender.com";
+
 const api = axios.create({
-  baseURL: "https://assetly-landing-page-backend.onrender.com", //process.env.NEXT_PUBLIC_API_URL,
+  baseURL: url, //process.env.NEXT_PUBLIC_API_URL,
   headers: {
     "Content-Type": "application/json",
   },
