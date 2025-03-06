@@ -903,36 +903,76 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mercadopag
 ;
 const defaultSubscriptionContext = {
     sub: null,
-    suscribirse: async ()=>{},
+    suscribirse: async ()=>({
+            success: false
+        }),
     desuscribirse: async ()=>false,
-    fetchSub: async ()=>null
+    fetchSub: async ()=>null,
+    isLoading: false
 };
 const SubscriptionContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["createContext"])(defaultSubscriptionContext);
 const SubscriptionProvider = ({ children })=>{
-    const { user, signOut } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useContext"])(__TURBOPACK__imported__module__$5b$project$5d2f$context$2f$user$2e$context$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"]);
+    const { user } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useContext"])(__TURBOPACK__imported__module__$5b$project$5d2f$context$2f$user$2e$context$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"]);
     const [sub, setSub] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [isLoading, setIsLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const token = ("TURBOPACK compile-time value", "APP_USR-8c3216f3-8ec0-4106-9522-f580b88cf1c4");
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mercadopago$2f$sdk$2d$react$2f$esm$2f$mercadoPago$2f$initMercadoPago$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__initMercadoPago$3e$__["initMercadoPago"])(("TURBOPACK compile-time truthy", 1) ? token : ("TURBOPACK unreachable", undefined));
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        if ("TURBOPACK compile-time truthy", 1) {
+            (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mercadopago$2f$sdk$2d$react$2f$esm$2f$mercadoPago$2f$initMercadoPago$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__initMercadoPago$3e$__["initMercadoPago"])(token);
+        } else {
+            "TURBOPACK unreachable";
+        }
+    }, [
+        token
+    ]);
     const suscribirse = async (planId, paymentMethodToken, email)=>{
+        setIsLoading(true);
         try {
+            if (!user?.id) {
+                return {
+                    success: false,
+                    error: "Usuario no identificado"
+                };
+            }
             const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post(`/subscriptions`, {
                 planId,
                 userEmail: email,
                 paymentMethodToken,
-                userId: user?.id
+                userId: user.id
             }));
-            if (error || !data?.data?.subscription) {
-                console.error("Error al suscribirse:", error || "No se retornaron datos");
-                return;
+            if (error) {
+                const errorMessage = error.response?.data?.message || "Error al procesar la suscripción";
+                console.error("Error al suscribirse:", errorMessage);
+                return {
+                    success: false,
+                    error: errorMessage
+                };
+            }
+            if (!data?.data?.subscription) {
+                return {
+                    success: false,
+                    error: "No se recibieron datos de la suscripción"
+                };
             }
             const newSubscription = data.data.subscription;
             setSub(newSubscription);
             localStorage.setItem("subscripcion", JSON.stringify(newSubscription));
+            return {
+                success: true
+            };
         } catch (err) {
+            const errorMessage = err.message || "Error inesperado al suscribirse";
             console.error("Excepción en suscribirse:", err);
+            return {
+                success: false,
+                error: errorMessage
+            };
+        } finally{
+            setIsLoading(false);
         }
     };
     const desuscribirse = async (cancellationReason)=>{
+        setIsLoading(true);
         try {
             if (!sub || !sub.id) {
                 console.error("No hay suscripción activa para cancelar");
@@ -959,25 +999,35 @@ const SubscriptionProvider = ({ children })=>{
         } catch (err) {
             console.error("Excepción en desuscribirse:", err);
             return false;
+        } finally{
+            setIsLoading(false);
         }
     };
     const fetchSub = async ()=>{
         if (!user) return null;
-        if (user.subscripcion) {
-            setSub(user.subscripcion);
-            return user.subscripcion;
-        }
-        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get(`/users/sub/${user.id}`));
-        if (error) {
-            if (error.response?.status === 404) {
+        setIsLoading(true);
+        try {
+            if (user.subscripcion) {
+                setSub(user.subscripcion);
+                return user.subscripcion;
+            }
+            const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get(`/users/sub/${user.id}`));
+            if (error) {
+                if (error.response?.status === 404) {
+                    return null;
+                }
+                console.error("Error al obtener la suscripción:", error);
                 return null;
             }
-            console.error("Error al obtener la suscripción:", error);
+            if (!data?.data) return null;
+            setSub(data.data);
+            return data.data;
+        } catch (err) {
+            console.error("Error inesperado al obtener suscripción:", err);
             return null;
+        } finally{
+            setIsLoading(false);
         }
-        if (!data?.data) return null;
-        setSub(data.data);
-        return data.data;
     };
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         if (!user) {
@@ -993,9 +1043,11 @@ const SubscriptionProvider = ({ children })=>{
             sub,
             suscribirse,
             desuscribirse,
-            fetchSub
+            fetchSub,
+            isLoading
         }), [
         sub,
+        isLoading,
         user
     ]);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(SubscriptionContext.Provider, {
@@ -1003,7 +1055,7 @@ const SubscriptionProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/context/Suscribe.context.tsx",
-        lineNumber: 166,
+        lineNumber: 208,
         columnNumber: 5
     }, this);
 };
