@@ -243,12 +243,42 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
   const signOut = useCallback(async (): Promise<void> => {
     try {
       await nextAuthSignOut({ redirect: false });
+
+      // Limpiar datos de usuario
       setToken("");
       setUserState(null);
+
+      // Obtener el ID del usuario antes de eliminar toda la información
+      const storedUser = localStorage.getItem("user");
+      let userId = null;
+
+      if (storedUser) {
+        try {
+          const userObj = JSON.parse(storedUser);
+          userId = userObj.id;
+        } catch (err) {
+          console.error("Error al parsear usuario en signOut:", err);
+        }
+      }
+
+      // Eliminar datos generales
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-      localStorage.removeItem("subscripcion");
-      Cookies.remove("token"); // Elimina las cookies
+
+      // Si tenemos ID de usuario, eliminar su suscripción específica
+      if (userId) {
+        localStorage.removeItem(`subscripcion_${userId}`);
+      }
+
+      // Para mayor seguridad, buscar y eliminar todas las suscripciones en localStorage
+      Object.keys(localStorage).forEach((key) => {
+        if (key.startsWith("subscripcion_")) {
+          localStorage.removeItem(key);
+        }
+      });
+
+      // Eliminar cookies
+      Cookies.remove("token");
       Cookies.remove("user");
     } catch (error) {
       console.error("Error durante el cierre de sesión:", error);

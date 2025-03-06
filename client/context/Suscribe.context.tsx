@@ -107,7 +107,12 @@ export const SubscriptionProvider = ({
 
       const newSubscription: ISubscripcion = data.data.subscription;
       setSub(newSubscription);
-      localStorage.setItem("subscripcion", JSON.stringify(newSubscription));
+
+      // Guardar en localStorage con la ID del usuario para no mezclar suscripciones
+      localStorage.setItem(
+        `subscripcion_${user.id}`,
+        JSON.stringify(newSubscription)
+      );
       return { success: true };
     } catch (err: any) {
       const errorMessage = err.message || "Error inesperado al suscribirse";
@@ -147,14 +152,14 @@ export const SubscriptionProvider = ({
       const updatedSubscription = data.data.subscription;
       setSub(updatedSubscription);
 
-      // Si guardas la suscripción en localStorage, actualízala
-      if (updatedSubscription) {
+      // Si hay un usuario, actualizar su suscripción en localStorage
+      if (user?.id && updatedSubscription) {
         localStorage.setItem(
-          "subscripcion",
+          `subscripcion_${user.id}`,
           JSON.stringify(updatedSubscription)
         );
-      } else {
-        localStorage.removeItem("subscripcion");
+      } else if (user?.id) {
+        localStorage.removeItem(`subscripcion_${user.id}`);
       }
 
       return true;
@@ -173,6 +178,11 @@ export const SubscriptionProvider = ({
     try {
       if (user.subscripcion) {
         setSub(user.subscripcion);
+        // También actualizar el localStorage
+        localStorage.setItem(
+          `subscripcion_${user.id}`,
+          JSON.stringify(user.subscripcion)
+        );
         return user.subscripcion;
       }
 
@@ -182,15 +192,27 @@ export const SubscriptionProvider = ({
 
       if (error) {
         if (error.response?.status === 404) {
+          // Limpiar datos de suscripción si no existe
+          setSub(null);
+          localStorage.removeItem(`subscripcion_${user.id}`);
           return null;
         }
         console.error("Error al obtener la suscripción:", error);
         return null;
       }
 
-      if (!data?.data) return null;
+      if (!data?.data) {
+        // Limpiar datos de suscripción si no hay datos
+        setSub(null);
+        localStorage.removeItem(`subscripcion_${user.id}`);
+        return null;
+      }
 
       setSub(data.data);
+      localStorage.setItem(
+        `subscripcion_${user.id}`,
+        JSON.stringify(data.data)
+      );
       return data.data;
     } catch (err) {
       console.error("Error inesperado al obtener suscripción:", err);
@@ -200,12 +222,25 @@ export const SubscriptionProvider = ({
     }
   };
 
+  // Efecto para manejar cambios en el usuario
   useEffect(() => {
     if (!user) {
+      // Si no hay usuario, limpiar estado de suscripción
       setSub(null);
-      localStorage.removeItem("subscripcion");
     } else {
-      fetchSub();
+      // Si hay un usuario, intentar cargar su suscripción específica
+      const storedSub = localStorage.getItem(`subscripcion_${user.id}`);
+      if (storedSub) {
+        try {
+          setSub(JSON.parse(storedSub));
+        } catch (e) {
+          console.error("Error al parsear suscripción del localStorage:", e);
+          setSub(null);
+        }
+      } else {
+        // Si no hay suscripción en localStorage, intentar obtenerla del servidor
+        fetchSub();
+      }
     }
   }, [user]);
 
