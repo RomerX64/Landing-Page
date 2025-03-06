@@ -312,7 +312,6 @@ const UserProvider = ({ children })=>{
             if (existsResponse?.data) {
                 const { data: fetchedResponse, error: fetchError } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get(`/users/get/${email}`));
                 if (fetchError || !fetchedResponse) {
-                    console.log("Error al traer el usuario:", fetchError?.message);
                     return null;
                 }
                 setUserState(fetchedResponse.data.User);
@@ -332,7 +331,6 @@ const UserProvider = ({ children })=>{
                 name
             }));
             if (postError || !createdResponse) {
-                console.log("Error al crear el usuario:", postError?.message);
                 return null;
             }
             setUserState(createdResponse.data);
@@ -508,7 +506,7 @@ const UserProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/context/user.context.tsx",
-        lineNumber: 337,
+        lineNumber: 335,
         columnNumber: 10
     }, this);
 };
@@ -742,7 +740,6 @@ const AdminProvider = ({ children })=>{
     const getUsersSubscribed = async ()=>{
         const cached = localStorage.getItem("admin_usersSubscribed");
         if (cached) {
-            console.log("Cargando usuarios suscritos desde localStorage...");
             return JSON.parse(cached);
         }
         const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get("/admin/getUsersSubscribed"));
@@ -783,7 +780,6 @@ const AdminProvider = ({ children })=>{
     const getAllPlans = async ()=>{
         const cached = localStorage.getItem("admin_plans");
         if (cached) {
-            console.log("Cargando planes desde localStorage...");
             return JSON.parse(cached);
         }
         const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get("/admin/plans"));
@@ -820,7 +816,6 @@ const AdminProvider = ({ children })=>{
     const getAllSubscriptions = async ()=>{
         const cached = localStorage.getItem("admin_subscriptions");
         if (cached) {
-            console.log("Cargando suscripciones desde localStorage...");
             return JSON.parse(cached);
         }
         const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get("/admin/subscriptions"));
@@ -877,7 +872,7 @@ const AdminProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/context/Administracion.context.tsx",
-        lineNumber: 245,
+        lineNumber: 242,
         columnNumber: 5
     }, this);
 };

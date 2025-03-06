@@ -140,7 +140,7 @@ const SuscripcionesTab: React.FC<{
           placeholder="Buscar por ID, email o plan..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="flex-1 px-4 py-2 text-white bg-gray-700 rounded-lg max-h-10" 
+          className="flex-1 px-4 py-2 text-white bg-gray-700 rounded-lg max-h-10"
         />
         <div className="flex flex-wrap gap-4">
           {Object.values(SubscriptionStatus).map((status) => (
@@ -170,7 +170,7 @@ const SuscripcionesTab: React.FC<{
               <div key={sub.id} className="p-2 bg-gray-700 rounded-lg shadow">
                 <div className="flex items-center justify-between mb-1">
                   <p className="text-xs font-bold text-white truncate">
-                    ID: {sub.id}
+                    {sub.id}
                   </p>
                   <span
                     className={`px-2 py-1 text-xs font-bold text-white rounded-full ${getStatusColor(
@@ -181,7 +181,15 @@ const SuscripcionesTab: React.FC<{
                   </span>
                 </div>
                 <div className="space-y-1">
-                  <p className="text-xs text-gray-400">UserId{sub.user.id}</p>
+                  {sub.mercadopagoSubscriptionId && (
+                    <p className="text-xs text-gray-400">
+                      <span className="font-medium">MP:</span>{" "}
+                      <span className="text-xs text-gray-400 truncate">
+                        {sub.mercadopagoSubscriptionId}
+                      </span>
+                    </p>
+                  )}
+                  <p className="text-xs text-gray-400">User: {sub.user.id}</p>
                   <p className="text-xs text-gray-400">
                     Email: {sub.user.email}
                   </p>
@@ -200,14 +208,7 @@ const SuscripcionesTab: React.FC<{
                     <span className="font-medium">Vencimiento:</span>{" "}
                     {formatDate(sub.fechaVencimiento)}
                   </p>
-                  {sub.mercadopagoSubscriptionId && (
-                    <p className="text-xs text-gray-400">
-                      <span className="font-medium">MP ID:</span>{" "}
-                      <span className="text-xs text-gray-400 truncate">
-                        {sub.mercadopagoSubscriptionId}
-                      </span>
-                    </p>
-                  )}
+
                   {sub.cancellationDate && (
                     <p className="text-xs text-gray-400">
                       <span className="font-medium">Cancelada:</span>{" "}

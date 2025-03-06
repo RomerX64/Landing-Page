@@ -101,7 +101,6 @@ export default function SignUpLayout() {
     try {
       setIsLoading(true);
       await signUp(newUser);
-      console.log("Registro exitoso. Revise su email para confirmar.");
     } catch (error) {
       console.error("Error en la solicitud:", error);
     } finally {

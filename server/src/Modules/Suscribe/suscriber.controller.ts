@@ -65,7 +65,6 @@ export class SubscriptionsController {
 
     try {
       this.verifyWebhook(headers, body, secret);
-      console.log('✅ Webhook verificado correctamente');
 
       // Procesa la notificación si la verificación fue exitosa
       return await this.subscriptionsService.handleWebhook(body);
@@ -122,10 +121,8 @@ export class SubscriptionsController {
 
     // Comparar la firma generada con la que envió Mercado Pago
     if (sha !== hash) {
-      console.log('Webhook verification failed');
       throw new Error('Invalid webhook signature');
     }
 
-    console.log('Webhook verification passed');
   }
 }

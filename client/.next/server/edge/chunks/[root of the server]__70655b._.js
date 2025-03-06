@@ -34,7 +34,6 @@ const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 async function middleware(req) {
     const url = req.nextUrl.clone();
     const token = req.cookies.get("token")?.value;
-    console.log("Token recibido:", token);
     const protectedRoutes = [
         "/administracion",
         "/user"

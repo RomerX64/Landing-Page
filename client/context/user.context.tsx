@@ -118,7 +118,6 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
           const { data: fetchedResponse, error: fetchError } =
             await handleAsync(api.get(`/users/get/${email}`));
           if (fetchError || !fetchedResponse) {
-            console.log("Error al traer el usuario:", fetchError?.message);
             return null;
           }
           setUserState(fetchedResponse.data.User);
@@ -139,7 +138,6 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
           api.post("/users/crearUser/google", { email, name })
         );
         if (postError || !createdResponse) {
-          console.log("Error al crear el usuario:", postError?.message);
           return null;
         }
         setUserState(createdResponse.data);

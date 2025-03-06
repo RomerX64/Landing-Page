@@ -73,7 +73,6 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
   const getUsersSubscribed = async (): Promise<IUser[]> => {
     const cached = localStorage.getItem("admin_usersSubscribed");
     if (cached) {
-      console.log("Cargando usuarios suscritos desde localStorage...");
       return JSON.parse(cached);
     }
     const { data, error } = await handleAsync(
@@ -126,7 +125,6 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
   const getAllPlans = async (): Promise<IPlan[]> => {
     const cached = localStorage.getItem("admin_plans");
     if (cached) {
-      console.log("Cargando planes desde localStorage...");
       return JSON.parse(cached);
     }
     const { data, error } = await handleAsync(api.get("/admin/plans"));
@@ -172,7 +170,6 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
   const getAllSubscriptions = async (): Promise<ISubscripcion[]> => {
     const cached = localStorage.getItem("admin_subscriptions");
     if (cached) {
-      console.log("Cargando suscripciones desde localStorage...");
       return JSON.parse(cached);
     }
     const { data, error } = await handleAsync(api.get("/admin/subscriptions"));

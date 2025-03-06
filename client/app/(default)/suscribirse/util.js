@@ -81,7 +81,6 @@ const cardForm = mp.cardForm({
       });
     },
     onFetching: (resource) => {
-      console.log("Fetching resource: ", resource);
 
       const progressBar = document.querySelector(".progress-bar");
       progressBar.removeAttribute("value");

@@ -7,8 +7,6 @@ export async function middleware(req: NextRequest) {
   const url = req.nextUrl.clone();
   const token = req.cookies.get("token")?.value;
 
-  console.log("Token recibido:", token);
-
   const protectedRoutes = ["/administracion", "/user"];
 
   // Verificar si la ruta solicitada está protegida

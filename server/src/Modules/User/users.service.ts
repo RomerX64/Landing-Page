@@ -52,7 +52,6 @@ export class UserService {
         where: { email: email },
         relations: ['subscripcion'],
       });
-      console.log(user);
       if (!user)
         throw new HttpException('User not found', HttpStatus.NOT_FOUND);
       const userPayload = {
