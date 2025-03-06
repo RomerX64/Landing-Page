@@ -126,7 +126,7 @@ export class UsersPreLoad implements OnApplicationBootstrap {
           // Si el plan ya existe, actualizamos sus propiedades
           existingPlan.name = planData.name;
           existingPlan.precio = planData.price || planData.precio;
-          mercadopagoPlanId: planData.id,
+          (existingPlan.mercadopagoPlanId = planData.id),
             (existingPlan.descripcion =
               planData.description ||
               planData.descripcion ||
