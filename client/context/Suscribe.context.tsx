@@ -87,7 +87,7 @@ export const SubscriptionProvider = ({
           planId,
           userEmail: email,
           paymentMethodToken,
-          userId: user.id,
+          userId: user.email || email,
         })
       );
 

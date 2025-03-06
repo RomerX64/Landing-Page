@@ -428,12 +428,35 @@ const UserProvider = ({ children })=>{
             await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["signOut"])({
                 redirect: false
             });
+            // Limpiar datos de usuario
             setToken("");
             setUserState(null);
+            // Obtener el ID del usuario antes de eliminar toda la información
+            const storedUser = localStorage.getItem("user");
+            let userId = null;
+            if (storedUser) {
+                try {
+                    const userObj = JSON.parse(storedUser);
+                    userId = userObj.id;
+                } catch (err) {
+                    console.error("Error al parsear usuario en signOut:", err);
+                }
+            }
+            // Eliminar datos generales
             localStorage.removeItem("token");
             localStorage.removeItem("user");
-            localStorage.removeItem("subscripcion");
-            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].remove("token"); // Elimina las cookies
+            // Si tenemos ID de usuario, eliminar su suscripción específica
+            if (userId) {
+                localStorage.removeItem(`subscripcion_${userId}`);
+            }
+            // Para mayor seguridad, buscar y eliminar todas las suscripciones en localStorage
+            Object.keys(localStorage).forEach((key)=>{
+                if (key.startsWith("subscripcion_")) {
+                    localStorage.removeItem(key);
+                }
+            });
+            // Eliminar cookies
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].remove("token");
             __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].remove("user");
         } catch (error) {
             console.error("Error durante el cierre de sesión:", error);
@@ -508,7 +531,7 @@ const UserProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/context/user.context.tsx",
-        lineNumber: 336,
+        lineNumber: 366,
         columnNumber: 10
     }, this);
 };
@@ -968,7 +991,8 @@ const SubscriptionProvider = ({ children })=>{
             }
             const newSubscription = data.data.subscription;
             setSub(newSubscription);
-            localStorage.setItem("subscripcion", JSON.stringify(newSubscription));
+            // Guardar en localStorage con la ID del usuario para no mezclar suscripciones
+            localStorage.setItem(`subscripcion_${user.id}`, JSON.stringify(newSubscription));
             return {
                 success: true
             };
@@ -1001,11 +1025,11 @@ const SubscriptionProvider = ({ children })=>{
             // Actualizamos el estado con la suscripción cancelada
             const updatedSubscription = data.data.subscription;
             setSub(updatedSubscription);
-            // Si guardas la suscripción en localStorage, actualízala
-            if (updatedSubscription) {
-                localStorage.setItem("subscripcion", JSON.stringify(updatedSubscription));
-            } else {
-                localStorage.removeItem("subscripcion");
+            // Si hay un usuario, actualizar su suscripción en localStorage
+            if (user?.id && updatedSubscription) {
+                localStorage.setItem(`subscripcion_${user.id}`, JSON.stringify(updatedSubscription));
+            } else if (user?.id) {
+                localStorage.removeItem(`subscripcion_${user.id}`);
             }
             return true;
         } catch (err) {
@@ -1021,18 +1045,29 @@ const SubscriptionProvider = ({ children })=>{
         try {
             if (user.subscripcion) {
                 setSub(user.subscripcion);
+                // También actualizar el localStorage
+                localStorage.setItem(`subscripcion_${user.id}`, JSON.stringify(user.subscripcion));
                 return user.subscripcion;
             }
             const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get(`/users/sub/${user.id}`));
             if (error) {
                 if (error.response?.status === 404) {
+                    // Limpiar datos de suscripción si no existe
+                    setSub(null);
+                    localStorage.removeItem(`subscripcion_${user.id}`);
                     return null;
                 }
                 console.error("Error al obtener la suscripción:", error);
                 return null;
             }
-            if (!data?.data) return null;
+            if (!data?.data) {
+                // Limpiar datos de suscripción si no hay datos
+                setSub(null);
+                localStorage.removeItem(`subscripcion_${user.id}`);
+                return null;
+            }
             setSub(data.data);
+            localStorage.setItem(`subscripcion_${user.id}`, JSON.stringify(data.data));
             return data.data;
         } catch (err) {
             console.error("Error inesperado al obtener suscripción:", err);
@@ -1041,12 +1076,25 @@ const SubscriptionProvider = ({ children })=>{
             setIsLoading(false);
         }
     };
+    // Efecto para manejar cambios en el usuario
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         if (!user) {
+            // Si no hay usuario, limpiar estado de suscripción
             setSub(null);
-            localStorage.removeItem("subscripcion");
         } else {
-            fetchSub();
+            // Si hay un usuario, intentar cargar su suscripción específica
+            const storedSub = localStorage.getItem(`subscripcion_${user.id}`);
+            if (storedSub) {
+                try {
+                    setSub(JSON.parse(storedSub));
+                } catch (e) {
+                    console.error("Error al parsear suscripción del localStorage:", e);
+                    setSub(null);
+                }
+            } else {
+                // Si no hay suscripción en localStorage, intentar obtenerla del servidor
+                fetchSub();
+            }
         }
     }, [
         user
@@ -1069,7 +1117,7 @@ const SubscriptionProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/context/Suscribe.context.tsx",
-        lineNumber: 225,
+        lineNumber: 260,
         columnNumber: 5
     }, this);
 };

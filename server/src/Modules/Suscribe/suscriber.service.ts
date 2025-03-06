@@ -505,13 +505,19 @@ export class SubscriptionsService {
     plan: Plan,
     mpResponse: any,
   ) {
-    const user = await this.userRepository.findOne({
-      where: { id: userId },
+    let user = await this.userRepository.findOne({
+      where: { email: userId },
       relations: ['subscripcion'],
     });
 
+    // Si el usuario no existe, lo creamos
     if (!user) {
-      throw new HttpException('Usuario no encontrado', HttpStatus.NOT_FOUND);
+      // Creamos un nuevo usuario
+      const newUser = this.userRepository.create({
+        email: userId,
+      });
+
+      user = await this.userRepository.save(newUser);
     }
 
     // Si el usuario ya tiene una suscripción activa, la cancelamos
@@ -528,7 +534,6 @@ export class SubscriptionsService {
       plan,
       fechaInicio: new Date(),
       mercadopagoSubscriptionId: mpResponse.id,
-      // Continuación del método saveSubscriptionData
       status: SubscriptionStatus.PENDING, // Siempre inicia como pendiente
       user: user,
       fechaVencimiento: this.calculateExpiryDate(new Date(), plan.billingCycle),
@@ -546,7 +551,6 @@ export class SubscriptionsService {
       subscription: savedSubscription,
     };
   }
-
   private async handleExistingSubscription(user: UserEntity) {
     console.log(`Cancelando suscripción existente para usuario: ${user.email}`);
     try {
