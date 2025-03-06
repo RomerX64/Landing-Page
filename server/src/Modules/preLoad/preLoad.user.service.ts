@@ -110,7 +110,7 @@ export class UsersPreLoad implements OnApplicationBootstrap {
           // Si el plan no existe, se crea uno nuevo
           const newPlan = this.planRepository.create({
             name: planData.name,
-            mercadopagoPlanId: planData.mercadopagoPlanId,
+            mercadopagoPlanId: planData.id,
             precio: planData.price || planData.precio,
             descripcion:
               planData.description ||
@@ -126,7 +126,7 @@ export class UsersPreLoad implements OnApplicationBootstrap {
           // Si el plan ya existe, actualizamos sus propiedades
           existingPlan.name = planData.name;
           existingPlan.precio = planData.price || planData.precio;
-          mercadopagoPlanId: planData.mercadopagoPlanId,
+          mercadopagoPlanId: planData.id,
             (existingPlan.descripcion =
               planData.description ||
               planData.descripcion ||

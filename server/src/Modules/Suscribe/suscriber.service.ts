@@ -76,7 +76,9 @@ export class SubscriptionsService {
    * @returns Objeto con mensaje y datos de la suscripción creada
    */
   async createSubscription(createSubscriptionDto: CreateSubscriptionDto) {
-    console.log(`Creando suscripción para: ${createSubscriptionDto.userEmail}`);
+    console.log(
+      `Creando suscripción para: ${createSubscriptionDto.userEmail}`,
+    );
 
     // Validaciones
     this.validateSubscriptionData(createSubscriptionDto);
@@ -548,7 +550,9 @@ export class SubscriptionsService {
   }
 
   private async handleExistingSubscription(user: UserEntity) {
-    console.log(`Cancelando suscripción existente para usuario: ${user.email}`);
+    console.log(
+      `Cancelando suscripción existente para usuario: ${user.email}`,
+    );
     try {
       if (user.subscripcion.mercadopagoSubscriptionId) {
         // Cancelar en Mercado Pago
