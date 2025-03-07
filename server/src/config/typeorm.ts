@@ -15,7 +15,7 @@ const config = {
   dropSchema: false,
   synchronize: true,
   schema: 'public',
-  logging: false,
+  logging: true,
   entities: ['dist/**/*.entity{.ts,.js}'],
   migrations: ['dist/migrations/*{.ts,.js}'],
 };

@@ -11,7 +11,7 @@ export class MailService {
     private configService: ConfigService,
     private jwtService: JwtService,
   ) {
-    // Create transporter using SMTP configuration from environment variables
+    // Crea el transporter usando la configuración SMTP definida en las variables de entorno
     this.transporter = nodemailer.createTransport({
       host: this.configService.get<string>('SMTP_HOST'),
       port: this.configService.get<number>('SMTP_PORT'),
@@ -24,118 +24,106 @@ export class MailService {
   }
 
   /**
-   * Send email verification link to user after registration
-   * @param email User's email address
-   * @param userId User's unique identifier
-   * @returns Promise with email sending result
+   * Envía el correo de verificación al usuario después de registrarse.
+   * @param email Dirección de correo del usuario.
+   * @param userId Identificador único del usuario.
    */
   async sendVerificationEmail(email: string, userId: string): Promise<void> {
-    // Generate email verification token (valid for 1 hour)
+    // Genera el token de verificación (1 hora de vigencia)
     const token = this.jwtService.sign(
       { email, userId, type: 'email_verification' },
       { expiresIn: '1h' },
     );
+    // Construye el enlace de verificación
+    const verificationLink = `${this.configService.get<string>('FRONTEND_URL')}/verify-email/token=${token}`;
 
-    // Construct verification link
-    const verificationLink = `${this.configService.get<string>('FRONTEND_URL')}/verify-email?token=${token}`;
-
-    // Email content
+    // Define el contenido HTML del correo
     const mailOptions = {
-      from: this.configService.get<string>(
-        'EMAIL_FROM',
-        'noreply@yourdomain.com',
-      ),
+      from: this.configService.get<string>('EMAIL_FROM', 'noreply@assetly.com'),
       to: email,
-      subject: 'Verify Your Email Address',
+      subject: 'Verifica tu email - Assetly',
       html: `
-        <h1>Email Verification</h1>
-        <p>Click the link below to verify your email address:</p>
-        <a href="${verificationLink}">Verify Email</a>
-        <p>This link will expire in 1 hour.</p>
-        <p>If you did not create an account, please ignore this email.</p>
-      `,
+      <div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif; background-color: #030712; border-radius: 10px">
+        <div style="text-align: center; padding: 20px; background-color: #4f46e5; color: white; border-radius: 8px 8px 0px 0px">
+          <h1 style="margin: 0; font-size: 28px; font-weight: 600;">Assetly</h1>
+          <p style="margin: 0; font-size: 20px; font-weight: 600;">Verifica tu email</p>
+        </div>
+        <div style="padding: 20px; background-color: #111827; color: #ffffff; font-size: 16px;">
+          <p>Hola,</p>
+          <p>Hemos recibido una solicitud para verificar tu correo. Haz clic en el botón de abajo para continuar.</p>
+          <div style="text-align: center; margin: 20px 0">
+            <a href="${verificationLink}" style="padding: 12px 24px; background-color: #6366f1; color: white; text-decoration: none; border-radius: 5px; font-weight: 500;">
+              Verificar Email →
+            </a>
+          </div>
+          <p>Este enlace expirará en 1 hora.</p>
+          <p>Si no solicitaste este cambio, ignora este correo.</p>
+        </div>
+        <div style="text-align: center; padding: 10px; background-color: #1f2937; color: white; font-size: 14px; border-radius: 0px 0px 8px 8px">
+          <p>© 2025 Assetly. Todos los derechos reservados.</p>
+        </div>
+    </div>`,
     };
 
-    // Send email
+    // Envía el correo
     await this.transporter.sendMail(mailOptions);
   }
 
   /**
-   * Send password reset link to user
-   * @param email User's email address
-   * @param userId User's unique identifier
-   * @returns Promise with email sending result
+   * Envía el correo de reseteo de contraseña al usuario.
+   * @param email Dirección de correo del usuario.
+   * @param userId Identificador único del usuario.
    */
   async sendPasswordResetEmail(email: string, userId: string): Promise<void> {
-    // Generate password reset token (valid for 30 minutes)
+    // Genera el token de reseteo (30 minutos de vigencia)
     const token = this.jwtService.sign(
       { email, userId, type: 'password_reset' },
       { expiresIn: '30m' },
     );
+    // Construye el enlace de reseteo
+    const resetLink = `${this.configService.get<string>('FRONTEND_URL')}/reset-password/token=${token}`;
 
-    // Construct password reset link
-    const resetLink = `${this.configService.get<string>('FRONTEND_URL')}/reset-password?token=${token}`;
-
-    // Email content
+    // Define el contenido HTML del correo
     const mailOptions = {
-      from: this.configService.get<string>(
-        'EMAIL_FROM',
-        'noreply@yourdomain.com',
-      ),
+      from: this.configService.get<string>('EMAIL_FROM', 'noreply@assetly.com'),
       to: email,
-      subject: 'Password Reset Request',
-      html: `
-        <h1>Password Reset</h1>
-        <p>You have requested to reset your password. Click the link below:</p>
-        <a href="${resetLink}">Reset Password</a>
-        <p>This link will expire in 30 minutes.</p>
-        <p>If you did not request a password reset, please ignore this email.</p>
-      `,
+      subject: 'Resetea tu contraseña - Assetly',
+      html: `   
+      <div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif; background-color: #030712; border-radius: 10px">
+        <div style="text-align: center; padding: 20px; background-color: #4f46e5; color: white; border-radius: 8px 8px 0px 0px">
+          <h1 style="margin: 0; font-size: 28px; font-weight: 600;">Assetly</h1>
+          <p style="margin: 0; font-size: 20px; font-weight: 600;">Resetea tu contraseña</p>
+        </div>
+        <div style="padding: 20px; background-color: #111827; color: #ffffff; font-size: 16px;">
+          <p>Hola,</p>
+          <p>Hemos recibido una solicitud para restablecer tu contraseña. Haz clic en el botón de abajo para continuar.</p>
+          <div style="text-align: center; margin: 20px 0">
+            <a href="${resetLink}" style="padding: 12px 24px; background-color: #6366f1; color: white; text-decoration: none; border-radius: 5px; font-weight: 500;">
+              Resetear Contraseña →
+            </a>
+          </div>
+          <p>Este enlace expirará en 30 minutos.</p>
+          <p>Si no solicitaste este cambio, ignora este correo.</p>
+        </div>
+        <div style="text-align: center; padding: 10px; background-color: #1f2937; color: white; font-size: 14px; border-radius: 0px 0px 8px 8px">
+          <p>© 2025 Assetly. Todos los derechos reservados.</p>
+        </div>
+    </div>`,
     };
 
-    // Send email
+    // Envía el correo
     await this.transporter.sendMail(mailOptions);
   }
 
-  /**
-   * Verify email verification token
-   * @param token JWT token for email verification
-   * @returns Decoded token information or throws an error
-   */
-  async verifyEmailVerificationToken(
-    token: string,
-  ): Promise<{ email: string; userId: string }> {
-    try {
-      const decoded = this.jwtService.verify(token);
-
-      // Additional validation
-      if (decoded.type !== 'email_verification') {
-        throw new Error('Invalid token type');
-      }
-
-      return {
-        email: decoded.email,
-        userId: decoded.userId,
-      };
-    } catch (error) {
-      throw new Error('Invalid or expired verification token');
-    }
-  }
-
-  /**
-   * Verify password reset token
-   * @param token JWT token for password reset
-   * @returns Decoded token information or throws an error
-   */
   async verifyPasswordResetToken(
     token: string,
   ): Promise<{ email: string; userId: string }> {
     try {
       const decoded = this.jwtService.verify(token);
 
-      // Additional validation
+      // Validación adicional: se comprueba el tipo de token
       if (decoded.type !== 'password_reset') {
-        throw new Error('Invalid token type');
+        throw new Error('Tipo de token inválido');
       }
 
       return {
@@ -143,7 +131,7 @@ export class MailService {
         userId: decoded.userId,
       };
     } catch (error) {
-      throw new Error('Invalid or expired reset token');
+      throw new Error('Token de reseteo inválido o expirado');
     }
   }
 }

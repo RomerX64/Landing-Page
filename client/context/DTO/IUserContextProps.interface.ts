@@ -4,9 +4,9 @@ import { SignInDTO, SignUpDTO, updateUserDTO } from "./sing.user.dto";
 export interface IUserContextProps {
   token: string;
   user: IUser | null;
-  signInO: (data: SignInDTO) => Promise<IUser | null>;
-  signUp: (data: SignUpDTO) => Promise<IUser>;
-  deleteUser: (data: SignInDTO) => Promise<IUser>;
+  signInO: (signInData: SignInDTO) => Promise<IUser | null>;
+  signUp: (signUpData: SignUpDTO) => Promise<IUser>;
+  deleteUser: (signInData: SignInDTO) => Promise<IUser>;
   mailIsValid: (email: string) => Promise<boolean>;
   updateUser: (updateUserData: updateUserDTO) => Promise<IUser>;
   signOut: () => Promise<void>;
@@ -16,5 +16,7 @@ export interface IUserContextProps {
   resetPassword: (
     token: string,
     newPassword: string
-  ) => Promise<{ message: string }>;
+  ) => Promise<{ message: string; user: IUser }>;
+  verifyEmail: (token: string) => Promise<{ message: string; user: IUser }>;
+  initiatePasswordReset: (email: string) => Promise<{ message: string }>;
 }

@@ -54,6 +54,12 @@ const defaultContext: IUserContextProps = {
   resetPassword: async () => {
     throw new Error("Not implemented");
   },
+  verifyEmail: async () => {
+    throw new Error("Not implemented");
+  },
+  initiatePasswordReset: async () => {
+    throw new Error("Not implemented");
+  },
 };
 
 export const UserContext = createContext<IUserContextProps>(defaultContext);
@@ -186,7 +192,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
     if (error || !response?.data) {
       throw new Error(error?.message || "Error de registro");
     }
-    const { User: returnedUser, token: returnedToken } = response.data;
+    const { user: returnedUser, token: returnedToken } = response.data;
     setToken(returnedToken);
     setUserState(returnedUser);
     localStorage.setItem("token", returnedToken);
@@ -209,7 +215,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
       setUserState(null);
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-      Cookies.remove("token"); // Elimina las cookies
+      Cookies.remove("token");
       Cookies.remove("user");
       return deletedUser;
     },
@@ -234,7 +240,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
       if (error || !response?.data) {
         throw new Error(error?.message || "Error al actualizar usuario");
       }
-      const { User: returnedUser, token: returnedToken } = response.data;
+      const { user: returnedUser, token: returnedToken } = response.data;
       return returnedUser;
     },
     [user]
@@ -248,7 +254,6 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
       setToken("");
       setUserState(null);
 
-      // Obtener el ID del usuario antes de eliminar toda la información
       const storedUser = localStorage.getItem("user");
       let userId = null;
 
@@ -265,12 +270,10 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
       localStorage.removeItem("token");
       localStorage.removeItem("user");
 
-      // Si tenemos ID de usuario, eliminar su suscripción específica
       if (userId) {
         localStorage.removeItem(`subscripcion_${userId}`);
       }
 
-      // Para mayor seguridad, buscar y eliminar todas las suscripciones en localStorage
       Object.keys(localStorage).forEach((key) => {
         if (key.startsWith("subscripcion_")) {
           localStorage.removeItem(key);
@@ -287,9 +290,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
 
   const signInWithGoogle = useCallback(async (): Promise<IUser | null> => {
     try {
-      // Solo inicia el flujo de Google y no intenta obtener la sesión inmediatamente
       await signIn("google", { callbackUrl: "/" });
-      // La sesión se manejará a través del useEffect cuando esté disponible
       return null;
     } catch (error) {
       console.error("Error en signInWithGoogle:", error);
@@ -301,14 +302,36 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
     return signInWithGoogle();
   }, [signInWithGoogle]);
 
-  const requestResetPassword = useCallback(
+  // New email verification function
+  const verifyEmail = useCallback(
+    async (token: string): Promise<{ message: string; user: IUser }> => {
+      const { data: response, error } = await handleAsync(
+        api.post("/users/verify-email", { token })
+      );
+      if (error || !response?.data) {
+        throw new Error(error?.message || "Error al verificar email");
+      }
+
+      if (user && user.id === response.data.user.id) {
+        const updatedUser = { ...response.data.user };
+        setUserState(updatedUser);
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+        Cookies.set("user", JSON.stringify(updatedUser), { expires: 7 });
+      }
+
+      return response.data;
+    },
+    [user]
+  );
+
+  const initiatePasswordReset = useCallback(
     async (email: string): Promise<{ message: string }> => {
       const { data: response, error } = await handleAsync(
-        api.post("/users/request-reset-password", { email })
+        api.get(`/users/initiate-password-reset/${email}`)
       );
       if (error || !response?.data) {
         throw new Error(
-          error?.message || "Error al solicitar reset de contraseña"
+          error?.message || "Error al solicitar restablecimiento de contraseña"
         );
       }
       return response.data;
@@ -320,12 +343,12 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
     async (
       token: string,
       newPassword: string
-    ): Promise<{ message: string }> => {
+    ): Promise<{ message: string; user: IUser }> => {
       const { data: response, error } = await handleAsync(
         api.post("/users/reset-password", { token, newPassword })
       );
       if (error || !response?.data) {
-        throw new Error(error?.message || "Error al resetear contraseña");
+        throw new Error(error?.message || "Error al restablecer contraseña");
       }
       return response.data;
     },
@@ -344,8 +367,10 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
       signOut,
       signInWithGoogle,
       signUpWithGoogle,
-      requestResetPassword,
+      verifyEmail,
+      initiatePasswordReset,
       resetPassword,
+      requestResetPassword: initiatePasswordReset,
     }),
     [
       user,
@@ -358,7 +383,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
       signOut,
       signInWithGoogle,
       signUpWithGoogle,
-      requestResetPassword,
+      verifyEmail,
+      initiatePasswordReset,
       resetPassword,
     ]
   );

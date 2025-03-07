@@ -266,6 +266,12 @@ const defaultContext = {
     },
     resetPassword: async ()=>{
         throw new Error("Not implemented");
+    },
+    verifyEmail: async ()=>{
+        throw new Error("Not implemented");
+    },
+    initiatePasswordReset: async ()=>{
+        throw new Error("Not implemented");
     }
 };
 const UserContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["createContext"])(defaultContext);
@@ -373,7 +379,7 @@ const UserProvider = ({ children })=>{
         if (error || !response?.data) {
             throw new Error(error?.message || "Error de registro");
         }
-        const { User: returnedUser, token: returnedToken } = response.data;
+        const { user: returnedUser, token: returnedToken } = response.data;
         setToken(returnedToken);
         setUserState(returnedUser);
         localStorage.setItem("token", returnedToken);
@@ -398,7 +404,7 @@ const UserProvider = ({ children })=>{
         setUserState(null);
         localStorage.removeItem("token");
         localStorage.removeItem("user");
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].remove("token"); // Elimina las cookies
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].remove("token");
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].remove("user");
         return deletedUser;
     }, []);
@@ -418,7 +424,7 @@ const UserProvider = ({ children })=>{
         if (error || !response?.data) {
             throw new Error(error?.message || "Error al actualizar usuario");
         }
-        const { User: returnedUser, token: returnedToken } = response.data;
+        const { user: returnedUser, token: returnedToken } = response.data;
         return returnedUser;
     }, [
         user
@@ -431,7 +437,6 @@ const UserProvider = ({ children })=>{
             // Limpiar datos de usuario
             setToken("");
             setUserState(null);
-            // Obtener el ID del usuario antes de eliminar toda la información
             const storedUser = localStorage.getItem("user");
             let userId = null;
             if (storedUser) {
@@ -445,11 +450,9 @@ const UserProvider = ({ children })=>{
             // Eliminar datos generales
             localStorage.removeItem("token");
             localStorage.removeItem("user");
-            // Si tenemos ID de usuario, eliminar su suscripción específica
             if (userId) {
                 localStorage.removeItem(`subscripcion_${userId}`);
             }
-            // Para mayor seguridad, buscar y eliminar todas las suscripciones en localStorage
             Object.keys(localStorage).forEach((key)=>{
                 if (key.startsWith("subscripcion_")) {
                     localStorage.removeItem(key);
@@ -464,11 +467,9 @@ const UserProvider = ({ children })=>{
     }, []);
     const signInWithGoogle = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async ()=>{
         try {
-            // Solo inicia el flujo de Google y no intenta obtener la sesión inmediatamente
             await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["signIn"])("google", {
                 callbackUrl: "/"
             });
-            // La sesión se manejará a través del useEffect cuando esté disponible
             return null;
         } catch (error) {
             console.error("Error en signInWithGoogle:", error);
@@ -480,12 +481,32 @@ const UserProvider = ({ children })=>{
     }, [
         signInWithGoogle
     ]);
-    const requestResetPassword = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async (email)=>{
-        const { data: response, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post("/users/request-reset-password", {
-            email
+    // New email verification function
+    const verifyEmail = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async (token)=>{
+        const { data: response, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post("/users/verify-email", {
+            token
         }));
         if (error || !response?.data) {
-            throw new Error(error?.message || "Error al solicitar reset de contraseña");
+            throw new Error(error?.message || "Error al verificar email");
+        }
+        if (user && user.id === response.data.user.id) {
+            const updatedUser = {
+                ...response.data.user
+            };
+            setUserState(updatedUser);
+            localStorage.setItem("user", JSON.stringify(updatedUser));
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].set("user", JSON.stringify(updatedUser), {
+                expires: 7
+            });
+        }
+        return response.data;
+    }, [
+        user
+    ]);
+    const initiatePasswordReset = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async (email)=>{
+        const { data: response, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get(`/users/initiate-password-reset/${email}`));
+        if (error || !response?.data) {
+            throw new Error(error?.message || "Error al solicitar restablecimiento de contraseña");
         }
         return response.data;
     }, []);
@@ -495,7 +516,7 @@ const UserProvider = ({ children })=>{
             newPassword
         }));
         if (error || !response?.data) {
-            throw new Error(error?.message || "Error al resetear contraseña");
+            throw new Error(error?.message || "Error al restablecer contraseña");
         }
         return response.data;
     }, []);
@@ -510,8 +531,10 @@ const UserProvider = ({ children })=>{
             signOut,
             signInWithGoogle,
             signUpWithGoogle,
-            requestResetPassword,
-            resetPassword
+            verifyEmail,
+            initiatePasswordReset,
+            resetPassword,
+            requestResetPassword: initiatePasswordReset
         }), [
         user,
         token,
@@ -523,7 +546,8 @@ const UserProvider = ({ children })=>{
         signOut,
         signInWithGoogle,
         signUpWithGoogle,
-        requestResetPassword,
+        verifyEmail,
+        initiatePasswordReset,
         resetPassword
     ]);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(UserContext.Provider, {
@@ -531,7 +555,7 @@ const UserProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/context/user.context.tsx",
-        lineNumber: 366,
+        lineNumber: 392,
         columnNumber: 10
     }, this);
 };
@@ -973,7 +997,7 @@ const SubscriptionProvider = ({ children })=>{
                 planId,
                 userEmail: email,
                 paymentMethodToken,
-                userId: user.id
+                userId: user.email || email
             }));
             if (error) {
                 const errorMessage = error.response?.data?.message || "Error al procesar la suscripción";
@@ -1040,7 +1064,10 @@ const SubscriptionProvider = ({ children })=>{
         }
     };
     const fetchSub = async ()=>{
-        if (!user) return null;
+        if (!user) {
+            setSub(null);
+            return null;
+        }
         setIsLoading(true);
         try {
             if (user.subscripcion) {
@@ -1079,7 +1106,6 @@ const SubscriptionProvider = ({ children })=>{
     // Efecto para manejar cambios en el usuario
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         if (!user) {
-            // Si no hay usuario, limpiar estado de suscripción
             setSub(null);
         } else {
             // Si hay un usuario, intentar cargar su suscripción específica
@@ -1117,7 +1143,7 @@ const SubscriptionProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/context/Suscribe.context.tsx",
-        lineNumber: 260,
+        lineNumber: 262,
         columnNumber: 5
     }, this);
 };

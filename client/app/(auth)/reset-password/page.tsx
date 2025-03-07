@@ -1,10 +1,9 @@
-import ResetPasswordLayout from "./layout";
-
 export const metadata = {
-  title: "Reset Password - Assetly",
+  title: "Send Mail - Assetly",
   description: "Page description",
 };
+import ResetPasswordLayout from "@/components/resetPassword";
 
-export default function ResetPassword() {
+export default function ResetPasswordPage() {
   return <ResetPasswordLayout />;
 }

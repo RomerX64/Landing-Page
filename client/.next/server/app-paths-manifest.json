@@ -1,11 +1,14 @@
 {
   "/(default)/page": "app/(default)/page.js",
   "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
-  "/(default)/plan/page": "app/(default)/plan/page.js",
-  "/(default)/suscribirse/page": "app/(default)/suscribirse/page.js",
-  "/(default)/success/page": "app/(default)/success/page.js",
   "/(default)/profile/page": "app/(default)/profile/page.js",
+  "/(auth)/send-email/page": "app/(auth)/send-email/page.js",
+  "/(auth)/signup/page": "app/(auth)/signup/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/(auth)/verify-email/page": "app/(auth)/verify-email/page.js",
+  "/(auth)/reset-password/confirm/page": "app/(auth)/reset-password/confirm/page.js",
+  "/(auth)/reset-password/page": "app/(auth)/reset-password/page.js",
   "/(auth)/signin/page": "app/(auth)/signin/page.js",
-  "/(default)/administracion/page": "app/(default)/administracion/page.js",
-  "/(auth)/signup/page": "app/(auth)/signup/page.js"
+  "/(default)/any/page": "app/(default)/any/page.js",
+  "/(auth)/reset-password/[slug]/page": "app/(auth)/reset-password/[slug]/page.js"
 }

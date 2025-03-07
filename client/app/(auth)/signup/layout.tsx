@@ -3,7 +3,7 @@ import { useContext, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { UserContext } from "@/context/user.context";
-import { Loader2 } from "lucide-react";
+import { Loader2, Mail } from "lucide-react";
 
 export default function SignUpLayout() {
   const { signUp, mailIsValid, signUpWithGoogle, user } =
@@ -26,14 +26,15 @@ export default function SignUpLayout() {
     emailError: "",
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
 
   let debounceTimeout: NodeJS.Timeout;
 
   useEffect(() => {
-    if (user) {
+    if (user && !registrationSuccess) {
       router.push("/");
     }
-  }, [user, router]);
+  }, [user, router, registrationSuccess]);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -101,6 +102,7 @@ export default function SignUpLayout() {
     try {
       setIsLoading(true);
       await signUp(newUser);
+      setRegistrationSuccess(true);
     } catch (error) {
       console.error("Error en la solicitud:", error);
     } finally {
@@ -119,6 +121,45 @@ export default function SignUpLayout() {
       setIsLoading(false);
     }
   };
+
+  // Si el registro fue exitoso, mostrar un mensaje de verificación
+  if (registrationSuccess) {
+    return (
+      <section>
+        <div className="max-w-6xl px-4 mx-auto sm:px-6">
+          <div className="py-12 md:py-20">
+            <div className="pb-12 text-center">
+              <h1 className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,theme(colors.gray.200),theme(colors.indigo.200),theme(colors.gray.50),theme(colors.indigo.300),theme(colors.gray.200))] bg-[length:200%_auto] bg-clip-text font-nacelle text-3xl font-semibold text-transparent md:text-4xl">
+                ¡Registro Exitoso!
+              </h1>
+            </div>
+            <div className="flex flex-col items-center justify-center mx-auto max-w-[500px] text-center">
+              <Mail className="w-16 h-16 mb-6 text-indigo-500" />
+              <h2 className="mb-4 text-xl font-semibold text-indigo-200">
+                Verifica tu correo electrónico
+              </h2>
+              <p className="mb-6 text-indigo-200/65">
+                Hemos enviado un correo de verificación a{" "}
+                <strong>{newUser.email}</strong>. Por favor, revisa tu bandeja
+                de entrada y haz clic en el enlace de verificación para activar
+                tu cuenta.
+              </p>
+              <p className="mb-10 text-sm text-indigo-200/65">
+                Si no encuentras el correo, verifica tu carpeta de spam o
+                solicita un nuevo correo de verificación.
+              </p>
+              <Link
+                href="/signin"
+                className="btn bg-gradient-to-t from-indigo-600 to-indigo-500 text-white hover:bg-[length:100%_150%]"
+              >
+                Ir a Iniciar Sesión
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section>

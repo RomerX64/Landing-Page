@@ -169,7 +169,7 @@ const PaymentForm = () => {
   // Si MercadoPago no está inicializado, mostramos un mensaje específico
   if (!mpInitialized) {
     return (
-      <section className="w-10/12 max-w-3xl px-1 py-5 mx-auto">
+      <section className="w-10/12 max-w-3xl px-1 py-5 mx-auto ">
         <div className="p-8 bg-gray-800 shadow-2xl rounded-2xl">
           <div className="flex items-center mb-6">
             <button
@@ -205,7 +205,7 @@ const PaymentForm = () => {
   }
 
   return (
-    <section className="w-10/12 max-w-3xl px-1 py-5 mx-auto">
+    <section className="w-10/12 max-w-3xl px-1 py-5 mx-auto ">
       {/* Progress bar */}
       {(paymentProcessing || progress > 0) && (
         <div

@@ -21,6 +21,7 @@ import { signIn } from './Dto/singIn.dto';
 import { signInGoogleDTO } from './Dto/singInGoogle.dto';
 import { signUp } from './Dto/singUp.dto';
 import { Subscripcion } from './Subscripcion.entity';
+import { get } from 'http';
 
 @Controller('users')
 export class UserController {
@@ -183,13 +184,13 @@ export class UserController {
     }
   }
 
-  @Post('/initiate-password-reset')
+  @Get('/initiate-password-reset/:email')
   @ApiOperation({
     summary: 'Initiate Password Reset',
     description: "Send password reset link to user's email",
   })
   async initiatePasswordReset(
-    @Body('email') email: string,
+    @Param('email') email: string,
   ): Promise<{ message: string }> {
     try {
       await this.userService.initiatePasswordReset(email);

@@ -235,7 +235,7 @@ export class UserService {
     try {
       // Verify the token
       const { email, userId } =
-        await this.mailService.verifyEmailVerificationToken(token);
+        await this.mailService.verifyPasswordResetToken(token);
 
       // Find the user
       const user = await this.getUserById(userId);
@@ -261,7 +261,6 @@ export class UserService {
       if (!user) {
         throw new NotFoundException('User not found');
       }
-
       // Send password reset email
       await this.mailService.sendPasswordResetEmail(user.email, user.id);
     } catch (error) {
