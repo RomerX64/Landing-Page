@@ -177,6 +177,7 @@ export class UserService {
       if (!isValid)
         throw new HttpException('Credencial inválida', HttpStatus.BAD_REQUEST);
       await this.userRepository.delete(user);
+      await this.mailService.userDelete(user.email);
       return user;
     } catch (error) {
       throw ErrorHandler.handle(error);

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as nodemailer from 'nodemailer';
 import { JwtService } from '@nestjs/jwt';
+import { SubscriptionStatus } from '../User/Subscripcion.entity';
 
 @Injectable()
 export class MailService {
@@ -15,12 +16,32 @@ export class MailService {
     this.transporter = nodemailer.createTransport({
       host: this.configService.get<string>('SMTP_HOST'),
       port: this.configService.get<number>('SMTP_PORT'),
-      secure: this.configService.get<boolean>('SMTP_SECURE', true),
+      secure: this.configService.get<boolean>('SMTP_SECURE'),
       auth: {
         user: this.configService.get<string>('SMTP_USER'),
         pass: this.configService.get<string>('SMTP_PASS'),
       },
     });
+  }
+
+  async verifyPasswordResetToken(
+    token: string,
+  ): Promise<{ email: string; userId: string }> {
+    try {
+      const decoded = this.jwtService.verify(token);
+
+      // Validación adicional: se comprueba el tipo de token
+      if (decoded.type !== 'password_reset') {
+        throw new Error('Tipo de token inválido');
+      }
+
+      return {
+        email: decoded.email,
+        userId: decoded.userId,
+      };
+    } catch (error) {
+      throw new Error('Token de reseteo inválido o expirado');
+    }
   }
 
   /**
@@ -115,23 +136,282 @@ export class MailService {
     await this.transporter.sendMail(mailOptions);
   }
 
-  async verifyPasswordResetToken(
-    token: string,
-  ): Promise<{ email: string; userId: string }> {
-    try {
-      const decoded = this.jwtService.verify(token);
+  /**
+   * Envía un correo de confirmación cuando se crea una nueva suscripción
+   * @param email Dirección de correo del usuario
+   */
+  async newSubscription(email: string): Promise<void> {
+    const mailOptions = {
+      from: this.configService.get<string>('EMAIL_FROM', 'noreply@assetly.com'),
+      to: email,
+      subject: 'Nueva Suscripción Creada - Assetly',
+      html: `
+      <div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif; background-color: #030712; border-radius: 10px">
+        <div style="text-align: center; padding: 20px; background-color: #4f46e5; color: white; border-radius: 8px 8px 0px 0px">
+          <h1 style="margin: 0; font-size: 28px; font-weight: 600;">Assetly</h1>
+          <p style="margin: 0; font-size: 20px; font-weight: 600;">¡Gracias por suscribirte!</p>
+        </div>
+        <div style="padding: 20px; background-color: #111827; color: #ffffff; font-size: 16px;">
+          <p>Hola,</p>
+          <p>Tu suscripción ha sido creada con éxito y está pendiente de aprobación.</p>
+          <p>Recibirás una confirmación cuando el pago sea procesado y tu suscripción sea activada.</p>
+          <div style="text-align: center; margin: 20px 0">
+            <a href="${this.configService.get<string>('FRONTEND_URL')}/dashboard" style="padding: 12px 24px; background-color: #6366f1; color: white; text-decoration: none; border-radius: 5px; font-weight: 500;">
+              Ver mi cuenta →
+            </a>
+          </div>
+          <p>Si tienes alguna pregunta, no dudes en contactarnos.</p>
+        </div>
+        <div style="text-align: center; padding: 10px; background-color: #1f2937; color: white; font-size: 14px; border-radius: 0px 0px 8px 8px">
+          <p>© 2025 Assetly. Todos los derechos reservados.</p>
+        </div>
+      </div>`,
+    };
 
-      // Validación adicional: se comprueba el tipo de token
-      if (decoded.type !== 'password_reset') {
-        throw new Error('Tipo de token inválido');
-      }
+    await this.transporter.sendMail(mailOptions);
+  }
 
-      return {
-        email: decoded.email,
-        userId: decoded.userId,
-      };
-    } catch (error) {
-      throw new Error('Token de reseteo inválido o expirado');
+  /**
+   * Envía una notificación cuando la suscripción cambia de estado
+   * @param email Dirección de correo del usuario
+   * @param status Nuevo estado de la suscripción
+   * @param planName Nombre del plan (opcional)
+   */
+  async subscriptionStatusChange(
+    email: string,
+    status: SubscriptionStatus,
+    planName?: string,
+  ): Promise<void> {
+    let subject = '';
+    let statusText = '';
+    let additionalInfo = '';
+    let buttonText = 'Ver mi cuenta';
+
+    switch (status) {
+      case SubscriptionStatus.ACTIVE:
+        subject = 'Suscripción Activada - Assetly';
+        statusText = 'Tu suscripción ha sido activada con éxito';
+        additionalInfo =
+          'Ya puedes disfrutar de todos los beneficios de tu plan.';
+        break;
+      case SubscriptionStatus.CANCELLED:
+        subject = 'Suscripción Cancelada - Assetly';
+        statusText = 'Tu suscripción ha sido cancelada';
+        additionalInfo =
+          'Lamentamos que hayas decidido cancelar tu suscripción. Esperamos verte pronto nuevamente.';
+        buttonText = 'Explorar planes';
+        break;
+      case SubscriptionStatus.REJECTED:
+        subject = 'Pago rechazado - Assetly';
+        statusText = 'Tu pago ha sido rechazado';
+        additionalInfo =
+          'Por favor, revisa tu método de pago y vuelve a intentarlo.';
+        buttonText = 'Actualizar método de pago';
+        break;
+      case SubscriptionStatus.EXPIRED:
+        subject = 'Suscripción Expirada - Assetly';
+        statusText = 'Tu suscripción ha expirado';
+        additionalInfo =
+          'Para continuar disfrutando de nuestros servicios, por favor renueva tu suscripción.';
+        buttonText = 'Renovar suscripción';
+        break;
+      case SubscriptionStatus.PAUSED:
+        subject = 'Suscripción Pausada - Assetly';
+        statusText = 'Tu suscripción ha sido pausada';
+        additionalInfo =
+          'Puedes reactivarla en cualquier momento desde tu panel de control.';
+        buttonText = 'Reactivar suscripción';
+        break;
+      default:
+        subject = 'Actualización de Suscripción - Assetly';
+        statusText = 'Tu suscripción ha sido actualizada';
+        break;
     }
+
+    // Incluir el nombre del plan si está disponible
+    const planInfo = planName ? `Plan: ${planName}` : '';
+
+    const mailOptions = {
+      from: this.configService.get<string>('EMAIL_FROM', 'noreply@assetly.com'),
+      to: email,
+      subject,
+      html: `
+      <div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif; background-color: #030712; border-radius: 10px">
+        <div style="text-align: center; padding: 20px; background-color: #4f46e5; color: white; border-radius: 8px 8px 0px 0px">
+          <h1 style="margin: 0; font-size: 28px; font-weight: 600;">Assetly</h1>
+          <p style="margin: 0; font-size: 20px; font-weight: 600;">Actualización de Suscripción</p>
+        </div>
+        <div style="padding: 20px; background-color: #111827; color: #ffffff; font-size: 16px;">
+          <p>Hola,</p>
+          <p><strong>${statusText}</strong></p>
+          ${planInfo ? `<p>${planInfo}</p>` : ''}
+          <p>${additionalInfo}</p>
+          <div style="text-align: center; margin: 20px 0">
+            <a href="${this.configService.get<string>('FRONTEND_URL')}/dashboard" style="padding: 12px 24px; background-color: #6366f1; color: white; text-decoration: none; border-radius: 5px; font-weight: 500;">
+              ${buttonText} →
+            </a>
+          </div>
+          <p>Si tienes alguna pregunta, no dudes en contactarnos.</p>
+        </div>
+        <div style="text-align: center; padding: 10px; background-color: #1f2937; color: white; font-size: 14px; border-radius: 0px 0px 8px 8px">
+          <p>© 2025 Assetly. Todos los derechos reservados.</p>
+        </div>
+      </div>`,
+    };
+
+    await this.transporter.sendMail(mailOptions);
+  }
+
+  /**
+   * Envía una notificación de pago recibido
+   * @param email Dirección de correo del usuario
+   * @param planName Nombre del plan
+   * @param amount Monto del pago
+   * @param paymentDate Fecha del pago
+   */
+  async paymentReceived(
+    email: string,
+    planName: string,
+    amount: number,
+    paymentDate: Date,
+  ): Promise<void> {
+    const formattedDate = paymentDate.toLocaleDateString('es-ES', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+
+    const formattedAmount = new Intl.NumberFormat('es-ES', {
+      style: 'currency',
+      currency: 'ARS', // Ajusta según la moneda que uses
+    }).format(amount);
+
+    const mailOptions = {
+      from: this.configService.get<string>('EMAIL_FROM', 'noreply@assetly.com'),
+      to: email,
+      subject: 'Pago Recibido - Assetly',
+      html: `
+      <div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif; background-color: #030712; border-radius: 10px">
+        <div style="text-align: center; padding: 20px; background-color: #4f46e5; color: white; border-radius: 8px 8px 0px 0px">
+          <h1 style="margin: 0; font-size: 28px; font-weight: 600;">Assetly</h1>
+          <p style="margin: 0; font-size: 20px; font-weight: 600;">Pago Recibido</p>
+        </div>
+        <div style="padding: 20px; background-color: #111827; color: #ffffff; font-size: 16px;">
+          <p>Hola,</p>
+          <p>Hemos recibido tu pago por el plan <strong>${planName}</strong>.</p>
+          <div style="background-color: #1f2937; padding: 15px; border-radius: 5px; margin: 15px 0;">
+            <p style="margin: 5px 0;"><strong>Monto:</strong> ${formattedAmount}</p>
+            <p style="margin: 5px 0;"><strong>Fecha:</strong> ${formattedDate}</p>
+            <p style="margin: 5px 0;"><strong>Plan:</strong> ${planName}</p>
+          </div>
+          <p>Tu suscripción ha sido actualizada automáticamente.</p>
+          <div style="text-align: center; margin: 20px 0">
+            <a href="${this.configService.get<string>('FRONTEND_URL')}" style="padding: 12px 24px; background-color: #6366f1; color: white; text-decoration: none; border-radius: 5px; font-weight: 500;">
+              Ver mi cuenta →
+            </a>
+          </div>
+          <p>Gracias por confiar en Assetly.</p>
+        </div>
+        <div style="text-align: center; padding: 10px; background-color: #1f2937; color: white; font-size: 14px; border-radius: 0px 0px 8px 8px">
+          <p>© 2025 Assetly. Todos los derechos reservados.</p>
+        </div>
+      </div>`,
+    };
+
+    await this.transporter.sendMail(mailOptions);
+  }
+
+  /**
+   * Envía una notificación cuando se elimina una cuenta de usuario
+   * @param email Dirección de correo del usuario
+   */
+  async userDelete(email: string): Promise<void> {
+    const mailOptions = {
+      from: this.configService.get<string>('EMAIL_FROM', 'noreply@assetly.com'),
+      to: email,
+      subject: 'Tu cuenta ha sido eliminada - Assetly',
+      html: `
+      <div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif; background-color: #030712; border-radius: 10px">
+        <div style="text-align: center; padding: 20px; background-color: #4f46e5; color: white; border-radius: 8px 8px 0px 0px">
+          <h1 style="margin: 0; font-size: 28px; font-weight: 600;">Assetly</h1>
+          <p style="margin: 0; font-size: 20px; font-weight: 600;">Cuenta Eliminada</p>
+        </div>
+        <div style="padding: 20px; background-color: #111827; color: #ffffff; font-size: 16px;">
+          <p>Hola,</p>
+          <p>Confirmamos que tu cuenta ha sido eliminada de nuestro sistema.</p>
+          <p>Todos tus datos han sido borrados de acuerdo con nuestra política de privacidad.</p>
+          <p>Lamentamos verte partir. Si decides regresar en el futuro, estaremos encantados de tenerte de nuevo.</p>
+          <div style="text-align: center; margin: 20px 0">
+            <a href="${this.configService.get<string>('FRONTEND_URL')}" style="padding: 12px 24px; background-color: #6366f1; color: white; text-decoration: none; border-radius: 5px; font-weight: 500;">
+              Volver a Assetly →
+            </a>
+          </div>
+        </div>
+        <div style="text-align: center; padding: 10px; background-color: #1f2937; color: white; font-size: 14px; border-radius: 0px 0px 8px 8px">
+          <p>© 2025 Assetly. Todos los derechos reservados.</p>
+        </div>
+      </div>`,
+    };
+
+    await this.transporter.sendMail(mailOptions);
+  }
+
+  /**
+   * Envía una notificación de próxima renovación de suscripción
+   * @param email Dirección de correo del usuario
+   * @param planName Nombre del plan
+   * @param amount Monto del pago
+   * @param renewalDate Fecha de renovación
+   */
+  async subscriptionRenewalReminder(
+    email: string,
+    planName: string,
+    amount: number,
+    renewalDate: Date,
+  ): Promise<void> {
+    const formattedDate = renewalDate.toLocaleDateString('es-ES', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+
+    const formattedAmount = new Intl.NumberFormat('es-ES', {
+      style: 'currency',
+      currency: 'ARS', // Ajusta según la moneda que uses
+    }).format(amount);
+
+    const mailOptions = {
+      from: this.configService.get<string>('EMAIL_FROM', 'noreply@assetly.com'),
+      to: email,
+      subject: 'Próxima Renovación de Suscripción - Assetly',
+      html: `
+      <div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif; background-color: #030712; border-radius: 10px">
+        <div style="text-align: center; padding: 20px; background-color: #4f46e5; color: white; border-radius: 8px 8px 0px 0px">
+          <h1 style="margin: 0; font-size: 28px; font-weight: 600;">Assetly</h1>
+          <p style="margin: 0; font-size: 20px; font-weight: 600;">Próxima Renovación</p>
+        </div>
+        <div style="padding: 20px; background-color: #111827; color: #ffffff; font-size: 16px;">
+          <p>Hola,</p>
+          <p>Te informamos que tu suscripción al plan <strong>${planName}</strong> se renovará automáticamente en los próximos días.</p>
+          <div style="background-color: #1f2937; padding: 15px; border-radius: 5px; margin: 15px 0;">
+            <p style="margin: 5px 0;"><strong>Fecha de renovación:</strong> ${formattedDate}</p>
+            <p style="margin: 5px 0;"><strong>Monto a cobrar:</strong> ${formattedAmount}</p>
+            <p style="margin: 5px 0;"><strong>Plan:</strong> ${planName}</p>
+          </div>
+          <p>Si deseas realizar algún cambio en tu suscripción, puedes hacerlo desde tu panel de control antes de la fecha de renovación.</p>
+          <div style="text-align: center; margin: 20px 0">
+            <a href="${this.configService.get<string>('FRONTEND_URL')}/dashboard" style="padding: 12px 24px; background-color: #6366f1; color: white; text-decoration: none; border-radius: 5px; font-weight: 500;">
+              Gestionar Suscripción →
+            </a>
+          </div>
+          <p>Gracias por confiar en Assetly.</p>
+        </div>
+        <div style="text-align: center; padding: 10px; background-color: #1f2937; color: white; font-size: 14px; border-radius: 0px 0px 8px 8px">
+          <p>© 2025 Assetly. Todos los derechos reservados.</p>
+        </div>
+      </div>`,
+    };
+
+    await this.transporter.sendMail(mailOptions);
   }
 }

@@ -879,6 +879,10 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   margin-bottom: .25rem;
 }
 
+.mb-10 {
+  margin-bottom: 2.5rem;
+}
+
 .mb-2 {
   margin-bottom: .5rem;
 }
@@ -959,10 +963,6 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   margin-top: auto;
 }
 
-.mb-10 {
-  margin-bottom: 2.5rem;
-}
-
 .block {
   display: block;
 }
@@ -977,10 +977,6 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
 
 .inline-flex {
   display: inline-flex;
-}
-
-.table {
-  display: table;
 }
 
 .grid {
@@ -1147,6 +1143,10 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   max-width: 400px;
 }
 
+.max-w-\[500px\] {
+  max-width: 500px;
+}
+
 .max-w-md {
   max-width: 28rem;
 }
@@ -1165,10 +1165,6 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
 
 .max-w-xs {
   max-width: 20rem;
-}
-
-.max-w-\[500px\] {
-  max-width: 500px;
 }
 
 .flex-1 {
@@ -1878,6 +1874,10 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   padding-left: 1.5rem;
 }
 
+.pr-10 {
+  padding-right: 2.5rem;
+}
+
 .pt-4 {
   padding-top: 1rem;
 }
@@ -1888,10 +1888,6 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
 
 .pt-7 {
   padding-top: 1.75rem;
-}
-
-.pr-10 {
-  padding-right: 2.5rem;
 }
 
 .text-left {

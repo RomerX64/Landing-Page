@@ -17,7 +17,7 @@ import { Subscripcion, SubscriptionStatus } from '../User/Subscripcion.entity';
 import { Plan } from '../User/Planes.entity';
 
 // Service Imports
-import { UserService } from '../User/users.service';
+import { MailService } from '../Mail/mail.service';
 import { ConfigService } from '@nestjs/config';
 
 // DTO Imports
@@ -47,8 +47,8 @@ export class SubscriptionsService {
     private readonly userRepository: Repository<UserEntity>,
     @InjectRepository(Plan)
     private readonly planRepository: Repository<Plan>,
-    @Inject(forwardRef(() => UserService))
-    private readonly userService: UserService,
+    @Inject(forwardRef(() => MailService))
+    private readonly mailService: MailService,
     private configService: ConfigService,
   ) {
     this.initializeMercadoPago();
@@ -342,17 +342,31 @@ export class SubscriptionsService {
   }
 
   // Handlers para diferentes eventos de webhook
+  // Handlers para diferentes eventos de webhook
   private async handlePaymentCreated(subscription: Subscripcion) {
     subscription.status = SubscriptionStatus.APPROVED;
     subscription.fechaUltimaPaga = new Date();
     await this.subscriptionRepository.save(subscription);
     console.log('Pago creado, suscripción aprobada');
+
+    // Enviar correo de notificación
+    try {
+      await this.mailService.subscriptionStatusChange(
+        subscription.user.email,
+        SubscriptionStatus.APPROVED,
+        subscription.plan.name,
+      );
+    } catch (error) {
+      console.error('Error al enviar correo de aprobación:', error);
+    }
   }
 
   private async handlePaymentUpdated(subscription: Subscripcion) {
     subscription.status = SubscriptionStatus.APPROVED;
     await this.subscriptionRepository.save(subscription);
     console.log('Pago actualizado');
+
+    // No enviamos correo aquí, ya que es solo una actualización interna
   }
 
   private async handlePaymentApproved(subscription: Subscripcion) {
@@ -360,12 +374,43 @@ export class SubscriptionsService {
     subscription.fechaUltimaPaga = new Date();
     await this.subscriptionRepository.save(subscription);
     console.log('Pago aprobado, suscripción activada');
+
+    // Enviar correo de notificación de pago y activación
+    try {
+      // Notificar sobre el pago recibido
+      await this.mailService.paymentReceived(
+        subscription.user.email,
+        subscription.plan.name,
+        subscription.plan.precio,
+        subscription.fechaUltimaPaga,
+      );
+
+      // Notificar sobre el cambio de estado
+      await this.mailService.subscriptionStatusChange(
+        subscription.user.email,
+        SubscriptionStatus.ACTIVE,
+        subscription.plan.name,
+      );
+    } catch (error) {
+      console.error('Error al enviar correos de pago aprobado:', error);
+    }
   }
 
   private async handlePaymentFailed(subscription: Subscripcion) {
     subscription.status = SubscriptionStatus.REJECTED;
     await this.subscriptionRepository.save(subscription);
     console.log('Pago fallido, suscripción rechazada');
+
+    // Enviar correo de notificación
+    try {
+      await this.mailService.subscriptionStatusChange(
+        subscription.user.email,
+        SubscriptionStatus.REJECTED,
+        subscription.plan.name,
+      );
+    } catch (error) {
+      console.error('Error al enviar correo de pago fallido:', error);
+    }
   }
 
   private async handleSubscriptionCancelled(
@@ -377,12 +422,34 @@ export class SubscriptionsService {
     subscription.cancellationReason = 'Cancelado por Mercado Pago';
     await this.subscriptionRepository.save(subscription);
     console.log('Suscripción cancelada');
+
+    // Enviar correo de notificación
+    try {
+      await this.mailService.subscriptionStatusChange(
+        subscription.user.email,
+        SubscriptionStatus.CANCELLED,
+        subscription.plan.name,
+      );
+    } catch (error) {
+      console.error('Error al enviar correo de cancelación:', error);
+    }
   }
 
   private async handleSubscriptionExpired(subscription: Subscripcion) {
     subscription.status = SubscriptionStatus.EXPIRED;
     await this.subscriptionRepository.save(subscription);
     console.log('Suscripción expirada');
+
+    // Enviar correo de notificación
+    try {
+      await this.mailService.subscriptionStatusChange(
+        subscription.user.email,
+        SubscriptionStatus.EXPIRED,
+        subscription.plan.name,
+      );
+    } catch (error) {
+      console.error('Error al enviar correo de expiración:', error);
+    }
   }
 
   private async handleSubscriptionRenewed(subscription: Subscripcion) {
@@ -393,14 +460,36 @@ export class SubscriptionsService {
     );
     await this.subscriptionRepository.save(subscription);
     console.log('Suscripción renovada');
+
+    // Enviar correo de notificación
+    try {
+      await this.mailService.paymentReceived(
+        subscription.user.email,
+        subscription.plan.name,
+        subscription.plan.precio,
+        subscription.fechaUltimaPaga,
+      );
+    } catch (error) {
+      console.error('Error al enviar correo de renovación:', error);
+    }
   }
 
   private async handleSubscriptionPaused(subscription: Subscripcion) {
     subscription.status = SubscriptionStatus.PAUSED;
     await this.subscriptionRepository.save(subscription);
     console.log('Suscripción pausada');
-  }
 
+    // Enviar correo de notificación
+    try {
+      await this.mailService.subscriptionStatusChange(
+        subscription.user.email,
+        SubscriptionStatus.PAUSED,
+        subscription.plan.name,
+      );
+    } catch (error) {
+      console.error('Error al enviar correo de pausa:', error);
+    }
+  }
   /**
    * Aprueba manualmente una suscripción que está en estado pendiente
    * @param subscriptionId ID de la suscripción en Mercado Pago
@@ -501,12 +590,12 @@ export class SubscriptionsService {
   }
 
   private async saveSubscriptionData(
-    userId: string,
+    userEmail: string,
     plan: Plan,
     mpResponse: any,
   ) {
     let user = await this.userRepository.findOne({
-      where: { email: userId },
+      where: { email: userEmail },
       relations: ['subscripcion'],
     });
 
@@ -514,7 +603,7 @@ export class SubscriptionsService {
     if (!user) {
       // Creamos un nuevo usuario
       const newUser = this.userRepository.create({
-        email: userId,
+        email: userEmail,
       });
 
       user = await this.userRepository.save(newUser);
@@ -546,11 +635,14 @@ export class SubscriptionsService {
     user.subscripcion = savedSubscription;
     await this.userRepository.save(user);
 
+    await this.mailService.newSubscription(userEmail);
+
     return {
       message: 'Suscripción creada correctamente en estado pendiente',
       subscription: savedSubscription,
     };
   }
+
   private async handleExistingSubscription(user: UserEntity) {
     console.log(`Cancelando suscripción existente para usuario: ${user.email}`);
     try {
