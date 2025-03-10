@@ -967,6 +967,10 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   display: inline-block;
 }
 
+.inline {
+  display: inline;
+}
+
 .flex {
   display: flex;
 }

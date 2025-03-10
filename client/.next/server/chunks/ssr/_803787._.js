@@ -433,6 +433,72 @@ const SuscriberProfile = ()=>{
                                         fileName: "[project]/components/suscriberProfile.tsx",
                                         lineNumber: 209,
                                         columnNumber: 13
+                                    }, this),
+                                    sub?.database && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                                            href: "https://google.com",
+                                            target: "_blank",
+                                            className: "flex items-center gap-1 text-indigo-400 transition-colors duration-200 hover:text-indigo-300",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                    children: "sub?.database"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/components/suscriberProfile.tsx",
+                                                    lineNumber: 224,
+                                                    columnNumber: 19
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                                                    xmlns: "http://www.w3.org/2000/svg",
+                                                    width: "14",
+                                                    height: "14",
+                                                    viewBox: "0 0 24 24",
+                                                    fill: "none",
+                                                    stroke: "currentColor",
+                                                    strokeWidth: "2",
+                                                    strokeLinecap: "round",
+                                                    strokeLinejoin: "round",
+                                                    className: "inline",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
+                                                            d: "M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/components/suscriberProfile.tsx",
+                                                            lineNumber: 237,
+                                                            columnNumber: 21
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("polyline", {
+                                                            points: "15 3 21 3 21 9"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/components/suscriberProfile.tsx",
+                                                            lineNumber: 238,
+                                                            columnNumber: 21
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
+                                                            x1: "10",
+                                                            y1: "14",
+                                                            x2: "21",
+                                                            y2: "3"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/components/suscriberProfile.tsx",
+                                                            lineNumber: 239,
+                                                            columnNumber: 21
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/components/suscriberProfile.tsx",
+                                                    lineNumber: 225,
+                                                    columnNumber: 19
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/components/suscriberProfile.tsx",
+                                            lineNumber: 219,
+                                            columnNumber: 17
+                                        }, this)
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/suscriberProfile.tsx",
+                                        lineNumber: 218,
+                                        columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
@@ -450,22 +516,22 @@ const SuscriberProfile = ()=>{
                                             size: 35
                                         }, void 0, false, {
                                             fileName: "[project]/components/suscriberProfile.tsx",
-                                            lineNumber: 222,
+                                            lineNumber: 249,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/components/suscriberProfile.tsx",
-                                        lineNumber: 221,
+                                        lineNumber: 248,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/suscriberProfile.tsx",
-                                    lineNumber: 220,
+                                    lineNumber: 247,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/suscriberProfile.tsx",
-                                lineNumber: 219,
+                                lineNumber: 246,
                                 columnNumber: 11
                             }, this)
                         ]
@@ -490,7 +556,7 @@ const SuscriberProfile = ()=>{
                             children: "Cancelar Suscripción"
                         }, void 0, false, {
                             fileName: "[project]/components/suscriberProfile.tsx",
-                            lineNumber: 233,
+                            lineNumber: 260,
                             columnNumber: 13
                         }, this),
                         cancelSuccess ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -501,7 +567,7 @@ const SuscriberProfile = ()=>{
                                     children: "Tu suscripción ha sido cancelada correctamente."
                                 }, void 0, false, {
                                     fileName: "[project]/components/suscriberProfile.tsx",
-                                    lineNumber: 239,
+                                    lineNumber: 266,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -510,13 +576,13 @@ const SuscriberProfile = ()=>{
                                     children: "Cerrar"
                                 }, void 0, false, {
                                     fileName: "[project]/components/suscriberProfile.tsx",
-                                    lineNumber: 242,
+                                    lineNumber: 269,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/suscriberProfile.tsx",
-                            lineNumber: 238,
+                            lineNumber: 265,
                             columnNumber: 15
                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
                             children: [
@@ -525,7 +591,7 @@ const SuscriberProfile = ()=>{
                                     children: "¿Estás seguro de que deseas cancelar tu suscripción? Perderás acceso a todos los beneficios al final del período actual."
                                 }, void 0, false, {
                                     fileName: "[project]/components/suscriberProfile.tsx",
-                                    lineNumber: 251,
+                                    lineNumber: 278,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -537,7 +603,7 @@ const SuscriberProfile = ()=>{
                                             children: "Motivo de cancelación (opcional)"
                                         }, void 0, false, {
                                             fileName: "[project]/components/suscriberProfile.tsx",
-                                            lineNumber: 257,
+                                            lineNumber: 284,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
@@ -549,13 +615,13 @@ const SuscriberProfile = ()=>{
                                             placeholder: "¿Por qué deseas cancelar tu suscripción?"
                                         }, void 0, false, {
                                             fileName: "[project]/components/suscriberProfile.tsx",
-                                            lineNumber: 263,
+                                            lineNumber: 290,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/suscriberProfile.tsx",
-                                    lineNumber: 256,
+                                    lineNumber: 283,
                                     columnNumber: 17
                                 }, this),
                                 cancelError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -563,7 +629,7 @@ const SuscriberProfile = ()=>{
                                     children: cancelError
                                 }, void 0, false, {
                                     fileName: "[project]/components/suscriberProfile.tsx",
-                                    lineNumber: 274,
+                                    lineNumber: 301,
                                     columnNumber: 19
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -575,7 +641,7 @@ const SuscriberProfile = ()=>{
                                             children: "Cancelar"
                                         }, void 0, false, {
                                             fileName: "[project]/components/suscriberProfile.tsx",
-                                            lineNumber: 280,
+                                            lineNumber: 307,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -585,13 +651,13 @@ const SuscriberProfile = ()=>{
                                             children: cancelLoading ? "Procesando..." : "Confirmar"
                                         }, void 0, false, {
                                             fileName: "[project]/components/suscriberProfile.tsx",
-                                            lineNumber: 286,
+                                            lineNumber: 313,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/suscriberProfile.tsx",
-                                    lineNumber: 279,
+                                    lineNumber: 306,
                                     columnNumber: 17
                                 }, this)
                             ]
@@ -599,12 +665,12 @@ const SuscriberProfile = ()=>{
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/suscriberProfile.tsx",
-                    lineNumber: 232,
+                    lineNumber: 259,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/suscriberProfile.tsx",
-                lineNumber: 231,
+                lineNumber: 258,
                 columnNumber: 9
             }, this)
         ]

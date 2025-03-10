@@ -9,4 +9,5 @@ export interface IUser {
   telefono: string;
   company: string;
   isAdmin: boolean;
+  database:IDatabase
 }
