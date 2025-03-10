@@ -1,7 +1,7 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/context/user.context";
-import { UserPen, LogOut } from "lucide-react";
+import { UserPen, LogOut, EyeOff, Eye } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import SuscriberProfile from "@/components/suscriberProfile";
@@ -17,6 +17,7 @@ const UserProfile: React.FC = () => {
     name: "",
   });
   const [isEditing, setIsEditing] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
@@ -46,9 +47,18 @@ const UserProfile: React.FC = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const toggleShowPassword = () => {
+    setShowPassword((prev) => !prev);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await updateUser({ ...formData, id: user.id });
+
+    // Si la contraseña está vacía, no la incluimos en el objeto a enviar
+    const { password, ...rest } = formData;
+    const updateData = { id: user.id, ...rest, ...(password && { password }) };
+
+    await updateUser(updateData);
     setIsEditing(false);
   };
 
@@ -139,15 +149,29 @@ const UserProfile: React.FC = () => {
                 <label className="block text-gray-300">
                   Contraseña (dejar en blanco para no cambiar)
                 </label>
-                <input
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 mt-1 text-white bg-gray-700 rounded-lg"
-                  placeholder="********"
-                />
+                <div className="relative mt-1">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 text-white bg-gray-700 rounded-lg"
+                    placeholder="********"
+                  />
+                  <button
+                    type="button"
+                    onClick={toggleShowPassword}
+                    className="absolute inset-y-0 right-0 flex items-center pr-3"
+                  >
+                    {showPassword ? (
+                      <EyeOff size={20} className="text-white" />
+                    ) : (
+                      <Eye size={20} className="text-white" />
+                    )}
+                  </button>
+                </div>
               </div>
+
               <div className="flex justify-between mt-4">
                 <button
                   type="submit"

@@ -9,10 +9,11 @@ import { SuscribeModule } from '../Suscribe/suscriber.module';
 import { MercadoPagoService } from './mp.service';
 import { AdminController } from './admin.controller';
 import { MailModule } from '../Mail/mail.module';
+import { Database } from '../User/database.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Subscripcion, Plan]),
+    TypeOrmModule.forFeature([User, Subscripcion, Plan, Database]),
     forwardRef(() => UserModule),
     forwardRef(() => SuscribeModule),
     forwardRef(() => MailModule),

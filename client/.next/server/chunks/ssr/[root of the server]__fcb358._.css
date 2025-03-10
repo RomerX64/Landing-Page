@@ -811,6 +811,10 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   top: 440px;
 }
 
+.top-7 {
+  top: 1.75rem;
+}
+
 .-z-10 {
   z-index: -10;
 }
@@ -1880,6 +1884,11 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   padding-bottom: 5px;
 }
 
+.py-7 {
+  padding-top: 1.75rem;
+  padding-bottom: 1.75rem;
+}
+
 .pb-12 {
   padding-bottom: 3rem;
 }
@@ -1918,6 +1927,10 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
 
 .pt-7 {
   padding-top: 1.75rem;
+}
+
+.pr-3 {
+  padding-right: .75rem;
 }
 
 .text-left {
