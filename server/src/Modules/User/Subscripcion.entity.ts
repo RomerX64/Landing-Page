@@ -9,6 +9,7 @@ import {
 import { User } from './User.entity';
 import { Plan } from './Planes.entity';
 import { IsEnum, IsISO8601, IsString } from 'class-validator';
+import { Database } from './database.entity';
 
 export enum SubscriptionStatus {
   ACTIVE = 'active', // La suscripción está activa.
@@ -76,4 +77,7 @@ export class Subscripcion {
 
   @Column({ nullable: true })
   paymentMethodId: string; // Añadir el campo paymentMethodId
+
+  @OneToOne(() => Database, (database) => database.subscripcion)
+  database: Database;
 }

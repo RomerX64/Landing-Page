@@ -17,6 +17,7 @@ import { User } from '../User/User.entity';
 import { Plan } from '../User/Planes.entity';
 import { Subscripcion, SubscriptionStatus } from '../User/Subscripcion.entity';
 import { CreatePlanDto, UpdatePlanDto } from './dto/plan.dto';
+import { createServiceDto } from './dto/createService.dto';
 
 @Controller('/admin')
 @UseGuards(AuthGuard, AdminGuard)
@@ -281,5 +282,28 @@ export class AdminController {
     } catch (error) {
       throw ErrorHandler.handle(error);
     }
+  }
+
+  // =====================
+  // Endpoints para DATABASE
+  // =====================
+
+  @Post('/create-service/:subId')
+  async createService(
+    @Body() createServiceDto: createServiceDto,
+    @Param('subId') subscriptionId: string,
+  ) {
+    const subscription =
+      await this.adminService.getSubscriptionById(subscriptionId);
+
+    const databaseService = await this.adminService.createDatabaseService(
+      subscription,
+      createServiceDto,
+    );
+
+    return {
+      message: 'Servicio creado exitosamente',
+      serviceId: databaseService.id,
+    };
   }
 }

@@ -1,6 +1,6 @@
-export interface AccessData {
+export class AccessDataDto {
   email: string;
-  serviceUrl: string;
+  url: string;
   username: string;
   password: string;
 }

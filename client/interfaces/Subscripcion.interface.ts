@@ -13,6 +13,7 @@ export interface ISubscripcion {
   cancellationReason: string;
   metadata: Record<string, any>;
   user: IUser;
+  database: IDatabase;
 }
 
 export enum SubscriptionStatus {

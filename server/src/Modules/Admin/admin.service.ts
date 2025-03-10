@@ -16,12 +16,16 @@ import { ErrorHandler } from 'src/Utils/Error.Handler';
 import { updateUserDto } from '../User/Dto/updateUser.dto';
 import { CreatePlanDto, UpdatePlanDto } from './dto/plan.dto';
 import { MailService } from '../Mail/mail.service';
+import { Database } from '../User/database.entity';
+import { createServiceDto } from './dto/createService.dto';
 
 @Injectable()
 export class AdminService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    @InjectRepository(Database)
+    private readonly databaseRepository: Repository<Database>,
     @InjectRepository(Subscripcion)
     private readonly subRepository: Repository<Subscripcion>,
     @InjectRepository(Plan)
@@ -247,6 +251,39 @@ export class AdminService {
   async cancelMercadoPagoSubscription(subscriptionId: string): Promise<any> {
     try {
       return await this.mercadoPagoService.cancelSubscription(subscriptionId);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  async createDatabaseService(
+    subscripcion: Subscripcion,
+    dbData: createServiceDto,
+  ): Promise<Database> {
+    try {
+      // Crear la entidad de base de datos
+      const database = this.databaseRepository.create({
+        subscripcion,
+        DB_NAME: dbData.dbName,
+        DB_HOST: dbData.dbHost,
+        DB_PORT: dbData.dbPort,
+        DB_USERNAME: dbData.dbUsername,
+        DB_PASSWORD: dbData.dbPassword,
+        url: dbData.url,
+      });
+
+      // Guardar en la base de datos
+      const savedDatabase = await this.databaseRepository.save(database);
+
+      // Enviar correo electrónico de confirmación
+      await this.mailService.sendServiceAccessCredentials({
+        email: subscripcion.user.email,
+        username: dbData.dbUsername,
+        password: dbData.dbPassword,
+        url: dbData.url,
+      });
+
+      return savedDatabase;
     } catch (error) {
       throw ErrorHandler.handle(error);
     }
