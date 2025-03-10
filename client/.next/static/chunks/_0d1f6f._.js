@@ -112,8 +112,11 @@ const PlanDetail = ()=>{
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: `absolute px-3 py-1 text-xs font-bold text-black bg-yellow-500 rounded-full shadow-md ${viewPlan.popular ? "top-12" : "top-3"} right-4`,
-                            children: viewPlan.precio
-                        }, void 0, false, {
+                            children: [
+                                "$",
+                                viewPlan.precio
+                            ]
+                        }, void 0, true, {
                             fileName: "[project]/app/(default)/plan/layout.tsx",
                             lineNumber: 78,
                             columnNumber: 11
@@ -139,8 +142,11 @@ const PlanDetail = ()=>{
                             className: "flex items-center gap-4",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                 className: "inline-block px-6 py-2 text-lg font-bold text-white transition-all duration-300 rounded-full shadow-sm bg-gradient-to-r from-green-500 to-teal-400 animate-gradient",
-                                children: viewPlan.activos
-                            }, void 0, false, {
+                                children: [
+                                    viewPlan.activos,
+                                    "/act"
+                                ]
+                            }, void 0, true, {
                                 fileName: "[project]/app/(default)/plan/layout.tsx",
                                 lineNumber: 92,
                                 columnNumber: 13
@@ -165,7 +171,7 @@ const PlanDetail = ()=>{
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                     className: "font-bold",
                                                     children: [
-                                                        " ",
+                                                        " $",
                                                         viewPlan.precio
                                                     ]
                                                 }, void 0, true, {

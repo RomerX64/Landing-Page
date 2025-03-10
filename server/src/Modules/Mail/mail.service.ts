@@ -3,6 +3,8 @@ import { ConfigService } from '@nestjs/config';
 import * as nodemailer from 'nodemailer';
 import { JwtService } from '@nestjs/jwt';
 import { SubscriptionStatus } from '../User/Subscripcion.entity';
+import { ContactMessage } from './dto/contact.message';
+import { ErrorHandler } from 'src/Utils/Error.Handler';
 
 @Injectable()
 export class MailService {
@@ -87,7 +89,11 @@ export class MailService {
     };
 
     // Envía el correo
-    await this.transporter.sendMail(mailOptions);
+    try {
+      await this.transporter.sendMail(mailOptions);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
   }
 
   /**
@@ -133,7 +139,11 @@ export class MailService {
     };
 
     // Envía el correo
-    await this.transporter.sendMail(mailOptions);
+    try {
+      await this.transporter.sendMail(mailOptions);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
   }
 
   /**
@@ -142,7 +152,7 @@ export class MailService {
    */
   async newSubscription(email: string): Promise<void> {
     const mailOptions = {
-      from: this.configService.get<string>('EMAIL_FROM', 'noreply@assetly.com'),
+      from: this.configService.get<string>('SMTP_USER'),
       to: email,
       subject: 'Nueva Suscripción Creada - Assetly',
       html: `
@@ -168,7 +178,11 @@ export class MailService {
       </div>`,
     };
 
-    await this.transporter.sendMail(mailOptions);
+    try {
+      await this.transporter.sendMail(mailOptions);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
   }
 
   /**
@@ -232,7 +246,7 @@ export class MailService {
     const planInfo = planName ? `Plan: ${planName}` : '';
 
     const mailOptions = {
-      from: this.configService.get<string>('EMAIL_FROM', 'noreply@assetly.com'),
+      from: this.configService.get<string>('SMTP_USER'),
       to: email,
       subject,
       html: `
@@ -259,7 +273,11 @@ export class MailService {
       </div>`,
     };
 
-    await this.transporter.sendMail(mailOptions);
+    try {
+      await this.transporter.sendMail(mailOptions);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
   }
 
   /**
@@ -287,7 +305,7 @@ export class MailService {
     }).format(amount);
 
     const mailOptions = {
-      from: this.configService.get<string>('EMAIL_FROM', 'noreply@assetly.com'),
+      from: this.configService.get<string>('SMTP_USER'),
       to: email,
       subject: 'Pago Recibido - Assetly',
       html: `
@@ -318,7 +336,11 @@ export class MailService {
       </div>`,
     };
 
-    await this.transporter.sendMail(mailOptions);
+    try {
+      await this.transporter.sendMail(mailOptions);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
   }
 
   /**
@@ -327,7 +349,7 @@ export class MailService {
    */
   async userDelete(email: string): Promise<void> {
     const mailOptions = {
-      from: this.configService.get<string>('EMAIL_FROM', 'noreply@assetly.com'),
+      from: this.configService.get<string>('SMTP_USER'),
       to: email,
       subject: 'Tu cuenta ha sido eliminada - Assetly',
       html: `
@@ -353,7 +375,11 @@ export class MailService {
       </div>`,
     };
 
-    await this.transporter.sendMail(mailOptions);
+    try {
+      await this.transporter.sendMail(mailOptions);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
   }
 
   /**
@@ -381,7 +407,7 @@ export class MailService {
     }).format(amount);
 
     const mailOptions = {
-      from: this.configService.get<string>('EMAIL_FROM', 'noreply@assetly.com'),
+      from: this.configService.get<string>('SMTP_USER'),
       to: email,
       subject: 'Próxima Renovación de Suscripción - Assetly',
       html: `
@@ -412,6 +438,118 @@ export class MailService {
       </div>`,
     };
 
-    await this.transporter.sendMail(mailOptions);
+    try {
+      await this.transporter.sendMail(mailOptions);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  /**
+   * Envía un mensaje de contacto al equipo y una confirmación al remitente
+   * @param contactData Datos del formulario de contacto
+   */
+  async sendContactMessage(contactData: ContactMessage): Promise<void> {
+    try {
+      const { name, email, message } = contactData;
+
+      // 1. Envía el mensaje al equipo de soporte
+      await this.sendMessageToTeam(name, email, message);
+
+      // 2. Envía confirmación al remitente
+      await this.sendConfirmationToSender(name, email);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  /**
+   * Envía el mensaje de contacto al equipo de soporte
+   */
+  private async sendMessageToTeam(
+    name: string,
+    email: string,
+    message: string,
+  ): Promise<void> {
+    const teamEmail = this.configService.get<string>('SMTP_USER');
+
+    const mailOptions = {
+      from: this.configService.get<string>('SMTP_USER'),
+      to: teamEmail,
+      subject: `Nuevo mensaje de contacto de ${name}`,
+      html: `
+        <div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif; background-color: #030712; border-radius: 10px">
+          <div style="text-align: center; padding: 20px; background-color: #4f46e5; color: white; border-radius: 8px 8px 0px 0px">
+            <h1 style="margin: 0; font-size: 28px; font-weight: 600;">Assetly</h1>
+            <p style="margin: 0; font-size: 20px; font-weight: 600;">Nuevo Mensaje de Contacto</p>
+          </div>
+          <div style="padding: 20px; background-color: #111827; color: #ffffff; font-size: 16px;">
+            <p><strong>Nombre:</strong> ${name}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <div style="background-color: #1f2937; padding: 15px; border-radius: 5px; margin: 15px 0;">
+              <p style="margin: 5px 0;"><strong>Mensaje:</strong></p>
+              <p style="margin: 10px 0; white-space: pre-wrap;">${message}</p>
+            </div>
+            <p>Fecha: ${new Date().toLocaleDateString('es-ES', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit',
+            })}</p>
+          </div>
+          <div style="text-align: center; padding: 10px; background-color: #1f2937; color: white; font-size: 14px; border-radius: 0px 0px 8px 8px">
+            <p>© 2025 Assetly. Todos los derechos reservados.</p>
+          </div>
+        </div>`,
+    };
+
+    try {
+      await this.transporter.sendMail(mailOptions);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  /**
+   * Envía un email de confirmación al remitente
+   */
+  private async sendConfirmationToSender(
+    name: string,
+    email: string,
+  ): Promise<void> {
+    const mailOptions = {
+      from: this.configService.get<string>('SMTP_USER'),
+      to: email,
+      subject: 'Hemos recibido tu mensaje - Assetly',
+      html: `
+        <div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif; background-color: #030712; border-radius: 10px">
+          <div style="text-align: center; padding: 20px; background-color: #4f46e5; color: white; border-radius: 8px 8px 0px 0px">
+            <h1 style="margin: 0; font-size: 28px; font-weight: 600;">Assetly</h1>
+            <p style="margin: 0; font-size: 20px; font-weight: 600;">Mensaje Recibido</p>
+          </div>
+          <div style="padding: 20px; background-color: #111827; color: #ffffff; font-size: 16px;">
+            <p>Hola ${name},</p>
+            <p>Hemos recibido tu mensaje y queremos agradecerte por contactarnos.</p>
+            <p>Nuestro equipo revisará tu consulta y te responderemos a la brevedad posible.</p>
+            <div style="text-align: center; margin: 20px 0">
+              <a href="${this.configService.get<string>('FRONTEND_URL')}" style="padding: 12px 24px; background-color: #6366f1; color: white; text-decoration: none; border-radius: 5px; font-weight: 500;">
+                Visitar Assetly →
+              </a>
+            </div>
+            <p>Si tienes alguna consulta adicional, no dudes en escribirnos nuevamente.</p>
+            <p>Saludos,<br>El equipo de Assetly</p>
+          </div>
+          <div style="text-align: center; padding: 10px; background-color: #1f2937; color: white; font-size: 14px; border-radius: 0px 0px 8px 8px">
+            <p>© 2025 Assetly. Todos los derechos reservados.</p>
+          </div>
+        </div>`,
+    };
+
+    try {
+      await this.transporter.sendMail(mailOptions);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
   }
 }

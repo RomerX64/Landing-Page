@@ -17,7 +17,7 @@ export default function Workflows() {
             </h2>
             <p className="text-lg text-indigo-200/65">
               Elije el plan que mas se adecue a su empresa, posee 2 meses de
-              prueba ($USD)
+              prueba ($ARS)
             </p>
           </div>
           <TiposDePlanes />

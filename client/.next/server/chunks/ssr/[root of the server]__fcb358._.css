@@ -859,10 +859,6 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   margin-bottom: 1rem;
 }
 
-.-mb-24 {
-  margin-bottom: -6rem;
-}
-
 .-mb-80 {
   margin-bottom: -20rem;
 }
@@ -881,6 +877,10 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
 
 .mb-10 {
   margin-bottom: 2.5rem;
+}
+
+.mb-12 {
+  margin-bottom: 3rem;
 }
 
 .mb-2 {
@@ -909,10 +909,6 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
 
 .ml-2 {
   margin-left: .5rem;
-}
-
-.ml-20 {
-  margin-left: 5rem;
 }
 
 .ml-4 {
@@ -1043,6 +1039,10 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   max-height: 100%;
 }
 
+.min-h-20 {
+  min-height: 5rem;
+}
+
 .min-h-\[60vh\] {
   min-height: 60vh;
 }
@@ -1161,6 +1161,10 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
 
 .max-w-sm {
   max-width: 24rem;
+}
+
+.max-w-xl {
+  max-width: 36rem;
 }
 
 .max-w-xs {
@@ -1405,6 +1409,10 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   border-radius: .375rem;
 }
 
+.rounded-xl {
+  border-radius: .75rem;
+}
+
 .rounded-l-lg {
   border-top-left-radius: .5rem;
   border-bottom-left-radius: .5rem;
@@ -1425,6 +1433,11 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
 .border-gray-600 {
   --tw-border-opacity: 1;
   border-color: rgb(75 85 99 / var(--tw-border-opacity, 1));
+}
+
+.border-gray-700 {
+  --tw-border-opacity: 1;
+  border-color: rgb(55 65 81 / var(--tw-border-opacity, 1));
 }
 
 .border-gray-700\/50 {
@@ -1507,9 +1520,18 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   background-color: rgb(20 83 45 / var(--tw-bg-opacity, 1));
 }
 
+.bg-green-900\/50 {
+  background-color: #14532d80;
+}
+
 .bg-indigo-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(79 70 229 / var(--tw-bg-opacity, 1));
+}
+
+.bg-indigo-700 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(67 56 202 / var(--tw-bg-opacity, 1));
 }
 
 .bg-red-100\/10 {
@@ -1538,6 +1560,10 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
 .bg-red-900 {
   --tw-bg-opacity: 1;
   background-color: rgb(127 29 29 / var(--tw-bg-opacity, 1));
+}
+
+.bg-red-900\/50 {
+  background-color: #7f1d1d80;
 }
 
 .bg-teal-600 {
@@ -1648,14 +1674,14 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   --tw-gradient-stops: var(--tw-gradient-from), #1f293740 var(--tw-gradient-via-position), var(--tw-gradient-to);
 }
 
-.via-gray-800\/50 {
-  --tw-gradient-to: #1f293700 var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from), #1f293780 var(--tw-gradient-via-position), var(--tw-gradient-to);
-}
-
 .via-gray-800\/60 {
   --tw-gradient-to: #1f293700 var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), #1f293799 var(--tw-gradient-via-position), var(--tw-gradient-to);
+}
+
+.via-gray-950\/40 {
+  --tw-gradient-to: #03071200 var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), #03071266 var(--tw-gradient-via-position), var(--tw-gradient-to);
 }
 
 .via-purple-400 {
@@ -2029,6 +2055,11 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   color: rgb(55 65 81 / var(--tw-text-opacity, 1));
 }
 
+.text-green-200 {
+  --tw-text-opacity: 1;
+  color: rgb(187 247 208 / var(--tw-text-opacity, 1));
+}
+
 .text-green-400 {
   --tw-text-opacity: 1;
   color: rgb(74 222 128 / var(--tw-text-opacity, 1));
@@ -2066,6 +2097,11 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
 .text-neutral-950 {
   --tw-text-opacity: 1;
   color: rgb(10 10 10 / var(--tw-text-opacity, 1));
+}
+
+.text-red-200 {
+  --tw-text-opacity: 1;
+  color: rgb(254 202 202 / var(--tw-text-opacity, 1));
 }
 
 .text-red-400 {
@@ -2229,6 +2265,30 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
 .\[border-image\:linear-gradient\(to_right\,transparent\,theme\(colors\.slate\.400\/\.25\)\,transparent\)1\] {
   -o-border-image: linear-gradient(to right, #0000, #94a3b840, #0000) 1;
   border-image: linear-gradient(to right, #0000, #94a3b840, #0000) 1;
+}
+
+::-webkit-scrollbar {
+  width: 2rem;
+  height: 2rem;
+}
+
+::-webkit-scrollbar-track {
+  background: #1f2937;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4f46e5;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6366f1;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #4f46e5 #1f2937;
 }
 
 .before\:pointer-events-none:before {

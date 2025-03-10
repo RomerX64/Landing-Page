@@ -80,7 +80,7 @@ const PlanDetail: React.FC = () => {
               viewPlan.popular ? "top-12" : "top-3"
             } right-4`}
           >
-            {viewPlan.precio}
+            ${viewPlan.precio}
           </div>
           <h2 className="absolute text-4xl font-bold text-transparent top-4 left-4 bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
             {viewPlan.name}
@@ -90,7 +90,7 @@ const PlanDetail: React.FC = () => {
         <div className="flex-grow p-4 mt-10 pt-7">
           <div className="flex items-center gap-4">
             <span className="inline-block px-6 py-2 text-lg font-bold text-white transition-all duration-300 rounded-full shadow-sm bg-gradient-to-r from-green-500 to-teal-400 animate-gradient">
-              {viewPlan.activos}
+              {viewPlan.activos}/act
             </span>
           </div>
 
@@ -99,7 +99,7 @@ const PlanDetail: React.FC = () => {
               <p className="text-gray-300">
                 Aprovecha este plan y gestiona hasta {viewPlan.activos} activos
                 al mes por tan solo
-                <span className="font-bold"> {viewPlan.precio}</span>.
+                <span className="font-bold"> ${viewPlan.precio}</span>.
               </p>
               <ul className="pl-6 space-y-2 text-gray-300 list-disc">
                 {baseFeatures.map((feature, index) => (
