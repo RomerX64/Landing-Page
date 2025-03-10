@@ -5,6 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import { SubscriptionStatus } from '../User/Subscripcion.entity';
 import { ContactMessage } from './dto/contact.message';
 import { ErrorHandler } from 'src/Utils/Error.Handler';
+import { AccessData } from './dto/acces.service.dto';
 
 @Injectable()
 export class MailService {
@@ -544,6 +545,67 @@ export class MailService {
             <p>© 2025 Assetly. Todos los derechos reservados.</p>
           </div>
         </div>`,
+    };
+
+    try {
+      await this.transporter.sendMail(mailOptions);
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+  /**
+   * Envía un correo con los datos de acceso al servicio después de activar la suscripción
+   * @param email Dirección de correo del usuario
+   * @param serviceUrl URL del servicio
+   * @param username Nombre de usuario
+   * @param password Contraseña de acceso
+   */
+  async sendServiceAccessCredentials({
+    email,
+    serviceUrl,
+    username,
+    password,
+  }: AccessData): Promise<void> {
+    // Crear una versión oculta de la contraseña (ej: *******)
+    const hiddenPassword = '*'.repeat(password.length);
+
+    const mailOptions = {
+      from: this.configService.get<string>('SMTP_USER'),
+      to: email,
+      subject: 'Datos de Acceso a tu Servicio - Assetly',
+      html: `
+    <div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif; background-color: #030712; border-radius: 10px">
+      <div style="text-align: center; padding: 20px; background-color: #4f46e5; color: white; border-radius: 8px 8px 0px 0px">
+        <h1 style="margin: 0; font-size: 28px; font-weight: 600;">Assetly</h1>
+        <p style="margin: 0; font-size: 20px; font-weight: 600;">¡Tu Suscripción está Activada!</p>
+      </div>
+      <div style="padding: 20px; background-color: #111827; color: #ffffff; font-size: 16px;">
+        <p>Hola,</p>
+        <p>Nos complace informarte que tu suscripción ha sido <strong>activada con éxito</strong>.</p>
+        <p>A continuación, encontrarás los datos de acceso a tu servicio:</p>
+        
+        <div style="background-color: #1f2937; padding: 15px; border-radius: 5px; margin: 15px 0;">
+          <p style="margin: 5px 0;"><strong>URL del Servicio:</strong> <a href="${serviceUrl}" style="color: #6366f1; text-decoration: none;">${serviceUrl}</a></p>
+          <p style="margin: 5px 0;"><strong>Nombre de Usuario:</strong> ${username}</p>
+          <p style="margin: 5px 0;"><strong>Contraseña:</strong> ${password}</p>
+        </div>
+        
+        <p><strong>¡Importante!</strong> Por seguridad, te recomendamos cambiar tu contraseña tan pronto como accedas al servicio.</p>
+        
+        <div style="text-align: center; margin: 20px 0">
+          <a href="${serviceUrl}" style="padding: 12px 24px; background-color: #6366f1; color: white; text-decoration: none; border-radius: 5px; font-weight: 500;">
+            Acceder al Servicio →
+          </a>
+        </div>
+        
+        <p>Si tienes problemas para acceder o cualquier consulta, no dudes en contactarnos.</p>
+        <p>¡Gracias por confiar en Assetly!</p>
+      </div>
+      <div style="text-align: center; padding: 10px; background-color: #1f2937; color: white; font-size: 14px; border-radius: 0px 0px 8px 8px">
+        <p>© 2025 Assetly. Todos los derechos reservados.</p>
+        <p style="font-size: 12px; color: #9CA3AF; margin-top: 5px;">Este correo contiene información confidencial. No lo reenvíes.</p>
+      </div>
+    </div>`,
     };
 
     try {

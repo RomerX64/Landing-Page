@@ -56,7 +56,6 @@ interface AdminProviderProps {
 }
 
 export const AdminProvider = ({ children }: AdminProviderProps) => {
-
   const getUsers = async (): Promise<IUser[]> => {
     const cached = localStorage.getItem("admin_users");
     if (cached) {
@@ -69,7 +68,7 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
     localStorage.setItem("admin_users", JSON.stringify(data.data));
     return data.data;
   };
-  
+
   const getUsersSubscribed = async (): Promise<IUser[]> => {
     const cached = localStorage.getItem("admin_usersSubscribed");
     if (cached) {
@@ -184,7 +183,7 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
     subscriptionId: string
   ): Promise<ISubscripcion> => {
     const { data, error } = await handleAsync(
-      api.get(`/admin/subscriptions/${subscriptionId}`)
+      api.get(`/admin/subscription/${subscriptionId}`)
     );
     if (error || !data) {
       throw new Error(error?.message || "Error al obtener suscripción.");
@@ -197,7 +196,7 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
     status: ISubscripcion["status"]
   ): Promise<ISubscripcion> => {
     const { data, error } = await handleAsync(
-      api.put(`/admin/subscriptions/${subscriptionId}/status`, { status })
+      api.put(`/admin/subscription/${subscriptionId}/status`, { status })
     );
     if (error || !data) {
       throw new Error(
@@ -213,7 +212,7 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
     reason: string
   ): Promise<ISubscripcion> => {
     const { data, error } = await handleAsync(
-      api.put(`/admin/subscriptions/${subscriptionId}/cancel`, { reason })
+      api.put(`/admin/subscription/${subscriptionId}/cancel`, { reason })
     );
     if (error || !data) {
       throw new Error(error?.message || "Error al cancelar suscripción.");

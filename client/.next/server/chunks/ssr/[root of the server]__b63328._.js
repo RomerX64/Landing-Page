@@ -875,14 +875,14 @@ const AdminProvider = ({ children })=>{
         return data.data;
     };
     const getSubscriptionById = async (subscriptionId)=>{
-        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get(`/admin/subscriptions/${subscriptionId}`));
+        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get(`/admin/subscription/${subscriptionId}`));
         if (error || !data) {
             throw new Error(error?.message || "Error al obtener suscripción.");
         }
         return data.data;
     };
     const updateSubscriptionStatus = async (subscriptionId, status)=>{
-        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].put(`/admin/subscriptions/${subscriptionId}/status`, {
+        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].put(`/admin/subscription/${subscriptionId}/status`, {
             status
         }));
         if (error || !data) {
@@ -892,7 +892,7 @@ const AdminProvider = ({ children })=>{
         return data.data;
     };
     const cancelSubscription = async (subscriptionId, reason)=>{
-        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].put(`/admin/subscriptions/${subscriptionId}/cancel`, {
+        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].put(`/admin/subscription/${subscriptionId}/cancel`, {
             reason
         }));
         if (error || !data) {
@@ -921,7 +921,7 @@ const AdminProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/context/Administracion.context.tsx",
-        lineNumber: 242,
+        lineNumber: 241,
         columnNumber: 5
     }, this);
 };

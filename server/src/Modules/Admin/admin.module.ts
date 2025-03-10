@@ -8,18 +8,17 @@ import { UserModule } from '../User/users.module';
 import { SuscribeModule } from '../Suscribe/suscriber.module';
 import { MercadoPagoService } from './mp.service';
 import { AdminController } from './admin.controller';
+import { MailModule } from '../Mail/mail.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([User, Subscripcion, Plan]),
     forwardRef(() => UserModule),
     forwardRef(() => SuscribeModule),
+    forwardRef(() => MailModule),
   ],
-  providers: [
-    AdminService,
-    MercadoPagoService, 
-  ],
-  controllers:[AdminController],
+  providers: [AdminService, MercadoPagoService],
+  controllers: [AdminController],
   exports: [AdminService, MercadoPagoService],
 })
 export class AdminModule {}

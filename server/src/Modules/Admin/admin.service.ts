@@ -15,6 +15,7 @@ import { MercadoPagoService } from './mp.service';
 import { ErrorHandler } from 'src/Utils/Error.Handler';
 import { updateUserDto } from '../User/Dto/updateUser.dto';
 import { CreatePlanDto, UpdatePlanDto } from './dto/plan.dto';
+import { MailService } from '../Mail/mail.service';
 
 @Injectable()
 export class AdminService {
@@ -27,6 +28,8 @@ export class AdminService {
     private readonly planRepository: Repository<Plan>,
     @Inject(forwardRef(() => UserService))
     private readonly userService: UserService,
+    @Inject(forwardRef(() => MailService))
+    private readonly mailService: MailService,
     @Inject(forwardRef(() => SubscriptionsService))
     private readonly subService: SubscriptionsService,
     private readonly mercadoPagoService: MercadoPagoService,
@@ -193,8 +196,15 @@ export class AdminService {
     status: SubscriptionStatus,
   ): Promise<Subscripcion> {
     try {
-      await this.subRepository.update(subscriptionId, { status });
-      return await this.getSubscriptionById(subscriptionId);
+      const subscription = await this.getSubscriptionById(subscriptionId);
+      subscription.status = status;
+      const sub = await this.subRepository.save(subscription);
+      await this.mailService.subscriptionStatusChange(
+        sub.user.email,
+        status,
+        sub.plan.name,
+      );
+      return sub;
     } catch (error) {
       throw ErrorHandler.handle(error);
     }

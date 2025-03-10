@@ -236,6 +236,8 @@ const SuscripcionesTab = ({ getAllSubscriptions, updateSubscriptionStatus, cance
     };
     const handleActivate = async (id)=>{
         try {
+            console.log(id);
+            console.log(__TURBOPACK__imported__module__$5b$project$5d2f$interfaces$2f$Subscripcion$2e$interface$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SubscriptionStatus"].ACTIVE);
             await updateSubscriptionStatus(id, __TURBOPACK__imported__module__$5b$project$5d2f$interfaces$2f$Subscripcion$2e$interface$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SubscriptionStatus"].ACTIVE);
             fetchSubscriptions();
         } catch (error) {
@@ -306,7 +308,7 @@ const SuscripcionesTab = ({ getAllSubscriptions, updateSubscriptionStatus, cance
                         className: "flex-1 px-4 py-2 text-white bg-gray-700 rounded-lg max-h-10"
                     }, void 0, false, {
                         fileName: "[project]/components/sub.tab.tsx",
-                        lineNumber: 138,
+                        lineNumber: 140,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -317,18 +319,18 @@ const SuscripcionesTab = ({ getAllSubscriptions, updateSubscriptionStatus, cance
                                 children: status
                             }, status, false, {
                                 fileName: "[project]/components/sub.tab.tsx",
-                                lineNumber: 147,
+                                lineNumber: 149,
                                 columnNumber: 13
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/components/sub.tab.tsx",
-                        lineNumber: 145,
+                        lineNumber: 147,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/sub.tab.tsx",
-                lineNumber: 137,
+                lineNumber: 139,
                 columnNumber: 7
             }, this),
             loading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -337,12 +339,12 @@ const SuscripcionesTab = ({ getAllSubscriptions, updateSubscriptionStatus, cance
                     className: "w-8 h-8 border-4 rounded-full border-t-indigo-600 animate-spin"
                 }, void 0, false, {
                     fileName: "[project]/components/sub.tab.tsx",
-                    lineNumber: 164,
+                    lineNumber: 166,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/sub.tab.tsx",
-                lineNumber: 163,
+                lineNumber: 165,
                 columnNumber: 9
             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3",
@@ -357,7 +359,7 @@ const SuscripcionesTab = ({ getAllSubscriptions, updateSubscriptionStatus, cance
                                         children: sub.id
                                     }, void 0, false, {
                                         fileName: "[project]/components/sub.tab.tsx",
-                                        lineNumber: 172,
+                                        lineNumber: 174,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -365,13 +367,13 @@ const SuscripcionesTab = ({ getAllSubscriptions, updateSubscriptionStatus, cance
                                         children: sub.status
                                     }, void 0, false, {
                                         fileName: "[project]/components/sub.tab.tsx",
-                                        lineNumber: 175,
+                                        lineNumber: 177,
                                         columnNumber: 19
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/sub.tab.tsx",
-                                lineNumber: 171,
+                                lineNumber: 173,
                                 columnNumber: 17
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -385,7 +387,7 @@ const SuscripcionesTab = ({ getAllSubscriptions, updateSubscriptionStatus, cance
                                                 children: "MP:"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/sub.tab.tsx",
-                                                lineNumber: 186,
+                                                lineNumber: 188,
                                                 columnNumber: 23
                                             }, this),
                                             " ",
@@ -394,13 +396,13 @@ const SuscripcionesTab = ({ getAllSubscriptions, updateSubscriptionStatus, cance
                                                 children: sub.mercadopagoSubscriptionId
                                             }, void 0, false, {
                                                 fileName: "[project]/components/sub.tab.tsx",
-                                                lineNumber: 187,
+                                                lineNumber: 189,
                                                 columnNumber: 23
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/sub.tab.tsx",
-                                        lineNumber: 185,
+                                        lineNumber: 187,
                                         columnNumber: 21
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -411,7 +413,7 @@ const SuscripcionesTab = ({ getAllSubscriptions, updateSubscriptionStatus, cance
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/sub.tab.tsx",
-                                        lineNumber: 192,
+                                        lineNumber: 194,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -422,7 +424,7 @@ const SuscripcionesTab = ({ getAllSubscriptions, updateSubscriptionStatus, cance
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/sub.tab.tsx",
-                                        lineNumber: 193,
+                                        lineNumber: 195,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -433,7 +435,7 @@ const SuscripcionesTab = ({ getAllSubscriptions, updateSubscriptionStatus, cance
                                                 children: "Plan:"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/sub.tab.tsx",
-                                                lineNumber: 197,
+                                                lineNumber: 199,
                                                 columnNumber: 21
                                             }, this),
                                             " ",
@@ -441,7 +443,7 @@ const SuscripcionesTab = ({ getAllSubscriptions, updateSubscriptionStatus, cance
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/sub.tab.tsx",
-                                        lineNumber: 196,
+                                        lineNumber: 198,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -452,7 +454,7 @@ const SuscripcionesTab = ({ getAllSubscriptions, updateSubscriptionStatus, cance
                                                 children: "Inicio:"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/sub.tab.tsx",
-                                                lineNumber: 200,
+                                                lineNumber: 202,
                                                 columnNumber: 21
                                             }, this),
                                             " ",
@@ -460,7 +462,7 @@ const SuscripcionesTab = ({ getAllSubscriptions, updateSubscriptionStatus, cance
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/sub.tab.tsx",
-                                        lineNumber: 199,
+                                        lineNumber: 201,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -471,7 +473,7 @@ const SuscripcionesTab = ({ getAllSubscriptions, updateSubscriptionStatus, cance
                                                 children: "Último pago:"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/sub.tab.tsx",
-                                                lineNumber: 204,
+                                                lineNumber: 206,
                                                 columnNumber: 21
                                             }, this),
                                             " ",
@@ -479,7 +481,7 @@ const SuscripcionesTab = ({ getAllSubscriptions, updateSubscriptionStatus, cance
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/sub.tab.tsx",
-                                        lineNumber: 203,
+                                        lineNumber: 205,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -490,7 +492,7 @@ const SuscripcionesTab = ({ getAllSubscriptions, updateSubscriptionStatus, cance
                                                 children: "Vencimiento:"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/sub.tab.tsx",
-                                                lineNumber: 208,
+                                                lineNumber: 210,
                                                 columnNumber: 21
                                             }, this),
                                             " ",
@@ -498,7 +500,7 @@ const SuscripcionesTab = ({ getAllSubscriptions, updateSubscriptionStatus, cance
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/sub.tab.tsx",
-                                        lineNumber: 207,
+                                        lineNumber: 209,
                                         columnNumber: 19
                                     }, this),
                                     sub.cancellationDate && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -509,7 +511,7 @@ const SuscripcionesTab = ({ getAllSubscriptions, updateSubscriptionStatus, cance
                                                 children: "Cancelada:"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/sub.tab.tsx",
-                                                lineNumber: 214,
+                                                lineNumber: 216,
                                                 columnNumber: 23
                                             }, this),
                                             " ",
@@ -517,13 +519,13 @@ const SuscripcionesTab = ({ getAllSubscriptions, updateSubscriptionStatus, cance
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/sub.tab.tsx",
-                                        lineNumber: 213,
+                                        lineNumber: 215,
                                         columnNumber: 21
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/sub.tab.tsx",
-                                lineNumber: 183,
+                                lineNumber: 185,
                                 columnNumber: 17
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -535,7 +537,7 @@ const SuscripcionesTab = ({ getAllSubscriptions, updateSubscriptionStatus, cance
                                         children: "Pausar"
                                     }, void 0, false, {
                                         fileName: "[project]/components/sub.tab.tsx",
-                                        lineNumber: 221,
+                                        lineNumber: 223,
                                         columnNumber: 21
                                     }, this),
                                     sub.status === __TURBOPACK__imported__module__$5b$project$5d2f$interfaces$2f$Subscripcion$2e$interface$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SubscriptionStatus"].PAUSED && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -544,7 +546,7 @@ const SuscripcionesTab = ({ getAllSubscriptions, updateSubscriptionStatus, cance
                                         children: "Activar"
                                     }, void 0, false, {
                                         fileName: "[project]/components/sub.tab.tsx",
-                                        lineNumber: 229,
+                                        lineNumber: 231,
                                         columnNumber: 21
                                     }, this),
                                     sub.status === __TURBOPACK__imported__module__$5b$project$5d2f$interfaces$2f$Subscripcion$2e$interface$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SubscriptionStatus"].PENDING && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
@@ -555,7 +557,7 @@ const SuscripcionesTab = ({ getAllSubscriptions, updateSubscriptionStatus, cance
                                                 children: "Aprobar"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/sub.tab.tsx",
-                                                lineNumber: 238,
+                                                lineNumber: 240,
                                                 columnNumber: 23
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -564,7 +566,7 @@ const SuscripcionesTab = ({ getAllSubscriptions, updateSubscriptionStatus, cance
                                                 children: "Cancelar"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/sub.tab.tsx",
-                                                lineNumber: 244,
+                                                lineNumber: 246,
                                                 columnNumber: 23
                                             }, this)
                                         ]
@@ -575,37 +577,37 @@ const SuscripcionesTab = ({ getAllSubscriptions, updateSubscriptionStatus, cance
                                         children: "Cancelar"
                                     }, void 0, false, {
                                         fileName: "[project]/components/sub.tab.tsx",
-                                        lineNumber: 254,
+                                        lineNumber: 256,
                                         columnNumber: 21
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/sub.tab.tsx",
-                                lineNumber: 219,
+                                lineNumber: 221,
                                 columnNumber: 17
                             }, this)
                         ]
                     }, sub.id, true, {
                         fileName: "[project]/components/sub.tab.tsx",
-                        lineNumber: 170,
+                        lineNumber: 172,
                         columnNumber: 15
                     }, this)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "text-center text-gray-300 col-span-full",
                     children: "No se encontraron suscripciones."
                 }, void 0, false, {
                     fileName: "[project]/components/sub.tab.tsx",
-                    lineNumber: 265,
+                    lineNumber: 267,
                     columnNumber: 13
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/sub.tab.tsx",
-                lineNumber: 167,
+                lineNumber: 169,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/sub.tab.tsx",
-        lineNumber: 135,
+        lineNumber: 137,
         columnNumber: 5
     }, this);
 };

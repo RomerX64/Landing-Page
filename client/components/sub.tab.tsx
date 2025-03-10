@@ -60,6 +60,8 @@ const SuscripcionesTab: React.FC<{
 
   const handleActivate = async (id: string) => {
     try {
+      console.log(id);
+      console.log(SubscriptionStatus.ACTIVE);
       await updateSubscriptionStatus(id, SubscriptionStatus.ACTIVE);
       fetchSubscriptions();
     } catch (error) {
