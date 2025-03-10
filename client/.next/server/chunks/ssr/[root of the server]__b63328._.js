@@ -775,16 +775,17 @@ const defaultContext = {
 const AdminContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["createContext"])(defaultContext);
 const AdminProvider = ({ children })=>{
     const getUsers = async ()=>{
-        const cached = localStorage.getItem("admin_users");
-        if (cached) {
-            return JSON.parse(cached);
-        }
+        const cachedStr = localStorage.getItem("admin_users");
+        const cached = cachedStr ? JSON.parse(cachedStr) : [];
         const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get("/admin/users"));
         if (error || !data) {
             throw new Error(error?.message || "Error al obtener los usuarios.");
         }
-        localStorage.setItem("admin_users", JSON.stringify(data.data));
-        return data.data;
+        if (cached.length < data.data.length) {
+            localStorage.setItem("admin_users", JSON.stringify(data.data));
+            return data.data;
+        }
+        return cached;
     };
     const getUsersSubscribed = async ()=>{
         const cached = localStorage.getItem("admin_usersSubscribed");
@@ -863,16 +864,17 @@ const AdminProvider = ({ children })=>{
     };
     // Funciones de Suscripciones
     const getAllSubscriptions = async ()=>{
-        const cached = localStorage.getItem("admin_subscriptions");
-        if (cached) {
-            return JSON.parse(cached);
-        }
+        const cachedStr = localStorage.getItem("admin_subscriptions");
+        const cached = cachedStr ? JSON.parse(cachedStr) : [];
         const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get("/admin/subscriptions"));
         if (error || !data) {
             throw new Error(error?.message || "Error al obtener suscripciones.");
         }
-        localStorage.setItem("admin_subscriptions", JSON.stringify(data.data));
-        return data.data;
+        if (cached.length < data.data.length) {
+            localStorage.setItem("admin_subscriptions", JSON.stringify(data.data));
+            return data.data;
+        }
+        return cached;
     };
     const getSubscriptionById = async (subscriptionId)=>{
         const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$Api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get(`/admin/subscription/${subscriptionId}`));
@@ -921,7 +923,7 @@ const AdminProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/context/Administracion.context.tsx",
-        lineNumber: 241,
+        lineNumber: 247,
         columnNumber: 5
     }, this);
 };
@@ -1105,22 +1107,17 @@ const SubscriptionProvider = ({ children })=>{
     };
     // Efecto para manejar cambios en el usuario
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        if (!user) {
-            setSub(null);
-        } else {
-            // Si hay un usuario, intentar cargar su suscripción específica
-            const storedSub = localStorage.getItem(`subscripcion_${user.id}`);
-            if (storedSub) {
-                try {
-                    setSub(JSON.parse(storedSub));
-                } catch (e) {
-                    console.error("Error al parsear suscripción del localStorage:", e);
-                    setSub(null);
-                }
-            } else {
-                // Si no hay suscripción en localStorage, intentar obtenerla del servidor
-                fetchSub();
+        setSub(null);
+        if (!user) return;
+        const storedSub = localStorage.getItem(`subscripcion_${user.id}`);
+        if (storedSub) {
+            try {
+                setSub(JSON.parse(storedSub));
+            } catch (e) {
+                console.error("Error al parsear suscripción del localStorage:", e);
             }
+        } else {
+            fetchSub();
         }
     }, [
         user
@@ -1143,7 +1140,7 @@ const SubscriptionProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/context/Suscribe.context.tsx",
-        lineNumber: 262,
+        lineNumber: 258,
         columnNumber: 5
     }, this);
 };

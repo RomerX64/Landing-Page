@@ -57,16 +57,19 @@ interface AdminProviderProps {
 
 export const AdminProvider = ({ children }: AdminProviderProps) => {
   const getUsers = async (): Promise<IUser[]> => {
-    const cached = localStorage.getItem("admin_users");
-    if (cached) {
-      return JSON.parse(cached);
-    }
+    const cachedStr = localStorage.getItem("admin_users");
+    const cached: IUser[] = cachedStr ? JSON.parse(cachedStr) : [];
+
     const { data, error } = await handleAsync(api.get("/admin/users"));
     if (error || !data) {
       throw new Error(error?.message || "Error al obtener los usuarios.");
     }
-    localStorage.setItem("admin_users", JSON.stringify(data.data));
-    return data.data;
+
+    if (cached.length < data.data.length) {
+      localStorage.setItem("admin_users", JSON.stringify(data.data));
+      return data.data;
+    }
+    return cached;
   };
 
   const getUsersSubscribed = async (): Promise<IUser[]> => {
@@ -167,16 +170,19 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
 
   // Funciones de Suscripciones
   const getAllSubscriptions = async (): Promise<ISubscripcion[]> => {
-    const cached = localStorage.getItem("admin_subscriptions");
-    if (cached) {
-      return JSON.parse(cached);
-    }
+    const cachedStr = localStorage.getItem("admin_subscriptions");
+    const cached: ISubscripcion[] = cachedStr ? JSON.parse(cachedStr) : [];
+
     const { data, error } = await handleAsync(api.get("/admin/subscriptions"));
     if (error || !data) {
       throw new Error(error?.message || "Error al obtener suscripciones.");
     }
-    localStorage.setItem("admin_subscriptions", JSON.stringify(data.data));
-    return data.data;
+
+    if (cached.length < data.data.length) {
+      localStorage.setItem("admin_subscriptions", JSON.stringify(data.data));
+      return data.data;
+    }
+    return cached;
   };
 
   const getSubscriptionById = async (

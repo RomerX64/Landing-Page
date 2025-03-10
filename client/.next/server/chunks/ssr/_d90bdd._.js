@@ -724,9 +724,7 @@ const UsuariosTab = ({ getUsers, planes })=>{
             }
         };
         fetchUsers();
-    }, [
-        getUsers
-    ]);
+    }, []);
     const filteredUsers = allUsers.filter((user)=>{
         const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase()) || user.email.toLowerCase().includes(searchTerm.toLowerCase()) || user.id.toLowerCase().includes(searchTerm.toLowerCase());
         let matchesPlan = true;

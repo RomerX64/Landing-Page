@@ -227,22 +227,18 @@ export const SubscriptionProvider = ({
 
   // Efecto para manejar cambios en el usuario
   useEffect(() => {
-    if (!user) {
-      setSub(null);
-    } else {
-      // Si hay un usuario, intentar cargar su suscripción específica
-      const storedSub = localStorage.getItem(`subscripcion_${user.id}`);
-      if (storedSub) {
-        try {
-          setSub(JSON.parse(storedSub));
-        } catch (e) {
-          console.error("Error al parsear suscripción del localStorage:", e);
-          setSub(null);
-        }
-      } else {
-        // Si no hay suscripción en localStorage, intentar obtenerla del servidor
-        fetchSub();
+    setSub(null);
+    if (!user) return;
+
+    const storedSub = localStorage.getItem(`subscripcion_${user.id}`);
+    if (storedSub) {
+      try {
+        setSub(JSON.parse(storedSub));
+      } catch (e) {
+        console.error("Error al parsear suscripción del localStorage:", e);
       }
+    } else {
+      fetchSub();
     }
   }, [user]);
 

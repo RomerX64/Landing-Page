@@ -26,7 +26,7 @@ const UsuariosTab: React.FC<{
       }
     };
     fetchUsers();
-  }, [getUsers]);
+  }, []);
 
   const filteredUsers = allUsers.filter((user) => {
     const matchesSearch =
