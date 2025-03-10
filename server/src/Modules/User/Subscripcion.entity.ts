@@ -78,6 +78,10 @@ export class Subscripcion {
   @Column({ nullable: true })
   paymentMethodId: string; // Añadir el campo paymentMethodId
 
-  @OneToOne(() => Database, (database) => database.subscripcion)
+  @OneToOne(() => Database, (database) => database.subscripcion, {
+    cascade: true, 
+    onDelete: 'SET NULL', 
+    nullable: true,
+  })
   database: Database;
 }

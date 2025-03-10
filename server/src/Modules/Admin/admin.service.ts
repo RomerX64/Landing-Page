@@ -43,7 +43,11 @@ export class AdminService {
   async getUsers(): Promise<User[]> {
     try {
       return await this.userRepository.find({
-        relations: ['subscripcion', 'subscripcion.plan'],
+        relations: [
+          'subscripcion',
+          'subscripcion.plan',
+          'subscripcion.database',
+        ],
       });
     } catch (error) {
       throw ErrorHandler.handle(error);
@@ -54,7 +58,11 @@ export class AdminService {
     try {
       const user = await this.userRepository.findOne({
         where: { id: userId },
-        relations: ['subscripcion', 'subscripcion.plan'],
+        relations: [
+          'subscripcion',
+          'subscripcion.plan',
+          'subscripcion.database',
+        ],
       });
       if (!user) throw new NotFoundException('Usuario no encontrado');
       return user;
@@ -186,7 +194,7 @@ export class AdminService {
     try {
       const sub = await this.subRepository.findOne({
         where: { id: subscriptionId },
-        relations: ['user', 'plan'],
+        relations: ['plan', 'database', 'user'],
       });
       if (!sub) throw new NotFoundException('Suscripción no encontrada');
       return sub;
@@ -263,7 +271,7 @@ export class AdminService {
     try {
       // Crear la entidad de base de datos
       const database = this.databaseRepository.create({
-        subscripcion,
+        subscripcion: subscripcion,
         DB_NAME: dbData.dbName,
         DB_HOST: dbData.dbHost,
         DB_PORT: dbData.dbPort,
@@ -277,9 +285,9 @@ export class AdminService {
 
       // Enviar correo electrónico de confirmación
       await this.mailService.sendServiceAccessCredentials({
-        email: subscripcion.user.email,
-        username: dbData.dbUsername,
-        password: dbData.dbPassword,
+        email: dbData.email,
+        username: dbData.username,
+        password: dbData.password,
         url: dbData.url,
       });
 

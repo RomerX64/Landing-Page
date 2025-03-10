@@ -98,7 +98,7 @@ export class SubscriptionsService {
         const response = await preApproval.create({
           body: {
             payer_email: createSubscriptionDto.userEmail,
-            reason: planResponse.reason,
+            reason: `Suscripcion a Assetly - ${planResponse.reason}`,
             card_token_id: createSubscriptionDto.paymentMethodToken,
             status: 'pending',
             preapproval_plan_id: planResponse.id,

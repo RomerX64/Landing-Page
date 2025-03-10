@@ -222,7 +222,7 @@ export class UserService {
       const user: User = await this.getUserById(userId);
       const sub: Subscripcion = await this.subsRepository.findOne({
         where: { id: user.subscripcion?.id },
-        relations: ['plan'],
+        relations: ['plan', 'database'],
       });
       if (!sub) return null;
       return sub;

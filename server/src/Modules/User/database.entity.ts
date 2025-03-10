@@ -15,7 +15,9 @@ export class Database {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @OneToOne(() => Subscripcion, (subscripcion) => subscripcion.database)
+  @OneToOne(() => Subscripcion, (subscripcion) => subscripcion.database, {
+    nullable: true,
+  })
   @JoinColumn()
   subscripcion: Subscripcion;
 
