@@ -26,41 +26,69 @@ export class UsersPreLoad implements OnApplicationBootstrap {
       telefono: '+54351532645',
       name: 'Romer',
     },
+    {
+      email: 'tomiromera2903@gmail.com',
+      company: 'Assetly',
+      password: '',
+      telefono: '',
+      name: 'Tomas Romera',
+    },
+    {
+      email: 'assetlysuport@gmail.com',
+      company: 'Assetly',
+      password: '',
+      telefono: '',
+      name: 'Assetly',
+    },
   ];
 
-  // Planes predefinidos por si falla la carga desde Mercado Pago
   defaultPlans: Partial<Plan>[] = [
     {
       name: 'Free Pass',
-      precio: 0,
-      descripcion: 'Plan gratuito básico',
       activos: '300',
-      mercadopagoPlanId: 'free_pass',
     },
     {
       name: 'AssetsOK',
-      precio: 80,
-      descripcion: 'Plan estándar',
       activos: '500',
-      mercadopagoPlanId: 'assets_ok',
     },
     {
       name: 'UltraAssets',
-      precio: 200,
-      descripcion: 'Plan premium',
       activos: '2500',
-      mercadopagoPlanId: 'ultra_assets',
+    },
+    {
+      name: 'MegaAssets',
+      activos: '10000',
+    },
+    {
+      name: 'Unlimit',
+      activos: '50000',
+    },
+    {
+      name: 'AssetsGod',
+      activos: '50000',
     },
   ];
 
   async onApplicationBootstrap() {
+    this.logger.log('Starting application bootstrap');
     await this.preLoadUsers();
     await this.preLoadPlans();
+    this.logger.log('Finished application bootstrap');
   }
 
   async preLoadUsers() {
     try {
+      this.logger.log('Starting user preload');
+
       for (const userData of this.users) {
+        // Skip users with empty passwords
+        if (!userData.password) {
+          this.logger.warn(
+            `Skipping user ${userData.email} due to empty password`,
+          );
+          continue;
+        }
+
         let existingUser = await this.userRepository.findOne({
           where: { email: userData.email },
         });
@@ -73,79 +101,128 @@ export class UsersPreLoad implements OnApplicationBootstrap {
           });
           user.isAdmin = true;
           await this.userRepository.save(user);
+          this.logger.log(`Created new admin user: ${userData.email}`);
         } else {
-          console.log(`El usuario con correo ${userData.email} ya existe`);
+          this.logger.log(`Updating existing user: ${userData.email}`);
           const hashedPassword = await bcrypt.hash(userData.password, 10);
           existingUser.password = hashedPassword;
           await this.userRepository.save(existingUser);
         }
       }
-      console.log('Usuarios cargados con éxito');
+
+      this.logger.log('Users preloaded successfully');
     } catch (error) {
-      console.error('Error al cargar usuarios', error);
+      this.logger.error('Error loading users', error);
       throw ErrorHandler.handle(error);
     }
   }
 
   async preLoadPlans() {
     try {
+      this.logger.log('Starting plans preload');
       let plans = [];
+
       try {
-        // Intenta cargar planes desde Mercado Pago
-        plans = await this.mercadoPagoService.fetchPlans();
-        console.log(`Cargados ${plans.length} planes desde Mercado Pago`);
+        // Attempt to load plans from Mercado Pago
+        const mpPlans = await this.mercadoPagoService.fetchPlans();
+        this.logger.log(`Loaded ${mpPlans.length} plans from Mercado Pago`);
+
+        // Transform Mercado Pago data to the expected format
+        plans = mpPlans.map((mpPlan) => {
+          // Find the corresponding default plan by name
+          const defaultPlan = this.defaultPlans.find(
+            (p) => p.name === mpPlan.name,
+          );
+
+          return {
+            name: mpPlan.name,
+            mercadopagoPlanId: mpPlan.mercadopagoPlanId,
+            precio: mpPlan.price,
+            descripcion: mpPlan.description,
+            activos: defaultPlan?.activos || '500', // Use assets from defaultPlan or fallback
+            activo: true, // All MP plans should be active
+            popular: mpPlan.name === 'UltraAssets', // Only UltraAssets is popular
+            imagen: 'default-plan-image',
+            alt: `Plan ${mpPlan.name}`,
+            fechaActualizacion: new Date(),
+          };
+        });
       } catch (mercadoPagoError) {
-        // Si falla, usa planes predefinidos
-        console.warn(
-          'No se pudieron cargar planes desde Mercado Pago, usando planes predefinidos',
+        // If MP fails, use predefined plans
+        this.logger.warn(
+          'Failed to load plans from Mercado Pago, using default plans',
+          mercadoPagoError,
         );
-        plans = this.defaultPlans;
+
+        // Add default values to the plans
+        plans = this.defaultPlans.map((plan) => ({
+          ...plan,
+          precio: 0, // Default price
+          descripcion: `Plan ${plan.name}`, // Default description
+          popular: plan.name === 'UltraAssets', // Only UltraAssets is popular
+          activo: true,
+          imagen: 'default-plan-image',
+          alt: `Plan ${plan.name}`,
+          fechaActualizacion: new Date(),
+        }));
       }
 
       for (const planData of plans) {
-        // Buscamos el plan por su ID de Mercado Pago o nombre
+        // Search for the plan by Mercado Pago ID or name
         const existingPlan = await this.planRepository.findOne({
           where: [
-            { mercadopagoPlanId: planData.id || planData.mercadopagoPlanId },
+            ...(planData.mercadopagoPlanId
+              ? [{ mercadopagoPlanId: planData.mercadopagoPlanId }]
+              : []),
             { name: planData.name },
           ],
         });
 
         if (!existingPlan) {
-          // Si el plan no existe, se crea uno nuevo
+          // If the plan doesn't exist, create a new one
           const newPlan = this.planRepository.create({
             name: planData.name,
-            mercadopagoPlanId: planData.id,
-            precio: planData.price || planData.precio,
-            descripcion:
-              planData.description ||
-              planData.descripcion ||
-              `Plan ${planData.name}`,
-            activo: true,
-            imagen: 'default-plan-image',
-            alt: `Plan ${planData.name}`,
+            mercadopagoPlanId: planData.mercadopagoPlanId,
+            precio: planData.precio || 0,
+            descripcion: planData.descripcion || `Plan ${planData.name}`,
+            activos: planData.activos,
+            activo: true, // All new plans should be active
+            popular: planData.name === 'UltraAssets', // Only UltraAssets is popular
+            imagen: planData.imagen || 'default-plan-image',
+            alt: planData.alt || `Plan ${planData.name}`,
+            fechaActualizacion: new Date(),
           });
           await this.planRepository.save(newPlan);
-          console.log(`El plan con nombre ${newPlan.name} ha sido creado`);
+          this.logger.log(`Created new plan: ${newPlan.name}`);
         } else {
-          // Si el plan ya existe, actualizamos sus propiedades
+          // If the plan already exists, update its properties
           existingPlan.name = planData.name;
-          existingPlan.precio = planData.price || planData.precio;
-          (existingPlan.mercadopagoPlanId = planData.id),
-            (existingPlan.descripcion =
-              planData.description ||
-              planData.descripcion ||
-              existingPlan.descripcion);
+          existingPlan.precio = planData.precio ?? existingPlan.precio ?? 0;
+
+          if (planData.mercadopagoPlanId) {
+            existingPlan.mercadopagoPlanId = planData.mercadopagoPlanId;
+          }
+
+          existingPlan.descripcion =
+            planData.descripcion ||
+            existingPlan.descripcion ||
+            `Plan ${planData.name}`;
+          existingPlan.activos = planData.activos || existingPlan.activos;
+          existingPlan.popular = planData.name === 'UltraAssets'; // Only UltraAssets is popular
+          existingPlan.imagen =
+            planData.imagen || existingPlan.imagen || 'default-plan-image';
+          existingPlan.alt =
+            planData.alt || existingPlan.alt || `Plan ${planData.name}`;
           existingPlan.fechaActualizacion = new Date();
+
           await this.planRepository.save(existingPlan);
-          console.log(
-            `El plan con nombre ${existingPlan.name} ha sido actualizado`,
-          );
+          this.logger.log(`Updated existing plan: ${existingPlan.name}`);
         }
       }
-      console.log('Planes cargados y actualizados con éxito');
+
+      this.logger.log('Plans loaded and updated successfully');
     } catch (error) {
-      console.error('Error al cargar planes', error);
+      this.logger.error('Error loading plans', error);
       throw ErrorHandler.handle(error);
     }
   }
