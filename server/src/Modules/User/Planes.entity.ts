@@ -19,7 +19,7 @@ export class Plan {
 
   @Column({
     type: 'varchar',
-    nullable: false, 
+    nullable: false,
     transformer: {
       to: (value: number | string) => {
         return value !== null && value !== undefined
@@ -54,7 +54,7 @@ export class Plan {
   @Column({ default: false })
   popular: boolean;
 
-  @Column({ unique: true })
+  @Column({ unique: true, nullable: true })
   mercadopagoPlanId: string;
 
   @Column({

@@ -1,11 +1,1 @@
-{
-  "/(default)/page": "app/(default)/page.js",
-  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
-  "/(default)/plan/page": "app/(default)/plan/page.js",
-  "/_not-found/page": "app/_not-found/page.js",
-  "/(default)/contacto/page": "app/(default)/contacto/page.js",
-  "/(auth)/signin/page": "app/(auth)/signin/page.js",
-  "/(default)/profile/page": "app/(default)/profile/page.js",
-  "/(default)/administracion/page": "app/(default)/administracion/page.js",
-  "/(auth)/signup/page": "app/(auth)/signup/page.js"
-}
+{}
