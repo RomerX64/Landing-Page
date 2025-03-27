@@ -1,91 +1,110 @@
-﻿# Landing-Page Assetly
+# Assetly Landing Page
 
-Este es un proyecto que incluye tanto el cliente como el servidor. A continuación se detallan los pasos para iniciar y trabajar en el proyecto.
+## Descripción
 
-## Requisitos previos
+Proyecto de Landing Page desarrollado con tecnologías modernas, utilizando un skeleton inspirado en el [template Open de Cruip](https://github.com/cruip/open-react-template).
 
-- Tener [Node.js](https://nodejs.org/) instalado en tu máquina.
-- Tener [npm](https://www.npmjs.com/) instalado.
+## Requisitos Previos
 
-## Instalación
+- [Node.js](https://nodejs.org/) (20)
+- [npm](https://www.npmjs.com/)
 
-1. Clona este repositorio:
+## Configuración e Instalación
+
+1. Clona el repositorio:
 
    ```bash
-   git clone https://github.com/RomerX64/Landing-Page.git
+   git clone https://github.com/RomerX64/Landing-Page.git Assetly-LandingPage
    ```
 
 2. Navega al directorio del proyecto:
 
    ```bash
-   cd Landing-Page
+   cd Assetly-LandingPage
    ```
 
-3. Instala las dependencias tanto del cliente como del servidor:
+3. Instala las dependencias en cada carpeta:
 
    ```bash
+   # Instalar dependencias del backend
+   cd server
+   npm install
+
+   # Instalar dependencias del frontend
+   cd ../client
    npm install
    ```
 
-## Iniciar el Proyecto
+## Ejecución del Proyecto
 
-### Servidor
+### Configuración Importante
 
-Para iniciar el servidor, utiliza el siguiente comando:
+⚠️ **Orden de Inicio**:
+
+- **Primero debe iniciarse el Backend** escuchando en el puerto 3000
+- Luego se puede iniciar el Frontend
+
+### Backend
+
+Navega a la carpeta del servidor y ejecuta:
 
 ```bash
+cd server
 npm run start:dev
 ```
 
-### Cliente
+El servidor estará corriendo en `http://localhost:3000`
 
-Para iniciar la web, utiliza el siguiente comando:
+### Frontend
+
+En otra terminal, navega a la carpeta del cliente y ejecuta:
 
 ```bash
+cd client
 npm run dev
 ```
 
-Recuerda que el servidor debe estar en funcionamiento antes de iniciar el cliente, ya que el servidor escucha en el puerto 3000, utilizado por el cliente.
+La aplicación web estará disponible en `http://localhost:3001`
 
-## Trabajar en la Aplicación
+## Estructura del Proyecto
 
-El código principal se encuentra en el archivo `main`. Aquí es donde se debe realizar el trabajo de desarrollo.
+- `server/`: Código del servidor (NestJS)
+- `client/`: Código del cliente (React/Next.js)
+- `main.ts`: Archivo principal de configuración
 
-## Despliegue en Producción
+## Despliegue
 
-Una vez que los cambios estén listos y hayan sido subidos a la rama `main`, sigue estos pasos para llevarlos `Produccion`:
+### Ramas de Producción
 
-1. Cambia a la rama `prod-(front/back)` dependiendo el ambito si backend o frontend:
+Para desplegar cambios:
+
+1. Backend:
 
    ```bash
    git checkout prod-back
    git reset --hard origin/main
    git push origin prod-back --force
    git checkout main
-
    ```
 
-2. Para volver a la rama `main`, usa el siguiente comando:
-
+2. Frontend:
    ```bash
    git checkout prod-front
    git reset --hard origin/main
    git push origin prod-front --force
    git checkout main
-
    ```
 
 ## Contribuciones
 
-Si deseas contribuir a este proyecto, por favor realiza un **fork** y luego envía un **pull request**.
+Si deseas contribuir:
 
+1. Realiza un **fork** del repositorio
+2. Crea tu rama de features
+3. Envía un **pull request**
 
-<!-- Card
-5547 3000 1630 0199
-04/29    041
+## Tecnologías
 
-GONZALO EMANUEL AGUETTI
-
-39737674
-
-tomiromera2903mini@gmail.com -->
+- Backend: NestJS
+- Frontend: React / Next.js
+- Estilos: Tailwind CSS
