@@ -19,4 +19,5 @@ export interface IUserContextProps {
   ) => Promise<{ message: string; user: IUser }>;
   verifyEmail: (token: string) => Promise<{ message: string; user: IUser }>;
   initiatePasswordReset: (email: string) => Promise<{ message: string }>;
+  isLoading: boolean;
 }

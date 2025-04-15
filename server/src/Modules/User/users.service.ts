@@ -293,4 +293,10 @@ export class UserService {
       throw ErrorHandler.handle(error);
     }
   }
+
+  signUpGoogle():
+    | { user: User; token: string }
+    | PromiseLike<{ user: User; token: string }> {
+    throw new Error('Method not implemented.');
+  }
 }

@@ -87,6 +87,18 @@ export class UserController {
     }
   }
 
+  @Post('/crearUser/google')
+  @ApiOperation({
+    summary: 'Registrar usuario',
+    description: 'Registra a un usuario nuevo y envía un email de confirmación',
+  })
+  async signUpGoogle(): Promise<{ user: User; token: string }> {
+    try {
+      return await this.userService.signUpGoogle();
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
   @ApiBearerAuth()
   @Delete('/user')
   @UseGuards(AuthGuard)
