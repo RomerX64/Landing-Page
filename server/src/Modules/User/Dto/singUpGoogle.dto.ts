@@ -18,10 +18,6 @@ export class signUpGoogleDTO {
   email: string;
 
   @IsNotEmpty()
-  @IsNumber()
-  id: number;
-
-  @IsNotEmpty()
   @IsString()
   @MinLength(5)
   @IsStrongPassword()

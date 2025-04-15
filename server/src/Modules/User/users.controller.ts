@@ -22,6 +22,7 @@ import { signInGoogleDTO } from './Dto/singInGoogle.dto';
 import { signUp } from './Dto/singUp.dto';
 import { Subscripcion } from './Subscripcion.entity';
 import { get } from 'http';
+import { signUpGoogleDTO } from './dto/singUpGoogle.dto';
 
 @Controller('users')
 export class UserController {
@@ -92,9 +93,11 @@ export class UserController {
     summary: 'Registrar usuario',
     description: 'Registra a un usuario nuevo y envía un email de confirmación',
   })
-  async signUpGoogle(): Promise<{ user: User; token: string }> {
+  async createUserWithGoogle(
+    @Body() signUpGoogleDTO: signUpGoogleDTO,
+  ): Promise<{ user: User; token: string }> {
     try {
-      return await this.userService.signUpGoogle();
+      return await this.userService.createUserWithGoogle(signUpGoogleDTO);
     } catch (error) {
       throw ErrorHandler.handle(error);
     }

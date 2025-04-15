@@ -20,6 +20,7 @@ import { signIn } from './Dto/singIn.dto';
 import { signUp } from './Dto/singUp.dto';
 import { signInGoogleDTO } from './Dto/singInGoogle.dto';
 import { MailService } from '../Mail/mail.service';
+import { signUpGoogleDTO } from './dto/singUpGoogle.dto';
 
 @Injectable()
 export class UserService {
@@ -294,9 +295,35 @@ export class UserService {
     }
   }
 
-  signUpGoogle():
-    | { user: User; token: string }
-    | PromiseLike<{ user: User; token: string }> {
-    throw new Error('Method not implemented.');
+  async createUserWithGoogle({
+    name,
+    email,
+  }: signUpGoogleDTO): Promise<{ user: User; token: string }> {
+    try {
+      const existingUser = await this.userRepository.findOne({
+        where: { email: email },
+      });
+      if (existingUser) {
+        const token = this.jwtService.sign({
+          sub: existingUser.id,
+          id: existingUser.id,
+          email: existingUser.email,
+        });
+        return { user: existingUser, token };
+      }
+
+      const newUser = this.userRepository.create({ email, name });
+      const savedUser = await this.userRepository.save(newUser);
+
+      const userPayload = {
+        sub: savedUser.id,
+        id: savedUser.id,
+        email: savedUser.email,
+      };
+      const token = this.jwtService.sign(userPayload);
+      return { user: savedUser, token };
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
   }
 }
