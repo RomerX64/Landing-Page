@@ -20,7 +20,7 @@ import { signIn } from './Dto/singIn.dto';
 import { signUp } from './Dto/singUp.dto';
 import { signInGoogleDTO } from './Dto/singInGoogle.dto';
 import { MailService } from '../Mail/mail.service';
-import { signUpGoogleDTO } from './dto/signUpGoogle.dto';
+import { signUpGoogleDTO } from './dto/sign-up-google.dto';
 
 @Injectable()
 export class UserService {
