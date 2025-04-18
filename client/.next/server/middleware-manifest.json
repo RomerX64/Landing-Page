@@ -3,35 +3,34 @@
   "middleware": {
     "/": {
       "files": [
-        "server/edge/chunks/_d732ef._.js",
-        "server/edge/chunks/[root of the server]__70655b._.js",
-        "server/edge/chunks/edge-wrapper_734d15.js"
+        "server/edge-runtime-webpack.js",
+        "server/middleware.js"
       ],
       "name": "middleware",
       "page": "/",
       "matchers": [
         {
-          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/administracion(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?(\\\\.json)?[\\/#\\?]?$",
+          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/administracion(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?(\\.json)?[\\/#\\?]?$",
           "originalSource": "/administracion/:path*"
         },
         {
-          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/user(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?(\\\\.json)?[\\/#\\?]?$",
+          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/user(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?(\\.json)?[\\/#\\?]?$",
           "originalSource": "/user/:path*"
         }
       ],
       "wasm": [],
       "assets": [],
       "env": {
-        "__NEXT_BUILD_ID": "development",
-        "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "K8ES/gBJBez6lnYAzECTC1mh6fesht29ZURRisYVaBs=",
-        "__NEXT_PREVIEW_MODE_ID": "aeb8f73c3d0ced75cdb0cc7c562718a4",
-        "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "30c258efc929291891496b4b4402c46436d97b1e2327096838db574faa9603c2",
-        "__NEXT_PREVIEW_MODE_SIGNING_KEY": "7dbe1717ec1d48f9bdb59380b4e334d7c785e463f632e2c68cb083e2d8e958ae"
+        "__NEXT_BUILD_ID": "7NpweWgFQ7Z4K7NVHsdS8",
+        "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "NuNY40wPJsTgtDoK7fG9a95GNTA6Q20lsiUpGpAJ4To=",
+        "__NEXT_PREVIEW_MODE_ID": "b26b6daa5243ef139b298d4f50558739",
+        "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "4c7692f992779c4e15c4ff631ef9e13d97f3506b08a03cc8adf226cda302b683",
+        "__NEXT_PREVIEW_MODE_SIGNING_KEY": "f9076f2e15e3cd34a15fced31c04164e15c144d0e2d5252191c365502136ecc0"
       }
     }
   },
+  "functions": {},
   "sortedMiddleware": [
     "/"
-  ],
-  "functions": {}
+  ]
 }
