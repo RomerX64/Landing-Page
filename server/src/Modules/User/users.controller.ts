@@ -18,11 +18,10 @@ import { AdminGuard } from '../../guards/admin.guard';
 import { Plan } from './Planes.entity';
 import { updateUserDto } from './Dto/updateUser.dto';
 import { signIn } from './Dto/singIn.dto';
-import { signInGoogleDTO } from './Dto/singInGoogle.dto';
+import { signInGoogleDTO, signUpGoogleDTO } from './Dto/singInGoogle.dto';
 import { signUp } from './Dto/singUp.dto';
 import { Subscripcion } from './Subscripcion.entity';
 import { get } from 'http';
-import { signUpGoogleDTO } from './dto/sign-up-google.dto';
 
 @Controller('users')
 export class UserController {

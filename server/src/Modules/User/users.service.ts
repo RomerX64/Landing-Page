@@ -18,9 +18,8 @@ import { Plan } from './Planes.entity';
 import { updateUserDto } from './Dto/updateUser.dto';
 import { signIn } from './Dto/singIn.dto';
 import { signUp } from './Dto/singUp.dto';
-import { signInGoogleDTO } from './Dto/singInGoogle.dto';
+import { signInGoogleDTO, signUpGoogleDTO } from './Dto/singInGoogle.dto';
 import { MailService } from '../Mail/mail.service';
-import { signUpGoogleDTO } from './dto/sign-up-google.dto';
 
 @Injectable()
 export class UserService {
