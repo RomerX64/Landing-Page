@@ -22,7 +22,7 @@ import { signInGoogleDTO } from './Dto/singInGoogle.dto';
 import { signUp } from './Dto/singUp.dto';
 import { Subscripcion } from './Subscripcion.entity';
 import { get } from 'http';
-import { signUpGoogleDTO } from './dto/singUpGoogle.dto';
+import { signUpGoogleDTO } from './dto/signUpGoogle';
 
 @Controller('users')
 export class UserController {
