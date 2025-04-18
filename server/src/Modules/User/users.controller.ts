@@ -94,7 +94,7 @@ export class UserController {
     description: 'Registra a un usuario nuevo y envía un email de confirmación',
   })
   async createUserWithGoogle(
-    @Body() signUpGoogleDTO: signUpGoogleDTO,
+    @Body() signUpGoogleDTO: signUpGoogleDTO, 
   ): Promise<{ user: User; token: string }> {
     try {
       return await this.userService.createUserWithGoogle(signUpGoogleDTO);
