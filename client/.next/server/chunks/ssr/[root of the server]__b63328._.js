@@ -168,7 +168,7 @@ __turbopack_esm__({
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/axios/lib/axios.js [app-ssr] (ecmascript)");
 ;
-const url = ("TURBOPACK compile-time value", "http://localhost:3001") || "https://assetly-landing-page-backend.onrender.com";
+const url = ("TURBOPACK compile-time value", "http://localhost:3001") || "https://assetsdb-page.onrender.com";
 const api = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].create({
     baseURL: url,
     headers: {

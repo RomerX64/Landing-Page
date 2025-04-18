@@ -7,4 +7,5 @@ export interface IPlan {
   activos: string;
   descripcion: string;
   popular?: boolean;
+  mercadopagoPlanId: string;
 }

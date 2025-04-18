@@ -1,6 +1,6 @@
 "use client";
 import React, { useContext, useState, useEffect, useRef } from "react";
-import { ChevronLeft, AlertCircle, RefreshCw } from "lucide-react";
+import { ChevronLeft, AlertCircle, RefreshCw, CreditCard } from "lucide-react";
 import { CardPayment, initMercadoPago } from "@mercadopago/sdk-react";
 import { useRouter } from "next/navigation";
 import { SubscriptionContext } from "@/context/Suscribe.context";
@@ -10,6 +10,13 @@ import {
   ICardPaymentBrickPayer,
   ICardPaymentFormData,
 } from "@mercadopago/sdk-react/esm/bricks/cardPayment/type";
+
+// Declare global interface for window to handle MercadoPago properties
+declare global {
+  interface Window {
+    $MPC_loaded?: boolean;
+  }
+}
 
 const PaymentForm = () => {
   initMercadoPago("APP_USR-8c3216f3-8ec0-4106-9522-f580b88cf1c4");
@@ -57,6 +64,39 @@ const PaymentForm = () => {
       setError(null);
     }
   }, [mpInitialized]);
+
+  // Effect para cargar el script de MercadoPago para el botón de suscripción
+  useEffect(() => {
+    function loadMercadoPagoScript() {
+      if (window.$MPC_loaded !== true) {
+        const script = document.createElement("script");
+        script.type = "text/javascript";
+        script.async = true;
+        script.src =
+          document.location.protocol +
+          "//secure.mlstatic.com/mptools/render.js";
+        const firstScript = document.getElementsByTagName("script")[0];
+        if (firstScript && firstScript.parentNode) {
+          firstScript.parentNode.insertBefore(script, firstScript);
+        } else {
+          document.head.appendChild(script);
+        }
+        window.$MPC_loaded = true;
+      }
+    }
+
+    if (typeof window !== "undefined") {
+      if (window.$MPC_loaded !== true) {
+        window.addEventListener("load", loadMercadoPagoScript, false);
+      }
+    }
+
+    return () => {
+      if (typeof window !== "undefined") {
+        window.removeEventListener("load", loadMercadoPagoScript);
+      }
+    };
+  }, []);
 
   // Progress bar effect during payment processing
   useEffect(() => {
@@ -266,34 +306,61 @@ const PaymentForm = () => {
         )}
 
         {!paymentProcessing && (
-          <div id="cardPaymentBrick_container" ref={paymentContainerRef}>
-            <CardPayment
-              key="payment-form"
-              initialization={{ amount: viewPlan ? viewPlan.precio : 0 }}
-              onSubmit={handleFormSubmit}
-              onError={(err: any) => {
-                console.error("Error en el Brick de Pago:", err);
-                setError(
-                  err.message ||
-                    "Hubo un error al procesar el pago. Intenta nuevamente."
-                );
-              }}
-              customization={{
-                visual: {
-                  style: {
-                    theme: "dark",
+          <>
+            {/* Botón de suscripción con Mercado Pago */}
+            {viewPlan && viewPlan.mercadopagoPlanId && (
+              <div className="mb-6 text-center">
+                <a
+                  href={`https://www.mercadopago.com.ar/subscriptions/checkout?preapproval_plan_id=${viewPlan.mercadopagoPlanId}`}
+                  id="MP-payButton"
+                  className="flex items-center justify-center px-6 py-3 mx-auto mb-6 text-lg font-medium text-white transition-all duration-300 bg-blue-600 rounded-lg hover:bg-blue-700"
+                >
+                  <CreditCard className="w-5 h-5 mr-2" />
+                  Suscribirme con Mercado Pago
+                </a>
+              </div>
+            )}
+
+            <div className="relative my-6">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-600"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 text-gray-400 bg-gray-800">
+                  O paga con tarjeta
+                </span>
+              </div>
+            </div>
+
+            <div id="cardPaymentBrick_container" ref={paymentContainerRef}>
+              <CardPayment
+                key="payment-form"
+                initialization={{ amount: viewPlan ? viewPlan.precio : 0 }}
+                onSubmit={handleFormSubmit}
+                onError={(err: any) => {
+                  console.error("Error en el Brick de Pago:", err);
+                  setError(
+                    err.message ||
+                      "Hubo un error al procesar el pago. Intenta nuevamente."
+                  );
+                }}
+                customization={{
+                  visual: {
+                    style: {
+                      theme: "dark",
+                    },
                   },
-                },
-                paymentMethods: {
-                  types: {
-                    included: ["credit_card", "debit_card", "prepaid_card"],
+                  paymentMethods: {
+                    types: {
+                      included: ["credit_card", "debit_card", "prepaid_card"],
+                    },
+                    minInstallments: 1,
+                    maxInstallments: 12,
                   },
-                  minInstallments: 1,
-                  maxInstallments: 12,
-                },
-              }}
-            />
-          </div>
+                }}
+              />
+            </div>
+          </>
         )}
       </div>
     </section>
