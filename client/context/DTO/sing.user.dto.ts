@@ -8,7 +8,7 @@ export interface SignUpDTO {
   company: string;
   password: string;
   telefono: string;
-  username: string;
+  name: string;
 }
 
 export interface updateUserDTO {
@@ -17,5 +17,5 @@ export interface updateUserDTO {
   company?: string;
   password?: string;
   telefono?: string;
-  username?: string;
+  name?: string;
 }

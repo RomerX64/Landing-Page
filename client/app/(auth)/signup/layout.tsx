@@ -25,7 +25,7 @@ export default function SignUpLayout() {
 
   // Form state
   const [newUser, setNewUser] = useState({
-    username: "",
+    name: "",
     company: "",
     email: "",
     telefono: "",
@@ -35,7 +35,7 @@ export default function SignUpLayout() {
 
   // Error state
   const [errors, setErrors] = useState({
-    username: "",
+    name: "",
     company: "",
     phoneError: false,
     passwordError: false,
@@ -189,7 +189,7 @@ export default function SignUpLayout() {
   const isFormValid = () => {
     // Check if all required fields are filled and valid
     const isStep1Valid =
-      newUser.username.trim() !== "" &&
+      newUser.name.trim() !== "" &&
       newUser.company.trim() !== "" &&
       newUser.email.trim() !== "" &&
       !errors.emailError &&
@@ -227,8 +227,8 @@ export default function SignUpLayout() {
     const newErrors = { ...errors };
 
     // Validate step 1 fields
-    if (newUser.username.trim() === "") {
-      newErrors.username = "El nombre de usuario es requerido";
+    if (newUser.name.trim() === "") {
+      newErrors.name = "El nombre de usuario es requerido";
     }
 
     if (newUser.company.trim() === "") {
@@ -384,11 +384,11 @@ export default function SignUpLayout() {
             {formStep === 1 ? (
               <form onSubmit={handleNextStep} className="space-y-5">
                 <InputField
-                  id="username"
-                  label="Username"
-                  value={newUser.username}
+                  id="name"
+                  label="Nombre"
+                  value={newUser.name}
                   onChange={handleOnChange}
-                  error={errors.username}
+                  error={errors.name}
                   required
                   icon={<span className="text-indigo-300/50">@</span>}
                 />
