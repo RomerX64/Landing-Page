@@ -58,18 +58,32 @@ interface AdminProviderProps {
 export const AdminProvider = ({ children }: AdminProviderProps) => {
   const getUsers = async (): Promise<IUser[]> => {
     const cachedStr = localStorage.getItem("admin_users");
-    const cached: IUser[] = cachedStr ? JSON.parse(cachedStr) : [];
+    const cached = cachedStr ? JSON.parse(cachedStr) : null;
 
-    const { data, error } = await handleAsync(api.get("/admin/users"));
-    if (error || !data) {
-      throw new Error(error?.message || "Error al obtener los usuarios.");
-    }
+    const currentTime = new Date().getTime();
+    const expirationTime = 10 * 60 * 1000; // 10 minutos en milisegundos
 
-    if (cached.length < data.data.length) {
-      localStorage.setItem("admin_users", JSON.stringify(data.data));
+    // Si no hay datos en caché o han caducado
+    if (!cached || currentTime - cached.timestamp > expirationTime) {
+      const { data, error } = await handleAsync(api.get("/admin/users"));
+      if (error || !data) {
+        throw new Error(error?.message || "Error al obtener los usuarios.");
+      }
+
+      // Guardamos los datos con la marca de tiempo de cuando fueron obtenidos
+      localStorage.setItem(
+        "admin_users",
+        JSON.stringify({
+          data: data.data,
+          timestamp: currentTime,
+        })
+      );
+
       return data.data;
     }
-    return cached;
+
+    // Si los datos no han caducado, los devolvemos
+    return cached.data;
   };
 
   const getUsersSubscribed = async (): Promise<IUser[]> => {

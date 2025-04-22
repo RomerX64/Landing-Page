@@ -823,16 +823,24 @@ const AdminContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$projec
 const AdminProvider = ({ children })=>{
     const getUsers = async ()=>{
         const cachedStr = localStorage.getItem("admin_users");
-        const cached = cachedStr ? JSON.parse(cachedStr) : [];
-        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get("/admin/users"));
-        if (error || !data) {
-            throw new Error(error?.message || "Error al obtener los usuarios.");
-        }
-        if (cached.length < data.data.length) {
-            localStorage.setItem("admin_users", JSON.stringify(data.data));
+        const cached = cachedStr ? JSON.parse(cachedStr) : null;
+        const currentTime = new Date().getTime();
+        const expirationTime = 10 * 60 * 1000; // 10 minutos en milisegundos
+        // Si no hay datos en caché o han caducado
+        if (!cached || currentTime - cached.timestamp > expirationTime) {
+            const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get("/admin/users"));
+            if (error || !data) {
+                throw new Error(error?.message || "Error al obtener los usuarios.");
+            }
+            // Guardamos los datos con la marca de tiempo de cuando fueron obtenidos
+            localStorage.setItem("admin_users", JSON.stringify({
+                data: data.data,
+                timestamp: currentTime
+            }));
             return data.data;
         }
-        return cached;
+        // Si los datos no han caducado, los devolvemos
+        return cached.data;
     };
     const getUsersSubscribed = async ()=>{
         const cached = localStorage.getItem("admin_usersSubscribed");
@@ -970,7 +978,7 @@ const AdminProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/context/Administracion.context.tsx",
-        lineNumber: 247,
+        lineNumber: 261,
         columnNumber: 5
     }, this);
 };
