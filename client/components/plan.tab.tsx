@@ -25,7 +25,7 @@ const PlanesTab: React.FC<{
   const handleDelete = async (id: number) => {
     try {
       await deletePlan(id);
-      setAllPlans((prev) => prev.filter((plan) => plan.id !== id));
+      setAllPlans((prev) => prev?.filter((plan) => plan.id !== id));
     } catch (error) {
       console.error("Error al eliminar el plan:", error);
     }

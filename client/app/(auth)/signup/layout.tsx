@@ -75,7 +75,7 @@ export default function SignUpLayout() {
       hasUpperCase,
       hasNumber,
       hasSpecialChar,
-    ].filter(Boolean).length;
+    ]?.filter(Boolean).length;
     return criteriaCount >= 3;
   }, []);
 

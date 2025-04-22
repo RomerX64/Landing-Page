@@ -81,7 +81,7 @@ function SignUpLayout() {
             hasUpperCase,
             hasNumber,
             hasSpecialChar
-        ].filter(Boolean).length;
+        ]?.filter(Boolean).length;
         return criteriaCount >= 3;
     }, []);
     // Handle basic field changes
@@ -1921,11 +1921,11 @@ function consumeDynamicAccess(serverDynamic, clientDynamic) {
     return serverDynamic.dynamicAccesses;
 }
 function formatDynamicAPIAccesses(dynamicAccesses) {
-    return dynamicAccesses.filter((access)=>typeof access.stack === 'string' && access.stack.length > 0).map(({ expression, stack })=>{
+    return dynamicAccesses?.filter((access)=>typeof access.stack === 'string' && access.stack.length > 0).map(({ expression, stack })=>{
         stack = stack.split('\n') // Remove the "Error: " prefix from the first line of the stack trace as
         // well as the first 4 lines of the stack trace which is the distance
         // from the user code and the `new Error().stack` call.
-        .slice(4).filter((line)=>{
+        .slice(4)?.filter((line)=>{
             // Exclude Next.js internals from the stack trace.
             if (line.includes('node_modules/next/')) {
                 return false;
@@ -2617,7 +2617,7 @@ var U = (e, t)=>{
                 toasts: []
             } : {
                 ...e,
-                toasts: e.toasts.filter((o)=>o.id !== t.toastId)
+                toasts: e.toasts?.filter((o)=>o.id !== t.toastId)
             };
         case 5:
             return {
@@ -2780,8 +2780,8 @@ var K = (e, t)=>{
     }, [
         r
     ]), a = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])((o, n)=>{
-        let { reverseOrder: i = !1, gutter: p = 8, defaultPosition: d } = n || {}, h = t.filter((m)=>(m.position || d) === (o.position || d) && m.height), v = h.findIndex((m)=>m.id === o.id), S = h.filter((m, E)=>E < v && m.visible).length;
-        return h.filter((m)=>m.visible).slice(...i ? [
+        let { reverseOrder: i = !1, gutter: p = 8, defaultPosition: d } = n || {}, h = t?.filter((m)=>(m.position || d) === (o.position || d) && m.height), v = h.findIndex((m)=>m.id === o.id), S = h?.filter((m, E)=>E < v && m.visible).length;
+        return h?.filter((m)=>m.visible).slice(...i ? [
             S + 1
         ] : [
             0,

@@ -14,7 +14,7 @@ const UserModal: React.FC<{
         </h2>
         <div className="space-y-2 text-gray-300">
           {Object.entries(user)
-            .filter(([key]) => key !== "password" && key !== "isAdmin")
+            ?.filter(([key]) => key !== "password" && key !== "isAdmin")
             .map(([key, value]) => (
               <div key={key} className="flex">
                 <span className="mr-2 font-bold<">{key}:</span>

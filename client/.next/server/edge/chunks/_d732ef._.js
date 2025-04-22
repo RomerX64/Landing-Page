@@ -1107,7 +1107,7 @@ function stringifyCookie(c) {
         "sameSite" in c && c.sameSite && `SameSite=${c.sameSite}`,
         "partitioned" in c && c.partitioned && "Partitioned",
         "priority" in c && c.priority && `Priority=${c.priority}`
-    ].filter(Boolean);
+    ]?.filter(Boolean);
     const stringified = `${c.name}=${encodeURIComponent((_a = c.value) != null ? _a : "")}`;
     return attrs.length === 0 ? stringified : `${stringified}; ${attrs.join("; ")}`;
 }
@@ -1280,7 +1280,7 @@ var RequestCookies = class {
             return all.map(([_, value])=>value);
         }
         const name = typeof args[0] === "string" ? args[0] : (_a = args[0]) == null ? void 0 : _a.name;
-        return all.filter(([n])=>n === name).map(([_, value])=>value);
+        return all?.filter(([n])=>n === name).map(([_, value])=>value);
     }
     has(name) {
         return this._parsed.has(name);
@@ -1351,7 +1351,7 @@ var ResponseCookies = class {
             return all;
         }
         const key = typeof args[0] === "string" ? args[0] : (_a = args[0]) == null ? void 0 : _a.name;
-        return all.filter((c)=>c.name === key);
+        return all?.filter((c)=>c.name === key);
     }
     has(name) {
         return this._parsed.has(name);
@@ -2308,7 +2308,7 @@ class MutableRequestCookiesAdapter {
                 workStore.pathWasRevalidated = true;
             }
             const allCookies = responseCookies.getAll();
-            modifiedValues = allCookies.filter((c)=>modifiedCookies.has(c.name));
+            modifiedValues = allCookies?.filter((c)=>modifiedCookies.has(c.name));
             if (onUpdateCookies) {
                 const serializedCookies = [];
                 for (const cookie of modifiedValues){
@@ -4974,7 +4974,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                     return e === null || e === void 0 ? void 0 : e.run;
                 }
                 filter(e) {
-                    return this._queue.filter((t)=>t.priority === e.priority).map((e)=>e.run);
+                    return this._queue?.filter((t)=>t.priority === e.priority).map((e)=>e.run);
                 }
                 get size() {
                     return this._queue.length;
@@ -5253,7 +5253,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                 return this._queue.size;
             }
             sizeBy(e) {
-                return this._queue.filter(e).length;
+                return this._queue?.filter(e).length;
             }
             get pending() {
                 return this._pendingCount;
@@ -5328,9 +5328,9 @@ function diffRevalidationState(prev, curr) {
     const prevTags = new Set(prev.revalidatedTags);
     const prevRevalidateWrites = new Set(prev.pendingRevalidateWrites);
     return {
-        revalidatedTags: curr.revalidatedTags.filter((tag)=>!prevTags.has(tag)),
-        pendingRevalidates: Object.fromEntries(Object.entries(curr.pendingRevalidates).filter(([key])=>!(key in prev.pendingRevalidates))),
-        pendingRevalidateWrites: curr.pendingRevalidateWrites.filter((promise)=>!prevRevalidateWrites.has(promise))
+        revalidatedTags: curr.revalidatedTags?.filter((tag)=>!prevTags.has(tag)),
+        pendingRevalidates: Object.fromEntries(Object.entries(curr.pendingRevalidates)?.filter(([key])=>!(key in prev.pendingRevalidates))),
+        pendingRevalidateWrites: curr.pendingRevalidateWrites?.filter((promise)=>!prevRevalidateWrites.has(promise))
     };
 }
 async function executeRevalidates(workStore, { revalidatedTags, pendingRevalidates, pendingRevalidateWrites }) {
@@ -5794,7 +5794,7 @@ function getTestStack() {
         }
     }
     // Filter out franmework lines.
-    stack = stack.filter((f)=>!f.includes('/next/dist/'));
+    stack = stack?.filter((f)=>!f.includes('/next/dist/'));
     // At most 5 lines.
     stack = stack.slice(0, 5);
     // Cleanup some internal info and trim.
@@ -9699,11 +9699,11 @@ function consumeDynamicAccess(serverDynamic, clientDynamic) {
     return serverDynamic.dynamicAccesses;
 }
 function formatDynamicAPIAccesses(dynamicAccesses) {
-    return dynamicAccesses.filter((access)=>typeof access.stack === 'string' && access.stack.length > 0).map(({ expression, stack })=>{
+    return dynamicAccesses?.filter((access)=>typeof access.stack === 'string' && access.stack.length > 0).map(({ expression, stack })=>{
         stack = stack.split('\n') // Remove the "Error: " prefix from the first line of the stack trace as
         // well as the first 4 lines of the stack trace which is the distance
         // from the user code and the `new Error().stack` call.
-        .slice(4).filter((line)=>{
+        .slice(4)?.filter((line)=>{
             // Exclude Next.js internals from the stack trace.
             if (line.includes('node_modules/next/')) {
                 return false;
@@ -10403,7 +10403,7 @@ __turbopack_esm__({
     "default": (()=>__TURBOPACK__default__export__)
 });
 const isDisjoint = (...headers)=>{
-    const sources = headers.filter(Boolean);
+    const sources = headers?.filter(Boolean);
     if (sources.length === 0 || sources.length === 1) {
         return true;
     }

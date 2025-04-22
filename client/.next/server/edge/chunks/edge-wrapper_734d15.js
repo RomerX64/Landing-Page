@@ -413,7 +413,7 @@ async function loadChunk(source, chunkData) {
         // TODO(alexkirsz) Do we need this check?
         // if (moduleFactories[included]) return true;
         return availableModuleChunks.get(included);
-    }).filter((p)=>p);
+    })?.filter((p)=>p);
     let promise;
     if (moduleChunksPromises.length > 0) {
         // Some module chunks are already loaded or loading.
@@ -1487,7 +1487,7 @@ async function loadWebAssemblyModule(_source, chunkPath) {
                 // The current chunk depends on other chunks, so we need to wait for
                 // those chunks to be registered before instantiating the runtime
                 // modules.
-                registerChunkRunner(chunkPath, params.otherChunks.filter((chunk)=>// The none runtime can only handle JS chunks, so we only wait for these
+                registerChunkRunner(chunkPath, params.otherChunks?.filter((chunk)=>// The none runtime can only handle JS chunks, so we only wait for these
                     getChunkPath(chunk).endsWith(".js")), params.runtimeModuleIds);
             }
         },

@@ -376,7 +376,7 @@ function getWidths(param, width, sizes) {
         if (percentSizes.length) {
             const smallestRatio = Math.min(...percentSizes) * 0.01;
             return {
-                widths: allSizes.filter((s)=>s >= deviceSizes[0] * smallestRatio),
+                widths: allSizes?.filter((s)=>s >= deviceSizes[0] * smallestRatio),
                 kind: 'w'
             };
         }

@@ -27,7 +27,7 @@ function SideEffect(props) {
     const { headManager, reduceComponentsToState } = props;
     function emitChange() {
         if (headManager && headManager.mountedInstances) {
-            const headElements = _react.Children.toArray(Array.from(headManager.mountedInstances).filter(Boolean));
+            const headElements = _react.Children.toArray(Array.from(headManager.mountedInstances)?.filter(Boolean));
             headManager.updateHead(reduceComponentsToState(headElements, props));
         }
     }
@@ -263,7 +263,7 @@ const METATYPES = [
  * @param headChildrenElements List of children of <Head>
  */ function reduceComponents(headChildrenElements, props) {
     const { inAmpMode } = props;
-    return headChildrenElements.reduce(onlyReactElement, []).reverse().concat(defaultHead(inAmpMode).reverse()).filter(unique()).reverse().map((c, i)=>{
+    return headChildrenElements.reduce(onlyReactElement, []).reverse().concat(defaultHead(inAmpMode).reverse())?.filter(unique()).reverse().map((c, i)=>{
         const key = c.key || i;
         if ("TURBOPACK compile-time falsy", 0) {
             "TURBOPACK unreachable";
@@ -461,7 +461,7 @@ function getWidths(param, width, sizes) {
         if (percentSizes.length) {
             const smallestRatio = Math.min(...percentSizes) * 0.01;
             return {
-                widths: allSizes.filter((s)=>s >= deviceSizes[0] * smallestRatio),
+                widths: allSizes?.filter((s)=>s >= deviceSizes[0] * smallestRatio),
                 kind: 'w'
             };
         }

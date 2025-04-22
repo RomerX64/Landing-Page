@@ -106,7 +106,7 @@ const SuscripcionesTab: React.FC<{
   };
 
   // Filtrar suscripciones
-  const filteredSubscriptions = allSubscriptions.filter((sub) => {
+  const filteredSubscriptions = allSubscriptions?.filter((sub) => {
     const matchesSearch =
       sub.id?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
       sub.user.email?.toLowerCase().includes(searchTerm?.toLowerCase()) ||

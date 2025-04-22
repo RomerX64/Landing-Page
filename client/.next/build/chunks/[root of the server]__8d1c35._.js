@@ -116,7 +116,7 @@ const init = async (ipc)=>{
             }
         });
     } else if (typeof config.plugins === "object") {
-        plugins = Object.entries(config.plugins).filter(([, options])=>options);
+        plugins = Object.entries(config.plugins)?.filter(([, options])=>options);
     } else {
         plugins = [];
     }

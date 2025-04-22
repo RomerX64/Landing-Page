@@ -413,7 +413,7 @@ async function loadChunk(source, chunkData) {
         // TODO(alexkirsz) Do we need this check?
         // if (moduleFactories[included]) return true;
         return availableModuleChunks.get(included);
-    }).filter((p)=>p);
+    })?.filter((p)=>p);
     let promise;
     if (moduleChunksPromises.length > 0) {
         // Some module chunks are already loaded or loading.
