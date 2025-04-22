@@ -112,7 +112,7 @@ export class SubscriptionsController {
     }
 
     // Obtener el ID del body
-    const dataID = body.data.id.toString().toLowerCase(); // Convertir a minúsculas si es alfanumérico
+    const dataID = body.data.id.toString()?.toLowerCase(); // Convertir a minúsculas si es alfanumérico
     const manifest = `id:${dataID};request-id:${xRequestId};ts:${ts};`;
 
     // Generar la firma HMAC-SHA256

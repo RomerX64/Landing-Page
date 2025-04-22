@@ -784,7 +784,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
             const n = u(510);
             const isWindows = ()=>{
                 if (typeof navigator !== "undefined" && navigator.platform) {
-                    const t = navigator.platform.toLowerCase();
+                    const t = navigator.platform?.toLowerCase();
                     return t === "win32" || t === "windows";
                 }
                 if (typeof process !== "undefined" && process.platform) {

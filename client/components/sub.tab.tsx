@@ -108,13 +108,13 @@ const SuscripcionesTab: React.FC<{
   // Filtrar suscripciones
   const filteredSubscriptions = allSubscriptions.filter((sub) => {
     const matchesSearch =
-      sub.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      sub.user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      sub.plan.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      sub.id?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
+      sub.user.email?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
+      sub.plan.name?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
       (sub.mercadopagoSubscriptionId &&
         sub.mercadopagoSubscriptionId
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase()));
+          ?.toLowerCase()
+          .includes(searchTerm?.toLowerCase()));
 
     let matchesStatus = true;
     if (selectedStatus !== null) {

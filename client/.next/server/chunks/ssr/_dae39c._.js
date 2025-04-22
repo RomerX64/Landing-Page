@@ -69,7 +69,7 @@ const PlanDetail = ()=>{
         "Actualizaciones constantes"
     ];
     const getExtraPersonalizations = (planName)=>{
-        const name = planName.toLowerCase();
+        const name = planName?.toLowerCase();
         if (name === "megaassets" || name === "assetsgod") {
             return [
                 "Personalización en los reportes",

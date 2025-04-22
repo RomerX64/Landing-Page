@@ -47,7 +47,7 @@ const PlanDetail: React.FC = () => {
   ];
 
   const getExtraPersonalizations = (planName: string): string[] => {
-    const name = planName.toLowerCase();
+    const name = planName?.toLowerCase();
     if (name === "megaassets" || name === "assetsgod") {
       return [
         "Personalización en los reportes",

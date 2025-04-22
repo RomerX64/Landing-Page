@@ -422,7 +422,7 @@ function toNodeOutgoingHttpHeaders(headers) {
     const cookies = [];
     if (headers) {
         for (const [key, value] of headers.entries()){
-            if (key.toLowerCase() === 'set-cookie') {
+            if (key?.toLowerCase() === 'set-cookie') {
                 // We may have gotten a comma joined string of cookies, or multiple
                 // set-cookie headers. We need to merge them into one header array
                 // to represent all the cookies.
@@ -545,13 +545,13 @@ __turbopack_esm__({
 function detectDomainLocale(domainItems, hostname, detectedLocale) {
     if (!domainItems) return;
     if (detectedLocale) {
-        detectedLocale = detectedLocale.toLowerCase();
+        detectedLocale = detectedLocale?.toLowerCase();
     }
     for (const item of domainItems){
         var _item_domain, _item_locales;
         // remove port if present
-        const domainHostname = (_item_domain = item.domain) == null ? void 0 : _item_domain.split(':', 1)[0].toLowerCase();
-        if (hostname === domainHostname || detectedLocale === item.defaultLocale.toLowerCase() || ((_item_locales = item.locales) == null ? void 0 : _item_locales.some((locale)=>locale.toLowerCase() === detectedLocale))) {
+        const domainHostname = (_item_domain = item.domain) == null ? void 0 : _item_domain.split(':', 1)[0]?.toLowerCase();
+        if (hostname === domainHostname || detectedLocale === item.defaultLocale?.toLowerCase() || ((_item_locales = item.locales) == null ? void 0 : _item_locales.some((locale)=>locale?.toLowerCase() === detectedLocale))) {
             return item;
         }
     }
@@ -675,12 +675,12 @@ function addLocale(path, locale, defaultLocale, ignorePrefix) {
     // If no locale was given or the locale is the default locale, we don't need
     // to prefix the path.
     if (!locale || locale === defaultLocale) return path;
-    const lower = path.toLowerCase();
+    const lower = path?.toLowerCase();
     // If the path is an API path or the path already has the locale prefix, we
     // don't need to prefix the path.
     if (!ignorePrefix) {
         if ((0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$shared$2f$lib$2f$router$2f$utils$2f$path$2d$has$2d$prefix$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["pathHasPrefix"])(lower, '/api')) return path;
-        if ((0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$shared$2f$lib$2f$router$2f$utils$2f$path$2d$has$2d$prefix$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["pathHasPrefix"])(lower, "/" + locale.toLowerCase())) return path;
+        if ((0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$shared$2f$lib$2f$router$2f$utils$2f$path$2d$has$2d$prefix$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["pathHasPrefix"])(lower, "/" + locale?.toLowerCase())) return path;
     }
     // Add the locale prefix to the path.
     return (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$shared$2f$lib$2f$router$2f$utils$2f$add$2d$path$2d$prefix$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["addPathPrefix"])(path, "/" + locale);
@@ -736,7 +736,7 @@ function getHostname(parsed, headers) {
     } else if (parsed.hostname) {
         hostname = parsed.hostname;
     } else return;
-    return hostname.toLowerCase();
+    return hostname?.toLowerCase();
 } //# sourceMappingURL=get-hostname.js.map
 }}),
 "[project]/node_modules/next/dist/esm/shared/lib/i18n/normalize-locale-path.js [middleware] (ecmascript)": ((__turbopack_context__) => {
@@ -760,7 +760,7 @@ function normalizeLocalePath(pathname, locales) {
     // first item will be empty string from splitting at first char
     const pathnameParts = pathname.split('/');
     (locales || []).some((locale)=>{
-        if (pathnameParts[1] && pathnameParts[1].toLowerCase() === locale.toLowerCase()) {
+        if (pathnameParts[1] && pathnameParts[1]?.toLowerCase() === locale?.toLowerCase()) {
             detectedLocale = locale;
             pathnameParts.splice(1, 1);
             pathname = pathnameParts.join('/') || '/';
@@ -1136,7 +1136,7 @@ function parseSetCookie(setCookie) {
     }
     const [[name, value], ...attributes] = parseCookie(setCookie);
     const { domain, expires, httponly, maxage, path, samesite, secure, partitioned, priority } = Object.fromEntries(attributes.map(([key, value2])=>[
-            key.toLowerCase().replace(/-/g, ""),
+            key?.toLowerCase().replace(/-/g, ""),
             value2
         ]));
     const cookie = {
@@ -1183,7 +1183,7 @@ var SAME_SITE = [
     "none"
 ];
 function parseSameSite(string) {
-    string = string.toLowerCase();
+    string = string?.toLowerCase();
     return SAME_SITE.includes(string) ? string : void 0;
 }
 var PRIORITY = [
@@ -1192,7 +1192,7 @@ var PRIORITY = [
     "high"
 ];
 function parsePriority(string) {
-    string = string.toLowerCase();
+    string = string?.toLowerCase();
     return PRIORITY.includes(string) ? string : void 0;
 }
 function splitCookiesString(cookiesString) {
@@ -1900,11 +1900,11 @@ class HeadersAdapter extends Headers {
                 if (typeof prop === 'symbol') {
                     return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$spec$2d$extension$2f$adapters$2f$reflect$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["ReflectAdapter"].get(target, prop, receiver);
                 }
-                const lowercased = prop.toLowerCase();
+                const lowercased = prop?.toLowerCase();
                 // Let's find the original casing of the key. This assumes that there is
                 // no mixed case keys (e.g. "Content-Type" and "content-type") in the
                 // headers object.
-                const original = Object.keys(headers).find((o)=>o.toLowerCase() === lowercased);
+                const original = Object.keys(headers).find((o)=>o?.toLowerCase() === lowercased);
                 // If the original casing doesn't exist, return undefined.
                 if (typeof original === 'undefined') return;
                 // If the original casing exists, return the value.
@@ -1914,21 +1914,21 @@ class HeadersAdapter extends Headers {
                 if (typeof prop === 'symbol') {
                     return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$spec$2d$extension$2f$adapters$2f$reflect$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["ReflectAdapter"].set(target, prop, value, receiver);
                 }
-                const lowercased = prop.toLowerCase();
+                const lowercased = prop?.toLowerCase();
                 // Let's find the original casing of the key. This assumes that there is
                 // no mixed case keys (e.g. "Content-Type" and "content-type") in the
                 // headers object.
-                const original = Object.keys(headers).find((o)=>o.toLowerCase() === lowercased);
+                const original = Object.keys(headers).find((o)=>o?.toLowerCase() === lowercased);
                 // If the original casing doesn't exist, use the prop as the key.
                 return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$spec$2d$extension$2f$adapters$2f$reflect$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["ReflectAdapter"].set(target, original ?? prop, value, receiver);
             },
             has (target, prop) {
                 if (typeof prop === 'symbol') return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$spec$2d$extension$2f$adapters$2f$reflect$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["ReflectAdapter"].has(target, prop);
-                const lowercased = prop.toLowerCase();
+                const lowercased = prop?.toLowerCase();
                 // Let's find the original casing of the key. This assumes that there is
                 // no mixed case keys (e.g. "Content-Type" and "content-type") in the
                 // headers object.
-                const original = Object.keys(headers).find((o)=>o.toLowerCase() === lowercased);
+                const original = Object.keys(headers).find((o)=>o?.toLowerCase() === lowercased);
                 // If the original casing doesn't exist, return false.
                 if (typeof original === 'undefined') return false;
                 // If the original casing exists, return true.
@@ -1936,11 +1936,11 @@ class HeadersAdapter extends Headers {
             },
             deleteProperty (target, prop) {
                 if (typeof prop === 'symbol') return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$spec$2d$extension$2f$adapters$2f$reflect$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["ReflectAdapter"].deleteProperty(target, prop);
-                const lowercased = prop.toLowerCase();
+                const lowercased = prop?.toLowerCase();
                 // Let's find the original casing of the key. This assumes that there is
                 // no mixed case keys (e.g. "Content-Type" and "content-type") in the
                 // headers object.
-                const original = Object.keys(headers).find((o)=>o.toLowerCase() === lowercased);
+                const original = Object.keys(headers).find((o)=>o?.toLowerCase() === lowercased);
                 // If the original casing doesn't exist, return true.
                 if (typeof original === 'undefined') return true;
                 // If the original casing exists, delete the property.
@@ -2018,7 +2018,7 @@ class HeadersAdapter extends Headers {
     }
     *entries() {
         for (const key of Object.keys(this.headers)){
-            const name = key.toLowerCase();
+            const name = key?.toLowerCase();
             // We assert here that this is a string because we got it from the
             // Object.keys() call above.
             const value = this.get(name);
@@ -2030,7 +2030,7 @@ class HeadersAdapter extends Headers {
     }
     *keys() {
         for (const key of Object.keys(this.headers)){
-            const name = key.toLowerCase();
+            const name = key?.toLowerCase();
             yield name;
         }
     }
@@ -4191,7 +4191,7 @@ class NextTracerImpl {
                 const onCleanup = ()=>{
                     rootSpanAttributesStore.delete(spanId);
                     if (startTime && process.env.NEXT_OTEL_PERFORMANCE_PREFIX && __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$lib$2f$trace$2f$constants$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["LogSpanAllowList"].includes(type || '')) {
-                        performance.measure(`${process.env.NEXT_OTEL_PERFORMANCE_PREFIX}:next-${(type.split('.').pop() || '').replace(/[A-Z]/g, (match)=>'-' + match.toLowerCase())}`, {
+                        performance.measure(`${process.env.NEXT_OTEL_PERFORMANCE_PREFIX}:next-${(type.split('.').pop() || '').replace(/[A-Z]/g, (match)=>'-' + match?.toLowerCase())}`, {
                             start: startTime,
                             end: performance.now()
                         });
@@ -4379,7 +4379,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                 p += "; Secure";
             }
             if (a.sameSite) {
-                var u = typeof a.sameSite === "string" ? a.sameSite.toLowerCase() : a.sameSite;
+                var u = typeof a.sameSite === "string" ? a.sameSite?.toLowerCase() : a.sameSite;
                 switch(u){
                     case true:
                         p += "; SameSite=Strict";
@@ -4641,7 +4641,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 function getHeaders(headers) {
     const cleaned = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$spec$2d$extension$2f$adapters$2f$headers$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["HeadersAdapter"].from(headers);
     for (const header of __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$client$2f$components$2f$app$2d$router$2d$headers$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["FLIGHT_HEADERS"]){
-        cleaned.delete(header.toLowerCase());
+        cleaned.delete(header?.toLowerCase());
     }
     return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$spec$2d$extension$2f$adapters$2f$headers$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["HeadersAdapter"].seal(cleaned);
 }
@@ -6046,7 +6046,7 @@ async function adapter(params) {
     // Headers should only be stripped for middleware
     if (!isEdgeRendering) {
         for (const header of __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$client$2f$components$2f$app$2d$router$2d$headers$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["FLIGHT_HEADERS"]){
-            const key = header.toLowerCase();
+            const key = header?.toLowerCase();
             const value = requestHeaders.get(key);
             if (value) {
                 flightHeaders.set(key, value);
@@ -6300,7 +6300,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                 }, has = function(i, e) {
                     return typeof i === l ? lowerize(e).indexOf(lowerize(i)) !== -1 : false;
                 }, lowerize = function(i) {
-                    return i.toLowerCase();
+                    return i?.toLowerCase();
                 }, majorize = function(i) {
                     return typeof i === l ? i.replace(/[^\d\.]/g, t).split(".")[0] : a;
                 }, trim = function(i, e) {
@@ -11078,7 +11078,7 @@ const __TURBOPACK__default__export__ = (str)=>{
         throw new TypeError('Invalid time period format');
     }
     const value = parseFloat(matched[1]);
-    const unit = matched[2].toLowerCase();
+    const unit = matched[2]?.toLowerCase();
     switch(unit){
         case 'sec':
         case 'secs':
@@ -11139,7 +11139,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$jose$2f$dist
 ;
 ;
 ;
-const normalizeTyp = (value)=>value.toLowerCase().replace(/^application\//, '');
+const normalizeTyp = (value)=>value?.toLowerCase().replace(/^application\//, '');
 const checkAudiencePresence = (audPayload, audOption)=>{
     if (typeof audPayload === 'string') {
         return audOption.includes(audPayload);
