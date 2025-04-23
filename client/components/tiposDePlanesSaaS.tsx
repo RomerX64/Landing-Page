@@ -108,7 +108,7 @@ const CardPlan: React.FC<CardPlanProps> = ({
             {/* Activos */}
             <span className="inline-block min-w-[100px] rounded-full bg-gradient-to-r from-green-500 to-teal-400 px-3 py-1 text-sm font-bold text-white shadow-sm animate-gradient text-center">
               {activos}
-              {activos !== "Sin límites" && "/act"}
+              {activos !== "Sin límites" && "/a"}
             </span>
 
             {/* Personalizable */}
