@@ -58,7 +58,7 @@ export const PlansProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const selectPlan = async (planId: number): Promise<IPlan | null> => {
-    if (planes.length === 0) {
+    if (planes?.length === 0) {
       await getPlanes();
     }
 
@@ -74,7 +74,7 @@ export const PlansProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const changePlan = (direction: "next" | "prev") => {
-    if (!viewPlan || planes.length === 0) return;
+    if (!viewPlan || planes?.length === 0) return;
 
     const currentIndex = planes.findIndex((plan) => plan.id === viewPlan.id);
     if (currentIndex === -1) return;
@@ -82,8 +82,8 @@ export const PlansProvider = ({ children }: { children: React.ReactNode }) => {
     let newIndex = direction === "next" ? currentIndex + 1 : currentIndex - 1;
 
     // Manejar el ciclo circular
-    if (newIndex < 0) newIndex = planes.length - 1;
-    if (newIndex >= planes.length) newIndex = 0;
+    if (newIndex < 0) newIndex = planes?.length - 1;
+    if (newIndex >= planes?.length) newIndex = 0;
 
     const newPlan = planes[newIndex];
     setViewPlan(newPlan);
@@ -114,7 +114,7 @@ export const PlansProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Establecer el plan de visualización cuando los planes están disponibles
   useEffect(() => {
-    if (planes.length > 0 && !viewPlan) {
+    if (planes?.length > 0 && !viewPlan) {
       const storedViewPlan = localStorage.getItem("viewPlan");
 
       if (storedViewPlan) {

@@ -125,7 +125,7 @@ export class UsersPreLoad implements OnApplicationBootstrap {
       try {
         // Attempt to load plans from Mercado Pago
         const mpPlans = await this.mercadoPagoService.fetchPlans();
-        this.logger.log(`Loaded ${mpPlans.length} plans from Mercado Pago`);
+        this.logger.log(`Loaded ${mpPlans?.length} plans from Mercado Pago`);
 
         // Transform Mercado Pago data to the expected format
         plans = mpPlans.map((mpPlan) => {

@@ -218,7 +218,7 @@ function createIpc(port) {
                 switch(state.type){
                     case "waiting":
                         {
-                            if (buffer.length >= 4) {
+                            if (buffer?.length >= 4) {
                                 const length = buffer.readUInt32BE(0);
                                 buffer = buffer.subarray(4);
                                 state = {
@@ -232,9 +232,9 @@ function createIpc(port) {
                         }
                     case "packet":
                         {
-                            if (buffer.length >= state.length) {
-                                const packet = buffer.subarray(0, state.length);
-                                buffer = buffer.subarray(state.length);
+                            if (buffer?.length >= state?.length) {
+                                const packet = buffer.subarray(0, state?.length);
+                                buffer = buffer.subarray(state?.length);
                                 state = {
                                     type: "waiting"
                                 };
@@ -259,7 +259,7 @@ function createIpc(port) {
     function send(message) {
         const packet = Buffer.from(JSON.stringify(message), "utf8");
         const length = Buffer.alloc(4);
-        length.writeUInt32BE(packet.length);
+        length.writeUInt32BE(packet?.length);
         socket.write(length);
         return new Promise((resolve, reject)=>{
             socket.write(packet, (err)=>{
@@ -425,7 +425,7 @@ const run = async (moduleFactory)=>{
     // Queue handling
     let isRunning = false;
     const run = async ()=>{
-        while(queue.length > 0){
+        while(queue?.length > 0){
             const args = queue.shift();
             try {
                 const value = await getValue(internalIpc, ...args);

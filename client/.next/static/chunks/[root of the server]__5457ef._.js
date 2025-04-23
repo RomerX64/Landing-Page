@@ -823,24 +823,16 @@ const AdminContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$projec
 const AdminProvider = ({ children })=>{
     const getUsers = async ()=>{
         const cachedStr = localStorage.getItem("admin_users");
-        const cached = cachedStr ? JSON.parse(cachedStr) : null;
-        const currentTime = new Date().getTime();
-        const expirationTime = 10 * 60 * 1000; // 10 minutos en milisegundos
-        // Si no hay datos en caché o han caducado
-        if (!cached || currentTime - cached.timestamp > expirationTime) {
-            const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get("/admin/users"));
-            if (error || !data) {
-                throw new Error(error?.message || "Error al obtener los usuarios.");
-            }
-            // Guardamos los datos con la marca de tiempo de cuando fueron obtenidos
-            localStorage.setItem("admin_users", JSON.stringify({
-                data: data.data,
-                timestamp: currentTime
-            }));
+        const cached = cachedStr ? JSON.parse(cachedStr) : [];
+        const { data, error } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$error$2e$helper$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["handleAsync"])(__TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$Api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get("/admin/users"));
+        if (error || !data) {
+            throw new Error(error?.message || "Error al obtener los usuarios.");
+        }
+        if (cached.length < data.data.length) {
+            localStorage.setItem("admin_users", JSON.stringify(data.data));
             return data.data;
         }
-        // Si los datos no han caducado, los devolvemos
-        return cached.data;
+        return cached;
     };
     const getUsersSubscribed = async ()=>{
         const cached = localStorage.getItem("admin_usersSubscribed");
@@ -978,7 +970,7 @@ const AdminProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/context/Administracion.context.tsx",
-        lineNumber: 261,
+        lineNumber: 247,
         columnNumber: 5
     }, this);
 };
@@ -1275,7 +1267,7 @@ const PlansProvider = ({ children })=>{
         }
     };
     const selectPlan = async (planId)=>{
-        if (planes.length === 0) {
+        if (planes?.length === 0) {
             await getPlanes();
         }
         const foundPlan = planes.find((plan)=>plan.id === planId);
@@ -1288,13 +1280,13 @@ const PlansProvider = ({ children })=>{
         return foundPlan;
     };
     const changePlan = (direction)=>{
-        if (!viewPlan || planes.length === 0) return;
+        if (!viewPlan || planes?.length === 0) return;
         const currentIndex = planes.findIndex((plan)=>plan.id === viewPlan.id);
         if (currentIndex === -1) return;
         let newIndex = direction === "next" ? currentIndex + 1 : currentIndex - 1;
         // Manejar el ciclo circular
-        if (newIndex < 0) newIndex = planes.length - 1;
-        if (newIndex >= planes.length) newIndex = 0;
+        if (newIndex < 0) newIndex = planes?.length - 1;
+        if (newIndex >= planes?.length) newIndex = 0;
         const newPlan = planes[newIndex];
         setViewPlan(newPlan);
         localStorage.setItem("viewPlan", JSON.stringify(newPlan));
@@ -1325,7 +1317,7 @@ const PlansProvider = ({ children })=>{
     // Establecer el plan de visualización cuando los planes están disponibles
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "PlansProvider.useEffect": ()=>{
-            if (planes.length > 0 && !viewPlan) {
+            if (planes?.length > 0 && !viewPlan) {
                 const storedViewPlan = localStorage.getItem("viewPlan");
                 if (storedViewPlan) {
                     try {

@@ -784,7 +784,7 @@ export class SubscriptionsService {
     }
 
     return {
-      totalExpired: expiredSubscriptions.length,
+      totalExpired: expiredSubscriptions?.length,
       updatedSubscriptionIds: updatedSubscriptions,
     };
   }

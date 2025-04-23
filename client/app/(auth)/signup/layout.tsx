@@ -75,7 +75,7 @@ export default function SignUpLayout() {
       hasUpperCase,
       hasNumber,
       hasSpecialChar,
-    ]?.filter(Boolean).length;
+    ]?.filter(Boolean)?.length;
     return criteriaCount >= 3;
   }, []);
 
@@ -134,7 +134,7 @@ export default function SignUpLayout() {
     const confirmPassword = isPassword ? newUser.confirmPassword : value;
 
     // Validate password length, complexity and match
-    const lengthError = password.length < 8;
+    const lengthError = password?.length < 8;
     const passwordError =
       password !== confirmPassword && confirmPassword !== "";
     const complexityError = !validatePassword(password);
@@ -197,7 +197,7 @@ export default function SignUpLayout() {
       !errors.phoneError;
 
     const isStep2Valid =
-      newUser.password.length >= 8 &&
+      newUser.password?.length >= 8 &&
       !errors.complexityError &&
       newUser.password === newUser.confirmPassword;
 
@@ -246,13 +246,13 @@ export default function SignUpLayout() {
 
     // Validate step 2 fields
     if (newUser.password) {
-      const lengthError = newUser.password.length < 8;
+      const lengthError = newUser.password?.length < 8;
       const passwordError =
         newUser.password !== newUser.confirmPassword &&
         newUser.confirmPassword !== "";
       const complexityError = !validatePassword(newUser.password);
 
-      newErrors.lengthError = lengthError;
+      newErrors?.lengthError = lengthError;
       newErrors.passwordError = passwordError;
       newErrors.complexityError = complexityError;
     }
@@ -472,7 +472,7 @@ export default function SignUpLayout() {
                     showPassword={showPassword}
                     toggleShowPassword={() => setShowPassword(!showPassword)}
                     onChange={handlePasswordChange}
-                    lengthError={errors.lengthError}
+                    lengthError={errors?.lengthError}
                     complexityError={errors.complexityError}
                   />
 
@@ -493,7 +493,7 @@ export default function SignUpLayout() {
                     </h4>
                     <ul className="space-y-1 text-xs text-indigo-200/65">
                       <PasswordRequirement
-                        met={newUser.password.length >= 8}
+                        met={newUser.password?.length >= 8}
                         text="Mínimo 8 caracteres"
                       />
                       <PasswordRequirement
@@ -536,7 +536,7 @@ export default function SignUpLayout() {
                       isLoading ||
                       contextLoading ||
                       errors.passwordError ||
-                      errors.lengthError ||
+                      errors?.lengthError ||
                       errors.complexityError
                     }
                   >

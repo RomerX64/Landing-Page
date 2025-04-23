@@ -58,7 +58,7 @@ export default function HeroHome() {
             >
               <span className="block">Assetly</span>{" "}
               <span className="block mt-2 text-xl text-indigo-200 md:text-2xl">
-                Tu forma Segura y Eficiente de Gestionar tus Activos
+                Tu forma segura y eficiente de gestionar tus activos
               </span>
             </h1>
             <div className="max-w-3xl mx-auto">

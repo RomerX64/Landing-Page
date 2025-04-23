@@ -371,16 +371,16 @@ function splitCookiesString(cookiesString) {
     var nextStart;
     var cookiesSeparatorFound;
     function skipWhitespace() {
-        while(pos < cookiesString.length && /\s/.test(cookiesString.charAt(pos))){
+        while(pos < cookiesString?.length && /\s/.test(cookiesString.charAt(pos))){
             pos += 1;
         }
-        return pos < cookiesString.length;
+        return pos < cookiesString?.length;
     }
     function notSpecialChar() {
         ch = cookiesString.charAt(pos);
         return ch !== '=' && ch !== ';' && ch !== ',';
     }
-    while(pos < cookiesString.length){
+    while(pos < cookiesString?.length){
         start = pos;
         cookiesSeparatorFound = false;
         while(skipWhitespace()){
@@ -391,11 +391,11 @@ function splitCookiesString(cookiesString) {
                 pos += 1;
                 skipWhitespace();
                 nextStart = pos;
-                while(pos < cookiesString.length && notSpecialChar()){
+                while(pos < cookiesString?.length && notSpecialChar()){
                     pos += 1;
                 }
                 // currently special character
-                if (pos < cookiesString.length && cookiesString.charAt(pos) === '=') {
+                if (pos < cookiesString?.length && cookiesString.charAt(pos) === '=') {
                     // we found cookies separator
                     cookiesSeparatorFound = true;
                     // pos is inside the next cookie, so back up and return it.
@@ -411,8 +411,8 @@ function splitCookiesString(cookiesString) {
                 pos += 1;
             }
         }
-        if (!cookiesSeparatorFound || pos >= cookiesString.length) {
-            cookiesStrings.push(cookiesString.substring(start, cookiesString.length));
+        if (!cookiesSeparatorFound || pos >= cookiesString?.length) {
+            cookiesStrings.push(cookiesString.substring(start, cookiesString?.length));
         }
     }
     return cookiesStrings;
@@ -427,7 +427,7 @@ function toNodeOutgoingHttpHeaders(headers) {
                 // set-cookie headers. We need to merge them into one header array
                 // to represent all the cookies.
                 cookies.push(...splitCookiesString(value));
-                nodeHeaders[key] = cookies.length === 1 ? cookies[0] : cookies;
+                nodeHeaders[key] = cookies?.length === 1 ? cookies[0] : cookies;
             } else {
                 nodeHeaders[key] = value;
             }
@@ -451,7 +451,7 @@ function normalizeNextQueryParam(key, onKeyNormalized) {
     ];
     for (const prefix of prefixes){
         if (key !== prefix && key.startsWith(prefix)) {
-            const normalizedKey = key.substring(prefix.length);
+            const normalizedKey = key.substring(prefix?.length);
             onKeyNormalized(normalizedKey);
         }
     }
@@ -801,7 +801,7 @@ function removePathPrefix(path, prefix) {
         return path;
     }
     // Remove the prefix from the path via slicing.
-    const withoutPrefix = path.slice(prefix.length);
+    const withoutPrefix = path.slice(prefix?.length);
     // If the path without the prefix starts with a `/` we can return it as is.
     if (withoutPrefix.startsWith('/')) {
         return withoutPrefix;
@@ -1109,7 +1109,7 @@ function stringifyCookie(c) {
         "priority" in c && c.priority && `Priority=${c.priority}`
     ]?.filter(Boolean);
     const stringified = `${c.name}=${encodeURIComponent((_a = c.value) != null ? _a : "")}`;
-    return attrs.length === 0 ? stringified : `${stringified}; ${attrs.join("; ")}`;
+    return attrs?.length === 0 ? stringified : `${stringified}; ${attrs.join("; ")}`;
 }
 function parseCookie(cookie) {
     const map = /* @__PURE__ */ new Map();
@@ -1205,16 +1205,16 @@ function splitCookiesString(cookiesString) {
     var nextStart;
     var cookiesSeparatorFound;
     function skipWhitespace() {
-        while(pos < cookiesString.length && /\s/.test(cookiesString.charAt(pos))){
+        while(pos < cookiesString?.length && /\s/.test(cookiesString.charAt(pos))){
             pos += 1;
         }
-        return pos < cookiesString.length;
+        return pos < cookiesString?.length;
     }
     function notSpecialChar() {
         ch = cookiesString.charAt(pos);
         return ch !== "=" && ch !== ";" && ch !== ",";
     }
-    while(pos < cookiesString.length){
+    while(pos < cookiesString?.length){
         start = pos;
         cookiesSeparatorFound = false;
         while(skipWhitespace()){
@@ -1224,10 +1224,10 @@ function splitCookiesString(cookiesString) {
                 pos += 1;
                 skipWhitespace();
                 nextStart = pos;
-                while(pos < cookiesString.length && notSpecialChar()){
+                while(pos < cookiesString?.length && notSpecialChar()){
                     pos += 1;
                 }
-                if (pos < cookiesString.length && cookiesString.charAt(pos) === "=") {
+                if (pos < cookiesString?.length && cookiesString.charAt(pos) === "=") {
                     cookiesSeparatorFound = true;
                     pos = nextStart;
                     cookiesStrings.push(cookiesString.substring(start, lastComma));
@@ -1239,8 +1239,8 @@ function splitCookiesString(cookiesString) {
                 pos += 1;
             }
         }
-        if (!cookiesSeparatorFound || pos >= cookiesString.length) {
-            cookiesStrings.push(cookiesString.substring(start, cookiesString.length));
+        if (!cookiesSeparatorFound || pos >= cookiesString?.length) {
+            cookiesStrings.push(cookiesString.substring(start, cookiesString?.length));
         }
     }
     return cookiesStrings;
@@ -1276,7 +1276,7 @@ var RequestCookies = class {
     getAll(...args) {
         var _a;
         const all = Array.from(this._parsed);
-        if (!args.length) {
+        if (!args?.length) {
             return all.map(([_, value])=>value);
         }
         const name = typeof args[0] === "string" ? args[0] : (_a = args[0]) == null ? void 0 : _a.name;
@@ -1286,7 +1286,7 @@ var RequestCookies = class {
         return this._parsed.has(name);
     }
     set(...args) {
-        const [name, value] = args.length === 1 ? [
+        const [name, value] = args?.length === 1 ? [
             args[0].name,
             args[0].value
         ] : args;
@@ -1347,7 +1347,7 @@ var ResponseCookies = class {
    */ getAll(...args) {
         var _a;
         const all = Array.from(this._parsed.values());
-        if (!args.length) {
+        if (!args?.length) {
             return all;
         }
         const key = typeof args[0] === "string" ? args[0] : (_a = args[0]) == null ? void 0 : _a.name;
@@ -1359,7 +1359,7 @@ var ResponseCookies = class {
     /**
    * {@link https://wicg.github.io/cookie-store/#CookieStore-set CookieStore#set} without the Promise.
    */ set(...args) {
-        const [name, value, cookie] = args.length === 1 ? [
+        const [name, value, cookie] = args?.length === 1 ? [
             args[0].name,
             args[0].value,
             args[0]
@@ -1858,7 +1858,7 @@ function normalizeAppPath(route) {
             return pathname;
         }
         // The last segment (if it's a leaf) should be ignored.
-        if ((segment === 'page' || segment === 'route') && index === segments.length - 1) {
+        if ((segment === 'page' || segment === 'route') && index === segments?.length - 1) {
             return pathname;
         }
         return pathname + "/" + segment;
@@ -2268,14 +2268,14 @@ class RequestCookiesAdapter {
 const SYMBOL_MODIFY_COOKIE_VALUES = Symbol.for('next.mutated.cookies');
 function getModifiedCookieValues(cookies) {
     const modified = cookies[SYMBOL_MODIFY_COOKIE_VALUES];
-    if (!modified || !Array.isArray(modified) || modified.length === 0) {
+    if (!modified || !Array.isArray(modified) || modified?.length === 0) {
         return [];
     }
     return modified;
 }
 function appendMutableCookies(headers, mutableCookies) {
     const modifiedCookieValues = getModifiedCookieValues(mutableCookies);
-    if (modifiedCookieValues.length === 0) {
+    if (modifiedCookieValues?.length === 0) {
         return false;
     }
     // Return a new response that extends the response with
@@ -3063,7 +3063,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                             }
                         };
                     }
-                    for(let e = 0; e < r.length; e++){
+                    for(let e = 0; e < r?.length; e++){
                         this[r[e].n] = _consoleFunc(r[e].c);
                     }
                 }
@@ -3513,11 +3513,11 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                     let o;
                     let i;
                     let s;
-                    if (arguments.length < 2) {
+                    if (arguments?.length < 2) {
                         return;
-                    } else if (arguments.length === 2) {
+                    } else if (arguments?.length === 2) {
                         s = t;
-                    } else if (arguments.length === 3) {
+                    } else if (arguments?.length === 3) {
                         o = t;
                         s = r;
                     } else {
@@ -3696,13 +3696,13 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                     }, []).join(i);
                 }
                 _parse(e) {
-                    if (e.length > o) return;
+                    if (e?.length > o) return;
                     this._internalState = e.split(i).reverse().reduce((e, t)=>{
                         const r = t.trim();
                         const a = r.indexOf(c);
                         if (a !== -1) {
                             const o = r.slice(0, a);
-                            const i = r.slice(a + 1, t.length);
+                            const i = r.slice(a + 1, t?.length);
                             if ((0, n.validateKey)(o) && (0, n.validateValue)(i)) {
                                 e.set(o, i);
                             } else {}
@@ -4201,7 +4201,7 @@ class NextTracerImpl {
                     rootSpanAttributesStore.set(spanId, new Map(Object.entries(options.attributes ?? {})));
                 }
                 try {
-                    if (fn.length > 1) {
+                    if (fn?.length > 1) {
                         return fn(span, (err)=>closeSpanWithError(span, err));
                     }
                     const result = fn(span);
@@ -4230,7 +4230,7 @@ class NextTracerImpl {
     }
     wrap(...args) {
         const tracer = this;
-        const [name, options, fn] = args.length === 3 ? args : [
+        const [name, options, fn] = args?.length === 3 ? args : [
             args[0],
             {},
             args[1]
@@ -4243,7 +4243,7 @@ class NextTracerImpl {
             if (typeof optionsObj === 'function' && typeof fn === 'function') {
                 optionsObj = optionsObj.apply(this, arguments);
             }
-            const lastArgId = arguments.length - 1;
+            const lastArgId = arguments?.length - 1;
             const cb = arguments[lastArgId];
             if (typeof cb === 'function') {
                 const scopeBoundCb = tracer.getContext().bind(context.active(), cb);
@@ -4316,14 +4316,14 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
             var n = r || {};
             var o = e.split(a);
             var s = n.decode || i;
-            for(var p = 0; p < o.length; p++){
+            for(var p = 0; p < o?.length; p++){
                 var f = o[p];
                 var u = f.indexOf("=");
                 if (u < 0) {
                     continue;
                 }
                 var v = f.substr(0, u).trim();
-                var c = f.substr(++u, f.length).trim();
+                var c = f.substr(++u, f?.length).trim();
                 if ('"' == c[0]) {
                     c = c.slice(1, -1);
                 }
@@ -4802,7 +4802,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                 if (r.fn) return [
                     r.fn
                 ];
-                for(var i = 0, s = r.length, o = new Array(s); i < s; i++){
+                for(var i = 0, s = r?.length, o = new Array(s); i < s; i++){
                     o[i] = r[i].fn;
                 }
                 return o;
@@ -4811,12 +4811,12 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                 var t = n ? n + e : e, r = this._events[t];
                 if (!r) return 0;
                 if (r.fn) return 1;
-                return r.length;
+                return r?.length;
             };
             EventEmitter.prototype.emit = function emit(e, t, r, i, s, o) {
                 var u = n ? n + e : e;
                 if (!this._events[u]) return false;
-                var a = this._events[u], l = arguments.length, c, h;
+                var a = this._events[u], l = arguments?.length, c, h;
                 if (a.fn) {
                     if (a.once) this.removeListener(e, a.fn, undefined, true);
                     switch(l){
@@ -4838,7 +4838,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                     }
                     a.fn.apply(a.context, c);
                 } else {
-                    var _ = a.length, f;
+                    var _ = a?.length, f;
                     for(h = 0; h < _; h++){
                         if (a[h].once) this.removeListener(e, a[h].fn, undefined, true);
                         switch(l){
@@ -4883,12 +4883,12 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                         clearEvent(this, s);
                     }
                 } else {
-                    for(var u = 0, a = [], l = o.length; u < l; u++){
+                    for(var u = 0, a = [], l = o?.length; u < l; u++){
                         if (o[u].fn !== t || i && !o[u].once || r && o[u].context !== r) {
                             a.push(o[u]);
                         }
                     }
-                    if (a.length) this._events[s] = a.length === 1 ? a[0] : a;
+                    if (a?.length) this._events[s] = a?.length === 1 ? a[0] : a;
                     else clearEvent(this, s);
                 }
                 return this;
@@ -4930,7 +4930,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
             });
             function lowerBound(e, t, n) {
                 let r = 0;
-                let i = e.length;
+                let i = e?.length;
                 while(i > 0){
                     const s = i / 2 | 0;
                     let o = r + s;
@@ -4977,7 +4977,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                     return this._queue?.filter((t)=>t.priority === e.priority).map((e)=>e.run);
                 }
                 get size() {
-                    return this._queue.length;
+                    return this._queue?.length;
                 }
             }
             t["default"] = PriorityQueue;
@@ -5253,7 +5253,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                 return this._queue.size;
             }
             sizeBy(e) {
-                return this._queue?.filter(e).length;
+                return this._queue?.filter(e)?.length;
             }
             get pending() {
                 return this._pendingCount;
@@ -5787,8 +5787,8 @@ const reader = {
 function getTestStack() {
     let stack = (new Error().stack ?? '').split('\n');
     // Skip the first line and find first non-empty line.
-    for(let i = 1; i < stack.length; i++){
-        if (stack[i].length > 0) {
+    for(let i = 1; i < stack?.length; i++){
+        if (stack[i]?.length > 0) {
             stack = stack.slice(i);
             break;
         }
@@ -6244,7 +6244,7 @@ async function adapter(params) {
             finalResponse.headers.set(`x-middleware-request-${key}`, value);
             overwrittenHeaders.push(key);
         }
-        if (overwrittenHeaders.length > 0) {
+        if (overwrittenHeaders?.length > 0) {
             finalResponse.headers.set('x-middleware-override-headers', middlewareOverrideHeaders + ',' + overwrittenHeaders.join(','));
         }
     }
@@ -6284,7 +6284,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                 var extend = function(i, e) {
                     var o = {};
                     for(var a in i){
-                        if (e[a] && e[a].length % 2 === 0) {
+                        if (e[a] && e[a]?.length % 2 === 0) {
                             o[a] = e[a].concat(i[a]);
                         } else {
                             o[a] = i[a];
@@ -6293,7 +6293,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                     return o;
                 }, enumerize = function(i) {
                     var e = {};
-                    for(var o = 0; o < i.length; o++){
+                    for(var o = 0; o < i?.length; o++){
                         e[i[o].toUpperCase()] = i[o];
                     }
                     return e;
@@ -6311,32 +6311,32 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                 };
                 var rgxMapper = function(i, e) {
                     var o = 0, r, t, n, b, l, d;
-                    while(o < e.length && !l){
+                    while(o < e?.length && !l){
                         var c = e[o], u = e[o + 1];
                         r = t = 0;
-                        while(r < c.length && !l){
+                        while(r < c?.length && !l){
                             if (!c[r]) {
                                 break;
                             }
                             l = c[r++].exec(i);
                             if (!!l) {
-                                for(n = 0; n < u.length; n++){
+                                for(n = 0; n < u?.length; n++){
                                     d = l[++t];
                                     b = u[n];
-                                    if (typeof b === w && b.length > 0) {
-                                        if (b.length === 2) {
+                                    if (typeof b === w && b?.length > 0) {
+                                        if (b?.length === 2) {
                                             if (typeof b[1] == s) {
                                                 this[b[0]] = b[1].call(this, d);
                                             } else {
                                                 this[b[0]] = b[1];
                                             }
-                                        } else if (b.length === 3) {
+                                        } else if (b?.length === 3) {
                                             if (typeof b[1] === s && !(b[1].exec && b[1].test)) {
                                                 this[b[0]] = d ? b[1].call(this, d, b[2]) : a;
                                             } else {
                                                 this[b[0]] = d ? d.replace(b[1], b[2]) : a;
                                             }
-                                        } else if (b.length === 4) {
+                                        } else if (b?.length === 4) {
                                             this[b[0]] = d ? b[3].call(this, d.replace(b[1], b[2])) : a;
                                         }
                                     } else {
@@ -6349,8 +6349,8 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                     }
                 }, strMapper = function(i, e) {
                     for(var o in e){
-                        if (typeof e[o] === w && e[o].length > 0) {
-                            for(var r = 0; r < e[o].length; r++){
+                        if (typeof e[o] === w && e[o]?.length > 0) {
+                            for(var r = 0; r < e[o]?.length; r++){
                                 if (has(e[o][r], i)) {
                                     return o === n ? a : o;
                                 }
@@ -8508,7 +8508,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                         return n;
                     };
                     this.setUA = function(i) {
-                        n = typeof i === l && i.length > q ? trim(i, q) : i;
+                        n = typeof i === l && i?.length > q ? trim(i, q) : i;
                         return this;
                     };
                     this.setUA(n);
@@ -8887,9 +8887,9 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
             var _RunInRootFrame$Deter = RunInRootFrame.DetermineComponentFrameRoot(), sampleStack = _RunInRootFrame$Deter[0], controlStack = _RunInRootFrame$Deter[1];
             if (sampleStack && controlStack) {
                 var sampleLines = sampleStack.split("\n"), controlLines = controlStack.split("\n");
-                for(_RunInRootFrame$Deter = namePropDescriptor = 0; namePropDescriptor < sampleLines.length && !sampleLines[namePropDescriptor].includes("DetermineComponentFrameRoot");)namePropDescriptor++;
-                for(; _RunInRootFrame$Deter < controlLines.length && !controlLines[_RunInRootFrame$Deter].includes("DetermineComponentFrameRoot");)_RunInRootFrame$Deter++;
-                if (namePropDescriptor === sampleLines.length || _RunInRootFrame$Deter === controlLines.length) for(namePropDescriptor = sampleLines.length - 1, _RunInRootFrame$Deter = controlLines.length - 1; 1 <= namePropDescriptor && 0 <= _RunInRootFrame$Deter && sampleLines[namePropDescriptor] !== controlLines[_RunInRootFrame$Deter];)_RunInRootFrame$Deter--;
+                for(_RunInRootFrame$Deter = namePropDescriptor = 0; namePropDescriptor < sampleLines?.length && !sampleLines[namePropDescriptor].includes("DetermineComponentFrameRoot");)namePropDescriptor++;
+                for(; _RunInRootFrame$Deter < controlLines?.length && !controlLines[_RunInRootFrame$Deter].includes("DetermineComponentFrameRoot");)_RunInRootFrame$Deter++;
+                if (namePropDescriptor === sampleLines?.length || _RunInRootFrame$Deter === controlLines?.length) for(namePropDescriptor = sampleLines?.length - 1, _RunInRootFrame$Deter = controlLines?.length - 1; 1 <= namePropDescriptor && 0 <= _RunInRootFrame$Deter && sampleLines[namePropDescriptor] !== controlLines[_RunInRootFrame$Deter];)_RunInRootFrame$Deter--;
                 for(; 1 <= namePropDescriptor && 0 <= _RunInRootFrame$Deter; namePropDescriptor--, _RunInRootFrame$Deter--)if (sampleLines[namePropDescriptor] !== controlLines[_RunInRootFrame$Deter]) {
                     if (1 !== namePropDescriptor || 1 !== _RunInRootFrame$Deter) {
                         do if (namePropDescriptor--, _RunInRootFrame$Deter--, 0 > _RunInRootFrame$Deter || sampleLines[namePropDescriptor] !== controlLines[_RunInRootFrame$Deter]) {
@@ -9003,7 +9003,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
     }
     function validateChildKeys(node, parentType) {
         if ("object" === typeof node && node && node.$$typeof !== REACT_CLIENT_REFERENCE) {
-            if (isArrayImpl(node)) for(var i = 0; i < node.length; i++){
+            if (isArrayImpl(node)) for(var i = 0; i < node?.length; i++){
                 var child = node[i];
                 isValidElement(child) && validateExplicitKey(child, parentType);
             }
@@ -9100,7 +9100,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
         }
         invokeCallback = 0;
         childKey = "" === nameSoFar ? "." : nameSoFar + ":";
-        if (isArrayImpl(children)) for(var i = 0; i < children.length; i++)nameSoFar = children[i], type = childKey + getElementKey(nameSoFar, i), invokeCallback += mapIntoArray(nameSoFar, array, escapedPrefix, type, callback);
+        if (isArrayImpl(children)) for(var i = 0; i < children?.length; i++)nameSoFar = children[i], type = childKey + getElementKey(nameSoFar, i), invokeCallback += mapIntoArray(nameSoFar, array, escapedPrefix, type, callback);
         else if (i = getIteratorFn(children), "function" === typeof i) for(i === children.entries && (didWarnAboutMaps || console.warn("Using Maps as children is not supported. Use an array of keyed ReactElements instead."), didWarnAboutMaps = !0), children = i.call(children), i = 0; !(nameSoFar = children.next()).done;)nameSoFar = nameSoFar.value, type = childKey + getElementKey(nameSoFar, i++), invokeCallback += mapIntoArray(nameSoFar, array, escapedPrefix, type, callback);
         else if ("object" === type) {
             if ("function" === typeof children.then) return mapIntoArray(resolveThenable(children), array, escapedPrefix, nameSoFar, callback);
@@ -9197,7 +9197,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
             dispatcher = fnMap.get(fn);
             void 0 === dispatcher && (dispatcher = createCacheNode(), fnMap.set(fn, dispatcher));
             fnMap = 0;
-            for(var l = arguments.length; fnMap < l; fnMap++){
+            for(var l = arguments?.length; fnMap < l; fnMap++){
                 var arg = arguments[fnMap];
                 if ("function" === typeof arg || "object" === typeof arg && null !== arg) {
                     var objectCache = dispatcher.o;
@@ -9234,7 +9234,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
             hasValidKey(config) && (checkKeyStringCoercion(config.key), key = "" + config.key);
             for(propName in config)!hasOwnProperty.call(config, propName) || "key" === propName || "__self" === propName || "__source" === propName || "ref" === propName && void 0 === config.ref || (props[propName] = config[propName]);
         }
-        var propName = arguments.length - 2;
+        var propName = arguments?.length - 2;
         if (1 === propName) props.children = children;
         else if (1 < propName) {
             JSCompiler_inline_result = Array(propName);
@@ -9242,14 +9242,14 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
             props.children = JSCompiler_inline_result;
         }
         props = ReactElement(element.type, key, void 0, void 0, owner, props);
-        for(key = 2; key < arguments.length; key++)validateChildKeys(arguments[key], props.type);
+        for(key = 2; key < arguments?.length; key++)validateChildKeys(arguments[key], props.type);
         return props;
     };
     exports.createElement = function(type, config, children) {
-        if (isValidElementType(type)) for(var i = 2; i < arguments.length; i++)validateChildKeys(arguments[i], type);
+        if (isValidElementType(type)) for(var i = 2; i < arguments?.length; i++)validateChildKeys(arguments[i], type);
         else {
             i = "";
-            if (void 0 === type || "object" === typeof type && null !== type && 0 === Object.keys(type).length) i += " You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.";
+            if (void 0 === type || "object" === typeof type && null !== type && 0 === Object.keys(type)?.length) i += " You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.";
             if (null === type) var typeString = "null";
             else isArrayImpl(type) ? typeString = "array" : void 0 !== type && type.$$typeof === REACT_ELEMENT_TYPE ? (typeString = "<" + (getComponentNameFromType(type.type) || "Unknown") + " />", i = " Did you accidentally export a JSX literal instead of a component?") : typeString = typeof type;
             console.error("React.createElement: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", typeString, i);
@@ -9258,7 +9258,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
         i = {};
         typeString = null;
         if (null != config) for(propName in didWarnAboutOldJSXRuntime || !("__self" in config) || "key" in config || (didWarnAboutOldJSXRuntime = !0, console.warn("Your app (or one of its dependencies) is using an outdated JSX transform. Update to the modern JSX transform for faster performance: https://react.dev/link/new-jsx-transform")), hasValidKey(config) && (checkKeyStringCoercion(config.key), typeString = "" + config.key), config)hasOwnProperty.call(config, propName) && "key" !== propName && "__self" !== propName && "__source" !== propName && (i[propName] = config[propName]);
-        var childrenLength = arguments.length - 2;
+        var childrenLength = arguments?.length - 2;
         if (1 === childrenLength) i.children = children;
         else if (1 < childrenLength) {
             for(var childArray = Array(childrenLength), _i = 0; _i < childrenLength; _i++)childArray[_i] = arguments[_i + 2];
@@ -9277,7 +9277,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
         return refObject;
     };
     exports.forwardRef = function(render) {
-        null != render && render.$$typeof === REACT_MEMO_TYPE ? console.error("forwardRef requires a render function but received a `memo` component. Instead of forwardRef(memo(...)), use memo(forwardRef(...)).") : "function" !== typeof render ? console.error("forwardRef requires a render function but was given %s.", null === render ? "null" : typeof render) : 0 !== render.length && 2 !== render.length && console.error("forwardRef render functions accept exactly two parameters: props and ref. %s", 1 === render.length ? "Did you forget to use the ref parameter?" : "Any additional parameter will be undefined.");
+        null != render && render.$$typeof === REACT_MEMO_TYPE ? console.error("forwardRef requires a render function but received a `memo` component. Instead of forwardRef(memo(...)), use memo(forwardRef(...)).") : "function" !== typeof render ? console.error("forwardRef requires a render function but was given %s.", null === render ? "null" : typeof render) : 0 !== render?.length && 2 !== render?.length && console.error("forwardRef render functions accept exactly two parameters: props and ref. %s", 1 === render?.length ? "Did you forget to use the ref parameter?" : "Any additional parameter will be undefined.");
         null != render && null != render.defaultProps && console.error("forwardRef render functions do not support defaultProps. Did you accidentally pass a React component?");
         var elementType = {
             $$typeof: REACT_FORWARD_REF_TYPE,
@@ -9689,7 +9689,7 @@ function isPrerenderInterruptedError(error) {
     return typeof error === 'object' && error !== null && error.digest === NEXT_PRERENDER_INTERRUPTED && 'name' in error && 'message' in error && error instanceof Error;
 }
 function accessedDynamicData(dynamicAccesses) {
-    return dynamicAccesses.length > 0;
+    return dynamicAccesses?.length > 0;
 }
 function consumeDynamicAccess(serverDynamic, clientDynamic) {
     // We mutate because we only call this once we are no longer writing
@@ -9699,7 +9699,7 @@ function consumeDynamicAccess(serverDynamic, clientDynamic) {
     return serverDynamic.dynamicAccesses;
 }
 function formatDynamicAPIAccesses(dynamicAccesses) {
-    return dynamicAccesses?.filter((access)=>typeof access.stack === 'string' && access.stack.length > 0).map(({ expression, stack })=>{
+    return dynamicAccesses?.filter((access)=>typeof access.stack === 'string' && access.stack?.length > 0).map(({ expression, stack })=>{
         stack = stack.split('\n') // Remove the "Error: " prefix from the first line of the stack trace as
         // well as the first 4 lines of the stack trace which is the distance
         // from the user code and the `new Error().stack` call.
@@ -9829,8 +9829,8 @@ function throwIfDisallowedDynamic(route, dynamicValidation, serverDynamic, clien
         throw new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$client$2f$components$2f$static$2d$generation$2d$bailout$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["StaticGenBailoutError"]();
     }
     const dynamicErrors = dynamicValidation.dynamicErrors;
-    if (dynamicErrors.length) {
-        for(let i = 0; i < dynamicErrors.length; i++){
+    if (dynamicErrors?.length) {
+        for(let i = 0; i < dynamicErrors?.length; i++){
             console.error(dynamicErrors[i]);
         }
         throw new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$client$2f$components$2f$static$2d$generation$2d$bailout$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["StaticGenBailoutError"]();
@@ -10089,7 +10089,7 @@ function concat(...buffers) {
     let i = 0;
     buffers.forEach((buffer)=>{
         buf.set(buffer, i);
-        i += buffer.length;
+        i += buffer?.length;
     });
     return buf;
 }
@@ -10123,16 +10123,16 @@ function uint32be(value) {
     return buf;
 }
 function lengthAndInput(input) {
-    return concat(uint32be(input.length), input);
+    return concat(uint32be(input?.length), input);
 }
 async function concatKdf(secret, bits, value) {
     const iterations = Math.ceil((bits >> 3) / 32);
     const res = new Uint8Array(iterations * 32);
     for(let iter = 0; iter < iterations; iter++){
-        const buf = new Uint8Array(4 + secret.length + value.length);
+        const buf = new Uint8Array(4 + secret?.length + value?.length);
         buf.set(uint32be(iter + 1));
         buf.set(secret, 4);
-        buf.set(value, 4 + secret.length);
+        buf.set(value, 4 + secret?.length);
         res.set(await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$jose$2f$dist$2f$browser$2f$runtime$2f$digest$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["default"])('sha256', buf), iter * 32);
     }
     return res.slice(0, bits >> 3);
@@ -10365,7 +10365,7 @@ const encodeBase64 = (input)=>{
     }
     const CHUNK_SIZE = 0x8000;
     const arr = [];
-    for(let i = 0; i < unencoded.length; i += CHUNK_SIZE){
+    for(let i = 0; i < unencoded?.length; i += CHUNK_SIZE){
         arr.push(String.fromCharCode.apply(null, unencoded.subarray(i, i + CHUNK_SIZE)));
     }
     return btoa(arr.join(''));
@@ -10375,8 +10375,8 @@ const encode = (input)=>{
 };
 const decodeBase64 = (encoded)=>{
     const binary = atob(encoded);
-    const bytes = new Uint8Array(binary.length);
-    for(let i = 0; i < binary.length; i++){
+    const bytes = new Uint8Array(binary?.length);
+    for(let i = 0; i < binary?.length; i++){
         bytes[i] = binary.charCodeAt(i);
     }
     return bytes;
@@ -10404,7 +10404,7 @@ __turbopack_esm__({
 });
 const isDisjoint = (...headers)=>{
     const sources = headers?.filter(Boolean);
-    if (sources.length === 0 || sources.length === 1) {
+    if (sources?.length === 0 || sources?.length === 1) {
         return true;
     }
     let acc;
@@ -10442,7 +10442,7 @@ function validateCrit(Err, recognizedDefault, recognizedOption, protectedHeader,
     if (!protectedHeader || protectedHeader.crit === undefined) {
         return new Set();
     }
-    if (!Array.isArray(protectedHeader.crit) || protectedHeader.crit.length === 0 || protectedHeader.crit.some((input)=>typeof input !== 'string' || input.length === 0)) {
+    if (!Array.isArray(protectedHeader.crit) || protectedHeader.crit?.length === 0 || protectedHeader.crit.some((input)=>typeof input !== 'string' || input?.length === 0)) {
         throw new Err('"crit" (Critical) Header Parameter MUST be an array of non-empty strings when present');
     }
     let recognized;
@@ -10515,10 +10515,10 @@ __turbopack_esm__({
     "withAlg": (()=>withAlg)
 });
 function message(msg, actual, ...types) {
-    if (types.length > 2) {
+    if (types?.length > 2) {
         const last = types.pop();
         msg += `one of type ${types.join(', ')}, or ${last}.`;
-    } else if (types.length === 2) {
+    } else if (types?.length === 2) {
         msg += `one of type ${types[0]} or ${types[1]}.`;
     } else {
         msg += `of type ${types[0]}.`;
@@ -10623,12 +10623,12 @@ function getNamedCurve(alg) {
     }
 }
 function checkUsage(key, usages) {
-    if (usages.length && !usages.some((expected)=>key.usages.includes(expected))) {
+    if (usages?.length && !usages.some((expected)=>key.usages.includes(expected))) {
         let msg = 'CryptoKey does not support this operation, its usages must include ';
-        if (usages.length > 2) {
+        if (usages?.length > 2) {
             const last = usages.pop();
             msg += `one of ${usages.join(', ')}, or ${last}.`;
-        } else if (usages.length === 2) {
+        } else if (usages?.length === 2) {
             msg += `one of ${usages[0]} or ${usages[1]}.`;
         } else {
             msg += `${usages[0]}.`;
@@ -10698,8 +10698,8 @@ function checkEncCryptoKey(key, alg, ...usages) {
             {
                 if (!isAlgorithm(key.algorithm, 'AES-GCM')) throw unusable('AES-GCM');
                 const expected = parseInt(alg.slice(1, 4), 10);
-                const actual = key.algorithm.length;
-                if (actual !== expected) throw unusable(expected, 'algorithm.length');
+                const actual = key.algorithm?.length;
+                if (actual !== expected) throw unusable(expected, 'algorithm?.length');
                 break;
             }
         case 'A128KW':
@@ -10708,8 +10708,8 @@ function checkEncCryptoKey(key, alg, ...usages) {
             {
                 if (!isAlgorithm(key.algorithm, 'AES-KW')) throw unusable('AES-KW');
                 const expected = parseInt(alg.slice(1, 4), 10);
-                const actual = key.algorithm.length;
-                if (actual !== expected) throw unusable(expected, 'algorithm.length');
+                const actual = key.algorithm?.length;
+                if (actual !== expected) throw unusable(expected, 'algorithm?.length');
                 break;
             }
         case 'ECDH':

@@ -39,7 +39,7 @@ export const ResetPasswordConfirm = () => {
 
   useEffect(() => {
     // Validar longitud de contraseña
-    setPasswordValid(newPassword.length >= 5);
+    setPasswordValid(newPassword?.length >= 5);
     // Validar que las contraseñas coincidan
     setPasswordsMatch(newPassword === confirmPassword);
   }, [newPassword, confirmPassword]);
@@ -176,7 +176,7 @@ export const ResetPasswordConfirm = () => {
                       )}
                     </button>
                   </div>
-                  {!passwordValid && newPassword.length > 0 && (
+                  {!passwordValid && newPassword?.length > 0 && (
                     <span className="text-xs text-red-500">
                       La contraseña debe tener al menos 5 caracteres
                     </span>
@@ -201,7 +201,7 @@ export const ResetPasswordConfirm = () => {
                       required
                     />
                   </div>
-                  {!passwordsMatch && confirmPassword.length > 0 && (
+                  {!passwordsMatch && confirmPassword?.length > 0 && (
                     <span className="text-xs text-red-500">
                       Las contraseñas no coinciden
                     </span>

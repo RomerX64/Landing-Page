@@ -404,7 +404,7 @@ async function loadChunk(source, chunkData) {
         if (moduleFactories[included]) return true;
         return availableModules.get(included);
     });
-    if (modulesPromises.length > 0 && modulesPromises.every((p)=>p)) {
+    if (modulesPromises?.length > 0 && modulesPromises.every((p)=>p)) {
         // When all included items are already loaded or loading, we can skip loading ourselves
         return Promise.all(modulesPromises);
     }
@@ -415,9 +415,9 @@ async function loadChunk(source, chunkData) {
         return availableModuleChunks.get(included);
     })?.filter((p)=>p);
     let promise;
-    if (moduleChunksPromises.length > 0) {
+    if (moduleChunksPromises?.length > 0) {
         // Some module chunks are already loaded or loading.
-        if (moduleChunksPromises.length === includedModuleChunksList.length) {
+        if (moduleChunksPromises?.length === includedModuleChunksList?.length) {
             // When all included module chunks are already loaded or loading, we can skip loading ourselves
             return Promise.all(moduleChunksPromises);
         }
@@ -1479,7 +1479,7 @@ async function loadWebAssemblyModule(_source, chunkPath) {
             if (params == null) {
                 return;
             }
-            if (params.otherChunks.length === 0) {
+            if (params.otherChunks?.length === 0) {
                 // The current chunk does not depend on any other chunks, it can be
                 // instantiated immediately.
                 instantiateRuntimeModules(params.runtimeModuleIds, chunkPath);

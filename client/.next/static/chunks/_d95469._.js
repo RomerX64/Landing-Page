@@ -404,7 +404,7 @@ async function loadChunk(source, chunkData) {
         if (moduleFactories[included]) return true;
         return availableModules.get(included);
     });
-    if (modulesPromises.length > 0 && modulesPromises.every((p)=>p)) {
+    if (modulesPromises?.length > 0 && modulesPromises.every((p)=>p)) {
         // When all included items are already loaded or loading, we can skip loading ourselves
         return Promise.all(modulesPromises);
     }
@@ -415,9 +415,9 @@ async function loadChunk(source, chunkData) {
         return availableModuleChunks.get(included);
     })?.filter((p)=>p);
     let promise;
-    if (moduleChunksPromises.length > 0) {
+    if (moduleChunksPromises?.length > 0) {
         // Some module chunks are already loaded or loading.
-        if (moduleChunksPromises.length === includedModuleChunksList.length) {
+        if (moduleChunksPromises?.length === includedModuleChunksList?.length) {
             // When all included module chunks are already loaded or loading, we can skip loading ourselves
             return Promise.all(moduleChunksPromises);
         }
@@ -1434,7 +1434,7 @@ async function loadWebAssemblyModule(_source, wasmChunkPath) {
                     type: SourceType.Runtime,
                     chunkPath
                 }, otherChunkData)));
-            if (params.runtimeModuleIds.length > 0) {
+            if (params.runtimeModuleIds?.length > 0) {
                 for (const moduleId of params.runtimeModuleIds){
                     getOrInstantiateRuntimeModule(moduleId, chunkPath);
                 }
@@ -1501,7 +1501,7 @@ async function loadWebAssemblyModule(_source, wasmChunkPath) {
         } else {
             if (chunkPath.endsWith(".css")) {
                 const previousLinks = document.querySelectorAll(`link[rel=stylesheet][href="${chunkUrl}"],link[rel=stylesheet][href^="${chunkUrl}?"],link[rel=stylesheet][href="${decodedChunkUrl}"],link[rel=stylesheet][href^="${decodedChunkUrl}?"]`);
-                if (previousLinks.length > 0) {
+                if (previousLinks?.length > 0) {
                     // CSS chunks do not register themselves, and as such must be marked as
                     // loaded instantly.
                     resolver.resolve();
@@ -1521,7 +1521,7 @@ async function loadWebAssemblyModule(_source, wasmChunkPath) {
                 }
             } else if (chunkPath.endsWith(".js")) {
                 const previousScripts = document.querySelectorAll(`script[src="${chunkUrl}"],script[src^="${chunkUrl}?"],script[src="${decodedChunkUrl}"],script[src^="${decodedChunkUrl}?"]`);
-                if (previousScripts.length > 0) {
+                if (previousScripts?.length > 0) {
                     // There is this edge where the script already failed loading, but we
                     // can't detect that. The Promise will never resolve in this case.
                     for (const script of Array.from(previousScripts)){
@@ -1591,7 +1591,7 @@ let DEV_BACKEND;
                 const chunkUrl = getChunkRelativeUrl(chunkPath);
                 const decodedChunkUrl = decodeURI(chunkUrl);
                 const previousLinks = document.querySelectorAll(`link[rel=stylesheet][href="${chunkUrl}"],link[rel=stylesheet][href^="${chunkUrl}?"],link[rel=stylesheet][href="${decodedChunkUrl}"],link[rel=stylesheet][href^="${decodedChunkUrl}?"]`);
-                if (previousLinks.length === 0) {
+                if (previousLinks?.length === 0) {
                     reject(new Error(`No link element found for chunk ${chunkPath}`));
                     return;
                 }

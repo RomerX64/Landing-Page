@@ -81,7 +81,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                 };
             }
             var i = Object.assign || function(e) {
-                for(var t = 1; t < arguments.length; t++){
+                for(var t = 1; t < arguments?.length; t++){
                     var n = arguments[t];
                     for(var o in n)Object.prototype.hasOwnProperty.call(n, o) && (e[o] = n[o]);
                 }
@@ -98,7 +98,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                 debounceDelay: 50,
                 disableMutationObserver: !1
             }, j = function() {
-                var e = arguments.length > 0 && void 0 !== arguments[0] && arguments[0];
+                var e = arguments?.length > 0 && void 0 !== arguments[0] && arguments[0];
                 if (e && (k = !0), k) return w = (0, y.default)(w, x), (0, b.default)(w, x.once), w;
             }, O = function() {
                 w = (0, h.default)(), j();
@@ -302,7 +302,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
             "use strict";
             function n(e) {
                 var t = void 0, o = void 0, i = void 0;
-                for(t = 0; t < e.length; t += 1){
+                for(t = 0; t < e?.length; t += 1){
                     if (o = e[t], o.dataset && o.dataset.aos) return !0;
                     if (i = o.children && n(o.children)) return !0;
                 }
@@ -350,7 +350,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
             });
             var i = function() {
                 function e(e, t) {
-                    for(var n = 0; n < t.length; n++){
+                    for(var n = 0; n < t?.length; n++){
                         var o = t[n];
                         o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, o.key, o);
                     }

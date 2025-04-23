@@ -167,7 +167,7 @@ const SuscripcionesTab: React.FC<{
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {filteredSubscriptions.length > 0 ? (
+          {filteredSubscriptions?.length > 0 ? (
             filteredSubscriptions.map((sub: ISubscripcion) => (
               <div key={sub.id} className="p-2 bg-gray-700 rounded-lg shadow">
                 <div className="flex items-center justify-between mb-1">

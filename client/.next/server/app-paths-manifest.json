@@ -4,5 +4,6 @@
   "/(default)/page": "app/(default)/page.js",
   "/(auth)/signup/page": "app/(auth)/signup/page.js",
   "/_not-found/page": "app/_not-found/page.js",
-  "/(auth)/signin/page": "app/(auth)/signin/page.js"
+  "/(auth)/signin/page": "app/(auth)/signin/page.js",
+  "/(default)/administracion/page": "app/(default)/administracion/page.js"
 }

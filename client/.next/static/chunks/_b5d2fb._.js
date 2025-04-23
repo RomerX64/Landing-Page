@@ -86,7 +86,7 @@ function SignUpLayout() {
                 hasUpperCase,
                 hasNumber,
                 hasSpecialChar
-            ]?.filter(Boolean).length;
+            ]?.filter(Boolean)?.length;
             return criteriaCount >= 3;
         }
     }["SignUpLayout.useCallback[validatePassword]"], []);
@@ -145,7 +145,7 @@ function SignUpLayout() {
         const password = isPassword ? value : newUser.password;
         const confirmPassword = isPassword ? newUser.confirmPassword : value;
         // Validate password length, complexity and match
-        const lengthError = password.length < 8;
+        const lengthError = password?.length < 8;
         const passwordError = password !== confirmPassword && confirmPassword !== "";
         const complexityError = !validatePassword(password);
         setErrors((prev)=>({
@@ -197,7 +197,7 @@ function SignUpLayout() {
     const isFormValid = ()=>{
         // Check if all required fields are filled and valid
         const isStep1Valid = newUser.name.trim() !== "" && newUser.company.trim() !== "" && newUser.email.trim() !== "" && !errors.emailError && newUser.telefono.trim() !== "" && !errors.phoneError;
-        const isStep2Valid = newUser.password.length >= 8 && !errors.complexityError && newUser.password === newUser.confirmPassword;
+        const isStep2Valid = newUser.password?.length >= 8 && !errors.complexityError && newUser.password === newUser.confirmPassword;
         return formStep === 1 ? isStep1Valid : isStep2Valid;
     };
     // Next step handler
@@ -236,10 +236,10 @@ function SignUpLayout() {
         handlePhoneValidation(newUser.telefono);
         // Validate step 2 fields
         if (newUser.password) {
-            const lengthError = newUser.password.length < 8;
+            const lengthError = newUser.password?.length < 8;
             const passwordError = newUser.password !== newUser.confirmPassword && newUser.confirmPassword !== "";
             const complexityError = !validatePassword(newUser.password);
-            newErrors.lengthError = lengthError;
+            newErrors?.lengthError = lengthError;
             newErrors.passwordError = passwordError;
             newErrors.complexityError = complexityError;
         }
@@ -635,7 +635,7 @@ function SignUpLayout() {
                                                 showPassword: showPassword,
                                                 toggleShowPassword: ()=>setShowPassword(!showPassword),
                                                 onChange: handlePasswordChange,
-                                                lengthError: errors.lengthError,
+                                                lengthError: errors?.lengthError,
                                                 complexityError: errors.complexityError
                                             }, void 0, false, {
                                                 fileName: "[project]/app/(auth)/signup/layout.tsx",
@@ -668,7 +668,7 @@ function SignUpLayout() {
                                                         className: "space-y-1 text-xs text-indigo-200/65",
                                                         children: [
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(PasswordRequirement, {
-                                                                met: newUser.password.length >= 8,
+                                                                met: newUser.password?.length >= 8,
                                                                 text: "Mínimo 8 caracteres"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/(auth)/signup/layout.tsx",
@@ -756,7 +756,7 @@ function SignUpLayout() {
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                 type: "submit",
                                                 className: "flex-1 btn bg-gradient-to-t from-indigo-600 to-indigo-500 text-white hover:bg-[length:100%_150%]",
-                                                disabled: isLoading || contextLoading || errors.passwordError || errors.lengthError || errors.complexityError,
+                                                disabled: isLoading || contextLoading || errors.passwordError || errors?.lengthError || errors.complexityError,
                                                 children: isLoading || contextLoading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__["Loader2"], {
                                                     className: "animate-spin"
                                                 }, void 0, false, {
@@ -1151,7 +1151,7 @@ let e = {
     let r = "", l = "", a = "";
     for(let n in e){
         let c = e[n];
-        "@" == n[0] ? "i" == n[1] ? r = n + " " + c + ";" : l += "f" == n[1] ? o(c, n) : n + "{" + o(c, "k" == n[1] ? "" : t) + "}" : "object" == typeof c ? l += o(c, t ? t.replace(/([^,])+/g, (e)=>n.replace(/([^,]*:\S+\([^)]*\))|([^,])+/g, (t)=>/&/.test(t) ? t.replace(/&/g, e) : e ? e + " " + t : t)) : n) : null != c && (n = /^--/.test(n) ? n : n.replace(/[A-Z]/g, "-$&")?.toLowerCase(), a += o.p ? o.p(n, c) : n + ":" + c + ";");
+        "@" == n[0] ? "i" == n[1] ? r = n + " " + c + ";" : l += "f" == n[1] ? o(c, n) : n + "{" + o(c, "k" == n[1] ? "" : t) + "}" : "object" == typeof c ? l += o(c, t ? t.replace(/([^,])+/g, (e)=>n.replace(/([^,]*:\S+\([^)]*\))|([^,])+/g, (t)=>/&/.test(t) ? t.replace(/&/g, e) : e ? e + " " + t : t)) : n) : null != c && (n = /^--/.test(n) ? n : n.replace(/[A-Z]/g, "-$&").toLowerCase(), a += o.p ? o.p(n, c) : n + ":" + c + ";");
     }
     return r + (t && a ? t + "{" + a + "}" : a) + l;
 }, c = {}, s = (e)=>{
@@ -1164,7 +1164,7 @@ let e = {
 }, i = (e, t, r, i, p)=>{
     let u = s(e), d = c[u] || (c[u] = ((e)=>{
         let t = 0, r = 11;
-        for(; t < e.length;)r = 101 * r + e.charCodeAt(t++) >>> 0;
+        for(; t < e?.length;)r = 101 * r + e.charCodeAt(t++) >>> 0;
         return "go" + r;
     })(u));
     if (!c[d]) {
@@ -1297,7 +1297,7 @@ var U = (e, t)=>{
                 toasts: []
             } : {
                 ...e,
-                toasts: e.toasts?.filter((o)=>o.id !== t.toastId)
+                toasts: e.toasts.filter((o)=>o.id !== t.toastId)
             };
         case 5:
             return {
@@ -1460,8 +1460,8 @@ var K = (e, t)=>{
     }, [
         r
     ]), a = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])((o, n)=>{
-        let { reverseOrder: i = !1, gutter: p = 8, defaultPosition: d } = n || {}, h = t?.filter((m)=>(m.position || d) === (o.position || d) && m.height), v = h.findIndex((m)=>m.id === o.id), S = h?.filter((m, E)=>E < v && m.visible).length;
-        return h?.filter((m)=>m.visible).slice(...i ? [
+        let { reverseOrder: i = !1, gutter: p = 8, defaultPosition: d } = n || {}, h = t.filter((m)=>(m.position || d) === (o.position || d) && m.height), v = h.findIndex((m)=>m.id === o.id), S = h.filter((m, E)=>E < v && m.visible)?.length;
+        return h.filter((m)=>m.visible).slice(...i ? [
             S + 1
         ] : [
             0,

@@ -13,7 +13,7 @@ const useMasonry = () => {
 
   useEffect(() => {
     const handleMasonry = () => {
-      if (!items || items.length < 1) return;
+      if (!items || items?.length < 1) return;
       let gapSize = 0;
       if (masonryContainer.current) {
         gapSize = parseInt(

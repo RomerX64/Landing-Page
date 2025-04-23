@@ -373,7 +373,7 @@ function getWidths(param, width, sizes) {
         for(let match; match = viewportWidthRe.exec(sizes); match){
             percentSizes.push(parseInt(match[2]));
         }
-        if (percentSizes.length) {
+        if (percentSizes?.length) {
             const smallestRatio = Math.min(...percentSizes) * 0.01;
             return {
                 widths: allSizes?.filter((s)=>s >= deviceSizes[0] * smallestRatio),
@@ -402,7 +402,7 @@ function getWidths(param, width, sizes) {
         [
             width,
             width * 2 /*, width * 3*/ 
-        ].map((w)=>allSizes.find((p)=>p >= w) || allSizes[allSizes.length - 1]))
+        ].map((w)=>allSizes.find((p)=>p >= w) || allSizes[allSizes?.length - 1]))
     ];
     return {
         widths,
@@ -419,7 +419,7 @@ function generateImgAttrs(param) {
         };
     }
     const { widths, kind } = getWidths(config, width, sizes);
-    const last = widths.length - 1;
+    const last = widths?.length - 1;
     return {
         sizes: !sizes && kind === 'w' ? '100vw' : sizes,
         srcSet: widths.map((w, i)=>loader({
@@ -990,7 +990,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                     ...e
                 };
                 const p = typeof u.maxLength === "number" ? Math.min(s, u.maxLength) : s;
-                let l = t.length;
+                let l = t?.length;
                 if (l > p) {
                     throw new SyntaxError(`Input length: ${l}, exceeds maximum allowed length: ${p}`);
                 }
@@ -1034,7 +1034,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                     tokens: A
                 };
                 t = o.removePrefix(t, m);
-                l = t.length;
+                l = t?.length;
                 const w = [];
                 const N = [];
                 const I = [];
@@ -1077,17 +1077,17 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                 const push = (t)=>{
                     if (B.type === "globstar") {
                         const e = m.braces > 0 && (t.type === "comma" || t.type === "brace");
-                        const u = t.extglob === true || w.length && (t.type === "pipe" || t.type === "paren");
+                        const u = t.extglob === true || w?.length && (t.type === "pipe" || t.type === "paren");
                         if (t.type !== "slash" && t.type !== "paren" && !e && !u) {
-                            m.output = m.output.slice(0, -B.output.length);
+                            m.output = m.output.slice(0, -B.output?.length);
                             B.type = "star";
                             B.value = "*";
                             B.output = k;
                             m.output += B.output;
                         }
                     }
-                    if (w.length && t.type !== "paren") {
-                        w[w.length - 1].inner += t.value;
+                    if (w?.length && t.type !== "paren") {
+                        w[w?.length - 1].inner += t.value;
                     }
                     if (t.value || t.output) append(t);
                     if (B && B.type === "text" && t.type === "text") {
@@ -1128,7 +1128,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                     let o;
                     if (t.type === "negate") {
                         let s = k;
-                        if (t.inner && t.inner.length > 1 && t.inner.includes("/")) {
+                        if (t.inner && t.inner?.length > 1 && t.inner.includes("/")) {
                             s = globstar(u);
                         }
                         if (s !== k || eos() || /^\)+$/.test(remaining())) {
@@ -1162,15 +1162,15 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                         }
                         if (o === "?") {
                             if (e) {
-                                return e + o + (s ? H.repeat(s.length) : "");
+                                return e + o + (s ? H.repeat(s?.length) : "");
                             }
                             if (r === 0) {
-                                return O + (s ? H.repeat(s.length) : "");
+                                return O + (s ? H.repeat(s?.length) : "");
                             }
-                            return H.repeat(u.length);
+                            return H.repeat(u?.length);
                         }
                         if (o === ".") {
-                            return h.repeat(u.length);
+                            return h.repeat(u?.length);
                         }
                         if (o === "*") {
                             if (e) {
@@ -1184,7 +1184,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                         if (u.unescape === true) {
                             s = s.replace(/\\/g, "");
                         } else {
-                            s = s.replace(/\\+/g, (t)=>t.length % 2 === 0 ? "\\\\" : t ? "\\" : "");
+                            s = s.replace(/\\+/g, (t)=>t?.length % 2 === 0 ? "\\\\" : t ? "\\" : "");
                         }
                     }
                     if (s === t && u.contains === true) {
@@ -1217,8 +1217,8 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                         }
                         const e = /^\\+/.exec(remaining());
                         let n = 0;
-                        if (e && e[0].length > 2) {
-                            n = e[0].length;
+                        if (e && e[0]?.length > 2) {
+                            n = e[0]?.length;
                             m.index += n;
                             if (n % 2 !== 0) {
                                 G += "\\";
@@ -1304,7 +1304,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                         if (m.parens === 0 && u.strictBrackets === true) {
                             throw new SyntaxError(syntaxError("opening", "("));
                         }
-                        const t = w[w.length - 1];
+                        const t = w[w?.length - 1];
                         if (t && m.parens === t.parens + 1) {
                             extglobClose(w.pop());
                             continue;
@@ -1333,7 +1333,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                         continue;
                     }
                     if (G === "]") {
-                        if (u.nobracket === true || B && B.type === "bracket" && B.value.length === 1) {
+                        if (u.nobracket === true || B && B.type === "bracket" && B.value?.length === 1) {
                             push({
                                 type: "text",
                                 value: G,
@@ -1365,7 +1365,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                             continue;
                         }
                         const e = o.escapeRegex(B.value);
-                        m.output = m.output.slice(0, -B.value.length);
+                        m.output = m.output.slice(0, -B.value?.length);
                         if (u.literalBrackets === true) {
                             m.output += e;
                             B.value = e;
@@ -1381,15 +1381,15 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                             type: "brace",
                             value: G,
                             output: "(",
-                            outputIndex: m.output.length,
-                            tokensIndex: m.tokens.length
+                            outputIndex: m.output?.length,
+                            tokensIndex: m.tokens?.length
                         };
                         N.push(t);
                         push(t);
                         continue;
                     }
                     if (G === "}") {
-                        const t = N[N.length - 1];
+                        const t = N[N?.length - 1];
                         if (u.nobrace === true || !t) {
                             push({
                                 type: "text",
@@ -1402,7 +1402,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                         if (t.dots === true) {
                             const t = A.slice();
                             const n = [];
-                            for(let e = t.length - 1; e >= 0; e--){
+                            for(let e = t?.length - 1; e >= 0; e--){
                                 A.pop();
                                 if (t[e].type === "brace") {
                                     break;
@@ -1434,8 +1434,8 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                         continue;
                     }
                     if (G === "|") {
-                        if (w.length > 0) {
-                            w[w.length - 1].conditions++;
+                        if (w?.length > 0) {
+                            w[w?.length - 1].conditions++;
                         }
                         push({
                             type: "text",
@@ -1445,8 +1445,8 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                     }
                     if (G === ",") {
                         let t = G;
-                        const e = N[N.length - 1];
-                        if (e && I[I.length - 1] === "braces") {
+                        const e = N[N?.length - 1];
+                        if (e && I[I?.length - 1] === "braces") {
                             e.comma = true;
                             t = "|";
                         }
@@ -1476,7 +1476,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                     if (G === ".") {
                         if (m.braces > 0 && B.type === "dot") {
                             if (B.value === ".") B.output = h;
-                            const t = N[N.length - 1];
+                            const t = N[N?.length - 1];
                             B.type = "dots";
                             B.output += G;
                             B.value += G;
@@ -1593,7 +1593,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                         const t = a.exec(remaining());
                         if (t) {
                             G += t[0];
-                            m.index += t[0].length;
+                            m.index += t[0]?.length;
                         }
                         push({
                             type: "text",
@@ -1634,7 +1634,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                             continue;
                         }
                         const a = m.braces > 0 && (n.type === "comma" || n.type === "brace");
-                        const i = w.length && (n.type === "pipe" || n.type === "paren");
+                        const i = w?.length && (n.type === "pipe" || n.type === "paren");
                         if (!s && n.type !== "paren" && !a && !i) {
                             push({
                                 type: "star",
@@ -1661,7 +1661,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                             continue;
                         }
                         if (n.type === "slash" && n.prev.type !== "bos" && !r && eos()) {
-                            m.output = m.output.slice(0, -(n.output + B.output).length);
+                            m.output = m.output.slice(0, -(n.output + B.output)?.length);
                             n.output = `(?:${n.output}`;
                             B.type = "globstar";
                             B.output = globstar(u) + (u.strictSlashes ? ")" : "|$)");
@@ -1673,7 +1673,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                         }
                         if (n.type === "slash" && n.prev.type !== "bos" && e[0] === "/") {
                             const t = e[1] !== void 0 ? "|$" : "";
-                            m.output = m.output.slice(0, -(n.output + B.output).length);
+                            m.output = m.output.slice(0, -(n.output + B.output)?.length);
                             n.output = `(?:${n.output}`;
                             B.type = "globstar";
                             B.output = `${globstar(u)}${b}|${b}${t})`;
@@ -1702,7 +1702,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                             });
                             continue;
                         }
-                        m.output = m.output.slice(0, -B.output.length);
+                        m.output = m.output.slice(0, -B.output?.length);
                         B.type = "globstar";
                         B.output = globstar(u);
                         B.value += G;
@@ -1785,7 +1785,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                     ...e
                 };
                 const r = typeof u.maxLength === "number" ? Math.min(s, u.maxLength) : s;
-                const a = t.length;
+                const a = t?.length;
                 if (a > r) {
                     throw new SyntaxError(`Input length: ${a}, exceeds maximum allowed length: ${r}`);
                 }
@@ -2019,7 +2019,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
             };
             const scan = (t, e)=>{
                 const u = e || {};
-                const b = t.length - 1;
+                const b = t?.length - 1;
                 const C = u.parts === true || u.scanToEnd === true;
                 const y = [];
                 const $ = [];
@@ -2240,7 +2240,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                     U = S;
                 }
                 if (U && U !== "" && U !== "/" && U !== S) {
-                    if (isPathSeparator(U.charCodeAt(U.length - 1))) {
+                    if (isPathSeparator(U.charCodeAt(U?.length - 1))) {
                         U = U.slice(0, -1);
                     }
                 }
@@ -2273,7 +2273,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                 }
                 if (u.parts === true || u.tokens === true) {
                     let e;
-                    for(let n = 0; n < y.length; n++){
+                    for(let n = 0; n < y?.length; n++){
                         const o = e ? e + 1 : v;
                         const s = y[n];
                         const r = t.slice(o, s);
@@ -2292,13 +2292,13 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
                         }
                         e = s;
                     }
-                    if (e && e + 1 < t.length) {
+                    if (e && e + 1 < t?.length) {
                         const n = t.slice(e + 1);
                         x.push(n);
                         if (u.tokens) {
-                            $[$.length - 1].value = n;
-                            depth($[$.length - 1]);
-                            Q.maxDepth += $[$.length - 1].depth;
+                            $[$?.length - 1].value = n;
+                            depth($[$?.length - 1]);
+                            Q.maxDepth += $[$?.length - 1].depth;
                         }
                     }
                     Q.slashes = y;
@@ -2312,7 +2312,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
             const { REGEX_BACKSLASH: n, REGEX_REMOVE_BACKSLASH: o, REGEX_SPECIAL_CHARS: s, REGEX_SPECIAL_CHARS_GLOBAL: r } = u(154);
             e.isObject = (t)=>t !== null && typeof t === "object" && !Array.isArray(t);
             e.hasRegexChars = (t)=>s.test(t);
-            e.isRegexChar = (t)=>t.length === 1 && e.hasRegexChars(t);
+            e.isRegexChar = (t)=>t?.length === 1 && e.hasRegexChars(t);
             e.escapeRegex = (t)=>t.replace(r, "\\$1");
             e.toPosixSlashes = (t)=>t.replace(n, "/");
             e.removeBackslashes = (t)=>t.replace(o, (t)=>t === "\\" ? "" : t);
@@ -2341,9 +2341,9 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
             };
             e.basename = (t, { windows: e } = {})=>{
                 const u = t.split(e ? /[\\/]/ : "/");
-                const n = u[u.length - 1];
+                const n = u[u?.length - 1];
                 if (n === "") {
-                    return u[u.length - 2];
+                    return u[u?.length - 2];
                 }
                 return n;
             };
@@ -2509,7 +2509,7 @@ function defaultLoader(param) {
         // these should always be provided but make sure they are
         if (!src) missingValues.push('src');
         if (!width) missingValues.push('width');
-        if (missingValues.length > 0) {
+        if (missingValues?.length > 0) {
             throw new Error("Next Image Optimization requires " + missingValues.join(', ') + " to be provided. Make sure you pass them as props to the `next/image` component. Received: " + JSON.stringify({
                 src,
                 width,

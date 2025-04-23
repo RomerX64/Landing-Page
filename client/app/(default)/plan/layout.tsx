@@ -108,10 +108,10 @@ const PlanDetail: React.FC = () => {
               </ul>
             </div>
 
-            {extraPersonalizations.length > 0 && (
+            {extraPersonalizations?.length > 0 && (
               <div className="hidden w-px mx-4 bg-gray-600 md:block" />
             )}
-            {extraPersonalizations.length > 0 && (
+            {extraPersonalizations?.length > 0 && (
               <div className="w-full md:w-1/2">
                 <p className="mb-4 text-gray-300">
                   Además, este plan te ofrece:

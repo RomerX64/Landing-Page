@@ -104,7 +104,7 @@ sendMessage = __TURBOPACK__imported__module__$5b$turbopack$5d2f$browser$2f$dev$2
             default:
                 try {
                     if (Array.isArray(msg.data)) {
-                        for(let i = 0; i < msg.data.length; i++){
+                        for(let i = 0; i < msg.data?.length; i++){
                             handleSocketMessage(msg.data[i]);
                         }
                     } else {
@@ -202,10 +202,10 @@ function mergeChunkListUpdates(updateA, updateB) {
             // Since there can only be `EcmascriptMergeUpdates` in the array, there is
             // no need to key on the `type` field.
             let update = updateA.merged[0];
-            for(let i = 1; i < updateA.merged.length; i++){
+            for(let i = 1; i < updateA.merged?.length; i++){
                 update = mergeChunkListEcmascriptMergedUpdates(update, updateA.merged[i]);
             }
-            for(let i = 0; i < updateB.merged.length; i++){
+            for(let i = 0; i < updateB.merged?.length; i++){
                 update = mergeChunkListEcmascriptMergedUpdates(update, updateB.merged[i]);
             }
             merged = [
@@ -292,7 +292,7 @@ function mergeEcmascriptChunksUpdates(chunksA, chunksB) {
             chunks[chunkPath] = chunkUpdateB;
         }
     }
-    if (Object.keys(chunks).length === 0) {
+    if (Object.keys(chunks)?.length === 0) {
         return undefined;
     }
     return chunks;
@@ -317,7 +317,7 @@ function mergeEcmascriptChunkUpdates(updateA, updateB) {
                 deleted.push(moduleId);
             }
         }
-        if (added.length === 0 && deleted.length === 0) {
+        if (added?.length === 0 && deleted?.length === 0) {
             return undefined;
         }
         return {
@@ -398,8 +398,8 @@ const CRITICAL = [
     "fatal"
 ];
 function compareByList(list, a, b) {
-    const aI = list.indexOf(a) + 1 || list.length;
-    const bI = list.indexOf(b) + 1 || list.length;
+    const aI = list.indexOf(a) + 1 || list?.length;
+    const bI = list.indexOf(b) + 1 || list?.length;
     return aI - bI;
 }
 const chunksWithIssues = new Map();
@@ -424,7 +424,7 @@ function handleIssues(msg) {
             hasCriticalIssues = true;
         }
     }
-    if (msg.issues.length > 0) {
+    if (msg.issues?.length > 0) {
         chunksWithIssues.set(key, msg.issues);
     } else if (chunksWithIssues.has(key)) {
         chunksWithIssues.delete(key);

@@ -43,7 +43,7 @@ export default function Features() {
               Que puedes hacer con Assetly?
             </h2>
             <p className="text-lg text-indigo-200/65">
-              Aqui podras gestionar todos tus activos
+              Aquí podrás gestionar todos tus activos.
             </p>
           </div>
           {/* <div className="flex justify-center pb-4 md:pb-12" data-aos="fade-up">
@@ -71,10 +71,10 @@ export default function Features() {
                 />
               </svg>
               <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                Personalisacion
+                Personalización
               </h3>
               <p className="text-indigo-200/65">
-                Podras personalisar la pagina a tu gusto, con tu logo, tus
+                Podrás personalizar la página a tu gusto, con tu logo, tus
                 colores, tus reportes
               </p>
             </article>
@@ -92,8 +92,8 @@ export default function Features() {
                 Geolocalizacion
               </h3>
               <p className="text-indigo-200/65">
-                Podras tener un seguimiento precisio de tus activos a traves de
-                google maps
+                Podras tener un seguimiento preciso de tus activos a través de
+                Google Maps
               </p>
             </article>
             <article>
@@ -110,10 +110,10 @@ export default function Features() {
                 />
               </svg>
               <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                Busquedas avanzadas
+                Búsqueda avanzadas
               </h3>
               <p className="text-indigo-200/65">
-                Podras hacer una busqueda simple para ver todos los datos de tu
+                Podrás hacer una busqueda simple para ver todos los datos de tu
                 activo entre un gran volumen de activos
               </p>
             </article>
@@ -160,9 +160,9 @@ export default function Features() {
                 Seguridad de Trabajadores
               </h3>
               <p className="text-indigo-200/65">
-                Podras implementar una gran cantidad de empleados con sus
-                respectivas zonas de trabajo unicas, generando mas seguridad
-                entre empleados
+                Podrás implementar una gran cantidad de empleados con sus
+                respectivas zonas de trabajo únicas, generando más seguridad
+                entre ellos.
               </p>
             </article>
             <article>
@@ -182,8 +182,8 @@ export default function Features() {
                 Avisos
               </h3>
               <p className="text-indigo-200/65">
-                Podras tener avisos personalisados para todos los mantenimientos
-                personalisados para los activos
+                Podrás recibir avisos personalizados para todos los
+                mantenimientos de los activos.
               </p>
             </article>
           </div>
