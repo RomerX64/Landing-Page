@@ -252,7 +252,7 @@ export default function SignUpLayout() {
         newUser.confirmPassword !== "";
       const complexityError = !validatePassword(newUser.password);
 
-      newErrors?.lengthError = lengthError;
+      newErrors.lengthError = lengthError;
       newErrors.passwordError = passwordError;
       newErrors.complexityError = complexityError;
     }
