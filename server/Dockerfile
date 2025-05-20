@@ -11,8 +11,7 @@ COPY server/package*.json ./
 RUN npm install
 
 # Copiar el resto de los archivos
-COPY server/ .
-
+COPY . .
 # Construir la aplicación
 RUN npm run build
 
