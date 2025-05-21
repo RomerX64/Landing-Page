@@ -1,18 +1,22 @@
-// Utilizamos dynamic para cargar el componente de forma dinámica
-import dynamic from "next/dynamic";
-import { Suspense } from "react";
+export const metadata = {
+  title: "Assetly",
+  description: "Page description",
+};
 
-// Importamos el componente de forma dinámica para evitar errores de importación
-const Home = dynamic(() => import("./(default)/page"), {
-  ssr: true, // Aseguramos que se renderice en el servidor también
-});
+import PageIllustration from "@/components/page-illustration";
+import Hero from "@/components/hero-home";
+import Workflows from "@/components/workflowsSaaS";
+import Features from "@/components/features";
+import Cta from "@/components/cta";
 
-export default function Page() {
+export default function Home() {
   return (
     <>
-      <Suspense fallback={<div>Cargando contenido...</div>}>
-        <Home />
-      </Suspense>
+      <PageIllustration />
+      <Hero />
+      <Features />
+      <Workflows />
+      <Cta />
     </>
   );
 }
