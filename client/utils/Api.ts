@@ -2,7 +2,7 @@ import axios from "axios";
 
 const url =
   process.env.NEXT_PUBLIC_API_URL ||
-  "https://assetsdb-page.onrender.com";
+  "https://landing-page-production-70bc.up.railway.app";
 
 const api = axios.create({
   baseURL: url, //process.env.NEXT_PUBLIC_API_URL,
