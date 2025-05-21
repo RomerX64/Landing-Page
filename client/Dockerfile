@@ -4,7 +4,7 @@ FROM node:20-bullseye-slim
 WORKDIR /app
 
 # Copiar los archivos de configuración
-COPY client/package*.json ./
+COPY package*.json ./
 
 # Instalar las dependencias necesarias para sharp
 RUN apt-get update && \
@@ -17,7 +17,7 @@ RUN apt-get update && \
 RUN npm install
 
 # Copiar el resto de los archivos
-COPY client/ ./
+COPY . .
 
 # Construir la aplicación
 RUN npm run build
