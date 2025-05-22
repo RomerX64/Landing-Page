@@ -13,7 +13,7 @@ _Version 2.0.3 built with Tailwind CSS and React + Vite is available [here](http
 _Version 3.3.0 (before redesign) built with Tailwind CSS and Next.js is available [here](https://github.com/cruip/open-react-template/releases/tag/3.3.0)._
 
 ## Live demo
-
+ 
 Check the live demo here 👉️ [https://open.cruip.com/](https://open.cruip.com/)
 
 ## Open PRO
